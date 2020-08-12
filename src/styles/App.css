@@ -1,0 +1,35 @@
+@import "NavBar.css";
+@import "Home.css";
+@import "Routes.css";
+@import "Footer.css";
+@import "Exam.css";
+@import "FCEPart2.css";
+@import "Timer.css";
+@import "button.css";
+@import "Header.css";
+
+@font-face {
+  font-family: 'Digital-7';
+  src: local('Digital-7'), url('../fonts/digital-7.ttf') format('truetype');
+}
+
+.HolyGrail {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.HolyGrail-body {
+  display: flex;
+  flex: 1;
+  background-color: green;
+}
+
+.HolyGrail-content {
+  flex: 1;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}

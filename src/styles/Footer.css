@@ -1,0 +1,10 @@
+.footer-container {
+  background-color: #589d77;
+  height: 100%;
+  padding: 15px;
+}
+
+.gitHub-logo {
+  height: 30px;
+  float: right;
+}
