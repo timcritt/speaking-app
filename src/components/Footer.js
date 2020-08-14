@@ -5,7 +5,9 @@ const Footer = () => {
   return (
     <div className='footer-container'>
       <span>© Timothy Crittenden</span>
-      <img className='gitHub-logo' src={gitHubLogo}></img>
+      <a href='https://github.com/timcritt/speaking-app' target='_blank'>
+        <img className='gitHub-logo' src={gitHubLogo}></img>
+      </a>
     </div>
   );
 };

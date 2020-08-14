@@ -1,5 +1,4 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import alarm from '../audio/alarm.mp3';
 
 const Timer = () => {
   const [time, setTime] = useState(600);
@@ -27,7 +26,7 @@ const Timer = () => {
 
   return (
     <div className='timer-container '>
-      <div>{parseInt(time / 100)}</div>
+      <div>{time > 0 ? parseInt(time / 100) : 'time up!'}</div>
       <div className='part2-button-container'>
         <button
           className={`btn ${buttonClass}`}
@@ -40,8 +39,8 @@ const Timer = () => {
           className='btn btn-reset'
           onClick={() => {
             clearTimeout(timerId);
-            setTime(6000);
             setTicking(false);
+            setTime(6000);
           }}
         >
           RESET

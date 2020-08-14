@@ -1,9 +1,11 @@
 import React from 'react';
+import EasyCrop from './EasyCrop';
+import { requirePropFactory } from '@material-ui/core';
 
-const ExamImageContainer = ({ image }) => {
+const ExamImageContainer = ({ imageSrc }) => {
   return (
     <div className='exam-image-container'>
-      <img src={image} className='part2-image' />
+      <img src={imageSrc} className='part2-image' />
     </div>
   );
 };

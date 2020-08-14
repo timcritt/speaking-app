@@ -7,6 +7,8 @@
 @import "Timer.css";
 @import "button.css";
 @import "Header.css";
+@import "EditFCEPart2.css";
+@import "placeholder.css";
 
 @font-face {
   font-family: 'Digital-7';
@@ -29,7 +31,7 @@
   flex: 1;
   background-color: white;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   flex-wrap: wrap;
 }

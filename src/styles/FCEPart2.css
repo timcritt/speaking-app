@@ -1,6 +1,6 @@
 .part2-main-row {
   background-color: white;
-  width: auto;
+  width: 100vw;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -11,6 +11,9 @@
 .question-container {
   background-color: white;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  margin: 5vh 0 5vh 0;
 }
 
 .part2-question-text {
@@ -20,9 +23,10 @@
 
 .part2-image-row {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   flex-wrap: wrap;
   align-content: center;
+  min-height: 50vh;
 }
 
 .exam-image-container {
@@ -32,12 +36,14 @@
   height: auto;
   max-width: auto;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
 }
 
 .part2-image {
   height: 50vh;
   width: auto;
-  border: grey;
+  border: #e5e5e5;
   border-style: solid;
 }
 
@@ -52,13 +58,48 @@
 }
 
 .btn-start {
-  background-color: green;
+  background-color: #28a745;
+  cursor: pointer;
+}
+
+.btn-start:hover {
+  background-color: #218838;
+}
+
+.btn-start:focus {
+  outline: #1b5f2a;
 }
 
 .btn-stop {
-  background-color: #ed5d5d;
+  background-color: #dc3545;
+  cursor: pointer;
+}
+
+.btn-stop:hover {
+  background-color: #c82333;
+}
+
+.btn-stop:disabled {
+  background-color: #d7c0c4;
+  color: grey;
+  cursor: default;
+}
+
+.btn-stop:focus {
+  background-color: #c82333;
+
+  outline-color: #9e2330;
 }
 
 .btn-reset {
   background-color: #357ae8;
+  cursor: pointer;
+}
+
+.btn-reset:hover {
+  background-color: #0069d9;
+}
+
+.btn-reset:focus {
+  outline-color: #0e59a8;
 }
