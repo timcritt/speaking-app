@@ -1,6 +1,4 @@
 import React from 'react';
-import EasyCrop from './EasyCrop';
-import { requirePropFactory } from '@material-ui/core';
 
 const ExamImageContainer = ({ imageSrc }) => {
   return (

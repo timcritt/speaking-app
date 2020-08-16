@@ -42,7 +42,7 @@ export default function SimpleModal({ modalButtonText }) {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <EasyCrop handleClose={handleClose}></EasyCrop>
+      <EasyCrop></EasyCrop>
     </div>
   );
 
@@ -51,16 +51,17 @@ export default function SimpleModal({ modalButtonText }) {
       <Button
         type='button'
         variant='contained'
-        color='primary'
+        color='default'
         onClick={handleOpen}
+        size='small'
       >
         {modalButtonText}
       </Button>
       <Modal
         open={open}
-        onClose={handleClose}
         aria-labelledby='simple-modal-title'
         aria-describedby='simple-modal-description'
+        onClose={handleClose}
       >
         {body}
       </Modal>

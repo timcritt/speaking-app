@@ -1,9 +1,10 @@
 .question-input {
   outline: none;
   border: none;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #c8c3c3;
   font-size: x-large;
   width: 40vw;
+
 }
 
 .question-input:focus {
@@ -32,4 +33,17 @@
 :-moz-placeholder {
   /* Firefox 18- */
   color: var(--placeholder-color);
+}
+
+.side-bar-left-tags {
+  order: -1;
+  max-width: 25vw;
+  display: flex;
+  align-items: center;
+  background-color: #f4f7fd;
+}
+
+.tags-container {
+  text-align: center;
+  padding: 20px;
 }

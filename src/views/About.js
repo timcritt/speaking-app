@@ -1,5 +1,5 @@
 import React from 'react';
 
 export const About = () => {
-  return <main class='HolyGrail-content'>About page</main>;
+  return <section className='holy-grail-content'>About page</section>;
 };

@@ -1,6 +1,5 @@
 .part2-main-row {
   background-color: white;
-  width: 100vw;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -26,7 +25,7 @@
   justify-content: center;
   flex-wrap: wrap;
   align-content: center;
-  min-height: 50vh;
+
 }
 
 .exam-image-container {
@@ -34,15 +33,16 @@
   padding: 5px 0px 5px 0px;
   margin: 5px 25px 5px 25px;
   height: auto;
-  max-width: auto;
+
   box-sizing: border-box;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .part2-image {
   height: 50vh;
-  width: auto;
+
   border: #e5e5e5;
   border-style: solid;
 }
@@ -50,6 +50,7 @@
 .timer-row {
   display: flex;
   justify-content: center;
+  padding: 10px;
 }
 
 .part2-button-container {

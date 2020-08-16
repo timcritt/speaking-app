@@ -15,13 +15,12 @@ const ORIENTATION_TO_ANGLE = {
   '8': -90,
 };
 
-const EasyCrop = ({ classes, handleClose }) => {
+const EasyCrop = ({ classes }) => {
   const [imageSrc, setImageSrc] = useState(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
-  const [croppedImage, setCroppedImage] = useState(null);
 
   //access to the function that sets the image on the page
   const handleSetImage = useContext(ImageContext);
@@ -39,16 +38,10 @@ const EasyCrop = ({ classes, handleClose }) => {
       );
       //set the state in the image container on the main page
       handleSetImage(croppedImage);
-      //close the modal that contains this component
-      handleClose();
     } catch (e) {
       console.error(e);
     }
-  }, [imageSrc, croppedAreaPixels, rotation]);
-
-  const onClose = useCallback(() => {
-    setCroppedImage(null);
-  }, []);
+  }, [imageSrc, croppedAreaPixels, rotation, handleSetImage]);
 
   const onFileChange = async (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -61,7 +54,6 @@ const EasyCrop = ({ classes, handleClose }) => {
       if (rotation) {
         imageDataUrl = await getRotatedImage(imageDataUrl, rotation);
       }
-
       setImageSrc(imageDataUrl);
     }
   };
@@ -89,7 +81,7 @@ const EasyCrop = ({ classes, handleClose }) => {
                 variant='overline'
                 classes={{ root: classes.sliderLabel }}
               >
-                Zoom
+                zoom
               </Typography>
               <Slider
                 value={zoom}
@@ -97,7 +89,6 @@ const EasyCrop = ({ classes, handleClose }) => {
                 max={3}
                 step={0.1}
                 aria-labelledby='Zoom'
-                classes={{ container: classes.slider }}
                 onChange={(e, zoom) => setZoom(zoom)}
               />
             </div>
@@ -114,7 +105,6 @@ const EasyCrop = ({ classes, handleClose }) => {
                 max={360}
                 step={1}
                 aria-labelledby='Rotation'
-                classes={{ container: classes.slider }}
                 onChange={(e, rotation) => setRotation(rotation)}
               />
             </div>

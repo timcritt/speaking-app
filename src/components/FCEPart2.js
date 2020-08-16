@@ -1,9 +1,7 @@
 import React from 'react';
 import ExamImageContainer from './ExamImageContainer';
-import skateboarding from '../img/skateboarding.jpg';
 import football from '../img/football.jpg';
 import Timer from './Timer';
-import ExamPickerContainer from './ImagePickerContainer';
 
 const FCEPart2 = () => {
   return (
@@ -16,7 +14,6 @@ const FCEPart2 = () => {
         </div>
         {console.log(football)}
         <div className='part2-image-row'>
-          <ExamPickerContainer></ExamPickerContainer>
           <ExamImageContainer image={football} />
         </div>
         <div className='timer-row'>

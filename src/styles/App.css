@@ -1,3 +1,4 @@
+@import "holy-grail-flex.css";
 @import "NavBar.css";
 @import "Home.css";
 @import "Routes.css";
@@ -9,29 +10,10 @@
 @import "Header.css";
 @import "EditFCEPart2.css";
 @import "placeholder.css";
+@import "TagItem.css";
+
 
 @font-face {
   font-family: 'Digital-7';
   src: local('Digital-7'), url('../fonts/digital-7.ttf') format('truetype');
-}
-
-.HolyGrail {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-}
-
-.HolyGrail-body {
-  display: flex;
-  flex: 1;
-  background-color: green;
-}
-
-.HolyGrail-content {
-  flex: 1;
-  background-color: white;
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  flex-wrap: wrap;
 }

@@ -1,0 +1,24 @@
+.tag-item {
+  margin: 8px 4px 0 4px;
+  padding: 0 16px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 21px;
+  border: solid 1px #bbb;
+  font-size: 14.88px;
+  font-size: 0.93rem;
+  font-weight: 500;
+  line-height: 40px;
+  text-align: center;
+  color: #bbb;
+  background-color: transparent;
+}
+
+.tag-item:focus {
+  outline: none;
+}
+
+.tag-item-selected {
+  color: blue;
+  border-color: blue;
+}
