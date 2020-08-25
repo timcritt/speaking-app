@@ -1,0 +1,77 @@
+.all-tests-container {
+  width: 100vw;
+  overflow-y: scroll;
+  padding: 30px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.test-preview-container {
+  border: solid 3px rgb(199, 198, 198);
+  border-radius: 10px;
+  padding: 5px;
+  margin: 5px;
+  width: fit-content;
+  height: fit-content;
+  transition: border-color 0.14s;
+}
+
+.test-preview-container:hover {
+  border-color: #f5d88b;
+}
+
+.test-preview-link {
+  text-decoration: none;
+}
+
+.test-preview-question-container {
+  color: black;
+  font-size: x-small;
+  padding: 0 8px 0 8px;
+  width: 208px;
+  height: 30px;
+}
+
+.dont-break-out {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  /* This is the dangerous one in WebKit, as it breaks things wherever */
+  word-break: break-all;
+  /* Instead use this non-standard one: */
+  word-break: break-word;
+  /* Adds a hyphen where the word breaks, if supported (No Blink) */
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.img-wrap {
+  display: flex;
+}
+
+.thumbnail {
+  width: 100px;
+  height: auto;
+  margin: 5px;
+}
+
+.test-preview-container {
+  animation: fadeInAnimation ease 1.5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

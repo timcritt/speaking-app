@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import EasyCrop from './EasyCrop';
-
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -48,15 +48,9 @@ export default function SimpleModal({ modalButtonText }) {
 
   return (
     <div>
-      <Button
-        type='button'
-        variant='contained'
-        color='default'
-        onClick={handleOpen}
-        size='small'
-      >
-        {modalButtonText}
-      </Button>
+      <button className='btn image-centre-btn upload-btn' onClick={handleOpen}>
+        <CloudUploadIcon />
+      </button>
       <Modal
         open={open}
         aria-labelledby='simple-modal-title'

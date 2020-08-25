@@ -1,17 +1,23 @@
-@import "holy-grail-flex.css";
-@import "NavBar.css";
-@import "Home.css";
-@import "Routes.css";
-@import "Footer.css";
-@import "Exam.css";
-@import "FCEPart2.css";
-@import "Timer.css";
-@import "button.css";
-@import "Header.css";
-@import "EditFCEPart2.css";
-@import "placeholder.css";
-@import "TagItem.css";
+@import 'holy-grail-flex.css';
+@import 'NavBar.css';
+@import 'Home.css';
+@import 'Routes.css';
+@import 'Footer.css';
+@import 'Exam.css';
+@import 'FCEPart2.css';
+@import 'Timer.css';
 
+@import 'Header.css';
+@import 'EditFCEPart2.css';
+@import 'placeholder.css';
+@import 'TagItem.css';
+@import 'button.css';
+@import 'dropdown.css';
+@import 'Signin.css';
+@import 'EasyCrop.css';
+@import 'ProgressBar.css';
+@import 'Tests.css';
+@import 'ToolBar.css';
 
 @font-face {
   font-family: 'Digital-7';

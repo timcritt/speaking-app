@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
+import AuthProvider from './context/AuthProvider';
+
 import Footer from './components/Footer';
 import ForkMe from './components/ForkMe';
 import './fonts/digital-7.ttf';
@@ -11,14 +13,15 @@ import { NavBar } from './components/NavBar';
 
 ReactDOM.render(
   <div className='holy-grail'>
-    <ForkMe></ForkMe>
     <Router>
-      <header></header>
-      <NavBar />
-      <div className='holy-grail-body'>
-        <App />
-      </div>
-      <Footer />
+      <AuthProvider>
+        <header></header>
+        <NavBar />
+        <div className='holy-grail-body'>
+          <App />
+        </div>
+        <Footer />
+      </AuthProvider>
     </Router>
   </div>,
   document.getElementById('root')

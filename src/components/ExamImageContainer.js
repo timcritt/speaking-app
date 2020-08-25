@@ -1,9 +1,20 @@
 import React from 'react';
+import placeholder from '../img/placeholder-landscape.jpg';
+import SimpleModal from './SimpleModal';
 
-const ExamImageContainer = ({ imageSrc }) => {
+const ExamImageContainer = ({ image, handleSetImage }) => {
   return (
-    <div className='exam-image-container'>
-      <img src={imageSrc} className='part2-image' />
+    <div className='exam-image-container upload-image-container'>
+      <img src={image ? image : placeholder} className='part2-image' />
+      {image && (
+        <button
+          className='image-centre-btn delete-btn'
+          onClick={() => handleSetImage()}
+        >
+          Delete
+        </button>
+      )}
+      {!image && <SimpleModal modalButtonText={'upload'} />}
     </div>
   );
 };

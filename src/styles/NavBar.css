@@ -3,15 +3,47 @@
   text-align: center;
   display: flex;
   justify-content: flex-end;
-  padding: 10px;
+  padding: 15px 40px 15px 40px;
 }
 
 .nav-link {
   color: white;
   text-decoration: none;
-  padding: 10px;
+  padding: 0 10px 0 10px;
+  white-space: nowrap;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  transition: border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 }
 
 .nav-link:hover {
   color: #a9c9b7;
+}
+
+.profile-picture {
+  border-radius: 50%;
+  border: 3px solid #f5d88b;
+  width: 42px;
+  height: 42px;
+  margin: 0 20px 0 10px;
+  box-sizing: border-box;
+}
+
+.nav-logo {
+  margin-right: auto;
+}
+
+.create-link {
+  border: 1px #99be9c solid;
+  border-radius: 10px;
+  align-items: center;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin-right: 10px;
+}
+
+.create-link:hover {
+  border: 1px #f5d88b solid;
+  color: white;
 }

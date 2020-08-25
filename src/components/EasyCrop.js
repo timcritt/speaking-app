@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useState, useCallback, useContext, Fragment } from 'react';
 import Cropper from 'react-easy-crop';
 import Slider from '@material-ui/core/Slider';
 import Button from '@material-ui/core/Button';
@@ -8,6 +8,7 @@ import { getOrientation } from 'get-orientation/browser';
 import { getCroppedImg, getRotatedImage } from './canvasUtils';
 import { styles } from './styles';
 import ImageContext from '../context/ImageContext';
+import ProgressBar from './ProgressBar';
 
 const ORIENTATION_TO_ANGLE = {
   '3': 180,
@@ -21,9 +22,10 @@ const EasyCrop = ({ classes }) => {
   const [rotation, setRotation] = useState(0);
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const [uploadError, setUploadError] = useState(null);
+  const [croppedImage, setCroppedImage] = useState(false);
 
   //access to the function that sets the image on the page
-  const handleSetImage = useContext(ImageContext);
 
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
@@ -36,12 +38,16 @@ const EasyCrop = ({ classes }) => {
         croppedAreaPixels,
         rotation
       );
+      setCroppedImage(croppedImage);
+
       //set the state in the image container on the main page
-      handleSetImage(croppedImage);
+      //handleSetImage(croppedImage);
     } catch (e) {
       console.error(e);
     }
-  }, [imageSrc, croppedAreaPixels, rotation, handleSetImage]);
+  }, [imageSrc, croppedAreaPixels, rotation]);
+
+  const fileTypes = ['image/png', 'image/jpeg'];
 
   const onFileChange = async (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -54,7 +60,13 @@ const EasyCrop = ({ classes }) => {
       if (rotation) {
         imageDataUrl = await getRotatedImage(imageDataUrl, rotation);
       }
-      setImageSrc(imageDataUrl);
+      //validate the image type here
+      if (fileTypes.includes(file.type)) {
+        setUploadError('');
+        setImageSrc(imageDataUrl);
+      } else {
+        setUploadError('wrong file format');
+      }
     }
   };
 
@@ -75,51 +87,57 @@ const EasyCrop = ({ classes }) => {
               onZoomChange={setZoom}
             />
           </div>
-          <div className={classes.controls}>
-            <div className={classes.sliderContainer}>
-              <Typography
-                variant='overline'
-                classes={{ root: classes.sliderLabel }}
+          {!croppedImage && (
+            <div className={classes.controls}>
+              <div className={classes.sliderContainer}>
+                <Typography
+                  variant='overline'
+                  classes={{ root: classes.sliderLabel }}
+                >
+                  zoom
+                </Typography>
+                <Slider
+                  value={zoom}
+                  min={1}
+                  max={3}
+                  step={0.1}
+                  aria-labelledby='Zoom'
+                  onChange={(e, zoom) => setZoom(zoom)}
+                />
+              </div>
+              <div className={classes.sliderContainer}>
+                <Typography
+                  variant='overline'
+                  classes={{ root: classes.sliderLabel }}
+                >
+                  Rotation
+                </Typography>
+                <Slider
+                  value={rotation}
+                  min={0}
+                  max={360}
+                  step={1}
+                  aria-labelledby='Rotation'
+                  onChange={(e, rotation) => setRotation(rotation)}
+                />
+              </div>
+              <Button
+                onClick={showCroppedImage}
+                variant='contained'
+                color='primary'
+                classes={{ root: classes.cropButton }}
               >
-                zoom
-              </Typography>
-              <Slider
-                value={zoom}
-                min={1}
-                max={3}
-                step={0.1}
-                aria-labelledby='Zoom'
-                onChange={(e, zoom) => setZoom(zoom)}
-              />
+                upload
+              </Button>
             </div>
-            <div className={classes.sliderContainer}>
-              <Typography
-                variant='overline'
-                classes={{ root: classes.sliderLabel }}
-              >
-                Rotation
-              </Typography>
-              <Slider
-                value={rotation}
-                min={0}
-                max={360}
-                step={1}
-                aria-labelledby='Rotation'
-                onChange={(e, rotation) => setRotation(rotation)}
-              />
-            </div>
-            <Button
-              onClick={showCroppedImage}
-              variant='contained'
-              color='primary'
-              classes={{ root: classes.cropButton }}
-            >
-              assign image
-            </Button>
-          </div>
+          )}
+          {croppedImage && <ProgressBar file={croppedImage} />}
         </React.Fragment>
       ) : (
-        <input type='file' onChange={onFileChange} accept='image/*' />
+        <Fragment>
+          <input type='file' onChange={onFileChange} accept='image/*' />
+          <span className='upload-error-message'>{uploadError}</span>
+        </Fragment>
       )}
     </div>
   );

@@ -10,7 +10,7 @@ const Tag = ({ tagName, selected, handleSetTags }) => {
       className={`tag-item ${selected ? 'tag-item-selected' : ''}`}
       onClick={handleClick}
     >
-      {tagName}
+      {'#' + tagName}
     </button>
   );
 };

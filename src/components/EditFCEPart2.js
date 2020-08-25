@@ -1,21 +1,19 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import ExamImageContainer from './ExamImageContainer';
 import ImageContext from '../context/ImageContext';
-import placeholder from '../img/placeholder-landscape.jpg';
-import Button from '@material-ui/core/Button';
-import SaveIcon from '@material-ui/icons/Save';
-import EasyCrop from './EasyCrop';
-import SimpleModal from './SimpleModal';
-import DeleteIcon from '@material-ui/icons/Delete';
 import SideBarTags from './SideBarTags';
+import PublishWarningModal from './PublishWarningModal';
+import { Link } from 'react-router-dom';
+import useGetTest from '../hooks/useGetTest';
 
-const mockTags = ['home', 'fitness'];
-
-const EditFCEPart2 = () => {
+const EditFCEPart2 = (props) => {
   const [question, setQuestion] = useState();
   const [imageOne, setImageOne] = useState();
   const [imageTwo, setImageTwo] = useState();
-  const [testTags, setTags] = useState(mockTags);
+  const [testTags, setTags] = useState([]);
+  const [docRef, setDocRef] = useState('');
+
+  var test = useGetTest(props.match.params.id);
 
   function handleSetImageOne(image) {
     setImageOne(image);
@@ -36,6 +34,25 @@ const EditFCEPart2 = () => {
       });
     }
   }
+  function handleSetDocRef(docRef) {
+    setDocRef(docRef);
+  }
+
+  useEffect(() => {
+    if (test) {
+      setDocRef(test.id);
+      setImageOne(test.imageOne);
+      setImageTwo(test.imageTwo);
+      setQuestion(test.question);
+      setTags(test.tags);
+    } else {
+      setDocRef(null);
+      setImageOne(null);
+      setImageTwo(null);
+      setQuestion(null);
+      setTags([]);
+    }
+  }, [test]);
 
   return (
     <Fragment>
@@ -43,73 +60,70 @@ const EditFCEPart2 = () => {
       <main className='holy-grail-content'>
         <div className='part2-main-row'>
           <div className='question-container'>
-            <input
+            <textarea
+              label='Long turn question'
               className='question-input'
-              placeholder='question'
+              maxLength='100'
               defaultValue={question}
+              placeholder='enter long turn question'
               onChange={(e) => setQuestion(e.target.value)}
+              rows='1'
             />
           </div>
           <div className='part2-image-row'>
             <div>
-              <ExamImageContainer
-                imageSrc={imageOne ? imageOne : placeholder}
-              />
               <ImageContext.Provider value={handleSetImageOne}>
-                <div className='exam-image-container'>
-                  {imageOne ? (
-                    <Button
-                      variant='contained'
-                      color='secondary'
-                      size='small'
-                      startIcon={<DeleteIcon />}
-                      onClick={() => setImageOne()}
-                    >
-                      delete
-                    </Button>
-                  ) : (
-                    <SimpleModal modalButtonText={'Add Image'}>
-                      <EasyCrop></EasyCrop>
-                    </SimpleModal>
-                  )}
-                </div>
+                <ExamImageContainer
+                  image={imageOne}
+                  handleSetImage={handleSetImageOne}
+                />
+                <div className='exam-image-container'></div>
               </ImageContext.Provider>
             </div>
-
             <div>
-              <ExamImageContainer
-                imageSrc={imageTwo ? imageTwo : placeholder}
-              />
               <ImageContext.Provider value={handleSetImageTwo}>
-                <div className='exam-image-container'>
-                  {imageTwo ? (
-                    <Button
-                      variant='contained'
-                      color='secondary'
-                      size='small'
-                      startIcon={<DeleteIcon />}
-                      onClick={() => setImageTwo()}
-                    >
-                      delete
-                    </Button>
-                  ) : (
-                    <SimpleModal modalButtonText={'Add Image'}>
-                      <EasyCrop></EasyCrop>
-                    </SimpleModal>
-                  )}
-                </div>
+                <ExamImageContainer
+                  image={imageTwo}
+                  handleSetImage={handleSetImageTwo}
+                />
+                <div className='exam-image-container'></div>
               </ImageContext.Provider>
             </div>
           </div>
+          <p className='advice-text'>
+            Each image should include at least one person
+          </p>
           <div className='timer-row'>
-            <Button
-              variant='contained'
-              color='primary'
-              startIcon={<SaveIcon />}
-              disabled={!(imageOne && imageTwo && question)}
-            >
-              save
-            </Button>
+            <PublishWarningModal
+              imageOne={imageOne}
+              imageTwo={imageTwo}
+              question={question}
+              tags={testTags}
+              docRef={docRef}
+              setDocRef={handleSetDocRef}
+            ></PublishWarningModal>
+          </div>
+          <div className='tool-bar-container'>
+            <div>
+              <a>add to folder</a> |
+              {docRef && (
+                <Link
+                  to={{
+                    pathname: `/FCEPart2/${docRef}`,
+                    doc: {
+                      imageOne,
+                      imageTwo,
+                      question,
+                      tags: testTags,
+                      docRef,
+                    },
+                  }}
+                >
+                  preview
+                </Link>
+              )}
+              | share | info | ---{' '}
+            </div>
           </div>
         </div>
       </main>

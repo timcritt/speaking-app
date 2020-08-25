@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const Timer = () => {
-  const [time, setTime] = useState(600);
+  const [time, setTime] = useState(6000);
   const [ticking, setTicking] = useState(false);
   const [timerId, setTimerId] = useState(0);
   const [buttonClass, setButtonClass] = useState('btn-start');
