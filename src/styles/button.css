@@ -1,5 +1,4 @@
 .btn {
-  border: none;
   border-radius: 3px;
 }
 
@@ -9,10 +8,6 @@
 
 .upload-image-container {
   position: relative;
-  width: auto;
-}
-
-.upload-image-container {
   width: auto;
 }
 
@@ -26,7 +21,7 @@
   color: black;
   border: none;
   cursor: pointer;
-  border-radius: 20px;
+  border-radius: 2px;
   text-align: center;
   transition:
     background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
@@ -36,7 +31,7 @@
 }
 
 .delete-btn {
-  background-color: rgba(255, 0, 0, 0.623);
+  background-color: rgba(255, 0, 0, 0.1);
   border: solid white 2px;
   color: white;
 }

@@ -1,16 +1,19 @@
 .question-input {
-  width: 80%;
+  width: 100%;
   font-size: 16pt;
   font-family: inherit;
   outline: none;
-  border: none;
-  border-bottom: 2px solid #bababa;
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
   resize: none;
   box-sizing: border-box;
+  background-color: #FAFAFA;
+  margin: 0 2px 0 2px;
+  padding: 5px 15px 5px 15px;
 }
 
 .question-input:focus {
-  border-bottom: 2px solid rgb(7, 48, 231);
+  border: 1px solid rgb(139, 152, 211);
 
 }
 
@@ -68,7 +71,7 @@
 }
 
 .tags-title {
-  color: #f5d88b;
+  color: #909090;
   margin: 3px 0 0 3px;
   margin: 0 0 7px 0px;
 }

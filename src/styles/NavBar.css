@@ -1,13 +1,14 @@
 .nav-container {
-  background-color: #589d77;
+  background-color: white;
   text-align: center;
   display: flex;
   justify-content: flex-end;
   padding: 15px 40px 15px 40px;
+  border-bottom: 1px solid #dbdbdb;
 }
 
 .nav-link {
-  color: white;
+  color: black;
   text-decoration: none;
   padding: 0 10px 0 10px;
   white-space: nowrap;
@@ -18,7 +19,7 @@
 }
 
 .nav-link:hover {
-  color: #a9c9b7;
+  color: darkgoldenrod;
 }
 
 .profile-picture {
@@ -35,9 +36,8 @@
 }
 
 .create-link {
-  border: 1px #99be9c solid;
-  border-radius: 10px;
-  align-items: center;
+  border: 1px solid #dbdbdb;
+  padding: 0;
   padding-left: 30px;
   padding-right: 30px;
   margin-right: 10px;
@@ -45,5 +45,5 @@
 
 .create-link:hover {
   border: 1px #f5d88b solid;
-  color: white;
+  color: black;
 }

@@ -33,7 +33,7 @@ const Tests = () => {
                 to={`/FCEPart2/${doc.id}`}
                 key={uuidv4()}
               >
-                <div className='test-preview-container'>
+                <div className='test-preview-container fade-in'>
                   <div className='test-preview-question-container dont-break-out'>
                     <p>{doc.question}</p>
                   </div>

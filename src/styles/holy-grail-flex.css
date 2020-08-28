@@ -22,8 +22,11 @@
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
+  background-color: #FAFAFA;
+  justify-content: center;
 
 }
+
 
 /**
  * Content body item is made
@@ -31,6 +34,7 @@
  */
 .holy-grail-content {
   flex: 1 1 auto;
+  display: flex;
 }
 
 /**
@@ -54,8 +58,10 @@
 	 * Body items are now side by side
 	 */
   .holy-grail-body {
+    display: flex;
     flex-direction: row;
   }
+
 
   /**
 	 * Sidebars have a basic 260 width

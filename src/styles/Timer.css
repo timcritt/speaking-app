@@ -1,7 +1,64 @@
+/*flex container has flex-direction: column*/
 .timer-container {
-  color: green;
+  color: #9d9c9c;
   text-align: center;
-
-  font-size: xxx-large;
+  font-size: xx-large;
   font-family: digital-7;
+  grid-column-start: 3;
+}
+
+/*generic class for all timer buttons*/
+.timer-btn {
+  padding: 7px 10px 3px 10px;
+  width: 70px;
+  margin: 2px;
+  color: #dbdbdb;
+  cursor: pointer;
+  border: solid #dbdbdb 2px;
+  background-color: transparent;
+  transition: all 0.25s ease-out;
+}
+
+.timer-btn:hover {
+  color: grey;
+  border-color: grey;
+}
+
+.btn-start:hover {
+  color: green;
+}
+
+.btn-start:focus {
+  outline: none;
+}
+
+.btn-stop:hover {
+  color: #c82333;
+}
+
+.btn-stop:focus {
+  outline: none;
+}
+
+.btn-stop:disabled {
+  color: #dbdbdb;
+  cursor: default;
+}
+
+.btn-stop:disabled:hover {
+  color: #dbdbdb;
+  border-color: #dbdbdb;
+  cursor: default;
+}
+
+.btn-reset {
+  cursor: pointer;
+}
+
+.btn-reset:hover {
+  color: blue;
+}
+
+.btn-reset:focus {
+  outline: none;
 }

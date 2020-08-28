@@ -13,7 +13,6 @@ const useGetTest = (testId) => {
       .then((doc) => {
         if (doc.exists) {
           setDoc({ ...doc.data(), id: doc.id });
-          console.log(doc);
         } else {
           console.log('no such document');
         }

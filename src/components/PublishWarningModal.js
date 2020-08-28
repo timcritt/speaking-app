@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import PublishIcon from '@material-ui/icons/Publish';
+import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
 import { projectFirestore, timestamp } from '../firebase/firebaseIndex';
+import updateTest from '../APIHandlers/updateTest';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -52,12 +54,15 @@ export default function PublishWarningModal({
   const handleOpen = () => {
     const createdAt = timestamp();
     if (complete) {
-      //docId exists locally - therefore overwrite in firestore
       if (docRef) {
-        var objectRef = projectFirestore.collection('FCE Part 2').doc(docRef);
-        objectRef
-          .update({ imageOne, imageTwo, question, createdAt, tags })
-          .then(() => setOpen(true));
+        updateTest(
+          imageOne,
+          imageTwo,
+          question,
+          tags,
+          docRef,
+          createdAt
+        ).then(() => setOpen(true));
       } else {
         //if local test has no docId, it's because it's new and doesn't exist on the firestore.
         const collectionRef = projectFirestore.collection('FCE Part 2');
@@ -94,16 +99,10 @@ export default function PublishWarningModal({
   );
 
   return (
-    <div>
-      <Button
-        variant='contained'
-        size='small'
-        color='primary'
-        onClick={handleOpen}
-        startIcon={<PublishIcon />}
-      >
-        {docRef ? 'save changes' : 'Publish'}
-      </Button>
+    <Fragment>
+      <button className='tool-bar-btn' onClick={handleOpen}>
+        {docRef ? <SaveOutlinedIcon /> : <PublishIcon />}
+      </button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -112,6 +111,6 @@ export default function PublishWarningModal({
       >
         {body}
       </Modal>
-    </div>
+    </Fragment>
   );
 }

@@ -52,6 +52,7 @@
 
 .img-wrap {
   display: flex;
+  justify-content: center;
 }
 
 .thumbnail {
@@ -60,7 +61,7 @@
   margin: 5px;
 }
 
-.test-preview-container {
+.fade-in {
   animation: fadeInAnimation ease 1.5s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;

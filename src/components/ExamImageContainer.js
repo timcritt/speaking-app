@@ -4,7 +4,7 @@ import SimpleModal from './SimpleModal';
 
 const ExamImageContainer = ({ image, handleSetImage }) => {
   return (
-    <div className='exam-image-container upload-image-container'>
+    <div className='exam-image-container upload-image-container fade-in'>
       <img src={image ? image : placeholder} className='part2-image' />
       {image && (
         <button

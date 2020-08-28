@@ -5,6 +5,10 @@ import SideBarTags from './SideBarTags';
 import PublishWarningModal from './PublishWarningModal';
 import { Link } from 'react-router-dom';
 import useGetTest from '../hooks/useGetTest';
+import deleteTest from '../APIHandlers/deleteTest';
+import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
+import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
+import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 
 const EditFCEPart2 = (props) => {
   const [question, setQuestion] = useState();
@@ -13,6 +17,7 @@ const EditFCEPart2 = (props) => {
   const [testTags, setTags] = useState([]);
   const [docRef, setDocRef] = useState('');
 
+  //custom hook
   var test = useGetTest(props.match.params.id);
 
   function handleSetImageOne(image) {
@@ -38,6 +43,13 @@ const EditFCEPart2 = (props) => {
     setDocRef(docRef);
   }
 
+  const clearState = () => {
+    setDocRef(null);
+    setImageOne(null);
+    setImageTwo(null);
+    setQuestion(null);
+    setTags([]);
+  };
   useEffect(() => {
     if (test) {
       setDocRef(test.id);
@@ -46,87 +58,80 @@ const EditFCEPart2 = (props) => {
       setQuestion(test.question);
       setTags(test.tags);
     } else {
-      setDocRef(null);
-      setImageOne(null);
-      setImageTwo(null);
-      setQuestion(null);
-      setTags([]);
+      clearState();
     }
   }, [test]);
 
   return (
     <Fragment>
-      <SideBarTags tags={testTags} handleSetTags={handleSetTags} />
-      <main className='holy-grail-content'>
-        <div className='part2-main-row'>
-          <div className='question-container'>
-            <textarea
-              label='Long turn question'
-              className='question-input'
-              maxLength='100'
-              defaultValue={question}
-              placeholder='enter long turn question'
-              onChange={(e) => setQuestion(e.target.value)}
-              rows='1'
-            />
-          </div>
-          <div className='part2-image-row'>
-            <div>
-              <ImageContext.Provider value={handleSetImageOne}>
-                <ExamImageContainer
-                  image={imageOne}
-                  handleSetImage={handleSetImageOne}
-                />
-                <div className='exam-image-container'></div>
-              </ImageContext.Provider>
+      <div className='holy-grail-body'>
+        <SideBarTags tags={testTags} handleSetTags={handleSetTags} />
+        <main className='holy-grail-content'>
+          <div className='part2-main-row fade-in'>
+            <div className='question-row'>
+              <textarea
+                label='Long turn question'
+                className='question-input'
+                maxLength='100'
+                defaultValue={question}
+                placeholder='enter long turn question'
+                onChange={(e) => setQuestion(e.target.value)}
+                rows='1'
+              />
             </div>
-            <div>
-              <ImageContext.Provider value={handleSetImageTwo}>
-                <ExamImageContainer
-                  image={imageTwo}
-                  handleSetImage={handleSetImageTwo}
-                />
-                <div className='exam-image-container'></div>
-              </ImageContext.Provider>
+            <div className='part2-image-row'>
+              <div>
+                <ImageContext.Provider value={handleSetImageOne}>
+                  <ExamImageContainer
+                    image={imageOne}
+                    handleSetImage={handleSetImageOne}
+                  />
+                </ImageContext.Provider>
+              </div>
+              <div>
+                <ImageContext.Provider value={handleSetImageTwo}>
+                  <ExamImageContainer
+                    image={imageTwo}
+                    handleSetImage={handleSetImageTwo}
+                  />
+                </ImageContext.Provider>
+              </div>
             </div>
-          </div>
-          <p className='advice-text'>
-            Each image should include at least one person
-          </p>
-          <div className='timer-row'>
-            <PublishWarningModal
-              imageOne={imageOne}
-              imageTwo={imageTwo}
-              question={question}
-              tags={testTags}
-              docRef={docRef}
-              setDocRef={handleSetDocRef}
-            ></PublishWarningModal>
-          </div>
-          <div className='tool-bar-container'>
-            <div>
-              <a>add to folder</a> |
-              {docRef && (
-                <Link
-                  to={{
-                    pathname: `/FCEPart2/${docRef}`,
-                    doc: {
-                      imageOne,
-                      imageTwo,
-                      question,
-                      tags: testTags,
-                      docRef,
-                    },
-                  }}
+            <div className='tool-bar-row'>
+              <div className='tool-btn-container'>
+                <PublishWarningModal
+                  imageOne={imageOne}
+                  imageTwo={imageTwo}
+                  question={question}
+                  tags={testTags}
+                  docRef={docRef}
+                  setDocRef={handleSetDocRef}
+                />
+                {docRef && (
+                  <Link
+                    to={{
+                      pathname: `/FCEPart2/${docRef}`,
+                    }}
+                  >
+                    <button className='tool-bar-btn'>
+                      <VisibilityOutlinedIcon />
+                    </button>
+                  </Link>
+                )}
+                <button className='tool-bar-btn'>
+                  <ShareOutlinedIcon />
+                </button>
+                <button
+                  className='tool-bar-btn'
+                  onClick={() => deleteTest(docRef, imageOne, imageTwo)}
                 >
-                  preview
-                </Link>
-              )}
-              | share | info | ---{' '}
+                  <DeleteForeverOutlinedIcon />
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </main>
+        </main>
+      </div>
     </Fragment>
   );
 };

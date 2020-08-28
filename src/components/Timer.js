@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import PlayArrowOutlinedIcon from '@material-ui/icons/PlayArrowOutlined';
+import StopOutlinedIcon from '@material-ui/icons/StopOutlined';
+import RotateLeftOutlinedIcon from '@material-ui/icons/RotateLeftOutlined';
 
 const Timer = () => {
   const [time, setTime] = useState(6000);
@@ -29,21 +32,21 @@ const Timer = () => {
       <div>{time > 0 ? parseInt(time / 100) : 'time up!'}</div>
       <div className='part2-button-container'>
         <button
-          className={`btn ${buttonClass}`}
+          className={`timer-btn ${buttonClass}`}
           onClick={() => setTicking((prevTicking) => !prevTicking)}
           disabled={time === 0}
         >
-          {ticking ? 'STOP' : 'START'}
+          {ticking ? <StopOutlinedIcon /> : <PlayArrowOutlinedIcon />}
         </button>
         <button
-          className='btn btn-reset'
+          className='timer-btn btn-reset'
           onClick={() => {
             clearTimeout(timerId);
             setTicking(false);
             setTime(6000);
           }}
         >
-          RESET
+          <RotateLeftOutlinedIcon />
         </button>
       </div>
     </div>

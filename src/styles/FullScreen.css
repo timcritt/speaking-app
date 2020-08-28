@@ -1,0 +1,51 @@
+.fullscreen {
+  align-self: center;
+}
+
+.fullscreen-enabled .holy-grail-content {
+  min-width: 100vw;
+  min-height: 100vh;
+  background-color: black;
+}
+
+.fullscreen-enabled .part2-main-row {
+  min-width: 100vw;
+  min-height: 90vh;
+  background-color: white;
+  position: absolute;
+  top: 50%;
+  bottom: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.fullscreen-enabled .question-input {
+  max-width: fit-content;
+  font-size: xx-large;
+  margin: auto;
+}
+
+.fullscreen-enabled .part2-image {
+  height: 60vh;
+}
+
+.open-fullscreen-btn {}
+
+.close-fullscreen-btn {
+  display: none;
+  margin-right: 20px;
+  align-self: flex-end;
+}
+
+.close-fullscreen-btn:hover {
+  color: red;
+}
+
+.fullscreen-enabled .show-on-fullscreen {
+  display: block;
+}
+
+.fullscreen-enabled .hide-on-fullscreen {
+  display: none;
+}

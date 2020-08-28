@@ -5,7 +5,6 @@ import ImageContext from '../context/ImageContext';
 const ProgressBar = ({ file }) => {
   const { url, progress } = useStorage(file);
   const setFile = useContext(ImageContext);
-  console.log(file);
 
   //cannot call parent component setState from within child if child is rendering unless in useEffect.
   useEffect(() => {
