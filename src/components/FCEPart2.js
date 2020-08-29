@@ -16,7 +16,6 @@ const FCEPart2 = (props) => {
   const [imageOne, setImageOne] = useState();
   const [imageTwo, setImageTwo] = useState();
   const [docRef, setDocRef] = useState('');
-  const [isFullScreen, setIsFullScreen] = useState(false);
 
   const handleFullScreen = useFullScreenHandle();
 

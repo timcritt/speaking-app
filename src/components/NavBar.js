@@ -12,7 +12,7 @@ export const NavBar = () => {
         SPEAKING | EXAM
       </Link>
       {token && (
-        <Link className='nav-link create-link' to='/EditFCEPart2'>
+        <Link className='nav-link create-link' to='/EditFCEPart2/new'>
           Create a test
         </Link>
       )}

@@ -39,16 +39,21 @@ const EditFCEPart2 = (props) => {
       });
     }
   }
+  const handleDeleteTest = async () => {
+    await deleteTest(docRef, imageOne, imageTwo);
+    clearState();
+  };
+
   function handleSetDocRef(docRef) {
     setDocRef(docRef);
   }
 
   const clearState = () => {
-    setDocRef(null);
+    setQuestion('');
     setImageOne(null);
     setImageTwo(null);
-    setQuestion(null);
     setTags([]);
+    setDocRef(null);
   };
   useEffect(() => {
     if (test) {
@@ -121,10 +126,7 @@ const EditFCEPart2 = (props) => {
                 <button className='tool-bar-btn'>
                   <ShareOutlinedIcon />
                 </button>
-                <button
-                  className='tool-bar-btn'
-                  onClick={() => deleteTest(docRef, imageOne, imageTwo)}
-                >
+                <button className='tool-bar-btn' onClick={handleDeleteTest}>
                   <DeleteForeverOutlinedIcon />
                 </button>
               </div>
