@@ -7,13 +7,12 @@ import { withStyles } from '@material-ui/core/styles';
 import { getOrientation } from 'get-orientation/browser';
 import { getCroppedImg, getRotatedImage } from './canvasUtils';
 import { styles } from './styles';
-import ImageContext from '../context/ImageContext';
 import ProgressBar from './ProgressBar';
 
 const ORIENTATION_TO_ANGLE = {
-  '3': 180,
-  '6': 90,
-  '8': -90,
+  3: 180,
+  6: 90,
+  8: -90,
 };
 
 const EasyCrop = ({ classes }) => {

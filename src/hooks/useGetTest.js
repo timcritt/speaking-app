@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { projectFirestore } from '../firebase/firebaseIndex';
+import { FCEPart2 } from '../firebase/firebaseConsts';
 
 const useGetTest = (testId) => {
   const [doc, setDoc] = useState();
@@ -7,7 +8,7 @@ const useGetTest = (testId) => {
   useEffect(() => {
     //returns a function
     var unsub = projectFirestore
-      .collection('FCE Part 2')
+      .collection(FCEPart2)
       .doc(testId)
       .get()
       .then((doc) => {

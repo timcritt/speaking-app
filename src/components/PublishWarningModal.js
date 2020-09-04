@@ -1,11 +1,12 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import Button from '@material-ui/core/Button';
 import PublishIcon from '@material-ui/icons/Publish';
 import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
-import { projectFirestore, timestamp } from '../firebase/firebaseIndex';
+import { timestamp } from '../firebase/firebaseIndex';
 import updateTest from '../APIHandlers/updateTest';
+import addTest from '../APIHandlers/addTest';
+import { firebaseAuth } from '../context/AuthProvider';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -31,47 +32,58 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PublishWarningModal({
-  imageOne,
-  imageTwo,
+  imageOneUrl,
+  imageTwoUrl,
   tags,
   question,
   docRef,
   setDocRef,
+  imageOneRef,
+  imageTwoRef,
 }) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const [complete, setComplete] = useState(false);
+  const { userId } = useContext(firebaseAuth);
 
   useEffect(() => {
-    if (tags.length > 0 && imageOne && imageTwo && question) {
+    if (tags.length > 0 && imageOneUrl && imageTwoUrl && question) {
       setComplete(true);
     } else {
       setComplete(false);
     }
-  }, [imageOne, imageTwo, tags, question]);
+  }, [imageOneUrl, imageTwoUrl, tags, question]);
 
   const handleOpen = () => {
     const createdAt = timestamp();
     if (complete) {
       if (docRef) {
         updateTest(
-          imageOne,
-          imageTwo,
+          imageOneUrl,
+          imageTwoUrl,
           question,
           tags,
           docRef,
-          createdAt
+          createdAt,
+          imageOneRef,
+          imageTwoRef
         ).then(() => setOpen(true));
       } else {
         //if local test has no docId, it's because it's new and doesn't exist on the firestore.
-        const collectionRef = projectFirestore.collection('FCE Part 2');
-        collectionRef
-          .add({ imageOne, imageTwo, question, createdAt, tags })
-          .then((docRef) => {
-            setDocRef(docRef.id);
-            setOpen(true);
-          });
+        addTest(
+          imageOneUrl,
+          imageTwoUrl,
+          question,
+          createdAt,
+          tags,
+          imageOneRef,
+          imageTwoRef,
+          userId
+        ).then((docRef) => {
+          setDocRef(docRef.id);
+          setOpen(true);
+        });
       }
     } else {
       setOpen(true);
@@ -88,7 +100,7 @@ export default function PublishWarningModal({
         {complete ? <h3>Published!</h3> : <h3>Oops! You forgot to:</h3>}
       </div>
       <ul>
-        {(!imageOne || !imageTwo) && <li>select two images</li>}
+        {(!imageOneUrl || !imageTwoUrl) && <li>select two images</li>}
         {!question && <li>enter a question</li>}
         {tags.length === 0 && <li>select at least one tag</li>}
       </ul>

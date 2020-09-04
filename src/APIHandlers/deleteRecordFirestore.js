@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { projectFirestore } from '../firebase/firebaseIndex';
+import { FCEPart2 } from '../firebase/firebaseConsts';
 
 const deleteRecordFirestore = (testId) => {
   projectFirestore
-    .collection('FCE Part 2')
+    .collection(FCEPart2)
     .doc(testId)
     .delete()
     .then(function () {

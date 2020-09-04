@@ -19,8 +19,17 @@
 @import 'Tests.css';
 @import 'ToolBar.css';
 @import 'FullScreen.css';
+@import 'logo.css';
+@import 'MyContent.css';
+@import 'MyTests.css';
+@import 'Folders.css';
 
 @font-face {
   font-family: 'Digital-7';
   src: local('Digital-7'), url('../fonts/digital-7.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Pacifico';
+  src: local('Pacifico'), url('../fonts/Pacifico-Regular.ttf') format('truetype');
 }

@@ -2,9 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import AuthProvider from './context/AuthProvider';
-
 import Footer from './components/Footer';
-import ForkMe from './components/ForkMe';
 import './fonts/digital-7.ttf';
 
 import './styles/index.css';
@@ -20,7 +18,7 @@ ReactDOM.render(
         <div className='holy-grail-body'>
           <App />
         </div>
-        <Footer />
+        {/*<Footer />*/}
       </AuthProvider>
     </Router>
   </div>,

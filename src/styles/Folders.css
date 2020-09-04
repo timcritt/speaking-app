@@ -1,0 +1,33 @@
+.my-folders-container {
+  background-color: #ededed
+}
+
+.folder-container {
+
+  border: 1px solid #c6c6c6;
+  border-radius: 5px;
+  margin: 5px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  box-shadow: 6px 5px 7px -6px rgba(163, 163, 163, 1);
+  background-color: white;
+}
+
+.create-folder-form-container {
+  display: flex;
+  margin: 20px 7px;
+}
+
+.folder-title {
+  margin-left: 8px;
+}
+
+.folder-info-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.folder-icon-title-container {
+  display: flex;
+}

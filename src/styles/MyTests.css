@@ -1,0 +1,16 @@
+.my-tests-search-bar-container {
+  width: 100%;
+  text-align: right;
+}
+
+.filter-input {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #b4b4b4
+}
+
+.filter-input:focus {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid blue
+}

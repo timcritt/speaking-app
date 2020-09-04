@@ -1,13 +1,25 @@
 import React, { useContext } from 'react';
 import { firebaseAuth } from '../context/AuthProvider';
+import { Link } from 'react-router-dom';
 
 const Home = (props) => {
   const { handleSignout } = useContext(firebaseAuth);
 
   return (
-    <div>
-      Home, login successful!!!!!!
-      <button onClick={handleSignout}>sign out </button>
+    <div className='home-content'>
+      <div className='home-page-slogan-container'>
+        <h1 className='home-page-slogan'>
+          Teacher-created English oral exam material
+        </h1>
+        <div className='home-btn-container'>
+          <Link to='/tests'>
+            <button className='btn get-started-btn'>Explore</button>
+          </Link>
+          <Link to='/EditFCEPart2/new'>
+            <button className='btn get-started-btn'>Create</button>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };

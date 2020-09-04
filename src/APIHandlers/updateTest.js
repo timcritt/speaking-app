@@ -1,15 +1,11 @@
-import { useState } from 'react';
-import deleteStorage from './deleteStorage';
 import { projectFirestore } from '../firebase/firebaseIndex';
+import { FCEPart2 } from '../firebase/firebaseConsts';
 
-//removes an image from storage if the local state of the test being edited no longer points to it
-//i.e, the user has removed it, added a new image, and is about to upload the new test to the store.
-
-// getFireStoreTest.js
+// getFireStoreTest.js  NOT CURRENTLY USED
 const getFirestoreTest = async (id) => {
   var result;
   var unsub = await projectFirestore
-    .collection('FCE Part 2')
+    .collection(FCEPart2)
     .doc(id)
     .get()
     .then((doc) => {
@@ -26,52 +22,26 @@ const getFirestoreTest = async (id) => {
   return result;
 };
 
-// deleteStorage.js
-const deleteStorageOldImage = async (imageOne, imageTwo, id) => {
-  const test = await getFirestoreTest(id);
-
-  if (test.imageOne != imageOne) {
-    await deleteStorage(test.imageOne);
-  }
-
-  if (test.imageTwo != imageTwo) {
-    await deleteStorage(test.imageTwo);
-  }
-
-  return Promise.resolve();
-};
-
-//updateFireStoreTest.js
-
-const updateFireStoreTest = (
-  imageOne,
-  imageTwo,
-  question,
-  createdAt,
-  tags,
-  id
-) => {
-  var objectRef = projectFirestore.collection('FCE Part 2').doc(id);
-  objectRef.update({ imageOne, imageTwo, question, createdAt, tags });
-
-  return Promise.resolve();
-};
-
-//publishWarningModal.js
-
-//updateTest.js
-
-const updateTest = async (
-  imageOne,
-  imageTwo,
+const updateTest = (
+  imageOneUrl,
+  imageTwoUrl,
   question,
   tags,
   id,
-  createdAt
+  createdAt,
+  imageOneRef,
+  imageTwoRef
 ) => {
-  console.log(id);
-  await deleteStorageOldImage(imageOne, imageTwo, id);
-  await updateFireStoreTest(imageOne, imageTwo, question, createdAt, tags, id);
+  var objectRef = projectFirestore.collection(FCEPart2).doc(id);
+  objectRef.update({
+    imageOneUrl,
+    imageTwoUrl,
+    question,
+    updatedAt: createdAt,
+    tags,
+    imageOneRef,
+    imageTwoRef,
+  });
 
   return Promise.resolve();
 };

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import ExamImageContainer2 from './ExamImageContainer2';
+import React, { useState, useEffect, useContext } from 'react';
+import ExamPicture from './ExamPicture';
 import Timer from './Timer';
 import { Link } from 'react-router-dom';
 import useGetTest from '../hooks/useGetTest';
@@ -8,30 +8,35 @@ import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 import FullscreenOutlinedIcon from '@material-ui/icons/FullscreenOutlined';
 import FullscreenExitOutlinedIcon from '@material-ui/icons/FullscreenExitOutlined';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
-import { Twitter } from 'react-social-sharing';
-import queryString from 'query-string';
+import { firebaseAuth } from '../context/AuthProvider';
 
 const FCEPart2 = (props) => {
   const [question, setQuestion] = useState();
-  const [imageOne, setImageOne] = useState();
-  const [imageTwo, setImageTwo] = useState();
-  const [docRef, setDocRef] = useState('');
+  const [imageOneUrl, setImageOne] = useState();
+  const [imageTwoUrl, setImageTwo] = useState();
+  const [docRef, setDocRef] = useState(null);
+  const [authorId, setAuthorId] = useState(null);
 
+  //the curent user's id
+  const { userId } = useContext(firebaseAuth);
+  console.log(userId);
   const handleFullScreen = useFullScreenHandle();
 
   //call database
-  const values = queryString.parse(props.location.search);
+
   var test = useGetTest(props.match.params.id);
-  console.log(test);
+
   useEffect(() => {
     if (test) {
       setDocRef(test.id);
-      setImageOne(test.imageOne);
-      setImageTwo(test.imageTwo);
+      setImageOne(test.imageOneUrl);
+      setImageTwo(test.imageTwoUrl);
       setQuestion(test.question);
+      setAuthorId(test.userId);
     }
   }, [test]);
-
+  console.log(authorId);
+  console.log(userId);
   return (
     <FullScreen handle={handleFullScreen}>
       <div className='holy-grail-body'>
@@ -41,14 +46,14 @@ const FCEPart2 = (props) => {
               <span className='question-input'>{question}</span>
             </div>
             <div className='part2-image-row'>
-              <ExamImageContainer2 image={imageOne} />
-              <ExamImageContainer2 image={imageTwo} />
+              <ExamPicture image={imageOneUrl} />
+              <ExamPicture image={imageTwoUrl} />
             </div>
 
             <div className='tool-bar-row'>
               <Timer />
               <div className='tool-btn-container'>
-                {docRef && (
+                {authorId == userId && (
                   <Link
                     to={{
                       pathname: `/EditFCEPart2/${docRef}`,

@@ -9,22 +9,30 @@ import deleteTest from '../APIHandlers/deleteTest';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
+import ExamPicture from './ExamPicture';
+import ImageDeleteBtn from './ImageDeleteBtn';
+import SimpleModal from './SimpleModal';
 
 const EditFCEPart2 = (props) => {
-  const [question, setQuestion] = useState();
-  const [imageOne, setImageOne] = useState();
-  const [imageTwo, setImageTwo] = useState();
+  const [question, setQuestion] = useState('');
+  const [imageOneUrl, setImageOneUrl] = useState();
+  const [imageTwoUrl, setImageTwoUrl] = useState();
+  const [imageOneRef, setImageOneRef] = useState();
+  const [imageTwoRef, setImageTwoRef] = useState();
   const [testTags, setTags] = useState([]);
-  const [docRef, setDocRef] = useState('');
+  const [docRef, setDocRef] = useState(null);
+  const [authorId, setAuthorId] = useState(null);
 
   //custom hook
   var test = useGetTest(props.match.params.id);
 
-  function handleSetImageOne(image) {
-    setImageOne(image);
+  function handleSetImageOne(imageUrl, ref) {
+    setImageOneUrl(imageUrl);
+    setImageOneRef(ref);
   }
-  function handleSetImageTwo(image) {
-    setImageTwo(image);
+  function handleSetImageTwo(imageUrl, ref) {
+    setImageTwoUrl(imageUrl);
+    setImageTwoRef(ref);
   }
   function handleSetTags(tag, selected) {
     if (!selected) {
@@ -40,7 +48,7 @@ const EditFCEPart2 = (props) => {
     }
   }
   const handleDeleteTest = async () => {
-    await deleteTest(docRef, imageOne, imageTwo);
+    await deleteTest(docRef, imageOneUrl, imageTwoUrl);
     clearState();
   };
 
@@ -50,18 +58,24 @@ const EditFCEPart2 = (props) => {
 
   const clearState = () => {
     setQuestion('');
-    setImageOne(null);
-    setImageTwo(null);
+    setImageOneUrl(null);
+    setImageTwoUrl(null);
     setTags([]);
     setDocRef(null);
+    setImageOneRef(null);
+    setImageTwoRef(null);
+    setAuthorId(null);
   };
   useEffect(() => {
     if (test) {
       setDocRef(test.id);
-      setImageOne(test.imageOne);
-      setImageTwo(test.imageTwo);
+      setImageOneUrl(test.imageOneUrl);
+      setImageTwoUrl(test.imageTwoUrl);
       setQuestion(test.question);
       setTags(test.tags);
+      setImageOneRef(test.imageOneRef);
+      setImageTwoRef(test.imageTwoRef);
+      setAuthorId(test.userId);
     } else {
       clearState();
     }
@@ -70,7 +84,17 @@ const EditFCEPart2 = (props) => {
   return (
     <Fragment>
       <div className='holy-grail-body'>
-        <SideBarTags tags={testTags} handleSetTags={handleSetTags} />
+        <div className='side-bar-left-tags hg-sidebar '>
+          <SideBarTags
+            tags={testTags}
+            handleSetTags={handleSetTags}
+            title={'Topic Tags'}
+          >
+            <p className='advice-text tag-advice'>
+              Adding the correct tags will help others find your test
+            </p>
+          </SideBarTags>
+        </div>
         <main className='holy-grail-content'>
           <div className='part2-main-row fade-in'>
             <div className='question-row'>
@@ -87,30 +111,38 @@ const EditFCEPart2 = (props) => {
             <div className='part2-image-row'>
               <div>
                 <ImageContext.Provider value={handleSetImageOne}>
-                  <ExamImageContainer
-                    image={imageOne}
-                    handleSetImage={handleSetImageOne}
-                  />
+                  <ExamPicture image={imageOneUrl}>
+                    {imageOneUrl ? (
+                      <ImageDeleteBtn handleClick={handleSetImageOne} />
+                    ) : (
+                      <SimpleModal modalButtonText={'upload'} />
+                    )}
+                  </ExamPicture>
                 </ImageContext.Provider>
               </div>
               <div>
                 <ImageContext.Provider value={handleSetImageTwo}>
-                  <ExamImageContainer
-                    image={imageTwo}
-                    handleSetImage={handleSetImageTwo}
-                  />
+                  <ExamPicture image={imageTwoUrl}>
+                    {imageTwoUrl ? (
+                      <ImageDeleteBtn handleClick={handleSetImageTwo} />
+                    ) : (
+                      <SimpleModal modalButtonText={'upload'} />
+                    )}
+                  </ExamPicture>
                 </ImageContext.Provider>
               </div>
             </div>
             <div className='tool-bar-row'>
               <div className='tool-btn-container'>
                 <PublishWarningModal
-                  imageOne={imageOne}
-                  imageTwo={imageTwo}
+                  imageOneUrl={imageOneUrl}
+                  imageTwoUrl={imageTwoUrl}
                   question={question}
                   tags={testTags}
                   docRef={docRef}
                   setDocRef={handleSetDocRef}
+                  imageOneRef={imageOneRef}
+                  imageTwoRef={imageTwoRef}
                 />
                 {docRef && (
                   <Link

@@ -2,14 +2,22 @@
 import React, { useContext } from 'react';
 import { firebaseAuth } from '../context/AuthProvider';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
-const Signin = () => {
-  const { handleSignup, handleSignin, inputs, setInputs, errors } = useContext(
-    firebaseAuth
-  );
-  const handleSubmit = (e) => {
+const Signin = ({ history }) => {
+  const { handleSignin, inputs, setInputs, errors } = useContext(firebaseAuth);
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    handleSignin(inputs.email, inputs.password);
+    try {
+      await handleSignin(inputs.email, inputs.password);
+
+      //redirects if login page was navigated to directly and not via a private route
+      if (history) {
+        history.push('/mycontent');
+      }
+    } catch (error) {
+      alert(error);
+    }
   };
   const handleChange = (e) => {
     const { name, value } = e.target;

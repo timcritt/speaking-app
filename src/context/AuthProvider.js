@@ -5,19 +5,31 @@ const AuthProvider = (props) => {
   const [inputs, setInputs] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState([]);
   const [token, setToken] = useState(null);
+  const [userId, setUserId] = useState(null);
+  const [userEmail, setUserEmail] = useState(null);
 
   const handleSignup = (email, password) => {
-    // middle man between firebase and signup
-
-    // calling signup from firebase server
-
-    authMethods.signup(inputs.email, inputs.password, setErrors, setToken);
+    authMethods.signup(
+      inputs.email,
+      inputs.password,
+      setErrors,
+      setToken,
+      setUserId,
+      setUserEmail
+    );
   };
   const handleSignin = (email, password) => {
-    authMethods.signin(inputs.email, inputs.password, setErrors, setToken);
+    authMethods.signin(
+      inputs.email,
+      inputs.password,
+      setErrors,
+      setToken,
+      setUserId,
+      setUserEmail
+    );
   };
   const handleSignout = () => {
-    authMethods.signout(setErrors, setToken);
+    authMethods.signout(setErrors, setToken, setUserId);
   };
 
   return (
@@ -30,6 +42,8 @@ const AuthProvider = (props) => {
         errors,
         handleSignout,
         token,
+        userId,
+        userEmail,
       }}
     >
       {props.children}

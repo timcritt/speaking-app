@@ -1,0 +1,97 @@
+.my-content-content {
+  width: 100vw;
+  background-color: #FAFAFA
+}
+
+.dashboard-container {
+  margin: 0 auto;
+  padding: 30px 30px 0 30px;
+  display: flex;
+  width: 50vw;
+  background-color: white;
+}
+
+.dashboard-profile-pic-container {
+  min-width: 100px;
+  height: auto;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
+
+.dashboard-main {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0 10px 20px;
+  justify-content: center;
+}
+
+.dashboard-user-name {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.dashboard-image {
+  height: auto;
+  max-width: 100px;
+  border-radius: 50%;
+}
+
+.dashboard-button-bar {
+  margin-top: 10px;
+  cursor: pointer;
+  display: inline-flex;
+  outline: none;
+  overflow: hidden;
+  vertical-align: top;
+}
+
+.dashboard-button-container {
+
+  position: relative;
+  margin-top: 0 !important;
+  display: inline-flex;
+  flex-grow: 1;
+}
+
+.dashboard-radio-btn {
+  margin: 0;
+  cursor: inherit;
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.dashboard-radio-btn:checked~.dashboard-radio-label {
+  background-color: #ffc800;
+}
+
+.dashboard-radio-label {
+  display: inline-flex;
+  padding: .625rem 1rem;
+  font-weight: 600;
+  font-size: .875rem;
+  line-height: 1.285714285714286;
+  margin-top: 0 !important;
+  border: 1px solid #cecece;
+  width: 100%;
+  justify-content: center;
+}
+
+.my-content-main {
+  margin: 0 auto;
+  padding: 0 30px;
+  display: flex;
+  width: 50vw;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+
+}
