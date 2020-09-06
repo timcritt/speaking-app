@@ -18,7 +18,7 @@ import DashBoardButton from '../components/DashBoardButton';
 
 const MyContent = () => {
   const docs = useFirestore(FCEPart2);
-  const { userEmail } = useContext(firebaseAuth);
+  const { userId, userEmail } = useContext(firebaseAuth);
   let { path, url } = useRouteMatch();
 
   return (
@@ -33,7 +33,7 @@ const MyContent = () => {
               <span className='dashboard-user-name'>{userEmail}</span>
             </div>
             <div className='dashboard-button-bar'>
-              <DashBoardButton linkTo={url} label={'My tests'} checked={true} />
+              <DashBoardButton linkTo={url} label={'Created'} checked={true} />
               <DashBoardButton linkTo={`${url}/folders`} label={'Folders'} />
             </div>
           </div>

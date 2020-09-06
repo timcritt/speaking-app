@@ -13,12 +13,12 @@ var firebaseConfig = {
   measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+const app = firebase.initializeApp(firebaseConfig);
 firebase.analytics();
-firebase.auth();
 
+const firebaseAuth = firebase.auth();
 const projectStorage = firebase.storage();
 const projectFirestore = firebase.firestore();
 const timestamp = firebase.firestore.FieldValue.serverTimestamp;
 
-export { firebaseConfig, projectStorage, projectFirestore, timestamp };
+export { firebaseAuth, projectStorage, projectFirestore, app, timestamp };

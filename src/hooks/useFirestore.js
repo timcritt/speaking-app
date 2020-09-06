@@ -15,16 +15,13 @@ const useFirestore = (collection, userId) => {
       tests = unsub;
     }
 
-    tests
-      .orderBy('createdAt', 'desc')
-      .get()
-      .then((snap) => {
-        let documents = [];
-        snap.forEach((doc) => {
-          documents.push({ ...doc.data(), id: doc.id });
-        });
-        setDocs(documents);
+    tests.orderBy('createdAt', 'desc').onSnapshot((snap) => {
+      let documents = [];
+      snap.forEach((doc) => {
+        documents.push({ ...doc.data(), id: doc.id });
       });
+      setDocs(documents);
+    });
   }, [collection, userId]);
 
   return { docs };

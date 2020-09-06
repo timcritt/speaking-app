@@ -1,8 +1,9 @@
 import deleteTestFirestore from './deleteRecordFirestore';
+import { FCEPart2 } from '../firebase/firebaseConsts';
 
-const deleteTest = async (testId, imageOne, imageTwo) => {
+const deleteTest = async (testId) => {
   if (testId) {
-    await deleteTestFirestore(testId);
+    await deleteTestFirestore(testId, FCEPart2);
   }
 };
 

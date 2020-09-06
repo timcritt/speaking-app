@@ -10,6 +10,7 @@ import Signin from '../components/Signin';
 import { firebaseAuth } from '../context/AuthProvider';
 import Tests from '../components/Tests';
 import PrivateRoute from '../components/PrivateRoute';
+import ViewFolder from '../components/ViewFolder';
 
 const Routes = () => {
   const { token } = useContext(firebaseAuth);
@@ -26,6 +27,7 @@ const Routes = () => {
         <Route exact path='/FCEPart2/:id' component={FCEPart2} />
         <Route exact path='/about' component={About} />
         <Route exact path='/tests' component={Tests} />
+        <Route exact path='/folder/:folderId' component={ViewFolder} />
       </Switch>
     </Fragment>
   );

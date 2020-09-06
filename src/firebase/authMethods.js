@@ -1,4 +1,3 @@
-import { firebaseconfig } from './firebaseIndex';
 import firebase from 'firebase';
 
 export const authMethods = {
@@ -15,8 +14,6 @@ export const authMethods = {
         setToken(window.localStorage.token);
         await localStorage.setItem('userId', JSON.stringify(user));
         setUserEmail(user.email);
-        //grab token from local storage and set to state.
-        setUser(window.localStorage.user);
       })
       .catch((err) => {
         setErrors((prev) => [...prev, err.message]);

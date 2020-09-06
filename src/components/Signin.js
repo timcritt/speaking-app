@@ -2,7 +2,6 @@
 import React, { useContext } from 'react';
 import { firebaseAuth } from '../context/AuthProvider';
 import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router';
 
 const Signin = ({ history }) => {
   const { handleSignin, inputs, setInputs, errors } = useContext(firebaseAuth);

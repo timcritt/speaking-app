@@ -1,6 +1,7 @@
 import React, { Fragment, useContext, useState } from 'react';
 import Tests from './Tests';
 import { firebaseAuth } from '../context/AuthProvider';
+import FilterInput from './FilterInput';
 
 const MyTests = () => {
   const [filterTerm, setFilterTerm] = useState('');
@@ -15,11 +16,10 @@ const MyTests = () => {
   return (
     <Fragment>
       <div className='my-tests-search-bar-container'>
-        <input
-          className='filter-input'
-          placeholder='filter by question'
-          onChange={(e) => handleSetFilterTerm(e)}
-        ></input>
+        <FilterInput
+          placeholder={'filter by question'}
+          handleSetFilterTerm={handleSetFilterTerm}
+        />
       </div>
       <Tests userId={userId} filterTerm={filterTerm} />
     </Fragment>

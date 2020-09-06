@@ -1,11 +1,9 @@
-import { useEffect } from 'react';
 import { projectFirestore } from '../firebase/firebaseIndex';
-import { FCEPart2 } from '../firebase/firebaseConsts';
 
-const deleteRecordFirestore = (testId) => {
+const deleteRecordFirestore = (documentId, collectionName) => {
   projectFirestore
-    .collection(FCEPart2)
-    .doc(testId)
+    .collection(collectionName)
+    .doc(documentId)
     .delete()
     .then(function () {
       console.log('Document successfully deleted!');

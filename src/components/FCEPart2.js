@@ -9,6 +9,10 @@ import FullscreenOutlinedIcon from '@material-ui/icons/FullscreenOutlined';
 import FullscreenExitOutlinedIcon from '@material-ui/icons/FullscreenExitOutlined';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import { firebaseAuth } from '../context/AuthProvider';
+import PlaylistAddOutlinedIcon from '@material-ui/icons/PlaylistAddOutlined';
+import Modal from './Modal';
+import MyFolders from './MyFolders';
+import FolderSummaryShort from './FolderSummaryShort';
 
 const FCEPart2 = (props) => {
   const [question, setQuestion] = useState();
@@ -16,14 +20,9 @@ const FCEPart2 = (props) => {
   const [imageTwoUrl, setImageTwo] = useState();
   const [docRef, setDocRef] = useState(null);
   const [authorId, setAuthorId] = useState(null);
-
-  //the curent user's id
+  const [AddToFolderModalOpen, setAddToFolderModalOpen] = useState(false);
   const { userId } = useContext(firebaseAuth);
-  console.log(userId);
   const handleFullScreen = useFullScreenHandle();
-
-  //call database
-
   var test = useGetTest(props.match.params.id);
 
   useEffect(() => {
@@ -35,10 +34,25 @@ const FCEPart2 = (props) => {
       setAuthorId(test.userId);
     }
   }, [test]);
-  console.log(authorId);
-  console.log(userId);
+
+  const openAddToFolderModal = () => {
+    setAddToFolderModalOpen(true);
+  };
+  const closeAddToFolderModal = () => {
+    setAddToFolderModalOpen(false);
+  };
+
   return (
     <FullScreen handle={handleFullScreen}>
+      {AddToFolderModalOpen && (
+        <Modal
+          className='open-add-folder-modal-btn'
+          heading='Add test to folder'
+          closeModal={closeAddToFolderModal}
+        >
+          <MyFolders FolderList={FolderSummaryShort} testId={docRef} />
+        </Modal>
+      )}
       <div className='holy-grail-body'>
         <main className='holy-grail-content fade-in'>
           <div className='part2-main-row'>
@@ -66,6 +80,12 @@ const FCEPart2 = (props) => {
                 )}
                 <button className='tool-bar-btn hide-on-fullscreen'>
                   <ShareOutlinedIcon />
+                </button>
+                <button
+                  className='tool-bar-btn hide-on-fullscreen'
+                  onClick={() => openAddToFolderModal(true)}
+                >
+                  <PlaylistAddOutlinedIcon />
                 </button>
                 <button
                   className='tool-bar-btn open-fullscreen-btn hide-on-fullscreen'

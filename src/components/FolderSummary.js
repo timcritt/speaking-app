@@ -1,0 +1,35 @@
+import React from 'react';
+import FolderOutlinedIcon from '@material-ui/icons/FolderOutlined';
+import { folders } from '../firebase/firebaseConsts';
+import deleteRecordFirestore from '../APIHandlers/deleteRecordFirestore';
+import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import { useHistory } from 'react-router-dom';
+
+const FolderSummary = ({ folder }) => {
+  const history = useHistory();
+
+  return (
+    <div className='folder-container'>
+      <div className='folder-info-container'>
+        <FolderOutlinedIcon
+          className='folder-summary-icon'
+          onClick={() => history.push(`/folder/${folder.id}`)}
+        />
+        <div className='folder-icon-title-container'>
+          <span className='folder-title'>{folder.title}</span>
+          <span>{`(${folder.tests.length} tests)`}</span>
+        </div>
+      </div>
+      <div className='folder-summary-toolbar'>
+        <DeleteForeverOutlinedIcon
+          className='delete-folder-btn'
+          onClick={() => deleteRecordFirestore(folder.id, folders)}
+        />
+        <EditOutlinedIcon />
+      </div>
+    </div>
+  );
+};
+
+export default FolderSummary;
