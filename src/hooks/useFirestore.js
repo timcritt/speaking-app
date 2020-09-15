@@ -5,26 +5,24 @@ const useFirestore = (collection, userId) => {
   const [docs, setDocs] = useState([]);
 
   useEffect(() => {
-    const unsub = projectFirestore.collection(collection);
-
-    var tests;
+    var results = projectFirestore.collection(collection);
 
     if (userId) {
-      tests = unsub.where('userId', '==', userId);
-    } else {
-      tests = unsub;
+      results = results.where('userId', '==', userId);
     }
 
-    tests.orderBy('createdAt', 'desc').onSnapshot((snap) => {
+    const unsub = results.orderBy('createdAt', 'desc').onSnapshot((snap) => {
       let documents = [];
       snap.forEach((doc) => {
         documents.push({ ...doc.data(), id: doc.id });
       });
       setDocs(documents);
     });
+    //equivalent of componentDidUnmount => unsubscribe()
+    return () => unsub();
   }, [collection, userId]);
 
-  return { docs };
+  return { docs, userId, collection };
 };
 
 export default useFirestore;

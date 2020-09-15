@@ -1,5 +1,4 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import ExamImageContainer from './ExamImageContainer';
 import ImageContext from '../context/ImageContext';
 import SideBarTags from './SideBarTags';
 import PublishWarningModal from './PublishWarningModal';

@@ -42,9 +42,9 @@
 }
 
 .side-bar-left-tags {
-  align-items: center;
   background-color: #f4f7fd;
   display: flex;
+  align-items: center;
 }
 
 @media (min-width: 768px) {
@@ -54,10 +54,8 @@
 }
 
 .tags-container {
-  margin: auto;
   text-align: center;
   padding: 5px 20px 20px;
-  margin-top: 10px;
 }
 
 .advice-text {

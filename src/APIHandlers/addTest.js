@@ -1,7 +1,7 @@
 import { projectFirestore } from '../firebase/firebaseIndex';
 import { FCEPart2 } from '../firebase/firebaseConsts';
 
-const addTest = (
+const addTest = async (
   imageOneUrl,
   imageTwoUrl,
   question,

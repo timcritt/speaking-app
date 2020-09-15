@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import FolderOutlinedIcon from '@material-ui/icons/FolderOutlined';
 import { folders } from '../firebase/firebaseConsts';
 import deleteRecordFirestore from '../APIHandlers/deleteRecordFirestore';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { useHistory } from 'react-router-dom';
+import EditFolderModal from './EditFolderModal';
 
 const FolderSummary = ({ folder }) => {
   const history = useHistory();
+  const [folderModalOpen, setFolderModalOpen] = useState(false);
 
   return (
     <div className='folder-container'>
@@ -26,8 +28,15 @@ const FolderSummary = ({ folder }) => {
           className='delete-folder-btn'
           onClick={() => deleteRecordFirestore(folder.id, folders)}
         />
-        <EditOutlinedIcon />
+        <EditOutlinedIcon onClick={() => setFolderModalOpen(true)} />
       </div>
+      {folderModalOpen && (
+        <EditFolderModal
+          folder={folder}
+          setModalOpen={setFolderModalOpen}
+          modalOpen={folderModalOpen}
+        />
+      )}
     </div>
   );
 };

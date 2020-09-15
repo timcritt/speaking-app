@@ -1,27 +1,6 @@
 import { projectFirestore } from '../firebase/firebaseIndex';
 import { FCEPart2 } from '../firebase/firebaseConsts';
 
-// getFireStoreTest.js  NOT CURRENTLY USED
-const getFirestoreTest = async (id) => {
-  var result;
-  var unsub = await projectFirestore
-    .collection(FCEPart2)
-    .doc(id)
-    .get()
-    .then((doc) => {
-      if (doc.exists) {
-        result = doc.data();
-      } else {
-        console.log('no such document');
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-
-  return result;
-};
-
 const updateTest = (
   imageOneUrl,
   imageTwoUrl,

@@ -24,6 +24,7 @@
 @import 'MyTests.css';
 @import 'Folders.css';
 @import 'Modal.css';
+@import 'ViewFolder.css';
 
 @font-face {
   font-family: 'Digital-7';
@@ -37,4 +38,13 @@
 
 body {
   overflow-y: scroll;
+}
+
+a {
+  cursor: pointer;
+}
+
+html,
+body {
+  height: 100%;
 }

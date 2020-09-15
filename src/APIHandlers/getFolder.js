@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react';
 import { projectFirestore } from '../firebase/firebaseIndex';
 import { folders } from '../firebase/firebaseConsts';
 
 const getFolder = async (folderId) => {
   var folder;
 
-  var unsub = await projectFirestore
+  await projectFirestore
     .collection(folders)
     .doc(folderId)
     .get()

@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 
-const Modal = ({ closeModal, children, heading }) => {
+const Modal = ({ modalOpen, setModalOpen, children, heading }) => {
+  console.log(modalOpen);
   return (
     <Fragment>
       <div className='modal-overlay'>
@@ -10,13 +11,12 @@ const Modal = ({ closeModal, children, heading }) => {
               <span>{heading}</span>
               <button
                 className='modal-close-btn'
-                onClick={() => closeModal(false)}
+                onClick={() => setModalOpen(false)}
               >
                 x
               </button>
             </div>
           </div>
-
           {children}
         </div>
       </div>

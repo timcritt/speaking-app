@@ -20,7 +20,7 @@ const FolderSummaryShort = ({ folder, testId }) => {
       newTestArray = [...folder.tests, testId];
       console.log(newTestArray);
     } else {
-      newTestArray = folder.tests.filter((test) => test != testId);
+      newTestArray = folder.tests.filter((test) => test !== testId);
     }
     updateFolderTests(folder.id, newTestArray);
   };

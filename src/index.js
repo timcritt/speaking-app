@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import AuthProvider from './context/AuthProvider';
-import Footer from './components/Footer';
 import './fonts/digital-7.ttf';
 
 import './styles/index.css';

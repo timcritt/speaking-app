@@ -58,15 +58,15 @@ export async function getCroppedImg(imageSrc, pixelCrop, rotation = 0) {
   // return canvas.toDataURL('image/jpeg');
 
   // As a blob (to then upload to firebase)
-  return new Promise((resolve) => {
-    canvas.toBlob(resolve, 'image/jpeg');
-  });
-  //as a blob.url to then be referenced by the browser
   // return new Promise((resolve) => {
-  //   canvas.toBlob((file) => {
-  //     resolve(URL.createObjectURL(file));
-  //   }, 'image/jpeg');
+  //   canvas.toBlob(resolve, 'image/jpeg');
   // });
+  //as a blob.url to then be referenced by the browser
+  return new Promise((resolve) => {
+    canvas.toBlob((file) => {
+      resolve(URL.createObjectURL(file));
+    }, 'image/jpeg');
+  });
 }
 
 export async function getRotatedImage(imageSrc, rotation = 0) {

@@ -7,7 +7,7 @@ const useGetTest = (testId) => {
 
   useEffect(() => {
     //returns a function
-    var unsub = projectFirestore
+    projectFirestore
       .collection(FCEPart2)
       .doc(testId)
       .get()
@@ -21,7 +21,6 @@ const useGetTest = (testId) => {
       .catch((error) => {
         console.log(error);
       });
-    //unsubscribe
   }, [testId]);
 
   return doc;

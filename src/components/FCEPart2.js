@@ -11,8 +11,7 @@ import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import { firebaseAuth } from '../context/AuthProvider';
 import PlaylistAddOutlinedIcon from '@material-ui/icons/PlaylistAddOutlined';
 import Modal from './Modal';
-import MyFolders from './MyFolders';
-import FolderSummaryShort from './FolderSummaryShort';
+import AddToMyFolders from './AddToMyFolders';
 
 const FCEPart2 = (props) => {
   const [question, setQuestion] = useState();
@@ -47,10 +46,11 @@ const FCEPart2 = (props) => {
       {AddToFolderModalOpen && (
         <Modal
           className='open-add-folder-modal-btn'
+          modalOpen={AddToFolderModalOpen}
           heading='Add test to folder'
-          closeModal={closeAddToFolderModal}
+          setModalOpen={closeAddToFolderModal}
         >
-          <MyFolders FolderList={FolderSummaryShort} testId={docRef} />
+          <AddToMyFolders testId={docRef} />
         </Modal>
       )}
       <div className='holy-grail-body'>

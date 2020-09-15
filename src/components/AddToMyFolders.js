@@ -3,16 +3,16 @@ import { firebaseAuth } from '../context/AuthProvider';
 import useFirestore from '../hooks/useFirestore';
 import { folders } from '../firebase/firebaseConsts';
 import FoldersPresentation from './presentation/FoldersPresentation';
-import FolderSummary from './FolderSummary';
+import FolderSummaryShort from './FolderSummaryShort';
 
-const MyFolders = ({ testId }) => {
+const AddToMyFolders = ({ testId }) => {
   const { userId } = useContext(firebaseAuth);
   const { docs } = useFirestore(folders, userId);
   return (
     <FoldersPresentation folders={docs} testId={testId}>
-      <FolderSummary />
+      <FolderSummaryShort />
     </FoldersPresentation>
   );
 };
 
-export default MyFolders;
+export default AddToMyFolders;

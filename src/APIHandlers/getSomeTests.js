@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { projectFirestore } from '../firebase/firebaseIndex';
 import { FCEPart2 } from '../firebase/firebaseConsts';
 import firebase from 'firebase';
@@ -9,7 +8,7 @@ const getSomeTests = async (testIds) => {
   var tests = [];
 
   if (testIds.length > 0) {
-    var unsub = await projectFirestore
+    await projectFirestore
       .collection(FCEPart2)
       .where(firebase.firestore.FieldPath.documentId(), 'in', testIds)
       .get()

@@ -12,7 +12,7 @@ const ProgressBar = ({ file }) => {
     //sets the image url in EditPage to the location of the image on firebase
     console.log(storageRef);
     setFile(url, storageRef);
-  }, [url]);
+  });
 
   return <div className='progress-bar' style={{ width: progress + '%' }}></div>;
 };

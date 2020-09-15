@@ -1,0 +1,9 @@
+.view-folder-container {
+  background-color: white;
+  display: flex;
+  max-width: 54vw;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  margin: 0 auto;
+}

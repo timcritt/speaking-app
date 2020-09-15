@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext, Fragment } from 'react';
+import React, { useState, useCallback, Fragment, useContext } from 'react';
 import Cropper from 'react-easy-crop';
 import Slider from '@material-ui/core/Slider';
 import Button from '@material-ui/core/Button';
@@ -8,6 +8,8 @@ import { getOrientation } from 'get-orientation/browser';
 import { getCroppedImg, getRotatedImage } from './canvasUtils';
 import { styles } from './styles';
 import ProgressBar from './ProgressBar';
+
+import ImageContext from '../context/ImageContext';
 
 const ORIENTATION_TO_ANGLE = {
   3: 180,
@@ -25,6 +27,7 @@ const EasyCrop = ({ classes }) => {
   const [croppedImage, setCroppedImage] = useState(false);
 
   //access to the function that sets the image on the page
+  const setFile = useContext(ImageContext);
 
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
@@ -37,9 +40,9 @@ const EasyCrop = ({ classes }) => {
         croppedAreaPixels,
         rotation
       );
-      setCroppedImage(croppedImage);
+      //setCroppedImage(croppedImage);
 
-      //set the state in the image container on the main page
+      setFile(croppedImage);
       //handleSetImage(croppedImage);
     } catch (e) {
       console.error(e);
