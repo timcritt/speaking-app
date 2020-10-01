@@ -12,22 +12,12 @@ const uploadImage = (file) => {
 
   const ref = projectStorage.ref(uuidv4());
 
-  ref.put(file).on(
-    'state_changed',
-    (snap) => {
-      let percentage = (snap.bytesTransferred / snap.totalBytes) * 100;
-      progress = percentage;
-    },
-    (err) => {
-      error = err;
-    },
-    async () => {
-      const downloadUrl = await ref.getDownloadURL();
-      console.log('use storage', ref.fullPath);
-      storageRef = ref.fullPath;
-      url = downloadUrl;
-    }
-  );
+  ref.put(file).then(async () => {
+    const downloadUrl = await ref.getDownloadURL();
+    console.log('use storage', ref.fullPath);
+    storageRef = ref.fullPath;
+    url = downloadUrl;
+  });
 
   return { progress, url, error, storageRef };
 };

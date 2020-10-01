@@ -1,7 +1,7 @@
 import { projectFirestore } from '../firebase/firebaseIndex';
 import { FCEPart2 } from '../firebase/firebaseConsts';
 
-const updateTest = (
+const updateTest = async (
   imageOneUrl,
   imageTwoUrl,
   question,
@@ -12,7 +12,7 @@ const updateTest = (
   imageTwoRef
 ) => {
   var objectRef = projectFirestore.collection(FCEPart2).doc(id);
-  objectRef.update({
+  await objectRef.update({
     imageOneUrl,
     imageTwoUrl,
     question,

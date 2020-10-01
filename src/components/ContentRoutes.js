@@ -5,16 +5,16 @@ import MyFolders from './MyFolders';
 import { firebaseAuth } from '../context/AuthProvider';
 import FolderSummary from './FolderSummary';
 
-const ContentRoutes = ({ url }) => {
+const ContentRoutes = ({ url, creatorId }) => {
   const { userId } = useContext(firebaseAuth);
 
   return (
     <Switch>
       <Route exact path={`${url}/`}>
-        <MyTests />
+        <MyTests creatorId={creatorId} />
       </Route>
       <Route path={`${url}/folders`}>
-        <MyFolders FolderList={FolderSummary} />
+        <MyFolders FolderList={FolderSummary} creatorId={creatorId} />
       </Route>
     </Switch>
   );

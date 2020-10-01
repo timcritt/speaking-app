@@ -19,3 +19,10 @@
   display: inline-flex;
   cursor: pointer;
 }
+
+.test-creator-info {
+  grid-column-start: 1;
+  margin-right: auto;
+  display: flex;
+  align-items: flex-end;
+}

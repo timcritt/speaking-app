@@ -5,9 +5,8 @@ import { folders } from '../firebase/firebaseConsts';
 import FoldersPresentation from './presentation/FoldersPresentation';
 import FolderSummary from './FolderSummary';
 
-const MyFolders = ({ testId }) => {
-  const { userId } = useContext(firebaseAuth);
-  const { docs } = useFirestore(folders, userId);
+const MyFolders = ({ testId, creatorId }) => {
+  const { docs } = useFirestore(folders, creatorId);
   return (
     <FoldersPresentation folders={docs} testId={testId}>
       <FolderSummary />

@@ -5,7 +5,7 @@ import { firebaseAuth } from '../context/AuthProvider';
 import { useHistory } from 'react-router';
 
 export const NavBar = () => {
-  const { token, handleSignout } = useContext(firebaseAuth);
+  const { token, handleSignout, userId } = useContext(firebaseAuth);
 
   let history = useHistory();
 
@@ -24,7 +24,7 @@ export const NavBar = () => {
           <Link className='nav-link create-link' to='/EditFCEPart2/new'>
             Create
           </Link>
-          <Link className='nav-link' to='/mycontent'>
+          <Link className='nav-link' to={`/userContent/${userId}`}>
             My content
           </Link>
         </Fragment>
@@ -43,7 +43,9 @@ export const NavBar = () => {
         <div className='dropdown'>
           <img className='profile-picture dropdown ' src={profilePic}></img>
           <div className='dropdown-content'>
-            <p className='nav-dropdown-link'>Profile</p>
+            <Link to={`/profile/${userId}`}>
+              <p className='nav-dropdown-link'>Profile</p>
+            </Link>
             <p className='nav-dropdown-link'>Settings</p>
             <p className='nav-dropdown-link' onClick={logoutAndRedirect}>
               Log out

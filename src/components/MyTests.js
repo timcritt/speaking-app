@@ -7,10 +7,9 @@ import { FCEPart2 } from '../firebase/firebaseConsts';
 import useFirestore from '../hooks/useFirestore';
 import SideBarTags from './SideBarTags';
 
-const MyTests = () => {
-  //hooks
-  const { userId } = useContext(firebaseAuth);
-  const { docs } = useFirestore(FCEPart2, userId);
+const MyTests = ({ creatorId }) => {
+  const { docs } = useFirestore(FCEPart2, creatorId);
+
   //state
   const [filterTerm, setFilterTerm] = useState('');
   const [results, setResults] = useState(null);
@@ -86,7 +85,7 @@ const MyTests = () => {
         handleSetTags={handleSetTags}
       ></SideBarTags>
       <Tests
-        userId={userId}
+        userId={creatorId}
         filterTerm={filterTerm}
         results={results}
         setResults={setResults}

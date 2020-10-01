@@ -12,6 +12,7 @@ import { firebaseAuth } from '../context/AuthProvider';
 import PlaylistAddOutlinedIcon from '@material-ui/icons/PlaylistAddOutlined';
 import Modal from './Modal';
 import AddToMyFolders from './AddToMyFolders';
+import getUserDetails from '../APIHandlers/getUserDetails';
 
 const FCEPart2 = (props) => {
   const [question, setQuestion] = useState();
@@ -22,6 +23,8 @@ const FCEPart2 = (props) => {
   const [AddToFolderModalOpen, setAddToFolderModalOpen] = useState(false);
   const { userId } = useContext(firebaseAuth);
   const handleFullScreen = useFullScreenHandle();
+  const [authorName, setAuthorName] = useState();
+
   var test = useGetTest(props.match.params.id);
 
   useEffect(() => {
@@ -32,7 +35,13 @@ const FCEPart2 = (props) => {
       setQuestion(test.question);
       setAuthorId(test.userId);
     }
-  }, [test]);
+    if (authorId) {
+      (async () => {
+        const creatorDetails = await getUserDetails(authorId);
+        setAuthorName(creatorDetails.userName);
+      })();
+    }
+  }, [test, authorId]);
 
   const openAddToFolderModal = () => {
     setAddToFolderModalOpen(true);
@@ -65,6 +74,14 @@ const FCEPart2 = (props) => {
             </div>
 
             <div className='tool-bar-row'>
+              {authorName && (
+                <div className='test-creator-info'>
+                  <span className='hide-on-fullscreen'>
+                    created by:{' '}
+                    {<Link to={`/userContent/${authorId}`}>{authorName}</Link>}
+                  </span>
+                </div>
+              )}
               <Timer />
               <div className='tool-btn-container'>
                 {authorId == userId && (

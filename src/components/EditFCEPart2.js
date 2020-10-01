@@ -21,17 +21,24 @@ const EditFCEPart2 = (props) => {
   const [testTags, setTags] = useState([]);
   const [docRef, setDocRef] = useState(null);
   const [authorId, setAuthorId] = useState(null);
+  const [changesSaved, setChangesSaved] = useState(false);
 
   //custom hook
   var test = useGetTest(props.match.params.id);
 
+  const handleQuestionChange = (e) => {
+    setQuestion(e.currentTarget.value);
+  };
+
   function handleSetImageOne(imageUrl, ref) {
     setImageOneUrl(imageUrl);
     setImageOneRef(ref);
+    //setChangesSaved(false);
   }
   function handleSetImageTwo(imageUrl, ref) {
     setImageTwoUrl(imageUrl);
     setImageTwoRef(ref);
+    //setChangesSaved(false);
   }
   function handleSetTags(tag, selected) {
     if (!selected) {
@@ -45,6 +52,7 @@ const EditFCEPart2 = (props) => {
         return [...prevTags.filter((currentTag) => currentTag !== tag)];
       });
     }
+    //setChangesSaved(false);
   }
   const handleDeleteTest = async () => {
     await deleteTest(docRef, imageOneUrl, imageTwoUrl);
@@ -103,7 +111,7 @@ const EditFCEPart2 = (props) => {
                 maxLength='100'
                 defaultValue={question}
                 placeholder='enter long turn question'
-                onChange={(e) => setQuestion(e.target.value)}
+                onChange={(e) => handleQuestionChange(e)}
                 rows='1'
               />
             </div>
@@ -142,6 +150,12 @@ const EditFCEPart2 = (props) => {
                   setDocRef={handleSetDocRef}
                   imageOneRef={imageOneRef}
                   imageTwoRef={imageTwoRef}
+                  setImageOneUrl={setImageOneUrl}
+                  setImageTwoUrl={setImageTwoUrl}
+                  setImageOneRef={setImageOneRef}
+                  setImageTwoRef={setImageTwoRef}
+                  changesSaved={changesSaved}
+                  setChangesSaved={setChangesSaved}
                 />
                 {docRef && (
                   <Link

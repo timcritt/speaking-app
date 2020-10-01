@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 
 const Modal = ({ modalOpen, setModalOpen, children, heading }) => {
-  console.log(modalOpen);
   return (
     <Fragment>
       <div className='modal-overlay'>

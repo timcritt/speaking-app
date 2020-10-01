@@ -8,6 +8,7 @@ const AuthProvider = (props) => {
   const [token, setToken] = useState(null);
   const [userId, setUserId] = useState(null);
   const [userEmail, setUserEmail] = useState(null);
+  const [userDetails, setUserDetails] = useState(null);
   const [pending, setPending] = useState(true);
 
   useEffect(() => {
@@ -17,6 +18,7 @@ const AuthProvider = (props) => {
         setToken(window.localStorage.token);
         setUserEmail(user.email);
         setUserId(user.uid);
+        setUserDetails(JSON.parse(window.localStorage.userDetails));
       }
     });
   }, []);
@@ -28,7 +30,8 @@ const AuthProvider = (props) => {
       setErrors,
       setToken,
       setUserId,
-      setUserEmail
+      setUserEmail,
+      setUserDetails
     );
   };
   const handleSignin = (email, password) => {
@@ -38,7 +41,8 @@ const AuthProvider = (props) => {
       setErrors,
       setToken,
       setUserId,
-      setUserEmail
+      setUserEmail,
+      setUserDetails
     );
   };
   const handleSignout = () => {
@@ -56,7 +60,7 @@ const AuthProvider = (props) => {
         handleSignout,
         token,
         userId,
-        userEmail,
+        userDetails,
       }}
     >
       {props.children}
