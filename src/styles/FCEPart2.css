@@ -59,10 +59,3 @@
   display: flex;
   align-content: center;
 }
-
-.test-creator-info {
-  grid-column-start: 1;
-  margin-right: auto;
-  display: flex;
-  align-items: center;
-}

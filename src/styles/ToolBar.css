@@ -4,6 +4,7 @@
   grid-template-columns: 1fr repeat(3, auto) 1fr;
   grid-column-gap: 5px;
   justify-items: center;
+  background-color: white;
 }
 
 .tool-btn-container {
@@ -18,11 +19,4 @@
   border: none;
   display: inline-flex;
   cursor: pointer;
-}
-
-.test-creator-info {
-  grid-column-start: 1;
-  margin-right: auto;
-  display: flex;
-  align-items: flex-end;
 }

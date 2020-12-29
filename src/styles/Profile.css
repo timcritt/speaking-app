@@ -1,5 +1,40 @@
 .profile-user-info-container {
-  width: 25vw;
-  background-color: red;
+  min-width: 100%;
+  background-color: white;
   margin: 0 auto;
+  padding: 15px;
+}
+
+.profile-detail-item-container {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.profile-detail-label-aside {
+  min-width: 45%;
+  min-height: 100%;
+  text-align: right;
+  padding-right: 50px;
+  box-sizing: border-box;
+}
+
+.profile-detail-picture {
+  width: 120px;
+  
+  border-radius: 50%;
+}
+
+.profile-detail-save-btn {
+  margin-left: 2px;
+}
+.profile-name-container {
+  flex-direction: column;
+}
+.profile-username {
+  font-size: 18pt;
+}
+.change-profile-picker-btn {
+  font-size: 10pt;
+  color: #f5d88b;
 }

@@ -28,7 +28,6 @@ export default function PublishWarningModal({
   const [open, setOpen] = useState(false);
   const [complete, setComplete] = useState(false);
   const { userId } = useContext(firebaseAuth);
-  const { progress } = useState(0);
 
   // var history = useHistory();
 

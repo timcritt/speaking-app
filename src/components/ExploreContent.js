@@ -3,27 +3,38 @@ import MyTests from './MyTests';
 import AllFolders from './AllFolders';
 import DashBoardButton from './DashBoardButton';
 import { useRouteMatch } from 'react-router-dom';
+import ExploreContentRoutes from './ExploreContentRoutes';
 
 const ExploreContent = () => {
   let { path, url } = useRouteMatch();
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <div className='dashboard-container'>
-        <div className='dashboard-profile-pic-container'></div>
-        <div className='dashboard-main'>
-          <div className='dashboard-user-info'>
-            <span className='dashboard-user-name'>some text</span>
+    <main className='holy-grail-content fade-in'>
+      <div className='my-content-content'>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div className='dashboard-container'>
+            <div className='dashboard-main'>
+              <div className='dashboard-user-info'>
+                <span className='dashboard-user-name'>Explore Content</span>
+              </div>
+              <div className='dashboard-button-bar'>
+                <DashBoardButton
+                  linkTo={`${url}/tests`}
+                  label={'Tests'}
+                  checked={true}
+                />
+                <DashBoardButton linkTo={`${url}/folders`} label={'Folders'} />
+                <DashBoardButton linkTo={`${url}/users`} label={'Users'} />
+              </div>
+            </div>
           </div>
-          <div className='dashboard-button-bar'>
-            <DashBoardButton linkTo={url} label={'Created'} checked={true} />
-            <DashBoardButton linkTo={`${url}/folders`} label={'Folders'} />
+          {/* router goes here */}
+          <div className='my-content-main'>
+            <ExploreContentRoutes url={url} creatorId={''} />
           </div>
         </div>
       </div>
-      <MyTests />
-      <AllFolders />
-    </div>
+    </main>
   );
 };
 

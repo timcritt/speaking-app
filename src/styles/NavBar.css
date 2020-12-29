@@ -1,10 +1,15 @@
 .nav-container {
   background-color: white;
+  
+  border-bottom: 1px solid #dbdbdb;
+}
+.nav-content-container {
+  width: 75vw;
+  margin: 0 auto;
   text-align: center;
   display: flex;
   justify-content: flex-end;
-  padding: 15px 40px 15px 40px;
-  border-bottom: 1px solid #dbdbdb;
+  padding: 15px 0px;
 }
 
 .nav-link {
@@ -27,12 +32,13 @@
   border: 3px solid #f5d88b;
   width: 42px;
   height: 42px;
-  margin: 0 20px 0 10px;
+  margin: 0 0 0 10px;
   box-sizing: border-box;
 }
 
 .nav-logo {
   margin-right: auto;
+  padding-left: 0;
 }
 
 .create-link {

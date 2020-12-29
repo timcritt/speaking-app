@@ -36,6 +36,8 @@ const EditFCEPart2 = (props) => {
     //setChangesSaved(false);
   }
   function handleSetImageTwo(imageUrl, ref) {
+    console.log('iamgeUrl:', imageUrl);
+    console.log('ref:', ref);
     setImageTwoUrl(imageUrl);
     setImageTwoRef(ref);
     //setChangesSaved(false);
@@ -107,7 +109,7 @@ const EditFCEPart2 = (props) => {
             <div className='question-row'>
               <textarea
                 label='Long turn question'
-                className='question-input'
+                className='question-input input'
                 maxLength='100'
                 defaultValue={question}
                 placeholder='enter long turn question'

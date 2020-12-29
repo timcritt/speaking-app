@@ -6,6 +6,7 @@ import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined'
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { useHistory } from 'react-router-dom';
 import EditFolderModal from './EditFolderModal';
+import CreatorInfo from './CreatorInfo';
 
 const FolderSummary = ({ folder }) => {
   const history = useHistory();
@@ -23,6 +24,7 @@ const FolderSummary = ({ folder }) => {
           <span>{`(${folder.tests.length} tests)`}</span>
         </div>
       </div>
+      <CreatorInfo authorId={folder.userId} />
       <div className='folder-summary-toolbar'>
         <DeleteForeverOutlinedIcon
           className='delete-folder-btn'

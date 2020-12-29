@@ -7,8 +7,11 @@ import FolderSummary from './FolderSummary';
 
 const MyFolders = ({ testId, creatorId }) => {
   const { docs } = useFirestore(folders, creatorId);
+
+  const addFolder = {};
+
   return (
-    <FoldersPresentation folders={docs} testId={testId}>
+    <FoldersPresentation folders={docs} testId={testId} addFolder={true}>
       <FolderSummary />
     </FoldersPresentation>
   );

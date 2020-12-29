@@ -26,6 +26,9 @@
 @import 'Modal.css';
 @import 'ViewFolder.css';
 @import 'Profile.css';
+@import 'CreatorDetails.css';
+@import 'SearchUsers.css';
+@import 'UserSummary.css';
 
 @font-face {
   font-family: 'Digital-7';

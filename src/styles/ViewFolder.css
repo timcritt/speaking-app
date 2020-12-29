@@ -1,9 +1,30 @@
+.view-folder-main-row {
+  margin: 0 auto;
+}
 .view-folder-container {
   background-color: white;
+  padding: 15px;
+}
+
+.view-folder-header {
+  background: white;
   display: flex;
-  max-width: 54vw;
+  align-items: center;
+}
+.view-folder-folder-row {
+  background-color: white;
+  display: flex;
+  max-width: 100%;
   flex-wrap: wrap;
-  justify-content: center;
   align-content: center;
   margin: 0 auto;
 }
+
+.view-folder-header {
+  background: white;
+  display: flex;
+  align-items: center;
+}
+
+
+

@@ -5,7 +5,9 @@ import FoldersPresentation from './presentation/FoldersPresentation';
 import FolderSummary from './FolderSummary';
 
 const AllFolders = ({ testId }) => {
-  const { docs } = useFirestore(folders);
+  const { docs } = useFirestore(folders, '');
+  console.log('in all folders', folders);
+
   return (
     <FoldersPresentation folders={docs} testId={testId}>
       {/*child is cloned and rendered in Folders */}

@@ -5,13 +5,11 @@ import CreateNewFolderOutlinedIcon from '@material-ui/icons/CreateNewFolderOutli
 import Folders from '../Folders';
 import InputSort from '../InputSort';
 
-const FoldersPresentation = ({ folders, testId, children }) => {
+const FoldersPresentation = ({ folders, testId, addFolder, children }) => {
   const [filterTerm, setFilterTerm] = useState();
   const [results, setResults] = useState();
   const [sortType, setSortType] = useState('Most Recent');
-
   const [folderModalOpen, setFolderModalOpen] = useState(false);
-
   const handleSetFilterTerm = (e) => {
     setFilterTerm(e.currentTarget.value);
   };
@@ -56,11 +54,12 @@ const FoldersPresentation = ({ folders, testId, children }) => {
           values={['Most Recent', 'Title']}
         />
 
-        <CreateNewFolderOutlinedIcon
-          className='open-add-folder-modal-btn'
-          onClick={() => setFolderModalOpen(true)}
-        />
-
+        {addFolder && (
+          <CreateNewFolderOutlinedIcon
+            className='open-add-folder-modal-btn'
+            onClick={() => setFolderModalOpen(true)}
+          />
+        )}
         <FilterInput
           placeholder={'filter by folder name'}
           handleSetFilterTerm={handleSetFilterTerm}

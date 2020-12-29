@@ -1,0 +1,13 @@
+.user-search-bar {
+  padding: 25px;
+  display: flex;
+  justify-content: center;
+}
+
+.user-search-input {
+  padding: 8px;
+}
+
+.user-search-button {
+padding: 8px;
+}

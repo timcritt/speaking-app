@@ -1,0 +1,6 @@
+[1024/011438.611:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\Tim\AppData\Local\AVG\Browser\User Data\Crashpad\attachments\66ff2052-c85e-441e-a202-2080ea8fd1da: The system cannot find the path specified. (0x3)
+[1024/011438.626:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1024/011438.629:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\Tim\AppData\Local\AVG\Browser\User Data\Crashpad\attachments\4e7b1d16-489e-437f-975c-073b6cac48ac: The system cannot find the path specified. (0x3)
+[1024/011438.631:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\Tim\AppData\Local\AVG\Browser\User Data\Crashpad\attachments\cb0328ac-2ffd-4b1e-848a-157dec31c68d: The system cannot find the path specified. (0x3)
+[1024/011438.632:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\Tim\AppData\Local\AVG\Browser\User Data\Crashpad\attachments\657bcc8a-cc6c-4f85-aafe-ad33a8b06dfc: The system cannot find the path specified. (0x3)
+[1225/161516.620:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)

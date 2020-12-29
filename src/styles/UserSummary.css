@@ -1,0 +1,6 @@
+.user-summary-container {
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}

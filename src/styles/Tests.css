@@ -12,11 +12,8 @@
   border-radius: 10px;
   padding: 4px;
   margin: 5px;
-  width: 160px;
   height: auto;
-
   transition: 0.14s;
-
 }
 
 .test-preview-container:hover {

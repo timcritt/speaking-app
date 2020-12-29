@@ -13,17 +13,17 @@ import PlaylistAddOutlinedIcon from '@material-ui/icons/PlaylistAddOutlined';
 import Modal from './Modal';
 import AddToMyFolders from './AddToMyFolders';
 import getUserDetails from '../APIHandlers/getUserDetails';
+import CreatorInfo from './CreatorInfo';
 
 const FCEPart2 = (props) => {
-  const [question, setQuestion] = useState();
-  const [imageOneUrl, setImageOne] = useState();
-  const [imageTwoUrl, setImageTwo] = useState();
+  const [question, setQuestion] = useState(null);
+  const [imageOneUrl, setImageOne] = useState(null);
+  const [imageTwoUrl, setImageTwo] = useState(null);
   const [docRef, setDocRef] = useState(null);
   const [authorId, setAuthorId] = useState(null);
   const [AddToFolderModalOpen, setAddToFolderModalOpen] = useState(false);
   const { userId } = useContext(firebaseAuth);
   const handleFullScreen = useFullScreenHandle();
-  const [authorName, setAuthorName] = useState();
 
   var test = useGetTest(props.match.params.id);
 
@@ -34,12 +34,6 @@ const FCEPart2 = (props) => {
       setImageTwo(test.imageTwoUrl);
       setQuestion(test.question);
       setAuthorId(test.userId);
-    }
-    if (authorId) {
-      (async () => {
-        const creatorDetails = await getUserDetails(authorId);
-        setAuthorName(creatorDetails.userName);
-      })();
     }
   }, [test, authorId]);
 
@@ -66,7 +60,7 @@ const FCEPart2 = (props) => {
         <main className='holy-grail-content fade-in'>
           <div className='part2-main-row'>
             <div className='question-row'>
-              <span className='question-input'>{question}</span>
+              <span className='input question-input'>{question}</span>
             </div>
             <div className='part2-image-row'>
               <ExamPicture image={imageOneUrl} />
@@ -74,14 +68,7 @@ const FCEPart2 = (props) => {
             </div>
 
             <div className='tool-bar-row'>
-              {authorName && (
-                <div className='test-creator-info'>
-                  <span className='hide-on-fullscreen'>
-                    created by:{' '}
-                    {<Link to={`/userContent/${authorId}`}>{authorName}</Link>}
-                  </span>
-                </div>
-              )}
+              {authorId && <CreatorInfo authorId={authorId} />}
               <Timer />
               <div className='tool-btn-container'>
                 {authorId == userId && (

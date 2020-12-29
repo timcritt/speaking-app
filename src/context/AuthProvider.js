@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import getUserDetails from '../APIHandlers/getUserDetails';
 import { authMethods } from '../firebase/authMethods';
 import { app } from '../firebase/firebaseIndex';
 
@@ -18,7 +19,8 @@ const AuthProvider = (props) => {
         setToken(window.localStorage.token);
         setUserEmail(user.email);
         setUserId(user.uid);
-        setUserDetails(JSON.parse(window.localStorage.userDetails));
+        const newDetails = await getUserDetails(user.uid);
+        setUserDetails(newDetails);
       }
     });
   }, []);
@@ -61,6 +63,7 @@ const AuthProvider = (props) => {
         token,
         userId,
         userDetails,
+        setUserDetails,
       }}
     >
       {props.children}

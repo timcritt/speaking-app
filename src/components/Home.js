@@ -1,10 +1,8 @@
-import React, { useContext } from 'react';
-import { firebaseAuth } from '../context/AuthProvider';
+import React from 'react';
+
 import { Link } from 'react-router-dom';
 
 const Home = (props) => {
-  const { handleSignout } = useContext(firebaseAuth);
-
   return (
     <div className='home-content'>
       <div className='home-page-slogan-container'>

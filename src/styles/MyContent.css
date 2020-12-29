@@ -1,22 +1,20 @@
 .my-content-content {
   width: 100%;
-  background-color: #FAFAFA;
+  background-color: white;
 }
 
 .dashboard-container {
-  margin: 0 auto;
   padding: 10px 30px 10px 30px;
   display: flex;
-
   background-color: white;
 }
 
 .dashboard-profile-pic-container {
   min-width: 100px;
-  height: auto;
+  height: 100px;
   display: flex;
   align-items: center;
-  padding: 5px;
+  padding: 5px 20px 5px 5px;
   justify-content: center;
 }
 
@@ -25,7 +23,7 @@
   height: auto;
   display: flex;
   flex-direction: column;
-  padding: 10px 0 10px 20px;
+  padding: 10px 0 10px 0px;
   justify-content: center;
   align-content: center;
 }
@@ -36,7 +34,7 @@
 }
 
 .dashboard-image {
-  height: auto;
+  height: 100px;
   max-width: 100px;
   border-radius: 50%;
 }
@@ -90,10 +88,8 @@
 }
 
 .my-content-main {
-  margin: 0 auto;
   padding: 0 30px 30px;
   display: flex;
-
   background-color: white;
   display: flex;
   flex-direction: column;

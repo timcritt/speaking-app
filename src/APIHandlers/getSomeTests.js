@@ -2,9 +2,8 @@ import { projectFirestore } from '../firebase/firebaseIndex';
 import { FCEPart2 } from '../firebase/firebaseConsts';
 import firebase from 'firebase';
 
+//gets an array of tests based on an array of test ids
 const getSomeTests = async (testIds) => {
-  //returns a function
-
   var tests = [];
 
   if (testIds.length > 0) {

@@ -3,12 +3,14 @@ import Tests from './Tests';
 import { firebaseAuth } from '../context/AuthProvider';
 import FilterInput from './FilterInput';
 import InputSort from './InputSort';
+import { FCEPart2 } from '../firebase/firebaseConsts';
+import useFirestore from '../hooks/useFirestore';
 import SideBarTags from './SideBarTags';
 import getFilteredTests from '../APIHandlers/getFilteredTests';
 
-const MyTests = ({ creatorId }) => {
+const AllTests = ({ creatorId }) => {
   //state
-  const [filterTerm, setFilterTerm] = useState('');
+  const [filterTerm, setFilterTerm] = useState(null);
   const [results, setResults] = useState(null);
   const [sortType, setSortType] = useState('Date');
   const [tagSearchTerm, setTagSearchTerm] = useState('');
@@ -31,44 +33,39 @@ const MyTests = ({ creatorId }) => {
     }
   }
 
-  useEffect(() => {
-    const innerAsync = async () => {
-      const docs = await getFilteredTests(creatorId);
-      var filteredDocs = JSON.parse(JSON.stringify(docs));
+  const handleSearchClick = async () => {
+    const docs = await getFilteredTests(creatorId, filterTerm);
+    var filteredDocs = JSON.parse(JSON.stringify(docs));
 
-      //filter by topic tag
-      if (tagSearchTerm) {
-        filteredDocs = filteredDocs.filter((doc) =>
-          doc.tags.includes(tagSearchTerm)
-        );
-      }
-      //filter by question and user-entered term
-      if (filterTerm) {
-        filteredDocs = filteredDocs.filter((doc) =>
-          doc.question.toUpperCase().includes(filterTerm.toUpperCase())
-        );
-      }
-      //sort alphabetically by question
-      if (sortType === 'Question') {
-        filteredDocs = filteredDocs.sort((a, b) => {
-          var titleA = a.question.toUpperCase();
-          var titleB = b.question.toUpperCase();
+    //filter by topic tag
+    if (tagSearchTerm) {
+      filteredDocs = filteredDocs.filter((doc) =>
+        doc.tags.includes(tagSearchTerm)
+      );
+    }
+    //filter by question and user-entered term
+    // if (filterTerm) {
+    //   filteredDocs = filteredDocs.filter((doc) =>
+    //     doc.question.toUpperCase().includes(filterTerm.toUpperCase())
+    //   );
+    // }
+    //sort alphabetically by question
+    if (sortType === 'Question') {
+      filteredDocs = filteredDocs.sort((a, b) => {
+        var titleA = a.question.toUpperCase();
+        var titleB = b.question.toUpperCase();
 
-          if (titleA < titleB) {
-            return -1;
-          }
-          if (titleA > titleB) {
-            return 1;
-          }
-          return 0;
-        });
-      }
-      setResults(filteredDocs);
-    };
-    innerAsync();
-
-    return;
-  }, [creatorId, filterTerm, sortType, tagSearchTerm]);
+        if (titleA < titleB) {
+          return -1;
+        }
+        if (titleA > titleB) {
+          return 1;
+        }
+        return 0;
+      });
+    }
+    setResults(filteredDocs);
+  };
 
   return (
     <Fragment>
@@ -78,10 +75,12 @@ const MyTests = ({ creatorId }) => {
           handleChange={handleChangeSort}
           values={['Most recent', 'Question']}
         />
-        <FilterInput
+
+        {/*<FilterInput
           placeholder={'filter by question'}
           handleSetFilterTerm={handleSetFilterTerm}
-        />
+        />*/}
+        <button onClick={() => handleSearchClick()}>Search</button>
       </div>
       <SideBarTags
         tags={tagSearchTerm}
@@ -98,4 +97,4 @@ const MyTests = ({ creatorId }) => {
   );
 };
 
-export default MyTests;
+export default AllTests;

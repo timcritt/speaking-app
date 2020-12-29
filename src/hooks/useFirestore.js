@@ -6,12 +6,14 @@ const useFirestore = (collection, userId) => {
 
   useEffect(() => {
     var results = projectFirestore.collection(collection);
-
+    console.log('in useFirestore');
     if (userId) {
       results = results.where('userId', '==', userId);
     }
-
-    const unsub = results.orderBy('createdAt', 'desc').onSnapshot((snap) => {
+    if (collection != 'users') {
+      results = results.orderBy('createdAt', 'desc');
+    }
+    const unsub = results.onSnapshot((snap) => {
       let documents = [];
       snap.forEach((doc) => {
         documents.push({ ...doc.data(), id: doc.id });

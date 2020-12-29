@@ -27,7 +27,7 @@ const Routes = () => {
         <PrivateRoute path='/userContent/:userId' component={CreatorContent} />
         <Route exact path='/FCEPart2/:id' component={FCEPart2} />
         <Route exact path='/about' component={About} />
-        <Route exact path='/tests' component={ExploreContent} />
+        <Route path='/exploreContent/' component={ExploreContent} />
         <Route exact path='/folder/:folderId' component={ViewFolder} />
         <PrivateRoute exact path='/profile/:userId' component={Profile} />
       </Switch>

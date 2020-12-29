@@ -1,6 +1,10 @@
 .question-input {
   width: 100%;
   font-size: 16pt;
+
+}
+
+.input {
   font-family: inherit;
   outline: none;
   border: 1px solid #dbdbdb;
@@ -12,7 +16,7 @@
   padding: 5px 15px 5px 15px;
 }
 
-.question-input:focus {
+.input:focus {
   border: 1px solid rgb(139, 152, 211);
 
 }

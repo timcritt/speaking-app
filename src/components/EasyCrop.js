@@ -17,7 +17,7 @@ const ORIENTATION_TO_ANGLE = {
   8: -90,
 };
 
-const EasyCrop = ({ classes }) => {
+const EasyCrop = ({ classes, aspect = 4 / 3 }) => {
   const [imageSrc, setImageSrc] = useState(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
@@ -28,6 +28,7 @@ const EasyCrop = ({ classes }) => {
 
   //access to the function that sets the image on the page
   const setFile = useContext(ImageContext);
+  console.log(setFile);
 
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
@@ -82,7 +83,7 @@ const EasyCrop = ({ classes }) => {
               crop={crop}
               rotation={rotation}
               zoom={zoom}
-              aspect={4 / 3}
+              aspect={aspect}
               onCropChange={setCrop}
               onRotationChange={setRotation}
               onCropComplete={onCropComplete}

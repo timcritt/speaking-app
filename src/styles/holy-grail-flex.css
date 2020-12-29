@@ -64,6 +64,9 @@
 
   .holy-grail-content {
     max-width: 75vw;
+    margin-top: 25px;
+    border: 1px solid #dbdbdb;
+
   }
 
 
