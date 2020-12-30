@@ -24,7 +24,7 @@
   flex-direction: column;
   background-color: #FAFAFA;
   justify-content: center;
-
+  
 }
 
 
@@ -35,6 +35,7 @@
 .holy-grail-content {
   flex: 1 1 auto;
   display: flex;
+  background-color: white;
 }
 
 /**

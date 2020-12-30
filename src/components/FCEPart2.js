@@ -14,6 +14,7 @@ import Modal from './Modal';
 import AddToMyFolders from './AddToMyFolders';
 import getUserDetails from '../APIHandlers/getUserDetails';
 import CreatorInfo from './CreatorInfo';
+import { Fragment } from 'react';
 
 const FCEPart2 = (props) => {
   const [question, setQuestion] = useState(null);
@@ -45,7 +46,7 @@ const FCEPart2 = (props) => {
   };
 
   return (
-    <FullScreen handle={handleFullScreen}>
+    <Fragment>
       {AddToFolderModalOpen && (
         <Modal
           className='open-add-folder-modal-btn'
@@ -56,17 +57,20 @@ const FCEPart2 = (props) => {
           <AddToMyFolders testId={docRef} />
         </Modal>
       )}
-      <div className='holy-grail-body'>
+      <FullScreen handle={handleFullScreen}>
         <main className='holy-grail-content fade-in'>
           <div className='part2-main-row'>
             <div className='question-row'>
               <span className='input question-input'>{question}</span>
             </div>
             <div className='part2-image-row'>
-              <ExamPicture image={imageOneUrl} />
-              <ExamPicture image={imageTwoUrl} />
+              <div className='part2-image-container-left'>
+                <ExamPicture image={imageOneUrl} />
+              </div>
+              <div className='part2-image-container-right'>
+                <ExamPicture image={imageTwoUrl} />
+              </div>
             </div>
-
             <div className='tool-bar-row'>
               {authorId && <CreatorInfo authorId={authorId} />}
               <Timer />
@@ -110,8 +114,8 @@ const FCEPart2 = (props) => {
             </div>
           </div>
         </main>
-      </div>
-    </FullScreen>
+      </FullScreen>
+    </Fragment>
   );
 };
 
