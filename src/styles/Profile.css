@@ -1,8 +1,13 @@
 .profile-user-info-container {
   min-width: 100%;
   background-color: white;
-  margin: 0 auto;
+  margin: auto;
   padding: 15px;
+  box-sizing: border-box;
+}
+
+.profile-user-info-container .input {
+  margin: 0;
 }
 
 .profile-detail-item-container {

@@ -33,7 +33,11 @@ const CreatorInfo = ({ authorId }) => {
         />
         <div className='created-by-text'>
           <div>creator: </div>
-          {<Link to={`/userContent/${authorId}/tests`}>{authorName}</Link>}
+          {
+            <Link className={'nav-link'} to={`/userContent/${authorId}/tests`}>
+              {authorName}
+            </Link>
+          }
         </div>
       </span>
     </div>

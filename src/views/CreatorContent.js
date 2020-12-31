@@ -41,11 +41,7 @@ const CreatorContent = () => {
               </span>
             </div>
             <div className='dashboard-button-bar'>
-              <DashBoardButton
-                linkTo={`${url}/tests`}
-                label={'Tests'}
-                checked={true}
-              />
+              <DashBoardButton linkTo={`${url}/tests`} label={'Tests'} />
               <DashBoardButton linkTo={`${url}/folders`} label={'Folders'} />
             </div>
           </div>

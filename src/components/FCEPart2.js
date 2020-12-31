@@ -107,7 +107,7 @@ const FCEPart2 = (props) => {
                 >
                   <FullscreenExitOutlinedIcon
                     fontSize='large'
-                    style={{ color: '#BFBFBF' }}
+                    style={{ color: 'black' }}
                   />
                 </button>
               </div>

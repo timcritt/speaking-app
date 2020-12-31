@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MyTests from './MyTests';
 import AllFolders from './AllFolders';
 import DashBoardButton from './DashBoardButton';
-import { useRouteMatch } from 'react-router-dom';
+import { useRouteMatch, useLocation } from 'react-router-dom';
 import ExploreContentRoutes from './ExploreContentRoutes';
 
 const ExploreContent = () => {
   let { path, url } = useRouteMatch();
-
   return (
     <main className='holy-grail-content fade-in'>
       <div className='my-content-content'>
@@ -18,11 +17,7 @@ const ExploreContent = () => {
                 <span className='dashboard-user-name'>Explore Content</span>
               </div>
               <div className='dashboard-button-bar'>
-                <DashBoardButton
-                  linkTo={`${url}/tests`}
-                  label={'Tests'}
-                  checked={true}
-                />
+                <DashBoardButton linkTo={`${url}/tests`} label={'Tests'} />
                 <DashBoardButton linkTo={`${url}/folders`} label={'Folders'} />
                 <DashBoardButton linkTo={`${url}/users`} label={'Users'} />
               </div>

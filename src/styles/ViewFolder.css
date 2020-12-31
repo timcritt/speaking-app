@@ -1,29 +1,48 @@
 .view-folder-main-row {
-  margin: 0 auto;
+  
+  width: 100%;
 }
 .view-folder-container {
   background-color: white;
-  padding: 15px;
+  box-sizing: border-box;
+
+  width: 100%;
+  border: 1px solid #dbdbdb;
+    border-radius: 3px;
+
 }
 
 .view-folder-header {
-  background: white;
-  display: flex;
+  margin: 10px;
+  background: #fafafa;
   align-items: center;
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 5px;
+
+
 }
 .view-folder-folder-row {
-  background-color: white;
+  background-color: #fafafa;
   display: flex;
   max-width: 100%;
   flex-wrap: wrap;
   align-content: center;
-  margin: 0 auto;
+  margin: 10px;
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+  padding: 30px;
 }
 
-.view-folder-header {
-  background: white;
-  display: flex;
-  align-items: center;
+.close-folder-button {
+
+  grid-column-start: 3;
+  padding-right: 15px;
+  margin-left: auto;
+  font-size: 20pt;
 }
 
 

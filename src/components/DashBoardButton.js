@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
-const DashBoardButton = ({ linkTo, label, checked }) => {
+const DashBoardButton = ({ linkTo, label }) => {
   var history = useHistory();
+  let pathname = useLocation().pathname;
+
+  const handleChangeChecked = () => {
+    return pathname === linkTo;
+  };
 
   return (
     <span
@@ -14,7 +20,8 @@ const DashBoardButton = ({ linkTo, label, checked }) => {
         type='radio'
         id='recent'
         name='dashboard-button'
-        defaultChecked={checked}
+        checked={handleChangeChecked()}
+        onChange={() => handleChangeChecked()}
       />
       <span className='dashboard-radio-label'>{label}</span>
     </span>

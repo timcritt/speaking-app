@@ -55,7 +55,8 @@
 }
 
 .exam-image-container {
-  
+  position:relative;
+  text-align:center;
 }
 
 .part2-image {

@@ -4,6 +4,15 @@
 
 }
 
+.dropdown a {
+  text-decoration: none;
+}
+
+.dropdown a:visited {
+  color: black;
+}
+
+
 .dropdown-content {
   display: none;
   color: black;
@@ -39,3 +48,4 @@
   border: 1px solid #dbdbdb;
   box-sizing: inherit;
 }
+

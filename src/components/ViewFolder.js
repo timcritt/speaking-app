@@ -6,6 +6,8 @@ import TestPreview from './TestPreview';
 import FolderOutlinedIcon from '@material-ui/icons/FolderOutlined';
 import CreatorInfo from './CreatorInfo';
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
+import CloseIcon from '@material-ui/icons/Close';
+import { Link } from 'react-router-dom';
 
 const ViewFolder = () => {
   const [tests, setTests] = useState(null);
@@ -33,33 +35,34 @@ const ViewFolder = () => {
 
   return (
     <Fragment>
-      <div className='holy-grail-body'>
-        <main className='holy-grail-content fade-in'>
-          <div className='view-folder-main-row'>
-            <div className='view-folder-container'>
-              <div className='view-folder-header'>
-                <FolderOutlinedIcon className='folder-summary-icon' />
-                <span className='dashboard-user-name'>{folderTitle}</span>
-              </div>
-              <div className='view-folder-folder-row'>
-                {tests &&
-                  tests.map((test) => {
-                    return <TestPreview key={test.id} test={test} />;
-                  })}
-              </div>
-              <div className='tool-bar-row'>
-                {creatorId && <CreatorInfo authorId={creatorId} />}
+      <main className='holy-grail-content fade-in centre-vertically'>
+        <div className='view-folder-container'>
+          <div className='view-folder-header'>
+            <FolderOutlinedIcon className='folder-summary-icon' />
+            <span className='dashboard-user-name'>{folderTitle}</span>
+            <span className='close-folder-button'>
+              <Link className='nav-link' to={'/tests'}>
+                <CloseIcon />
+              </Link>
+            </span>
+          </div>
+          <div className='view-folder-folder-row'>
+            {tests &&
+              tests.map((test) => {
+                return <TestPreview key={test.id} test={test} />;
+              })}
+          </div>
+          <div className='tool-bar-row'>
+            {creatorId && <CreatorInfo authorId={creatorId} />}
 
-                <div className='tool-btn-container'>
-                  <button className='tool-bar-btn hide-on-fullscreen'>
-                    <ShareOutlinedIcon />
-                  </button>
-                </div>
-              </div>
+            <div className='tool-btn-container'>
+              <button className='tool-bar-btn'>
+                <ShareOutlinedIcon />
+              </button>
             </div>
           </div>
-        </main>
-      </div>
+        </div>
+      </main>
     </Fragment>
   );
 };

@@ -17,7 +17,7 @@ const getUserDetails = async (userId) => {
     .catch((error) => {
       console.log(error);
     });
-  console.log(userDetails);
+
   return userDetails;
 };
 

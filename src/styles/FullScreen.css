@@ -4,8 +4,7 @@
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  padding: 20px;
-  
+  padding: 20px; 
 }
 
 .fullscreen-enabled .holy-grail-content {
@@ -39,6 +38,13 @@
 
 .fullscreen-enabled .show-on-fullscreen {
   display: block;
+}
+.fullscreen-enabled .close-fullscreen-btn {
+  display: inline-flex;
+  margin: auto 15px auto 0px;
+  size: 100pt;
+  
+  
 }
 
 .fullscreen-enabled .hide-on-fullscreen {
