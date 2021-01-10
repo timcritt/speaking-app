@@ -13,6 +13,8 @@ import PrivateRoute from '../components/PrivateRoute';
 import ViewFolder from '../components/ViewFolder';
 import ExploreContent from '../components/ExploreContent';
 import Profile from '../components/Profile';
+import Part3 from '../components/Part3';
+import EditPart3 from '../components/EditPart3';
 const Routes = () => {
   const { token } = useContext(firebaseAuth);
 
@@ -26,6 +28,8 @@ const Routes = () => {
         <PrivateRoute exact path='/EditFCEPart2/:id' component={EditFCEPart2} />
         <PrivateRoute path='/userContent/:userId' component={CreatorContent} />
         <Route exact path='/FCEPart2/:id' component={FCEPart2} />
+        <Route exact path='/FCEPart3/:id' component={Part3} />
+        <Route exact path='/EditFCEPart3/:id' component={EditPart3} />
         <Route exact path='/about' component={About} />
         <Route path='/exploreContent/' component={ExploreContent} />
         <Route exact path='/folder/:folderId' component={ViewFolder} />

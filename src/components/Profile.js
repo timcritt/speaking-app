@@ -24,7 +24,7 @@ const Profile = () => {
   const handleSetProfilePicture = async (localURL) => {
     const { url, reference } = await uploadImage(localURL);
     console.log(url);
-    await updateUserProfilePicture(url, userId);
+    await updateUserProfilePicture(url, reference, userId);
     const details = await getUserDetails(userId);
     setUserDetails(details);
   };

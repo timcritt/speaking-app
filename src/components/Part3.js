@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import ExamPicture from './ExamPicture';
 import Timer from './Timer';
 import { Link } from 'react-router-dom';
 import useGetTest from '../hooks/useGetTest';
@@ -12,11 +11,11 @@ import { firebaseAuth } from '../context/AuthProvider';
 import PlaylistAddOutlinedIcon from '@material-ui/icons/PlaylistAddOutlined';
 import Modal from './Modal';
 import AddToMyFolders from './AddToMyFolders';
-import getUserDetails from '../APIHandlers/getUserDetails';
 import CreatorInfo from './CreatorInfo';
 import { Fragment } from 'react';
+import LineTo from 'react-lineto';
 
-const FCEPart2 = (props) => {
+const Part3 = (props) => {
   const [question, setQuestion] = useState(null);
   const [imageOneUrl, setImageOne] = useState(null);
   const [imageTwoUrl, setImageTwo] = useState(null);
@@ -26,7 +25,32 @@ const FCEPart2 = (props) => {
   const { userId } = useContext(firebaseAuth);
   const handleFullScreen = useFullScreenHandle();
 
-  var test = useGetTest('FCEPart2', props.match.params.id);
+  var test = useGetTest(props.match.params.id);
+  const [lineState, setLineState] = useState({
+    height: window.innerHeight,
+    width: window.innerWidth,
+  });
+  window.onpopstate = (e) => {
+    setLineState({
+      height: window.innerHeight,
+      width: window.innerWidth,
+    });
+  };
+  React.useEffect(() => {
+    function handleResize() {
+      setLineState({
+        height: window.innerHeight,
+        width: window.innerWidth,
+      });
+    }
+
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('fullscreenchange', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('fullscreenchange', handleResize);
+    };
+  });
 
   useEffect(() => {
     if (test) {
@@ -38,21 +62,12 @@ const FCEPart2 = (props) => {
     }
   }, [test, authorId]);
 
-  const openAddToFolderModal = () => {
-    setAddToFolderModalOpen(true);
-  };
-  const closeAddToFolderModal = () => {
-    setAddToFolderModalOpen(false);
-  };
-
   return (
     <Fragment>
       {AddToFolderModalOpen && (
         <Modal
           className='open-add-folder-modal-btn'
-          modalOpen={AddToFolderModalOpen}
           heading='Add test to folder'
-          setModalOpen={closeAddToFolderModal}
         >
           <AddToMyFolders testId={docRef} />
         </Modal>
@@ -60,15 +75,62 @@ const FCEPart2 = (props) => {
       <FullScreen handle={handleFullScreen}>
         <main className='holy-grail-content fade-in'>
           <div className='part2-main-row'>
-            <div className='question-row'>
-              <span className='input question-input'>{question}</span>
-            </div>
-            <div className='part2-image-row'>
-              <div className='part2-image-container-left'>
-                <ExamPicture image={imageOneUrl} />
+            <div className='part3-grid-container'>
+              <div className='part3-option-top-left part3-option'>
+                recycling
               </div>
-              <div className='part2-image-container-right'>
-                <ExamPicture image={imageTwoUrl} />
+              <div className='part3-question-centre'>
+                <span>How can these ideas help prevent climate change?</span>
+              </div>
+              <div className='part3-option-top-right part3-option'>
+                renewable energy
+              </div>
+              <div className='part3-option-bottom-left part3-option'>
+                reusing things
+              </div>
+              <div className='part3-option-bottom-centre part3-option'>
+                public transport
+              </div>
+              <div className='part3-option-bottom-right part3-option'>
+                politicians
+              </div>
+              <div>
+                <LineTo
+                  borderColor={'#dbdbdb'}
+                  zIndex={0}
+                  within={'part3-grid-container'}
+                  innerState={lineState}
+                  from='part3-option-top-left'
+                  to='part3-question-centre'
+                />
+                <LineTo
+                  borderColor={'#dbdbdb'}
+                  within={'part3-grid-container'}
+                  innerState={lineState}
+                  from='part3-option-top-right'
+                  to='part3-question-centre'
+                />
+                <LineTo
+                  borderColor={'#dbdbdb'}
+                  within={'part3-grid-container'}
+                  innerState={lineState}
+                  from='part3-option-bottom-left'
+                  to='part3-question-centre'
+                />
+                <LineTo
+                  borderColor={'#dbdbdb'}
+                  within={'part3-grid-container'}
+                  innerState={lineState}
+                  from='part3-option-bottom-centre'
+                  to='part3-question-centre'
+                />
+                <LineTo
+                  borderColor={'#dbdbdb'}
+                  within={'part3-grid-container'}
+                  innerState={lineState}
+                  from='part3-option-bottom-right'
+                  to='part3-question-centre'
+                />
               </div>
             </div>
             <div className='tool-bar-row'>
@@ -89,10 +151,7 @@ const FCEPart2 = (props) => {
                 <button className='tool-bar-btn hide-on-fullscreen'>
                   <ShareOutlinedIcon />
                 </button>
-                <button
-                  className='tool-bar-btn hide-on-fullscreen'
-                  onClick={() => openAddToFolderModal(true)}
-                >
+                <button className='tool-bar-btn hide-on-fullscreen'>
                   <PlaylistAddOutlinedIcon />
                 </button>
                 <button
@@ -119,4 +178,4 @@ const FCEPart2 = (props) => {
   );
 };
 
-export default FCEPart2;
+export default Part3;

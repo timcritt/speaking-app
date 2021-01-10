@@ -2,7 +2,8 @@ import { projectFirestore } from '../firebase/firebaseIndex';
 
 const getTest = async (collectionName, testId) => {
   var test;
-
+  console.log('in get test');
+  console.log(testId);
   await projectFirestore
     .collection(collectionName)
     .doc(testId)
@@ -17,7 +18,8 @@ const getTest = async (collectionName, testId) => {
     .catch((error) => {
       console.log(error);
     });
-  return Promise.resolve(test);
+  console.log(test);
+  return test;
 };
 
 export default getTest;

@@ -1,6 +1,4 @@
 import React, { useEffect } from 'react';
-import MyTests from './MyTests';
-import AllFolders from './AllFolders';
 import DashBoardButton from './DashBoardButton';
 import { useRouteMatch, useLocation } from 'react-router-dom';
 import ExploreContentRoutes from './ExploreContentRoutes';
