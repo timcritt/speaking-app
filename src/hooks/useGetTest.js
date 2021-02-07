@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { projectFirestore } from '../firebase/firebaseIndex';
-import { FCEPart2 } from '../firebase/firebaseConsts';
 
 const useGetTest = (collection, testId) => {
   const [doc, setDoc] = useState();

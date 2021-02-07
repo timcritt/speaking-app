@@ -1,0 +1,20 @@
+.create-all-levels-container {
+  background-color: white;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.create-single-level-container {
+  width: 40%;
+  padding: 0 50px;
+  box-sizing: border-box;
+  border: 1px solid #dbdbdb;
+  background-color: #FAFAFA;
+}
+
+.page-title {
+  background-color: red;
+  width: 100%;  
+}

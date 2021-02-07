@@ -10,7 +10,7 @@ const useFirestore = (collection, userId) => {
     if (userId) {
       results = results.where('userId', '==', userId);
     }
-    if (collection != 'users') {
+    if (collection !== 'users') {
       results = results.orderBy('createdAt', 'desc');
     }
     const unsub = results.onSnapshot((snap) => {

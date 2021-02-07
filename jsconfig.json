@@ -1,0 +1,8 @@
+//allows for absolute file paths for imports. Imports now don't break when moving files to different folders.
+
+{
+  "compilerOptions": {
+    "baseUrl": "src"
+  },
+  "include": ["src"]
+}

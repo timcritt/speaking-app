@@ -30,6 +30,8 @@
 @import 'SearchUsers.css';
 @import 'UserSummary.css';
 @import 'Part3.css';
+@import 'Share.css';
+@import 'Create.css';
 
 @font-face {
   font-family: 'Digital-7';

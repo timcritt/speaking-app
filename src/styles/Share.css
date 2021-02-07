@@ -1,0 +1,26 @@
+.shareButtonContainer {
+  display: flex;
+  justify-content: flex-start;
+  padding: 20px 10px;
+   background-color: #FAFAFA;
+  border: 1px solid #dbdbdb;
+  margin: 10px 0;
+
+}
+.copy-link-container {
+  display: flex;
+  justify-content: space-between;
+
+  padding: 10px 20px;
+  background-color: #FAFAFA;
+  border: 1px solid #dbdbdb;
+}
+
+.copy-link-input {
+  background-color: transparent;
+  width: 70%;
+  border: none;
+  flex-grow: 1;
+  margin-right: 10px;
+  
+}

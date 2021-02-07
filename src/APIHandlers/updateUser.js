@@ -1,5 +1,5 @@
 import { projectFirestore } from '../firebase/firebaseIndex';
-import { users } from '../firebase/firebaseConsts';
+import { users } from './firebaseConsts';
 
 export const updateUserProfilePicture = async (
   profilePictureUrl,

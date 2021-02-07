@@ -6,7 +6,7 @@ import './fonts/digital-7.ttf';
 
 import './styles/index.css';
 import App from './components/App';
-import { NavBar } from './components/NavBar';
+import { NavBar } from './components/common/NavBar';
 
 ReactDOM.render(
   <div className='holy-grail'>

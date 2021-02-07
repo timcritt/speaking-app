@@ -1,5 +1,5 @@
 import { projectFirestore } from '../firebase/firebaseIndex';
-import { FCEPart2 } from '../firebase/firebaseConsts';
+import { FCEPart2 } from './firebaseConsts';
 import firebase from 'firebase';
 
 //gets an array of tests based on an array of test ids

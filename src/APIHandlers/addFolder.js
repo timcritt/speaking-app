@@ -1,5 +1,5 @@
 import { projectFirestore } from '../firebase/firebaseIndex';
-import { folders } from '../firebase/firebaseConsts';
+import { folders } from './firebaseConsts';
 
 const addFolder = async (title, description, tests, createdAt, userId) => {
   try {

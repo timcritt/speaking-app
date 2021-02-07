@@ -1,4 +1,4 @@
-import { folders } from '../firebase/firebaseConsts';
+import { folders } from './firebaseConsts';
 import { projectFirestore } from '../firebase/firebaseIndex';
 import { timestamp } from '../firebase/firebaseIndex';
 
