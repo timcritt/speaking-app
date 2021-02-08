@@ -1,13 +1,13 @@
 import React, { useState, useEffect, Fragment, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import Modal from '../common/Modal';
+import Modal from 'components/common/Modal';
 import PublishIcon from '@material-ui/icons/Publish';
 import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
-import { timestamp } from '../../firebase/firebaseIndex';
-import updateTest from '../../APIHandlers/updateTest';
-import addTest from '../../APIHandlers/addTest';
-import { firebaseAuth } from '../../context/AuthProvider';
-import { uploadFCEPart2Images } from '../../APIHandlers/uploadImage';
+import { timestamp } from 'firebase/firebaseIndex';
+import updateFCEPart3 from 'APIHandlers/updateFCEPart3';
+import addFCEPart3 from 'APIHandlers/addFCEPart3';
+import { firebaseAuth } from 'context/AuthProvider';
+import { uploadFCEPart2Images } from 'APIHandlers/uploadImage';
 
 export default function PublishWarningModal({
   bottomCentre,
@@ -19,6 +19,8 @@ export default function PublishWarningModal({
   topLeft,
   topRight,
   tags,
+  changesSaved,
+  docRef,
 }) {
   const [open, setOpen] = useState(false);
   const [complete, setComplete] = useState(false);
@@ -49,58 +51,31 @@ export default function PublishWarningModal({
     question,
     topLeft,
     topRight,
+    tags.length,
   ]);
 
   const handleOpen = () => {
     setOpen(true);
-    const createdAt = timestamp();
+    //const createdAt = timestamp();
     if (complete) {
       if (docRef) {
-        //var test = getTest(FCEPart2, docRef).then(console.log);
-        uploadFCEPart2Images(
-          imageOneUrl,
-          imageTwoUrl,
-          imageOneRef,
-          imageTwoRef
-        ).then((data) => {
-          updateTest(
-            data.imageOneData.url,
-            data.imageTwoData.url,
-            question,
-            tags,
-            docRef,
-            createdAt,
-            data.imageOneData.reference,
-            data.imageTwoData.reference
-          ).then(
-            () => setImageOneUrl(data.imageOneData.url),
-            setImageTwoUrl(data.imageTwoData.url),
-            setImageOneRef(data.imageOneData.reference),
-            setImageTwoRef(data.imageTwoData.reference)
-            //setChangesSaved(true)
-          );
-        });
-      } else {
-        setOpen(true);
-        //if local test has no docId, it's because it's new and doesn't exist on the firestore.
-        uploadFCEPart2Images(imageOneUrl, imageTwoUrl).then((data) => {
-          addTest(
-            data.imageOneData.url,
-            data.imageTwoData.url,
-            question,
-            createdAt,
-            tags,
-            data.imageOneData.reference,
-            data.imageTwoData.reference,
-            userId
-          ).then((docRef) => {
-            setDocRef(docRef); //setChangesSaved(true); //history.push(`/FCEPart2/${docRef.id}`);
-          });
-        });
+        //update fce part 3
+        console.log('updating existing part 3');
       }
     } else {
       setOpen(true);
-      //setChangesSaved(true);
+      //upload new Part 3
+      console.log('updloading new part 3');
+      addFCEPart3(
+        bottomCentre,
+        bottomLeft,
+        bottomRight,
+        creatorId,
+        question,
+        questionTwo,
+        topLeft,
+        topRight
+      );
     }
   };
 
@@ -111,13 +86,16 @@ export default function PublishWarningModal({
   const body = (
     <div>
       <div>
-        {complete ? <h3>Published!</h3> : <h3>Oops! You forgot to:</h3>}
+        {complete ? (
+          <h3>Published!</h3>
+        ) : (
+          <h3>
+            Oops! You forgot to complete all the fields and add at least one
+            tag!
+          </h3>
+        )}
       </div>
-      <ul>
-        {(!imageOneUrl || !imageTwoUrl) && <li>select two images</li>}
-        {!question && <li>enter a question</li>}
-        {tags.length === 0 && <li>select at least one tag</li>}
-      </ul>
+      <ul></ul>
       <div className='center'>
         <button onClick={handleClose}>ok</button>
       </div>

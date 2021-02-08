@@ -1,11 +1,11 @@
 import { projectFirestore } from '../firebase/firebaseIndex';
-import { FCEPart2 } from './firebaseConsts';
+import { FCEPart3 } from './firebaseConsts';
 
 const addPart3 = async (
   bottomCentre,
   bottomLeft,
   bottomRight,
-  createdId,
+  creatorId,
   question,
   questionTwo,
   topLeft,
@@ -15,7 +15,7 @@ const addPart3 = async (
     bottomCentre,
     bottomLeft,
     bottomRight,
-    createdId,
+    creatorId,
     question,
     questionTwo,
     topLeft,

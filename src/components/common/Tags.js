@@ -12,6 +12,9 @@ const tagList = [
   'education',
   'home',
   'relationships',
+  'money',
+  'work',
+  'animals',
 ];
 
 const Tags = ({ tags, handleSetTags }) => {

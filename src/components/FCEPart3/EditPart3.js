@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import useGetTest from '../../hooks/useGetTest';
+import useGetTest from 'hooks/useGetTest';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
-import Modal from '../common/Modal';
-import AddToMyFolders from '../common/AddToMyFolders';
-import CreatorInfo from '../common/CreatorInfo';
+import Modal from 'components/common/Modal';
+import AddToMyFolders from 'components/common/AddToMyFolders';
+import CreatorInfo from 'components/common/CreatorInfo';
 import { Fragment } from 'react';
 import LineTo from 'react-lineto';
 import { TextareaAutosize } from '@material-ui/core';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
-import SideBarTags from '../common/SideBarTags';
-//mport PublishPart3WarningModal from './PublishPart3WarningModal';
+import SideBarTags from 'components/common/SideBarTags';
+import PublishPart3WarningModal from 'components/FCEPart3/PublishPart3WarningModal';
 
 const EditPart3 = (props) => {
   const [question, setQuestion] = useState('');
@@ -22,9 +22,10 @@ const EditPart3 = (props) => {
   const [bottomRight, setBottomRight] = useState('');
   const [lineClass, setLineClass] = useState('');
   const [testTags, setTags] = useState([]);
-  const [docRef, setDocRef] = useState('');
+  const [docRef, setDocRef] = useState(null);
   const [authorId, setAuthorId] = useState('');
   const [AddToFolderModalOpen, setAddToFolderModalOpen] = useState(false);
+  const [changesSaved, setChangesSaved] = useState(false);
   const handleFullScreen = useFullScreenHandle();
   const optionPlaceholder = 'option';
 
@@ -74,7 +75,9 @@ const EditPart3 = (props) => {
     };
   }, []);
   var test = useGetTest('Part3', props.match.params.id);
-
+  function handleSetDocRef(docRef) {
+    setDocRef(docRef);
+  }
   useEffect(() => {
     if (test) {
       setDocRef(test.id);
@@ -88,6 +91,7 @@ const EditPart3 = (props) => {
       //draws the lines in the correct positions after test load
       handleResize();
     }
+    handleResize();
   }, [test]);
 
   const handleQuestionChange = (e) => {
@@ -264,6 +268,21 @@ const EditPart3 = (props) => {
               {authorId && <CreatorInfo authorId={authorId} />}
 
               <div className='tool-btn-container'>
+                <PublishPart3WarningModal
+                  bottomCentre={bottomCentre}
+                  bottomLeft={bottomLeft}
+                  bottomRight={bottomRight}
+                  creatorId={authorId}
+                  question={question}
+                  questionTwo={'question two placeholder'}
+                  topLeft={topLeft}
+                  topRight={topRight}
+                  tags={testTags}
+                  changesSaved={changesSaved}
+                  setChangesSaved={setChangesSaved}
+                  docRef={docRef}
+                  setDocRef={handleSetDocRef}
+                />
                 {docRef && (
                   <Link
                     to={{

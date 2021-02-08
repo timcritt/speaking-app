@@ -26,7 +26,6 @@ const EditFCEPart2 = (props) => {
 
   //custom hook
   var test = useGetTest(FCEPart2, props.match.params.id);
-
   const handleQuestionChange = (e) => {
     setQuestion(e.currentTarget.value);
   };

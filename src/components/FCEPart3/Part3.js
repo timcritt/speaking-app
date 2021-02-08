@@ -1,19 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react';
-import Timer from '../common/Timer';
+import Timer from 'components/common/Timer';
 import { Link } from 'react-router-dom';
-import useGetTest from '../../hooks/useGetTest';
+import useGetTest from 'hooks/useGetTest';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import FullscreenOutlinedIcon from '@material-ui/icons/FullscreenOutlined';
 import FullscreenExitOutlinedIcon from '@material-ui/icons/FullscreenExitOutlined';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
-import { firebaseAuth } from '../../context/AuthProvider';
+import { firebaseAuth } from 'context/AuthProvider';
 import PlaylistAddOutlinedIcon from '@material-ui/icons/PlaylistAddOutlined';
-import Modal from '../common/Modal';
-import AddToMyFolders from '../common/AddToMyFolders';
-import CreatorInfo from '../common/CreatorInfo';
+import Modal from 'components/common/Modal';
+import AddToMyFolders from 'components/common/AddToMyFolders';
+import CreatorInfo from 'components/common/CreatorInfo';
 import { Fragment } from 'react';
 import LineTo from 'react-lineto';
-import ShareButton from '../common/ShareButton';
+import ShareButton from 'components/common/ShareButton';
 
 const Part3 = (props) => {
   const [question, setQuestion] = useState('');
