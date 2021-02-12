@@ -9,7 +9,8 @@ const addPart3 = async (
   question,
   questionTwo,
   topLeft,
-  topRight
+  topRight,
+  tags
 ) => {
   return projectFirestore.collection('Part3').add({
     bottomCentre,
@@ -20,6 +21,7 @@ const addPart3 = async (
     questionTwo,
     topLeft,
     topRight,
+    tags,
   });
 };
 

@@ -5,23 +5,24 @@ const updateFCEPart3 = async (
   bottomCentre,
   bottomLeft,
   bottomRight,
-  creatorId,
   question,
   questionTwo,
   topLeft,
   topRight,
-  id
+  docRef,
+  tags
 ) => {
-  var objectRef = projectFirestore.collection(FCEPart2).doc(id);
+  console.log(docRef);
+  var objectRef = projectFirestore.collection('Part3').doc(docRef);
   await objectRef.update({
     bottomCentre,
     bottomLeft,
     bottomRight,
-    creatorId,
     question,
     questionTwo,
     topLeft,
     topRight,
+    tags,
   });
 
   return Promise.resolve();

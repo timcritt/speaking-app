@@ -6,7 +6,6 @@
 @import 'Exam.css';
 @import 'FCEPart2.css';
 @import 'Timer.css';
-
 @import 'Header.css';
 @import 'EditFCEPart2.css';
 @import 'placeholder.css';
@@ -32,6 +31,7 @@
 @import 'Part3.css';
 @import 'Share.css';
 @import 'Create.css';
+@import 'spinners.css';
 
 @font-face {
   font-family: 'Digital-7';
