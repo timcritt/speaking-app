@@ -1,8 +1,11 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import Tests from '../common/Tests';
 import InputSort from '../common/InputSort';
 import SideBarTags from '../common/SideBarTags';
 import getFilteredTests from '../../APIHandlers/getFilteredTests';
+import { FCEPart2 } from 'APIHandlers/firebaseConsts';
+import { FCEPart3 } from 'APIHandlers/firebaseConsts';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const AllTests = ({ creatorId }) => {
   //state
@@ -10,14 +13,22 @@ const AllTests = ({ creatorId }) => {
   const [results, setResults] = useState(null);
   const [sortType, setSortType] = useState('Date');
   const [tagSearchTerm, setTagSearchTerm] = useState('');
-
-  //TODO
-  const handleSetFilterTerm = (e) => {
-    setFilterTerm(e.currentTarget.value);
-  };
+  const [testType, setTestType] = useState(FCEPart2);
+  const [searchButtonClicked, setSearchButtonClicked] = useState(false);
+  const [hasFetched, setHasFetched] = useState(false);
 
   const handleChangeSort = (e) => {
     setSortType(e.currentTarget.value);
+  };
+
+  useEffect(() => {
+    if (searchButtonClicked) {
+      handleSearchClick();
+    }
+  }, [testType, filterTerm, sortType]);
+
+  const handleChangeTestType = (e) => {
+    setTestType(e.currentTarget.value);
   };
 
   function handleSetTags(tag, selected) {
@@ -31,37 +42,37 @@ const AllTests = ({ creatorId }) => {
   }
 
   const handleSearchClick = async () => {
-    const docs = await getFilteredTests(creatorId, filterTerm);
-    var filteredDocs = JSON.parse(JSON.stringify(docs));
+    setHasFetched(false);
+    setSearchButtonClicked(true);
 
-    //filter by topic tag
-    if (tagSearchTerm) {
-      filteredDocs = filteredDocs.filter((doc) =>
-        doc.tags.includes(tagSearchTerm)
-      );
-    }
-    //filter by question and user-entered term
-    // if (filterTerm) {
-    //   filteredDocs = filteredDocs.filter((doc) =>
-    //     doc.question.toUpperCase().includes(filterTerm.toUpperCase())
-    //   );
-    // }
-    //sort alphabetically by question
-    if (sortType === 'Question') {
-      filteredDocs = filteredDocs.sort((a, b) => {
-        var titleA = a.question.toUpperCase();
-        var titleB = b.question.toUpperCase();
+    await getFilteredTests(creatorId, filterTerm, testType).then((data) => {
+      var filteredDocs = JSON.parse(JSON.stringify(data));
 
-        if (titleA < titleB) {
-          return -1;
-        }
-        if (titleA > titleB) {
-          return 1;
-        }
-        return 0;
-      });
-    }
-    setResults(filteredDocs);
+      //filter by topic tag
+      if (tagSearchTerm) {
+        filteredDocs = filteredDocs.filter((doc) =>
+          doc.tags.includes(tagSearchTerm)
+        );
+      }
+
+      //sort alphabetically by question
+      if (sortType === 'Question') {
+        filteredDocs = filteredDocs.sort((a, b) => {
+          var titleA = a.question.toUpperCase();
+          var titleB = b.question.toUpperCase();
+
+          if (titleA < titleB) {
+            return -1;
+          }
+          if (titleA > titleB) {
+            return 1;
+          }
+          return 0;
+        });
+      }
+      setResults(filteredDocs);
+      setHasFetched(true);
+    });
   };
 
   return (
@@ -72,24 +83,25 @@ const AllTests = ({ creatorId }) => {
           handleChange={handleChangeSort}
           values={['Most recent', 'Question']}
         />
-
-        {/*<FilterInput
-          placeholder={'filter by question'}
-          handleSetFilterTerm={handleSetFilterTerm}
-        />*/}
+        <InputSort
+          selectVale={testType}
+          handleChange={handleChangeTestType}
+          values={[FCEPart2, FCEPart3]}
+        />
         <button onClick={() => handleSearchClick()}>Search</button>
       </div>
-      <SideBarTags
-        tags={tagSearchTerm}
-        handleSetTags={handleSetTags}
-      ></SideBarTags>
-      <Tests
-        userId={creatorId}
-        filterTerm={filterTerm}
-        results={results}
-        setResults={setResults}
-        tagSearchTerm={tagSearchTerm}
-      />
+      <SideBarTags tags={tagSearchTerm} handleSetTags={handleSetTags} />
+      {!hasFetched && searchButtonClicked && <LinearProgress />}
+      {hasFetched && (
+        <Tests
+          testType={testType}
+          userId={creatorId}
+          filterTerm={filterTerm}
+          results={results}
+          setResults={setResults}
+          tagSearchTerm={tagSearchTerm}
+        />
+      )}
     </Fragment>
   );
 };

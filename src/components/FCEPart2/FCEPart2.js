@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import ExamPicture from 'components/FCEPart2/ExamPicture';
 import Timer from 'components/common/Timer';
 import { Link } from 'react-router-dom';
-import useGetTest from 'hooks/useGetTest';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import FullscreenOutlinedIcon from '@material-ui/icons/FullscreenOutlined';
 import FullscreenExitOutlinedIcon from '@material-ui/icons/FullscreenExitOutlined';
@@ -14,6 +13,8 @@ import AddToMyFolders from 'components/common/AddToMyFolders';
 import CreatorInfo from 'components/common/CreatorInfo';
 import { Fragment } from 'react';
 import ShareButton from 'components/common/ShareButton';
+import getTest from 'APIHandlers/getTest';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const FCEPart2 = (props) => {
   const [question, setQuestion] = useState(null);
@@ -24,18 +25,28 @@ const FCEPart2 = (props) => {
   const [AddToFolderModalOpen, setAddToFolderModalOpen] = useState(false);
   const { userId } = useContext(firebaseAuth);
   const handleFullScreen = useFullScreenHandle();
-
-  var test = useGetTest('FCEPart2', props.match.params.id);
+  const [hasFetched, setHasFetched] = useState(false);
 
   useEffect(() => {
-    if (test) {
-      setDocRef(test.id);
-      setImageOne(test.imageOneUrl);
-      setImageTwo(test.imageTwoUrl);
-      setQuestion(test.question);
-      setAuthorId(test.userId);
-    }
-  }, [test, authorId]);
+    var isMounted = true;
+
+    getTest('FCEPart2', props.match.params.id).then((data) => {
+      if (isMounted && data) {
+        setDocRef(data.id);
+        setImageOne(data.imageOneUrl);
+        setImageTwo(data.imageTwoUrl);
+        setQuestion(data.question);
+        setAuthorId(data.userId);
+        setHasFetched(true);
+      } else {
+        setHasFetched(true);
+      }
+    });
+    //prevents setting of state if fetch requests completes after component has unmounted
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const openAddToFolderModal = () => {
     setAddToFolderModalOpen(true);
@@ -44,80 +55,88 @@ const FCEPart2 = (props) => {
     setAddToFolderModalOpen(false);
   };
 
-  return (
-    <Fragment>
-      {AddToFolderModalOpen && (
-        <Modal
-          className='open-add-folder-modal-btn'
-          modalOpen={AddToFolderModalOpen}
-          heading='Add test to folder'
-          setModalOpen={closeAddToFolderModal}
-        >
-          <AddToMyFolders testId={docRef} />
-        </Modal>
-      )}
+  if (hasFetched) {
+    return (
+      <Fragment>
+        {AddToFolderModalOpen && (
+          <Modal
+            className='open-add-folder-modal-btn'
+            modalOpen={AddToFolderModalOpen}
+            heading='Add test to folder'
+            setModalOpen={closeAddToFolderModal}
+          >
+            <AddToMyFolders testId={docRef} />
+          </Modal>
+        )}
 
-      <FullScreen handle={handleFullScreen}>
-        <main className='holy-grail-content fade-in'>
-          <div className='part2-main-row'>
-            <div className='question-row'>
-              <span className='input question-input'>{question}</span>
-            </div>
-            <div className='part2-image-row'>
-              <div className='part2-image-container-left'>
-                <ExamPicture image={imageOneUrl} />
+        <FullScreen handle={handleFullScreen}>
+          <main className='holy-grail-content fade-in'>
+            <div className='part2-main-row'>
+              <div className='question-row'>
+                <span className='input question-input'>{question}</span>
               </div>
-              <div className='part2-image-container-right'>
-                <ExamPicture image={imageTwoUrl} />
+              <div className='part2-image-row'>
+                <div className='part2-image-container-left'>
+                  <ExamPicture image={imageOneUrl} />
+                </div>
+                <div className='part2-image-container-right'>
+                  <ExamPicture image={imageTwoUrl} />
+                </div>
               </div>
-            </div>
-            <div className='tool-bar-row'>
-              {authorId && <CreatorInfo authorId={authorId} />}
-              <Timer />
-              <div className='tool-btn-container'>
-                {authorId === userId && (
-                  <Link
-                    to={{
-                      pathname: `/EditFCEPart2/${docRef}`,
-                    }}
-                  >
-                    <button className='tool-bar-btn hide-on-fullscreen'>
-                      <EditOutlinedIcon />
-                    </button>
-                  </Link>
-                )}
-                <ShareButton
-                  className='tool-bar-btn hide-on-fullscreen'
-                  sharedItemType={'FCE Part 2'}
-                />
-                <button
-                  className='tool-bar-btn hide-on-fullscreen'
-                  onClick={() => openAddToFolderModal(true)}
-                >
-                  <PlaylistAddOutlinedIcon />
-                </button>
-                <button
-                  className='tool-bar-btn open-fullscreen-btn hide-on-fullscreen'
-                  onClick={() => handleFullScreen.enter()}
-                >
-                  <FullscreenOutlinedIcon />
-                </button>
-                <button
-                  className='tool-bar-btn close-fullscreen-btn show-on-fullscreen'
-                  onClick={() => handleFullScreen.exit()}
-                >
-                  <FullscreenExitOutlinedIcon
-                    fontSize='large'
-                    style={{ color: 'black' }}
+              <div className='tool-bar-row'>
+                {authorId && <CreatorInfo authorId={authorId} />}
+                <Timer />
+                <div className='tool-btn-container'>
+                  {authorId === userId && (
+                    <Link
+                      to={{
+                        pathname: `/EditFCEPart2/${docRef}`,
+                      }}
+                    >
+                      <button className='tool-bar-btn hide-on-fullscreen'>
+                        <EditOutlinedIcon />
+                      </button>
+                    </Link>
+                  )}
+                  <ShareButton
+                    className='tool-bar-btn hide-on-fullscreen'
+                    sharedItemType={'FCE Part 2'}
                   />
-                </button>
+                  <button
+                    className='tool-bar-btn hide-on-fullscreen'
+                    onClick={() => openAddToFolderModal(true)}
+                  >
+                    <PlaylistAddOutlinedIcon />
+                  </button>
+                  <button
+                    className='tool-bar-btn open-fullscreen-btn hide-on-fullscreen'
+                    onClick={() => handleFullScreen.enter()}
+                  >
+                    <FullscreenOutlinedIcon />
+                  </button>
+                  <button
+                    className='tool-bar-btn close-fullscreen-btn show-on-fullscreen'
+                    onClick={() => handleFullScreen.exit()}
+                  >
+                    <FullscreenExitOutlinedIcon
+                      fontSize='large'
+                      style={{ color: 'black' }}
+                    />
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </main>
-      </FullScreen>
-    </Fragment>
-  );
+          </main>
+        </FullScreen>
+      </Fragment>
+    );
+  } else {
+    return (
+      <div className={'full-width'}>
+        <LinearProgress />
+      </div>
+    );
+  }
 };
 
 export default FCEPart2;

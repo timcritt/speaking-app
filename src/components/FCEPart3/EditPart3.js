@@ -83,7 +83,7 @@ const EditPart3 = (props) => {
   useEffect(() => {
     var isMounted = true;
     getTest('Part3', props.match.params.id).then((data) => {
-      if (isMounted) {
+      if (isMounted && data) {
         setDocRef(data.id);
         setQuestion(data.question);
         setTopLeft(data.topLeft);
@@ -96,6 +96,8 @@ const EditPart3 = (props) => {
         //draws the lines in the correct positions after test load
         setHasFetched(true);
         handleResize();
+      } else {
+        setHasFetched(true);
       }
     });
     return () => {
@@ -111,14 +113,12 @@ const EditPart3 = (props) => {
 
     console.log(question);
   };
-
   const handleTopLeftChange = (e) => {
     setTopLeft(e.currentTarget.value);
     setTimeout(function () {
       handleResize();
     }, 100);
   };
-
   const handleTopRightChange = (e) => {
     setTopRight(e.currentTarget.value);
     setTimeout(function () {
@@ -131,7 +131,6 @@ const EditPart3 = (props) => {
       handleResize();
     }, 100);
   };
-
   const handleBottomCentreChange = (e) => {
     setBottomCentre(e.currentTarget.value);
     setTimeout(function () {
@@ -215,7 +214,6 @@ const EditPart3 = (props) => {
                   onChange={handleBottomLeftChange}
                   rowsMin='1'
                 />
-
                 <TextareaAutosize
                   className='part3-option-bottom-centre part3-input part3-option-input'
                   placeholder={optionPlaceholder}
@@ -223,7 +221,6 @@ const EditPart3 = (props) => {
                   onChange={handleBottomCentreChange}
                   rowsMin='1'
                 />
-
                 <TextareaAutosize
                   className='part3-option-bottom-right part3-input part3-option-input '
                   placeholder={optionPlaceholder}
@@ -231,7 +228,6 @@ const EditPart3 = (props) => {
                   onChange={handleBottomRightChange}
                   rowsMin='1'
                 />
-
                 <Part3Lines
                   windowDimensions={windowDimensions}
                   lineClass={lineClass}
@@ -239,7 +235,6 @@ const EditPart3 = (props) => {
               </div>
               <div className='tool-bar-row'>
                 {authorId && <CreatorInfo authorId={authorId} />}
-
                 <div className='tool-btn-container'>
                   <PublishPart3WarningModal
                     bottomCentre={bottomCentre}

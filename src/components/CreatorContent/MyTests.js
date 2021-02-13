@@ -4,6 +4,7 @@ import FilterInput from '../common/FilterInput';
 import InputSort from '../common/InputSort';
 import SideBarTags from '../common/SideBarTags';
 import getFilteredTests from '../../APIHandlers/getFilteredTests';
+import { FCEPart2 } from 'APIHandlers/firebaseConsts';
 
 const MyTests = ({ creatorId }) => {
   //state
@@ -32,7 +33,7 @@ const MyTests = ({ creatorId }) => {
 
   useEffect(() => {
     const innerAsync = async () => {
-      const docs = await getFilteredTests(creatorId);
+      const docs = await getFilteredTests(creatorId, null, FCEPart2);
       var filteredDocs = JSON.parse(JSON.stringify(docs));
 
       //filter by topic tag

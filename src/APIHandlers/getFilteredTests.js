@@ -1,11 +1,9 @@
 import { projectFirestore } from '../firebase/firebaseIndex';
-import { FCEPart2 } from './firebaseConsts';
-import firebase from 'firebase';
 
 //gets an array of tests based on an array of test ids
-const getFilteredTests = async (userId, filterTerm) => {
+const getFilteredTests = async (userId, filterTerm, TestPart) => {
   var tests = [];
-  var results = projectFirestore.collection(FCEPart2);
+  var results = projectFirestore.collection(TestPart);
 
   if (userId) {
     results = results.where('userId', '==', userId);
@@ -19,7 +17,7 @@ const getFilteredTests = async (userId, filterTerm) => {
       tests.push({ ...doc.data(), id: doc.id });
     });
   });
-  console.log(tests);
+
   return tests;
 };
 
