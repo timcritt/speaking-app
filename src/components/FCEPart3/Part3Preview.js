@@ -8,11 +8,11 @@ const Part3Preview = ({ test }) => {
       to={`/FCEPart3/${test.id}`}
       key={test.id}
     >
-      <div className='test-preview-container'>
-        <div className='test-preview-question-container dont-break-out'>
+      <div className='part3-test-preview-container'>
+        <div className='part3-test-preview-question-container dont-break-out'>
           <span>{test.question}</span>
         </div>
-        <div key={test.id}>
+        <div className='part3-test-preview-options-container' key={test.id}>
           <div>
             <span>{test.topLeft}</span>
           </div>

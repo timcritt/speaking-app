@@ -13,6 +13,7 @@ import SideBarTags from 'components/common/SideBarTags';
 import PublishPart3WarningModal from 'components/FCEPart3/PublishPart3WarningModal';
 import Part3Lines from 'components/FCEPart3/Part3Lines';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import debounce from 'auxFunctions/debounce';
 
 const EditPart3 = (props) => {
   const [question, setQuestion] = useState('');
@@ -35,17 +36,6 @@ const EditPart3 = (props) => {
     height: window.innerHeight,
     width: window.innerWidth,
   });
-
-  function debounce(fn, ms) {
-    let timer;
-    return (_) => {
-      clearTimeout(timer);
-      timer = setTimeout((_) => {
-        timer = null;
-        fn.apply(this, arguments);
-      }, ms);
-    };
-  }
 
   const hideLines = () => {
     setLineClass('line-hidden');
@@ -97,7 +87,9 @@ const EditPart3 = (props) => {
         setHasFetched(true);
         handleResize();
       } else {
+        //creat new test
         setHasFetched(true);
+        handleResize();
       }
     });
     return () => {
@@ -110,8 +102,6 @@ const EditPart3 = (props) => {
     setTimeout(function () {
       handleResize();
     }, 100);
-
-    console.log(question);
   };
   const handleTopLeftChange = (e) => {
     setTopLeft(e.currentTarget.value);

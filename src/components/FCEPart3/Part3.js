@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, Fragment } from 'react';
 import Timer from 'components/common/Timer';
 import { Link } from 'react-router-dom';
-import useGetTest from 'hooks/useGetTest';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import FullscreenOutlinedIcon from '@material-ui/icons/FullscreenOutlined';
 import FullscreenExitOutlinedIcon from '@material-ui/icons/FullscreenExitOutlined';
@@ -12,11 +11,10 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Modal from 'components/common/Modal';
 import AddToMyFolders from 'components/common/AddToMyFolders';
 import CreatorInfo from 'components/common/CreatorInfo';
-import { Fragment } from 'react';
-import LineTo from 'react-lineto';
 import ShareButton from 'components/common/ShareButton';
 import Part3Lines from 'components/FCEPart3/Part3Lines';
 import getTest from 'APIHandlers/getTest';
+import debounce from 'auxFunctions/debounce';
 
 const Part3 = (props) => {
   const [question, setQuestion] = useState('');
@@ -26,7 +24,6 @@ const Part3 = (props) => {
   const [bottomCentre, setBottomCentre] = useState('');
   const [bottomRight, setBottomRight] = useState('');
   const [docRef, setDocRef] = useState(null);
-  const [testTags, setTags] = useState([]);
   const [authorId, setAuthorId] = useState(null);
   const [AddToFolderModalOpen, setAddToFolderModalOpen] = useState(false);
   const { userId } = useContext(firebaseAuth);
@@ -34,23 +31,10 @@ const Part3 = (props) => {
   const [lineClass, setLineClass] = useState('');
   const [hasFetched, setHasFetched] = useState(false);
 
-  var test = useGetTest('Part3', props.match.params.id);
-
   const [windowDimensions, setWindowDimensions] = useState({
     height: window.innerHeight,
     width: window.innerWidth,
   });
-
-  function debounce(fn, ms) {
-    let timer;
-    return (_) => {
-      clearTimeout(timer);
-      timer = setTimeout((_) => {
-        timer = null;
-        fn.apply(this, arguments);
-      }, ms);
-    };
-  }
 
   //hide lines before redrawing
   const hideLines = () => {
@@ -100,9 +84,8 @@ const Part3 = (props) => {
         setBottomLeft(data.bottomLeft);
         setBottomRight(data.bottomRight);
         setAuthorId(data.creatorId);
-        setTags(data.tags);
-        //draws the lines in the correct positions after test load
         setHasFetched(true);
+        //draws the lines in the correct positions after test load
         handleResize();
       }
     });

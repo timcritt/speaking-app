@@ -55,7 +55,7 @@
 
 .filter-input-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   padding: 15px 0;
   flex-wrap: wrap;
   /* box-shadow: 0 4px 6px -6px #00000094;*/

@@ -10,7 +10,6 @@ const AuthProvider = (props) => {
   const [userId, setUserId] = useState(null);
   const [userEmail, setUserEmail] = useState(null);
   const [userDetails, setUserDetails] = useState(null);
-  const [pending, setPending] = useState(true);
 
   useEffect(() => {
     //listens to state change. Persists login even after refresh

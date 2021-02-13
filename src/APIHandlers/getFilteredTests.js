@@ -1,9 +1,9 @@
 import { projectFirestore } from '../firebase/firebaseIndex';
 
 //gets an array of tests based on an array of test ids
-const getFilteredTests = async (userId, filterTerm, TestPart) => {
+const getFilteredTests = async (userId, filterTerm, testPart) => {
   var tests = [];
-  var results = projectFirestore.collection(TestPart);
+  var results = projectFirestore.collection(testPart);
 
   if (userId) {
     results = results.where('userId', '==', userId);

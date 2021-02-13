@@ -14,8 +14,9 @@
   margin: 5px;
   height: auto;
   transition: 0.14s;
-  max-width: 200px;
+  width: 200px;
 }
+
 
 .test-preview-container:hover {
   border-color: #f5d88b;
@@ -23,6 +24,7 @@
 
 .test-preview-link {
   text-decoration: none;
+  color: black;
 }
 
 .test-preview-question-container {
@@ -76,4 +78,30 @@
   100% {
     opacity: 1;
   }
+}
+
+.part3-test-preview-container {
+  width: 300px;
+  border: solid 3px rgb(199, 198, 198);
+  border-radius: 10px;
+  padding: 4px;
+  margin: 5px;
+  height: auto;
+  transition: 0.14s;
+}
+
+.part3-test-preview-container:hover {
+  border-color: #f5d88b;
+}
+
+.part3-test-preview-question-container {
+  padding: 10px 10px 0px 10px;
+  font-size: small;
+  min-height: 3em;
+  
+}
+
+.part3-test-preview-options-container {
+  text-align: center;
+  padding: 10px;
 }

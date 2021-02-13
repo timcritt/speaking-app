@@ -16,6 +16,7 @@ const AllTests = ({ creatorId }) => {
   const [testType, setTestType] = useState(FCEPart2);
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
   const [hasFetched, setHasFetched] = useState(false);
+  const [exam, setExam] = useState('FCE');
 
   const handleChangeSort = (e) => {
     setSortType(e.currentTarget.value);
@@ -29,6 +30,10 @@ const AllTests = ({ creatorId }) => {
 
   const handleChangeTestType = (e) => {
     setTestType(e.currentTarget.value);
+  };
+
+  const handleChangeExam = (e) => {
+    setExam(e.currentTarget.value);
   };
 
   function handleSetTags(tag, selected) {
@@ -84,10 +89,16 @@ const AllTests = ({ creatorId }) => {
           values={['Most recent', 'Question']}
         />
         <InputSort
+          selectValue={exam}
+          handleChange={handleChangeExam}
+          values={['FCE', 'CAE']}
+        />
+        <InputSort
           selectVale={testType}
           handleChange={handleChangeTestType}
           values={[FCEPart2, FCEPart3]}
         />
+
         <button onClick={() => handleSearchClick()}>Search</button>
       </div>
       <SideBarTags tags={tagSearchTerm} handleSetTags={handleSetTags} />
