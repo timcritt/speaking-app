@@ -3,7 +3,6 @@ import ImageContext from 'context/ImageContext';
 import SideBarTags from 'components/common/SideBarTags';
 import PublishWarningModal from 'components/FCEPart2/PublishWarningModal';
 import { Link } from 'react-router-dom';
-import useGetTest from 'hooks/useGetTest';
 import deleteTest from 'APIHandlers/deleteTest';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
@@ -16,7 +15,8 @@ import getTest from 'APIHandlers/getTest';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 const EditFCEPart2 = (props) => {
-  const [question, setQuestion] = useState('');
+  const [longTurnQuestion, setLongTurnQuestion] = useState('');
+  const [shortTurnQuestion, setShortTurnQuestion] = useState('');
   const [imageOneUrl, setImageOneUrl] = useState();
   const [imageTwoUrl, setImageTwoUrl] = useState();
   const [imageOneRef, setImageOneRef] = useState();
@@ -28,9 +28,11 @@ const EditFCEPart2 = (props) => {
   const [hasFetched, setHasFetched] = useState(false);
 
   //custom hook
-  var test = useGetTest(FCEPart2, props.match.params.id);
-  const handleQuestionChange = (e) => {
-    setQuestion(e.currentTarget.value);
+  const handleLongTurnQuestionChange = (e) => {
+    setLongTurnQuestion(e.currentTarget.value);
+  };
+  const handleShortTurnQuestionChange = (e) => {
+    setShortTurnQuestion(e.currentTarget.value);
   };
 
   function handleSetImageOne(imageUrl, ref) {
@@ -69,7 +71,8 @@ const EditFCEPart2 = (props) => {
   }
 
   const clearState = () => {
-    setQuestion('');
+    setLongTurnQuestion('');
+    setShortTurnQuestion('');
     setImageOneUrl(null);
     setImageTwoUrl(null);
     setTags([]);
@@ -85,7 +88,8 @@ const EditFCEPart2 = (props) => {
         setDocRef(data.id);
         setImageOneUrl(data.imageOneUrl);
         setImageTwoUrl(data.imageTwoUrl);
-        setQuestion(data.question);
+        setLongTurnQuestion(data.question);
+        setShortTurnQuestion(data.shortTurnQuestion);
         setTags(data.tags);
         setImageOneRef(data.imageOneRef);
         setImageTwoRef(data.imageTwoRef);
@@ -95,7 +99,6 @@ const EditFCEPart2 = (props) => {
         setHasFetched(true);
       }
     });
-
     return () => {
       isMounted = false;
     };
@@ -115,17 +118,39 @@ const EditFCEPart2 = (props) => {
             </p>
           </SideBarTags>
         </div>
-
         <main className='holy-grail-content centre-vertically'>
           <div className='part2-main-row fade-in'>
-            <div className='question-row'>
-              <input
-                label='Long turn question'
-                className='input question-input '
-                defaultValue={question}
-                placeholder='enter long turn question'
-                onChange={(e) => handleQuestionChange(e)}
-              />
+            <div className='part2-edit-question-row'>
+              <div className='part2-edit-question-container'>
+                <label
+                  className='part2-question-input-label'
+                  htmlFor='long-turn'
+                >
+                  Long turn
+                </label>
+                <input
+                  label='long-turn'
+                  className='input question-input '
+                  defaultValue={longTurnQuestion}
+                  placeholder='enter long turn question'
+                  onChange={(e) => handleLongTurnQuestionChange(e)}
+                />
+              </div>
+              <div className='part2-edit-question-container'>
+                <label
+                  className='part2-question-input-label'
+                  htmlFor='long-turn'
+                >
+                  Short turn
+                </label>
+                <input
+                  label='long-turn'
+                  className='input question-input '
+                  defaultValue={shortTurnQuestion}
+                  placeholder='enter short turn question'
+                  onChange={(e) => handleShortTurnQuestionChange(e)}
+                />
+              </div>
             </div>
             <div className='part2-image-row'>
               <ImageContext.Provider value={handleSetImageOne}>
@@ -139,7 +164,6 @@ const EditFCEPart2 = (props) => {
                   </ExamPicture>
                 </div>
               </ImageContext.Provider>
-
               <div>
                 <ImageContext.Provider value={handleSetImageTwo}>
                   <div className='part2-image-container-right'>
@@ -159,7 +183,8 @@ const EditFCEPart2 = (props) => {
                 <PublishWarningModal
                   imageOneUrl={imageOneUrl}
                   imageTwoUrl={imageTwoUrl}
-                  question={question}
+                  question={longTurnQuestion}
+                  shortTurnQuestion={shortTurnQuestion}
                   tags={testTags}
                   docRef={docRef}
                   setDocRef={handleSetDocRef}
@@ -183,9 +208,7 @@ const EditFCEPart2 = (props) => {
                     </button>
                   </Link>
                 )}
-                <button className='tool-bar-btn'>
-                  <ShareOutlinedIcon />
-                </button>
+
                 <button className='tool-bar-btn' onClick={handleDeleteTest}>
                   <DeleteForeverOutlinedIcon />
                 </button>

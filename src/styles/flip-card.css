@@ -1,0 +1,33 @@
+body { font-family: sans-serif; }
+
+.scene {
+  perspective: 600px;
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transform-origin: center right;
+  transition: transform 1s;
+  
+}
+
+.card.is-flipped {
+  transform: rotateX(-180deg);
+}
+
+.card__face {
+  backface-visibility: hidden;
+}
+
+.card__face--front {
+  background: red;
+}
+
+.card__face--back {
+  background: blue;
+  transform: rotateX(180deg);
+}

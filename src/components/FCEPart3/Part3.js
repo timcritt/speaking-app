@@ -53,11 +53,17 @@ const Part3 = (props) => {
     showLines();
     console.log('lines redrawn');
   };
+  const openAddToFolderModal = () => {
+    setAddToFolderModalOpen(true);
+  };
+  const closeAddToFolderModal = () => {
+    setAddToFolderModalOpen(false);
+  };
 
   //applies a time delay between window resize and the rerender of lines
   const debouncedHandleResize = debounce(handleResize, 200);
 
-  React.useEffect(() => {
+  useEffect(() => {
     //instantly hides the lines on window resize to prevent ugly jumping of lines between positions.
     window.addEventListener('resize', hideLines);
     //listens for window resize and redraws the lines between text areas after a set time. Sets lines to visible when done.
@@ -100,7 +106,9 @@ const Part3 = (props) => {
         {AddToFolderModalOpen && (
           <Modal
             className='open-add-folder-modal-btn'
+            modalOpen={AddToFolderModalOpen}
             heading='Add test to folder'
+            setModalOpen={closeAddToFolderModal}
           >
             <AddToMyFolders testId={docRef} />
           </Modal>
@@ -151,7 +159,10 @@ const Part3 = (props) => {
                     className='tool-bar-btn hide-on-fullscreen'
                     sharedItemType={'Part 3'}
                   />
-                  <button className='tool-bar-btn hide-on-fullscreen'>
+                  <button
+                    className='tool-bar-btn hide-on-fullscreen'
+                    onClick={() => openAddToFolderModal(true)}
+                  >
                     <PlaylistAddOutlinedIcon />
                   </button>
                   <button

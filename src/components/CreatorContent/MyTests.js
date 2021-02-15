@@ -32,8 +32,9 @@ const MyTests = ({ creatorId }) => {
   }
 
   useEffect(() => {
-    const innerAsync = async () => {
-      const docs = await getFilteredTests(creatorId, null, FCEPart2);
+    var isMounted = true;
+
+    getFilteredTests(creatorId, null, FCEPart2).then((docs) => {
       var filteredDocs = JSON.parse(JSON.stringify(docs));
 
       //filter by topic tag
@@ -63,11 +64,12 @@ const MyTests = ({ creatorId }) => {
           return 0;
         });
       }
-      setResults(filteredDocs);
-    };
-    innerAsync();
+      if (isMounted) {
+        setResults(filteredDocs);
+      }
+    });
 
-    return;
+    return () => (isMounted = false);
   }, [creatorId, filterTerm, sortType, tagSearchTerm]);
 
   return (

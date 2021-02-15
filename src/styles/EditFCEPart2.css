@@ -1,7 +1,8 @@
 .question-input {
-  width: 100%;
   font-size: 16pt;
-
+  box-sizing: border-box;
+  flex-grow: 1;
+  background-color: #FAFAFA;
 }
 
 .input {
@@ -10,10 +11,9 @@
   border: 1px solid #dbdbdb;
   border-radius: 3px;
   resize: none;
-  box-sizing: border-box;
-  background-color: #FAFAFA;
   margin: 10px;
   padding: 5px 15px 5px 15px;
+  box-sizing: border-box;
 }
 
 .input:focus {
@@ -84,3 +84,20 @@
   text-align: center;
 }
 
+.part2-edit-question-row {
+  grid-column: 1/-1;
+  grid-row:1;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 2;
+}
+
+.part2-question-input-label {
+  padding: 0px 10px;
+  font-size: large;
+}
+.part2-edit-question-container {
+  display: flex;
+  align-items: center;
+}

@@ -18,6 +18,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 
 const FCEPart2 = (props) => {
   const [question, setQuestion] = useState(null);
+  const [shortTurnQuestion, setShortTurnQuestion] = useState(null);
   const [imageOneUrl, setImageOne] = useState(null);
   const [imageTwoUrl, setImageTwo] = useState(null);
   const [docRef, setDocRef] = useState(null);
@@ -26,16 +27,17 @@ const FCEPart2 = (props) => {
   const { userId } = useContext(firebaseAuth);
   const handleFullScreen = useFullScreenHandle();
   const [hasFetched, setHasFetched] = useState(false);
+  const [shortTurnVisible, setShortTurnVisible] = useState(false);
 
   useEffect(() => {
     var isMounted = true;
-
     getTest('FCEPart2', props.match.params.id).then((data) => {
       if (isMounted && data) {
         setDocRef(data.id);
         setImageOne(data.imageOneUrl);
         setImageTwo(data.imageTwoUrl);
         setQuestion(data.question);
+        setShortTurnQuestion(data.shortTurnQuestion);
         setAuthorId(data.userId);
         setHasFetched(true);
       } else {
@@ -54,6 +56,9 @@ const FCEPart2 = (props) => {
   const closeAddToFolderModal = () => {
     setAddToFolderModalOpen(false);
   };
+  const handleViewShortTurnClick = () => {
+    setShortTurnVisible(!shortTurnVisible);
+  };
 
   if (hasFetched) {
     return (
@@ -61,19 +66,41 @@ const FCEPart2 = (props) => {
         {AddToFolderModalOpen && (
           <Modal
             className='open-add-folder-modal-btn'
-            modalOpen={AddToFolderModalOpen}
             heading='Add test to folder'
             setModalOpen={closeAddToFolderModal}
           >
             <AddToMyFolders testId={docRef} />
           </Modal>
         )}
-
         <FullScreen handle={handleFullScreen}>
           <main className='holy-grail-content fade-in'>
             <div className='part2-main-row'>
-              <div className='question-row'>
-                <span className='input question-input'>{question}</span>
+              <div className='part2-edit-question-row'>
+                <div className='part2-edit-question-container'>
+                  {!shortTurnVisible ? (
+                    <input
+                      label='long-turn'
+                      className='input question-input '
+                      value={question}
+                      readOnly={true}
+                      placeholder='ERROR: data not loaded'
+                    />
+                  ) : (
+                    <input
+                      label='short-turn'
+                      className='input question-input short-turn-question-input'
+                      value={`Short turn: ${shortTurnQuestion}`}
+                      readOnly={true}
+                      placeholder='ERROR: data not loaded'
+                    />
+                  )}
+                  <button
+                    className={'short-turn-button '}
+                    onClick={handleViewShortTurnClick}
+                  >
+                    {shortTurnVisible ? 'show long turn' : 'show short turn'}
+                  </button>
+                </div>
               </div>
               <div className='part2-image-row'>
                 <div className='part2-image-container-left'>
