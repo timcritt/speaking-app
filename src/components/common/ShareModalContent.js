@@ -11,8 +11,6 @@ import {
   TwitterIcon,
 } from 'react-share';
 
-import { CopyToClipboard } from 'react-copy-to-clipboard';
-
 const iconSize = 64;
 const ShareModalContent = () => {
   const location = window.location.href;

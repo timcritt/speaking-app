@@ -7,7 +7,7 @@ function getScrollHeight(elm) {
 
 export function onExpandableTextareaInput({ target: elm }) {
   // make sure the input event originated from a textarea and it's desired to be auto-expandable
-  if (!elm.classList.contains('autoExpand') || !elm.nodeName == 'TEXTAREA')
+  if (!elm.classList.contains('autoExpand') || !elm.nodeName === 'TEXTAREA')
     return;
 
   var minRows = elm.getAttribute('data-min-rows') | 0,

@@ -1,14 +1,13 @@
 import { projectFirestore } from '../firebase/firebaseIndex';
-import { FCEPart2 } from './firebaseConsts';
 import firebase from 'firebase';
 
 //gets an array of tests based on an array of test ids
-const getSomeTests = async (testIds) => {
+const getTestsById = async (testIds, testType) => {
   var tests = [];
 
   if (testIds.length > 0) {
     await projectFirestore
-      .collection(FCEPart2)
+      .collection(testType)
       .where(firebase.firestore.FieldPath.documentId(), 'in', testIds)
       .get()
       .then((querySnapshot) => {
@@ -21,4 +20,4 @@ const getSomeTests = async (testIds) => {
   return tests;
 };
 
-export default getSomeTests;
+export default getTestsById;

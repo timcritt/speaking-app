@@ -1,23 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-const TestPreview = ({ test }) => {
+const TestPreview = ({ question, children }) => {
   return (
-    <Link
-      className='test-preview-link fade-in'
-      to={`/FCEPart2/${test.id}`}
-      key={test.id}
-    >
-      <div className='test-preview-container'>
-        <div className='test-preview-question-container dont-break-out'>
-          <span>{test.question}</span>
-        </div>
-        <div className='img-wrap' key={test.id}>
-          <img className='thumbnail' src={test.imageOneUrl}></img>
-          <img className='thumbnail' src={test.imageTwoUrl}></img>
-        </div>
+    <div className='test-preview-container fade-in'>
+      <div className='test-preview-question-container dont-break-out'>
+        <span>{question}</span>
       </div>
-    </Link>
+      {children}
+    </div>
   );
 };
 

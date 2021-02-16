@@ -1,9 +1,6 @@
-import React, { useContext } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import MyTests from 'components/CreatorContent/MyTests';
-import AllFolders from 'components/common/AllFolders';
 import MyFolders from 'components/CreatorContent/MyFolders';
-import { firebaseAuth } from 'context/AuthProvider';
 import FolderSummary from 'components/common/FolderSummary';
 
 const ContentRoutes = ({ url, creatorId }) => {
