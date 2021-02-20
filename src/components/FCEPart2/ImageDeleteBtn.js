@@ -1,6 +1,11 @@
 import React, { Fragment } from 'react';
 
-const ImageDeleteBtn = ({ handleClick }) => {
+const ImageDeleteBtn = ({ setImageUrl, setImageRef }) => {
+  const handleClick = () => {
+    setImageUrl(null);
+    setImageRef(null);
+  };
+
   return (
     <Fragment>
       <button

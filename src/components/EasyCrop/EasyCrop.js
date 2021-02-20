@@ -9,15 +9,13 @@ import { getCroppedImg, getRotatedImage } from '../../auxFunctions/canvasUtils';
 import { styles } from './styles';
 import ProgressBar from '../ProgressBar';
 
-import ImageContext from '../../context/ImageContext';
-
 const ORIENTATION_TO_ANGLE = {
   3: 180,
   6: 90,
   8: -90,
 };
 
-const EasyCrop = ({ classes, aspect = 4 / 3 }) => {
+const EasyCrop = ({ classes, aspect = 4 / 3, setImageUrl }) => {
   const [imageSrc, setImageSrc] = useState(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
@@ -27,8 +25,6 @@ const EasyCrop = ({ classes, aspect = 4 / 3 }) => {
   const [croppedImage, setCroppedImage] = useState(false);
 
   //access to the function that sets the image on the page
-  const setFile = useContext(ImageContext);
-  console.log(setFile);
 
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
@@ -43,7 +39,7 @@ const EasyCrop = ({ classes, aspect = 4 / 3 }) => {
       );
       //setCroppedImage(croppedImage);
 
-      setFile(croppedImage);
+      setImageUrl(croppedImage);
       //handleSetImage(croppedImage);
     } catch (e) {
       console.error(e);

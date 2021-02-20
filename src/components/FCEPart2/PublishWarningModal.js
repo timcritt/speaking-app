@@ -66,7 +66,7 @@ export default function PublishWarningModal() {
             data.imageOneData.reference,
             data.imageTwoData.reference
           ).then(
-            () => context.setImageOneUrl(data.imageOneData.url),
+            context.setImageOneUrl(data.imageOneData.url),
             context.setImageTwoUrl(data.imageTwoData.url),
             context.setImageOneRef(data.imageOneData.reference),
             context.setImageTwoRef(data.imageTwoData.reference),
@@ -92,8 +92,8 @@ export default function PublishWarningModal() {
               userId
             ).then((response) => {
               context.setDocRef(response.id);
-              history.push(`/EditFCEPart2/${response.id}`);
               setUploadComplete(true);
+              history.push(`/EditFCEPart2/${response.id}`);
             });
           }
         );

@@ -88,10 +88,16 @@ const FCEPart2 = (props) => {
               </div>
               <div className='part2-image-row'>
                 <div className='part2-image-container-left'>
-                  <ExamPicture image={context.imageOneUrl} />
+                  <ExamPicture
+                    image={context.imageOneUrl}
+                    setImage={context.setImageOneUrl}
+                  />
                 </div>
                 <div className='part2-image-container-right'>
-                  <ExamPicture image={context.imageTwoUrl} />
+                  <ExamPicture
+                    image={context.imageTwoUrl}
+                    setImage={context.setImageTwoUrl}
+                  />
                 </div>
               </div>
               <div className='tool-bar-row'>

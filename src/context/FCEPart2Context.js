@@ -30,7 +30,7 @@ export const FCEPart2ContextProvider = ({ children }) => {
     setShortTurnVisible(false);
   };
 
-  // docRef is grabbed from the params of the component displaying the context.
+  // docRef is updated from the params from within the component displaying the context.
   // UseEffect only runs if the component requires a different test to the previous one displayed.
   useEffect(() => {
     setHasFetched(false);

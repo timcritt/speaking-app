@@ -1,5 +1,4 @@
 import React, { useEffect, useContext, Fragment } from 'react';
-import ImageContext from 'context/ImageContext';
 import SideBarTags from 'components/common/SideBarTags';
 import PublishWarningModal from 'components/FCEPart2/PublishWarningModal';
 import { Link } from 'react-router-dom';
@@ -12,19 +11,12 @@ import SimpleModal from 'components/common/SimpleModal';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { useHistory } from 'react-router-dom';
 import { FCEPart2Context } from 'context/FCEPart2Context';
+import { FCEPart2 } from 'APIHandlers/firebaseConsts';
 
 const EditFCEPart2 = (props) => {
   const context = useContext(FCEPart2Context);
   var history = useHistory();
 
-  function handleSetImageOne(imageUrl, ref) {
-    context.setImageOneUrl(imageUrl);
-    context.setImageOneRef(ref);
-  }
-  function handleSetImageTwo(imageUrl, ref) {
-    context.setImageTwoUrl(imageUrl);
-    context.setImageTwoRef(ref);
-  }
   function handleSetTags(tag, selected) {
     if (!selected) {
       //adds tag to the state
@@ -39,7 +31,7 @@ const EditFCEPart2 = (props) => {
     }
   }
   const handleDeleteTest = async () => {
-    await deleteTest(context.docRef, context.imageOneUrl, context.imageTwoUrl);
+    await deleteTest(context.docRef, FCEPart2);
     context.clearState();
     history.push('/EditFCEPart2/new');
   };
@@ -105,29 +97,44 @@ const EditFCEPart2 = (props) => {
               </div>
             </div>
             <div className='part2-image-row'>
-              <ImageContext.Provider value={handleSetImageOne}>
-                <div className='part2-image-container-left'>
-                  <ExamPicture image={context.imageOneUrl}>
-                    {context.imageOneUrl ? (
-                      <ImageDeleteBtn handleClick={handleSetImageOne} />
+              <div className='part2-image-container-left'>
+                <ExamPicture
+                  image={context.imageOneUrl}
+                  setImage={context.setImageOneUrl}
+                >
+                  {context.imageOneUrl ? (
+                    <ImageDeleteBtn
+                      setImageUrl={context.setImageOneUrl}
+                      setImageRef={context.setImageOneRef}
+                    />
+                  ) : (
+                    <SimpleModal
+                      modalButtonText={'upload'}
+                      setImageUrl={context.setImageOneUrl}
+                    />
+                  )}
+                </ExamPicture>
+              </div>
+
+              <div>
+                <div className='part2-image-container-right'>
+                  <ExamPicture
+                    image={context.imageTwoUrl}
+                    setImage={context.setImageTwoUrl}
+                  >
+                    {context.imageTwoUrl ? (
+                      <ImageDeleteBtn
+                        setImageUrl={context.setImageTwoUrl}
+                        setImageRef={context.setImageTwoRef}
+                      />
                     ) : (
-                      <SimpleModal modalButtonText={'upload'} />
+                      <SimpleModal
+                        modalButtonText={'upload'}
+                        setImageUrl={context.setImageTwoUrl}
+                      />
                     )}
                   </ExamPicture>
                 </div>
-              </ImageContext.Provider>
-              <div>
-                <ImageContext.Provider value={handleSetImageTwo}>
-                  <div className='part2-image-container-right'>
-                    <ExamPicture image={context.imageTwoUrl}>
-                      {context.imageTwoUrl ? (
-                        <ImageDeleteBtn handleClick={handleSetImageTwo} />
-                      ) : (
-                        <SimpleModal modalButtonText={'upload'} />
-                      )}
-                    </ExamPicture>
-                  </div>
-                </ImageContext.Provider>
               </div>
             </div>
             <div className='tool-bar-row'>
