@@ -1,115 +1,62 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useEffect, useContext, Fragment } from 'react';
 import ImageContext from 'context/ImageContext';
 import SideBarTags from 'components/common/SideBarTags';
 import PublishWarningModal from 'components/FCEPart2/PublishWarningModal';
 import { Link } from 'react-router-dom';
 import deleteTest from 'APIHandlers/deleteTest';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
-import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import ExamPicture from 'components/FCEPart2/ExamPicture';
 import ImageDeleteBtn from 'components/FCEPart2/ImageDeleteBtn';
 import SimpleModal from 'components/common/SimpleModal';
-import { FCEPart2 } from 'APIHandlers/firebaseConsts';
-import getTest from 'APIHandlers/getTest';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import { useHistory } from 'react-router-dom';
+import { FCEPart2Context } from 'context/FCEPart2Context';
 
 const EditFCEPart2 = (props) => {
-  const [longTurnQuestion, setLongTurnQuestion] = useState('');
-  const [shortTurnQuestion, setShortTurnQuestion] = useState('');
-  const [imageOneUrl, setImageOneUrl] = useState();
-  const [imageTwoUrl, setImageTwoUrl] = useState();
-  const [imageOneRef, setImageOneRef] = useState();
-  const [imageTwoRef, setImageTwoRef] = useState();
-  const [testTags, setTags] = useState([]);
-  const [docRef, setDocRef] = useState(null);
-  const [authorId, setAuthorId] = useState(null);
-  const [changesSaved, setChangesSaved] = useState(false);
-  const [hasFetched, setHasFetched] = useState(false);
-
-  //custom hook
-  const handleLongTurnQuestionChange = (e) => {
-    setLongTurnQuestion(e.currentTarget.value);
-  };
-  const handleShortTurnQuestionChange = (e) => {
-    setShortTurnQuestion(e.currentTarget.value);
-  };
+  const context = useContext(FCEPart2Context);
+  var history = useHistory();
 
   function handleSetImageOne(imageUrl, ref) {
-    setImageOneUrl(imageUrl);
-    setImageOneRef(ref);
-    //setChangesSaved(false);
+    context.setImageOneUrl(imageUrl);
+    context.setImageOneRef(ref);
   }
   function handleSetImageTwo(imageUrl, ref) {
-    console.log('iamgeUrl:', imageUrl);
-    console.log('ref:', ref);
-    setImageTwoUrl(imageUrl);
-    setImageTwoRef(ref);
-    //setChangesSaved(false);
+    context.setImageTwoUrl(imageUrl);
+    context.setImageTwoRef(ref);
   }
   function handleSetTags(tag, selected) {
     if (!selected) {
       //adds tag to the state
-      setTags((prevTags) => {
+      context.setTestTags((prevTags) => {
         return [...prevTags, tag];
       });
     } else {
       //removes the tag from the state
-      setTags((prevTags) => {
+      context.setTestTags((prevTags) => {
         return [...prevTags.filter((currentTag) => currentTag !== tag)];
       });
     }
-    //setChangesSaved(false);
   }
   const handleDeleteTest = async () => {
-    await deleteTest(docRef, imageOneUrl, imageTwoUrl);
-    clearState();
+    await deleteTest(context.docRef, context.imageOneUrl, context.imageTwoUrl);
+    context.clearState();
+    history.push('/EditFCEPart2/new');
   };
 
-  function handleSetDocRef(docRef) {
-    setDocRef(docRef);
-  }
-
-  const clearState = () => {
-    setLongTurnQuestion('');
-    setShortTurnQuestion('');
-    setImageOneUrl(null);
-    setImageTwoUrl(null);
-    setTags([]);
-    setDocRef(null);
-    setImageOneRef(null);
-    setImageTwoRef(null);
-    setAuthorId(null);
-  };
   useEffect(() => {
-    var isMounted = true;
-    getTest('FCEPart2', props.match.params.id).then((data) => {
-      if (isMounted && data) {
-        setDocRef(data.id);
-        setImageOneUrl(data.imageOneUrl);
-        setImageTwoUrl(data.imageTwoUrl);
-        setLongTurnQuestion(data.question);
-        setShortTurnQuestion(data.shortTurnQuestion);
-        setTags(data.tags);
-        setImageOneRef(data.imageOneRef);
-        setImageTwoRef(data.imageTwoRef);
-        setAuthorId(data.userId);
-        setHasFetched(true);
-      } else {
-        setHasFetched(true);
-      }
-    });
-    return () => {
-      isMounted = false;
-    };
+    //sends the id of the current test to be displayed to the FCEPart2 context
+    if (props.match.params.id !== 'new') {
+      context.setDocRef(props.match.params.id);
+    }
   }, []);
 
-  if (hasFetched) {
+  if (context.hasFetched) {
     return (
       <Fragment>
         <div className='side-bar-left-tags hg-sidebar '>
           <SideBarTags
-            tags={testTags}
+            tags={context.testTags}
             handleSetTags={handleSetTags}
             title={'Topic Tags'}
           >
@@ -130,10 +77,10 @@ const EditFCEPart2 = (props) => {
                 </label>
                 <input
                   label='long-turn'
-                  className='input question-input '
-                  defaultValue={longTurnQuestion}
+                  className='input question-input'
+                  value={context.question}
                   placeholder='enter long turn question'
-                  onChange={(e) => handleLongTurnQuestionChange(e)}
+                  onChange={(e) => context.setQuestion(e.currentTarget.value)}
                 />
               </div>
               <div className='part2-edit-question-container'>
@@ -146,17 +93,19 @@ const EditFCEPart2 = (props) => {
                 <input
                   label='long-turn'
                   className='input question-input '
-                  defaultValue={shortTurnQuestion}
+                  value={context.shortTurnQuestion}
                   placeholder='enter short turn question'
-                  onChange={(e) => handleShortTurnQuestionChange(e)}
+                  onChange={(e) =>
+                    context.setShortTurnQuestion(e.currentTarget.value)
+                  }
                 />
               </div>
             </div>
             <div className='part2-image-row'>
               <ImageContext.Provider value={handleSetImageOne}>
                 <div className='part2-image-container-left'>
-                  <ExamPicture image={imageOneUrl}>
-                    {imageOneUrl ? (
+                  <ExamPicture image={context.imageOneUrl}>
+                    {context.imageOneUrl ? (
                       <ImageDeleteBtn handleClick={handleSetImageOne} />
                     ) : (
                       <SimpleModal modalButtonText={'upload'} />
@@ -167,8 +116,8 @@ const EditFCEPart2 = (props) => {
               <div>
                 <ImageContext.Provider value={handleSetImageTwo}>
                   <div className='part2-image-container-right'>
-                    <ExamPicture image={imageTwoUrl}>
-                      {imageTwoUrl ? (
+                    <ExamPicture image={context.imageTwoUrl}>
+                      {context.imageTwoUrl ? (
                         <ImageDeleteBtn handleClick={handleSetImageTwo} />
                       ) : (
                         <SimpleModal modalButtonText={'upload'} />
@@ -180,27 +129,11 @@ const EditFCEPart2 = (props) => {
             </div>
             <div className='tool-bar-row'>
               <div className='tool-btn-container'>
-                <PublishWarningModal
-                  imageOneUrl={imageOneUrl}
-                  imageTwoUrl={imageTwoUrl}
-                  question={longTurnQuestion}
-                  shortTurnQuestion={shortTurnQuestion}
-                  tags={testTags}
-                  docRef={docRef}
-                  setDocRef={handleSetDocRef}
-                  imageOneRef={imageOneRef}
-                  imageTwoRef={imageTwoRef}
-                  setImageOneUrl={setImageOneUrl}
-                  setImageTwoUrl={setImageTwoUrl}
-                  setImageOneRef={setImageOneRef}
-                  setImageTwoRef={setImageTwoRef}
-                  changesSaved={changesSaved}
-                  setChangesSaved={setChangesSaved}
-                />
-                {docRef && (
+                <PublishWarningModal />
+                {context.docRef && (
                   <Link
                     to={{
-                      pathname: `/FCEPart2/${docRef}`,
+                      pathname: `/FCEPart2/${context.docRef}`,
                     }}
                   >
                     <button className='tool-bar-btn'>

@@ -6,6 +6,7 @@ const TestPreview = ({ question, children }) => {
       <div className='test-preview-question-container dont-break-out'>
         <span>{question}</span>
       </div>
+
       {children}
     </div>
   );

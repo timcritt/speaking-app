@@ -3,21 +3,26 @@ import PlayArrowOutlinedIcon from '@material-ui/icons/PlayArrowOutlined';
 import StopOutlinedIcon from '@material-ui/icons/StopOutlined';
 import RotateLeftOutlinedIcon from '@material-ui/icons/RotateLeftOutlined';
 
-const Timer = ({ time = 6000 }) => {
-  const [timeState, setTimeState] = useState(time);
+const Timer = ({ time }) => {
+  const [currentTime, setCurrentTime] = useState();
   const [ticking, setTicking] = useState(false);
   const [timerId, setTimerId] = useState(0);
   const [buttonClass, setButtonClass] = useState('btn-start');
 
+  //monitors changes to default total time passed in as prop
   useEffect(() => {
-    if (ticking && timeState > 0) {
+    setCurrentTime(time);
+  }, [time]);
+
+  useEffect(() => {
+    if (ticking && currentTime > 0) {
       setTimerId(
         setTimeout(() => {
-          setTimeState(timeState - 1);
+          setCurrentTime(currentTime - 1);
         }, 10)
       );
     }
-  }, [timeState, ticking]);
+  }, [currentTime, ticking]);
 
   useEffect(() => {
     if (ticking) {
@@ -29,12 +34,12 @@ const Timer = ({ time = 6000 }) => {
 
   return (
     <div className='timer-container '>
-      <div>{timeState > 0 ? parseInt(timeState / 100) : 'time up!'}</div>
+      <div>{currentTime > 0 ? parseInt(currentTime / 100) : 'time up!'}</div>
       <div className='part2-button-container'>
         <button
           className={`timer-btn ${buttonClass}`}
           onClick={() => setTicking((prevTicking) => !prevTicking)}
-          disabled={timeState === 0}
+          disabled={currentTime === 0}
         >
           {ticking ? <StopOutlinedIcon /> : <PlayArrowOutlinedIcon />}
         </button>
@@ -43,7 +48,7 @@ const Timer = ({ time = 6000 }) => {
           onClick={() => {
             clearTimeout(timerId);
             setTicking(false);
-            setTimeState(time);
+            setCurrentTime(time);
           }}
         >
           <RotateLeftOutlinedIcon />

@@ -13,41 +13,20 @@ import AddToMyFolders from 'components/common/AddToMyFolders';
 import CreatorInfo from 'components/common/CreatorInfo';
 import { Fragment } from 'react';
 import ShareButton from 'components/common/ShareButton';
-import getTest from 'APIHandlers/getTest';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import { FCEPart2Context } from 'context/FCEPart2Context';
 
 const FCEPart2 = (props) => {
-  const [question, setQuestion] = useState(null);
-  const [shortTurnQuestion, setShortTurnQuestion] = useState(null);
-  const [imageOneUrl, setImageOne] = useState(null);
-  const [imageTwoUrl, setImageTwo] = useState(null);
-  const [docRef, setDocRef] = useState(null);
-  const [authorId, setAuthorId] = useState(null);
+  const context = useContext(FCEPart2Context);
   const [AddToFolderModalOpen, setAddToFolderModalOpen] = useState(false);
   const { userId } = useContext(firebaseAuth);
   const handleFullScreen = useFullScreenHandle();
-  const [hasFetched, setHasFetched] = useState(false);
   const [shortTurnVisible, setShortTurnVisible] = useState(false);
+  const [time, setTime] = useState(6000);
 
   useEffect(() => {
-    var isMounted = true;
-    getTest('FCEPart2', props.match.params.id).then((data) => {
-      if (isMounted && data) {
-        setDocRef(data.id);
-        setImageOne(data.imageOneUrl);
-        setImageTwo(data.imageTwoUrl);
-        setQuestion(data.question);
-        setShortTurnQuestion(data.shortTurnQuestion);
-        setAuthorId(data.userId);
-        setHasFetched(true);
-      } else {
-        setHasFetched(true);
-      }
-    });
-    //prevents setting of state if fetch requests completes after component has unmounted
-    return () => {
-      isMounted = false;
-    };
+    //sends the id of the current test to be displayed to the FCEPart2 context
+    context.setDocRef(props.match.params.id);
   }, []);
 
   const openAddToFolderModal = () => {
@@ -57,10 +36,15 @@ const FCEPart2 = (props) => {
     setAddToFolderModalOpen(false);
   };
   const handleViewShortTurnClick = () => {
-    setShortTurnVisible(!shortTurnVisible);
+    setShortTurnVisible((prevState) => !prevState);
+    if (!shortTurnVisible) {
+      setTime(2000);
+    } else {
+      setTime(6000);
+    }
   };
 
-  if (hasFetched) {
+  if (context.hasFetched) {
     return (
       <Fragment>
         {AddToFolderModalOpen && (
@@ -69,7 +53,7 @@ const FCEPart2 = (props) => {
             heading='Add test to folder'
             setModalOpen={closeAddToFolderModal}
           >
-            <AddToMyFolders testId={docRef} />
+            <AddToMyFolders testId={context.docRef} />
           </Modal>
         )}
         <FullScreen handle={handleFullScreen}>
@@ -81,7 +65,7 @@ const FCEPart2 = (props) => {
                     <input
                       label='long-turn'
                       className='input question-input '
-                      value={question}
+                      value={context.question}
                       readOnly={true}
                       placeholder='ERROR: data not loaded'
                     />
@@ -89,7 +73,7 @@ const FCEPart2 = (props) => {
                     <input
                       label='short-turn'
                       className='input question-input short-turn-question-input'
-                      value={`Short turn: ${shortTurnQuestion}`}
+                      value={`Short turn: ${context.shortTurnQuestion}`}
                       readOnly={true}
                       placeholder='ERROR: data not loaded'
                     />
@@ -104,20 +88,22 @@ const FCEPart2 = (props) => {
               </div>
               <div className='part2-image-row'>
                 <div className='part2-image-container-left'>
-                  <ExamPicture image={imageOneUrl} />
+                  <ExamPicture image={context.imageOneUrl} />
                 </div>
                 <div className='part2-image-container-right'>
-                  <ExamPicture image={imageTwoUrl} />
+                  <ExamPicture image={context.imageTwoUrl} />
                 </div>
               </div>
               <div className='tool-bar-row'>
-                {authorId && <CreatorInfo authorId={authorId} />}
-                <Timer />
+                {context.authorId && (
+                  <CreatorInfo authorId={context.authorId} />
+                )}
+                <Timer time={time} />
                 <div className='tool-btn-container'>
-                  {authorId === userId && (
+                  {context.authorId === userId && (
                     <Link
                       to={{
-                        pathname: `/EditFCEPart2/${docRef}`,
+                        pathname: `/EditFCEPart2/${context.docRef}`,
                       }}
                     >
                       <button className='tool-bar-btn hide-on-fullscreen'>

@@ -5,7 +5,6 @@ import { useLocation } from 'react-router-dom';
 const DashBoardButton = ({ linkTo, label }) => {
   var history = useHistory();
   let pathname = useLocation().pathname;
-
   const handleChangeChecked = () => {
     return pathname === linkTo;
   };

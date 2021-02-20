@@ -7,86 +7,84 @@ import updateTest from 'APIHandlers/updateTest';
 import addTest from 'APIHandlers/addTest';
 import { firebaseAuth } from 'context/AuthProvider';
 import { uploadFCEPart2Images } from 'APIHandlers/uploadImage';
+import { FCEPart2Context } from 'context/FCEPart2Context';
 
-export default function PublishWarningModal({
-  imageOneUrl,
-  imageTwoUrl,
-  tags,
-  question,
-  shortTurnQuestion,
-  docRef,
-  setDocRef,
-  imageOneRef,
-  imageTwoRef,
-  setImageOneUrl,
-  setImageTwoUrl,
-  setImageOneRef,
-  setImageTwoRef,
-  changesSaved,
-  setChangesSaved,
-}) {
+export default function PublishWarningModal() {
   const [open, setOpen] = useState(false);
   const [complete, setComplete] = useState(false);
   const { userId } = useContext(firebaseAuth);
+  const context = useContext(FCEPart2Context);
 
   // var history = useHistory();
 
   useEffect(() => {
-    if (tags.length > 0 && imageOneUrl && imageTwoUrl && question) {
+    if (
+      context.testTags.length > 0 &&
+      context.imageOneUrl &&
+      context.imageTwoUrl &&
+      context.question
+    ) {
       setComplete(true);
     } else {
       setComplete(false);
     }
-  }, [imageOneUrl, imageTwoUrl, tags, question]);
+  }, [
+    context.imageOneUrl,
+    context.imageTwoUrl,
+    context.testTags,
+    context.question,
+  ]);
 
   const handleOpen = () => {
     setOpen(true);
     const createdAt = timestamp();
     if (complete) {
-      if (docRef) {
+      if (context.docRef) {
         //var test = getTest(FCEPart2, docRef).then(console.log);
         uploadFCEPart2Images(
-          imageOneUrl,
-          imageTwoUrl,
-          imageOneRef,
-          imageTwoRef
+          context.imageOneUrl,
+          context.imageTwoUrl,
+          context.imageOneRef,
+          context.imageTwoRef
         ).then((data) => {
           updateTest(
             data.imageOneData.url,
             data.imageTwoData.url,
-            question,
-            shortTurnQuestion,
-            tags,
-            docRef,
+            context.question,
+            context.shortTurnQuestion,
+            context.testTags,
+            context.docRef,
             createdAt,
             data.imageOneData.reference,
             data.imageTwoData.reference
           ).then(
-            () => setImageOneUrl(data.imageOneData.url),
-            setImageTwoUrl(data.imageTwoData.url),
-            setImageOneRef(data.imageOneData.reference),
-            setImageTwoRef(data.imageTwoData.reference)
+            () => context.setImageOneUrl(data.imageOneData.url),
+            context.setImageTwoUrl(data.imageTwoData.url),
+            context.setImageOneRef(data.imageOneData.reference),
+            context.setImageTwoRef(data.imageTwoData.reference)
             //setChangesSaved(true)
           );
         });
       } else {
         setOpen(true);
         //if local test has no docId, it's because it's new and doesn't exist on the firestore.
-        uploadFCEPart2Images(imageOneUrl, imageTwoUrl).then((data) => {
-          addTest(
-            data.imageOneData.url,
-            data.imageTwoData.url,
-            question,
-            shortTurnQuestion,
-            createdAt,
-            tags,
-            data.imageOneData.reference,
-            data.imageTwoData.reference,
-            userId
-          ).then((docRef) => {
-            setDocRef(docRef); //setChangesSaved(true); //history.push(`/FCEPart2/${docRef.id}`);
-          });
-        });
+        uploadFCEPart2Images(context.imageOneUrl, context.imageTwoUrl).then(
+          (data) => {
+            addTest(
+              data.imageOneData.url,
+              data.imageTwoData.url,
+              context.question,
+              context.shortTurnQuestion,
+              createdAt,
+              context.testTags,
+              data.imageOneData.reference,
+              data.imageTwoData.reference,
+              userId
+            ).then((response) => {
+              context.setDocRef(response.id); //setChangesSaved(true); //history.push(`/FCEPart2/${docRef.id}`);
+            });
+          }
+        );
       }
     } else {
       setOpen(true);
@@ -104,9 +102,11 @@ export default function PublishWarningModal({
         {complete ? <h3>Published!</h3> : <h3>Oops! You forgot to:</h3>}
       </div>
       <ul>
-        {(!imageOneUrl || !imageTwoUrl) && <li>select two images</li>}
-        {!question && <li>enter a question</li>}
-        {tags.length === 0 && <li>select at least one tag</li>}
+        {(!context.imageOneUrl || !context.imageTwoUrl) && (
+          <li>select two images</li>
+        )}
+        {!context.question && <li>enter a question</li>}
+        {context.testTags.length === 0 && <li>select at least one tag</li>}
       </ul>
       <div className='center'>
         <button onClick={handleClose}>ok</button>
@@ -116,12 +116,8 @@ export default function PublishWarningModal({
 
   return (
     <Fragment>
-      <button
-        className='tool-bar-btn'
-        onClick={handleOpen}
-        disabled={changesSaved}
-      >
-        {docRef ? <SaveOutlinedIcon /> : <PublishIcon />}
+      <button className='tool-bar-btn' onClick={handleOpen}>
+        {context.docRef ? <SaveOutlinedIcon /> : <PublishIcon />}
       </button>
       {open && (
         <Modal

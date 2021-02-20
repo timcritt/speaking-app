@@ -5,11 +5,9 @@
 .view-folder-container {
   background-color: white;
   box-sizing: border-box;
-
   width: 100%;
   border: 1px solid #dbdbdb;
-    border-radius: 3px;
-
+  border-radius: 3px;
 }
 
 .view-folder-header {
@@ -46,4 +44,9 @@
 }
 
 
-
+.ellipsis {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
