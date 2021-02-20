@@ -8,14 +8,21 @@ import addTest from 'APIHandlers/addTest';
 import { firebaseAuth } from 'context/AuthProvider';
 import { uploadFCEPart2Images } from 'APIHandlers/uploadImage';
 import { FCEPart2Context } from 'context/FCEPart2Context';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import { useHistory } from 'react-router-dom';
+
+const PublishMessage = ({ uploadComplete }) => {
+  return uploadComplete ? <h3>Published!</h3> : <LinearProgress />;
+};
 
 export default function PublishWarningModal() {
   const [open, setOpen] = useState(false);
-  const [complete, setComplete] = useState(false);
   const { userId } = useContext(firebaseAuth);
   const context = useContext(FCEPart2Context);
+  const [allInputsCompleted, setAllInputsCompleted] = useState(false);
+  const [uploadComplete, setUploadComplete] = useState(false);
 
-  // var history = useHistory();
+  var history = useHistory();
 
   useEffect(() => {
     if (
@@ -24,9 +31,9 @@ export default function PublishWarningModal() {
       context.imageTwoUrl &&
       context.question
     ) {
-      setComplete(true);
+      setAllInputsCompleted(true);
     } else {
-      setComplete(false);
+      setAllInputsCompleted(false);
     }
   }, [
     context.imageOneUrl,
@@ -37,8 +44,9 @@ export default function PublishWarningModal() {
 
   const handleOpen = () => {
     setOpen(true);
+    setUploadComplete(false);
     const createdAt = timestamp();
-    if (complete) {
+    if (allInputsCompleted) {
       if (context.docRef) {
         //var test = getTest(FCEPart2, docRef).then(console.log);
         uploadFCEPart2Images(
@@ -61,7 +69,9 @@ export default function PublishWarningModal() {
             () => context.setImageOneUrl(data.imageOneData.url),
             context.setImageTwoUrl(data.imageTwoData.url),
             context.setImageOneRef(data.imageOneData.reference),
-            context.setImageTwoRef(data.imageTwoData.reference)
+            context.setImageTwoRef(data.imageTwoData.reference),
+            setUploadComplete(true)
+
             //setChangesSaved(true)
           );
         });
@@ -81,7 +91,9 @@ export default function PublishWarningModal() {
               data.imageTwoData.reference,
               userId
             ).then((response) => {
-              context.setDocRef(response.id); //setChangesSaved(true); //history.push(`/FCEPart2/${docRef.id}`);
+              context.setDocRef(response.id);
+              history.push(`/EditFCEPart2/${response.id}`);
+              setUploadComplete(true);
             });
           }
         );
@@ -94,12 +106,17 @@ export default function PublishWarningModal() {
 
   const handleClose = () => {
     setOpen(false);
+    setUploadComplete(false);
   };
 
   const body = (
     <div>
       <div>
-        {complete ? <h3>Published!</h3> : <h3>Oops! You forgot to:</h3>}
+        {allInputsCompleted ? (
+          <PublishMessage uploadComplete={uploadComplete} />
+        ) : (
+          <h3>Oops! You forgot to:</h3>
+        )}
       </div>
       <ul>
         {(!context.imageOneUrl || !context.imageTwoUrl) && (

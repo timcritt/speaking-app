@@ -11,6 +11,8 @@ const Timer = ({ time }) => {
 
   //monitors changes to default total time passed in as prop
   useEffect(() => {
+    setTicking(false);
+    clearTimeout(timerId);
     setCurrentTime(time);
   }, [time]);
 
