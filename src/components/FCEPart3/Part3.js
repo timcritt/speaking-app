@@ -13,30 +13,28 @@ import AddToMyFolders from 'components/common/AddToMyFolders';
 import CreatorInfo from 'components/common/CreatorInfo';
 import ShareButton from 'components/common/ShareButton';
 import Part3Lines from 'components/FCEPart3/Part3Lines';
-import getTest from 'APIHandlers/getTest';
+import { FCEPart3Context } from 'context/FCEPart3Context';
 import debounce from 'auxFunctions/debounce';
 
 const Part3 = (props) => {
-  const [question, setQuestion] = useState('');
-  const [topLeft, setTopLeft] = useState('');
-  const [topRight, setTopRight] = useState('');
-  const [bottomLeft, setBottomLeft] = useState('');
-  const [bottomCentre, setBottomCentre] = useState('');
-  const [bottomRight, setBottomRight] = useState('');
-  const [docRef, setDocRef] = useState(null);
-  const [authorId, setAuthorId] = useState(null);
   const [AddToFolderModalOpen, setAddToFolderModalOpen] = useState(false);
   const { userId } = useContext(firebaseAuth);
   const handleFullScreen = useFullScreenHandle();
+  const context = useContext(FCEPart3Context);
   const [lineClass, setLineClass] = useState('');
-  const [hasFetched, setHasFetched] = useState(false);
-
+  const [mountLines, setMountLines] = useState(true);
   const [windowDimensions, setWindowDimensions] = useState({
-    height: window.innerHeight,
-    width: window.innerWidth,
+    height: null,
+    width: null,
   });
 
-  //hide lines before redrawing
+  const openAddToFolderModal = () => {
+    setAddToFolderModalOpen(true);
+  };
+  const closeAddToFolderModal = () => {
+    setAddToFolderModalOpen(false);
+  };
+
   const hideLines = () => {
     setLineClass('line-hidden');
   };
@@ -44,7 +42,6 @@ const Part3 = (props) => {
     setLineClass('');
   };
 
-  //sets the state of the lines after window resize to force a rerender
   const handleResize = () => {
     setWindowDimensions({
       height: window.innerHeight,
@@ -53,14 +50,7 @@ const Part3 = (props) => {
     showLines();
     console.log('lines redrawn');
   };
-  const openAddToFolderModal = () => {
-    setAddToFolderModalOpen(true);
-  };
-  const closeAddToFolderModal = () => {
-    setAddToFolderModalOpen(false);
-  };
 
-  //applies a time delay between window resize and the rerender of lines
   const debouncedHandleResize = debounce(handleResize, 200);
 
   useEffect(() => {
@@ -75,32 +65,26 @@ const Part3 = (props) => {
       window.removeEventListener('resize', hideLines);
       window.removeEventListener('resize', debouncedHandleResize);
       window.removeEventListener('fullscreenchange', handleResize);
+      setMountLines(false);
     };
   }, []);
 
   useEffect(() => {
-    var isMounted = true;
-    getTest('Part3', props.match.params.id).then((data) => {
-      if (isMounted) {
-        setDocRef(data.id);
-        setQuestion(data.question);
-        setTopLeft(data.topLeft);
-        setTopRight(data.topRight);
-        setBottomCentre(data.bottomCentre);
-        setBottomLeft(data.bottomLeft);
-        setBottomRight(data.bottomRight);
-        setAuthorId(data.creatorId);
-        setHasFetched(true);
-        //draws the lines in the correct positions after test load
-        handleResize();
-      }
-    });
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+    setMountLines(true);
+    //sends the id of the current test to be displayed to the FCEPart2 context
+    if (props.match.params.id !== 'new') {
+      context.setDocRef(props.match.params.id);
+    } else {
+      //clears context state of previously viewed Test. displays blank test to be created by user.
+      // context.clearState();
+      handleResize();
+    }
+    if (context.hasFetched) {
+      handleResize();
+    }
+  }, [context.hasFetched]);
 
-  if (hasFetched) {
+  if (context.hasFetched) {
     return (
       <Fragment>
         {AddToFolderModalOpen && (
@@ -110,44 +94,45 @@ const Part3 = (props) => {
             heading='Add test to folder'
             setModalOpen={closeAddToFolderModal}
           >
-            <AddToMyFolders testId={docRef} />
+            <AddToMyFolders testId={context.docRef} />
           </Modal>
         )}
-        <FullScreen handle={handleFullScreen}>
+        <FullScreen handle={handleFullScreen} key={2352}>
           <main className='holy-grail-content fade-in'>
             <div className='part2-main-row'>
-              <div className='part3-grid-container'>
+              <div className='part3-grid-container' key={2}>
                 <div className='part3-option-top-left part3-input'>
-                  {topLeft}
+                  {context.topLeft}
                 </div>
                 <div className='part3-question-centre part3-input'>
-                  <span>{question}</span>
+                  <span>{context.question}</span>
                 </div>
                 <div className='part3-option-top-right part3-input part3-option-input'>
-                  <span>{topRight}</span>
+                  <span>{context.topRight}</span>
                 </div>
                 <div className='part3-option-bottom-left part3-input part3-option-input'>
-                  {bottomLeft}
+                  {context.bottomLeft}
                 </div>
                 <div className='part3-option-bottom-centre part3-input part3-option-input'>
-                  {bottomCentre}
+                  {context.bottomCentre}
                 </div>
                 <div className='part3-option-bottom-right part3-input part3-option-input'>
-                  {bottomRight}
+                  {context.bottomRight}
                 </div>
                 <Part3Lines
+                  key={12121}
                   windowDimensions={windowDimensions}
                   lineClass={lineClass}
                 />
               </div>
               <div className='tool-bar-row'>
-                <CreatorInfo authorId={authorId} />
+                <CreatorInfo authorId={context.authorId} />
                 <Timer time={12000} />
                 <div className='tool-btn-container'>
-                  {authorId === userId && (
+                  {context.authorId === userId && (
                     <Link
                       to={{
-                        pathname: `/EditFCEPart3/${docRef}`,
+                        pathname: `/EditFCEPart3/${context.docRef}`,
                       }}
                     >
                       <button className='tool-bar-btn hide-on-fullscreen'>

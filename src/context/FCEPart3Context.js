@@ -10,32 +10,13 @@ export const FCEPart3ContextProvider = ({ children }) => {
   const [bottomLeft, setBottomLeft] = useState('');
   const [bottomCentre, setBottomCentre] = useState('');
   const [bottomRight, setBottomRight] = useState('');
-  const [lineClass, setLineClass] = useState('');
   const [testTags, setTestTags] = useState([]);
   const [docRef, setDocRef] = useState(null);
   const [authorId, setAuthorId] = useState('');
   const [changesSaved, setChangesSaved] = useState(false);
   const optionPlaceholder = 'option';
   const [hasFetched, setHasFetched] = useState(false);
-  const [windowDimensions, setWindowDimensions] = useState({
-    height: window.innerHeight,
-    width: window.innerWidth,
-  });
 
-  const hideLines = () => {
-    setLineClass('line-hidden');
-  };
-  const showLines = () => {
-    setLineClass('');
-  };
-  const handleResize = () => {
-    setWindowDimensions({
-      height: window.innerHeight,
-      width: window.innerWidth,
-    });
-    showLines();
-    console.log('lines redrawn');
-  };
   function handleSetTags(tag, selected) {
     if (!selected) {
       //adds tag to the state
@@ -67,13 +48,10 @@ export const FCEPart3ContextProvider = ({ children }) => {
           setBottomRight(data.bottomRight);
           setAuthorId(data.creatorId);
           setTestTags(data.tags);
-          //draws the lines in the correct positions after test load
           setHasFetched(true);
-          handleResize();
         } else {
           //creat new test
           setHasFetched(true);
-          handleResize();
         }
       });
     }
@@ -94,8 +72,6 @@ export const FCEPart3ContextProvider = ({ children }) => {
         setBottomCentre,
         bottomRight,
         setBottomRight,
-        lineClass,
-        setLineClass,
         testTags,
         setTestTags,
         docRef,
@@ -107,11 +83,6 @@ export const FCEPart3ContextProvider = ({ children }) => {
         optionPlaceholder,
         hasFetched,
         setHasFetched,
-        windowDimensions,
-        setWindowDimensions,
-        hideLines,
-        showLines,
-        handleResize,
         handleSetTags,
       }}
     >

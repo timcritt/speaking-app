@@ -81,12 +81,12 @@ const EditFCEPart2 = (props) => {
               <div className='part2-edit-question-container'>
                 <label
                   className='part2-question-input-label'
-                  htmlFor='long-turn'
+                  htmlFor='short-turn'
                 >
                   Short turn
                 </label>
                 <input
-                  label='long-turn'
+                  label='short-turn'
                   className='input question-input '
                   value={context.shortTurnQuestion}
                   placeholder='enter short turn question'

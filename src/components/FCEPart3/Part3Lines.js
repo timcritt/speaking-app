@@ -2,8 +2,10 @@ import React, { Fragment } from 'react';
 import LineTo from 'react-lineto';
 
 const Part3Lines = ({ windowDimensions, lineClass }) => {
+  console.log('rendering lines');
+
   return (
-    <Fragment>
+    <div key={Date.now()}>
       <LineTo
         borderColor={'#dbdbdb'}
         zIndex={0}
@@ -45,7 +47,7 @@ const Part3Lines = ({ windowDimensions, lineClass }) => {
         to='part3-question-centre'
         className={`line ${lineClass}`}
       />
-    </Fragment>
+    </div>
   );
 };
 

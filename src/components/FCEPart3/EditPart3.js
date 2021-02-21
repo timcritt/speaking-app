@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import getTest from 'APIHandlers/getTest';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import Modal from 'components/common/Modal';
 import AddToMyFolders from 'components/common/AddToMyFolders';
@@ -18,36 +17,62 @@ import { FCEPart3Context } from 'context/FCEPart3Context';
 
 const EditPart3 = (props) => {
   const [AddToFolderModalOpen, setAddToFolderModalOpen] = useState(false);
-
   const handleFullScreen = useFullScreenHandle();
   const optionPlaceholder = 'option';
-
   const context = useContext(FCEPart3Context);
+  const [mountLines, setMountLines] = useState(true);
+  const [lineClass, setLineClass] = useState('');
+  const [windowDimensions, setWindowDimensions] = useState({
+    height: null,
+    width: null,
+  });
 
-  const debouncedHandleResize = debounce(context.handleResize, 200);
+  const hideLines = () => {
+    setLineClass('line-hidden');
+  };
+  const showLines = () => {
+    setLineClass('');
+  };
+
+  const handleResize = () => {
+    setWindowDimensions({
+      height: window.innerHeight,
+      width: window.innerWidth,
+    });
+    showLines();
+    console.log('lines redrawn');
+  };
+
+  const debouncedHandleResize = debounce(handleResize, 200);
 
   useEffect(() => {
+    setMountLines(true);
     //sends the id of the current test to be displayed to the FCEPart2 context
     if (props.match.params.id !== 'new') {
       context.setDocRef(props.match.params.id);
     } else {
       //clears context state of previously viewed Test. displays blank test to be created by user.
       // context.clearState();
+      handleResize();
     }
-  }, []);
+    if (context.hasFetched) {
+      handleResize();
+    }
+  }, [context.hasFetched]);
 
   useEffect(() => {
     //instantly hides the lines on window resize to prevent jumping lines.
-    window.addEventListener('resize', context.hideLines);
+    window.addEventListener('resize', hideLines);
     //listens for window resize and redraws the lines between text areas after a set time. Sets lines to visible when done.
     window.addEventListener('resize', debouncedHandleResize);
-    window.addEventListener('fullscreenchange', context.handleResize);
+    window.addEventListener('fullscreenchange', handleResize);
 
     //cleanup function - removes listeners on unmount
     return () => {
-      window.removeEventListener('resize', context.hideLines);
+      window.removeEventListener('resize', hideLines);
       window.removeEventListener('resize', debouncedHandleResize);
-      window.removeEventListener('fullscreenchange', context.handleResize);
+      window.removeEventListener('fullscreenchange', handleResize);
+      setMountLines(false);
     };
   }, []);
 
@@ -58,37 +83,37 @@ const EditPart3 = (props) => {
   const handleQuestionChange = (e) => {
     context.setQuestion(e.currentTarget.value);
     setTimeout(function () {
-      context.handleResize();
+      handleResize();
     }, 100);
   };
   const handleTopLeftChange = (e) => {
     context.setTopLeft(e.currentTarget.value);
     setTimeout(function () {
-      context.handleResize();
+      handleResize();
     }, 100);
   };
   const handleTopRightChange = (e) => {
     context.setTopRight(e.currentTarget.value);
     setTimeout(function () {
-      context.handleResize();
+      handleResize();
     }, 100);
   };
   const handleBottomLeftChange = (e) => {
     context.setBottomLeft(e.currentTarget.value);
     setTimeout(function () {
-      context.handleResize();
+      handleResize();
     }, 100);
   };
   const handleBottomCentreChange = (e) => {
     context.setBottomCentre(e.currentTarget.value);
     setTimeout(function () {
-      context.handleResize();
+      handleResize();
     }, 100);
   };
   const handleBottomRightChange = (e) => {
     context.setBottomRight(e.currentTarget.value);
     setTimeout(function () {
-      context.handleResize();
+      handleResize();
     }, 100);
   };
 
@@ -116,10 +141,10 @@ const EditPart3 = (props) => {
             <AddToMyFolders testId={context.docRef} />
           </Modal>
         )}
-        <FullScreen handle={handleFullScreen}>
+        <FullScreen handle={handleFullScreen} key={2351}>
           <main className='holy-grail-content fade-in'>
             <div className='part2-main-row'>
-              <div className='part3-grid-container'>
+              <div className='part3-grid-container' key={1235}>
                 <TextareaAutosize
                   className='part3-option-top-left part3-option-input part3-input '
                   placeholder={optionPlaceholder}
@@ -162,9 +187,11 @@ const EditPart3 = (props) => {
                   onChange={handleBottomRightChange}
                   rowsMin='1'
                 />
+
                 <Part3Lines
-                  windowDimensions={context.windowDimensions}
-                  lineClass={context.lineClass}
+                  windowDimensions={windowDimensions}
+                  lineClass={lineClass}
+                  key={12344}
                 />
               </div>
               <div className='tool-bar-row'>
