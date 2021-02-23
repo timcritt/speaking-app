@@ -109,3 +109,8 @@
     opacity: 1;
   }
 }
+
+.part3-questionTwo-container {
+  grid-column: 1/-1;
+  grid-row:auto;
+}

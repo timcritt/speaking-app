@@ -5,6 +5,9 @@ export const FCEPart3Context = createContext();
 
 export const FCEPart3ContextProvider = ({ children }) => {
   const [question, setQuestion] = useState('');
+  const [questionTwo, setQuestionTwo] = useState(
+    'Now decide which is the best'
+  );
   const [topLeft, setTopLeft] = useState('');
   const [topRight, setTopRight] = useState('');
   const [bottomLeft, setBottomLeft] = useState('');
@@ -16,6 +19,18 @@ export const FCEPart3ContextProvider = ({ children }) => {
   const [changesSaved, setChangesSaved] = useState(false);
   const optionPlaceholder = 'option';
   const [hasFetched, setHasFetched] = useState(false);
+
+  const clearState = () => {
+    setQuestion('');
+    setQuestionTwo('');
+    setTopLeft('');
+    setTopRight('');
+    setBottomLeft('');
+    setBottomRight('');
+    setBottomCentre('');
+    setTestTags([]);
+    setHasFetched(true);
+  };
 
   function handleSetTags(tag, selected) {
     if (!selected) {
@@ -33,7 +48,7 @@ export const FCEPart3ContextProvider = ({ children }) => {
   }
 
   // docRef is grabbed from the params of the component displaying the context.
-  // UseEffect only runs if the component requires a different test to the previous one displayed.
+  // UseEffect only runs if the component is supposed to display a different test to the previous one displayed.
   useEffect(() => {
     setHasFetched(false);
     if (docRef) {
@@ -49,11 +64,10 @@ export const FCEPart3ContextProvider = ({ children }) => {
           setAuthorId(data.creatorId);
           setTestTags(data.tags);
           setHasFetched(true);
-        } else {
-          //creat new test
-          setHasFetched(true);
         }
       });
+    } else {
+      setHasFetched(true);
     }
   }, [docRef]);
 
@@ -62,6 +76,8 @@ export const FCEPart3ContextProvider = ({ children }) => {
       value={{
         question,
         setQuestion,
+        questionTwo,
+        setQuestionTwo,
         topLeft,
         setTopLeft,
         topRight,
@@ -84,6 +100,7 @@ export const FCEPart3ContextProvider = ({ children }) => {
         hasFetched,
         setHasFetched,
         handleSetTags,
+        clearState,
       }}
     >
       {children}

@@ -22,11 +22,24 @@ const Part3 = (props) => {
   const handleFullScreen = useFullScreenHandle();
   const context = useContext(FCEPart3Context);
   const [lineClass, setLineClass] = useState('');
-  const [mountLines, setMountLines] = useState(true);
+  const [questionTwoVisible, setQuestionTwoVisible] = useState(false);
   const [windowDimensions, setWindowDimensions] = useState({
     height: null,
     width: null,
   });
+  const [time, setTime] = useState(1200);
+
+  const handleViewShortTurnClick = () => {
+    hideLines();
+    setQuestionTwoVisible((prevState) => !prevState);
+
+    if (!questionTwoVisible) {
+      setTime(2000);
+    } else {
+      setTime(6000);
+    }
+    debouncedHandleResize();
+  };
 
   const openAddToFolderModal = () => {
     setAddToFolderModalOpen(true);
@@ -65,12 +78,10 @@ const Part3 = (props) => {
       window.removeEventListener('resize', hideLines);
       window.removeEventListener('resize', debouncedHandleResize);
       window.removeEventListener('fullscreenchange', handleResize);
-      setMountLines(false);
     };
   }, []);
 
   useEffect(() => {
-    setMountLines(true);
     //sends the id of the current test to be displayed to the FCEPart2 context
     if (props.match.params.id !== 'new') {
       context.setDocRef(props.match.params.id);
@@ -97,15 +108,25 @@ const Part3 = (props) => {
             <AddToMyFolders testId={context.docRef} />
           </Modal>
         )}
-        <FullScreen handle={handleFullScreen} key={2352}>
+        <FullScreen handle={handleFullScreen}>
           <main className='holy-grail-content fade-in'>
             <div className='part2-main-row'>
-              <div className='part3-grid-container' key={2}>
+              <button
+                className={'short-turn-button '}
+                onClick={handleViewShortTurnClick}
+              >
+                show question 2
+              </button>
+              <div className='part3-grid-container'>
                 <div className='part3-option-top-left part3-input'>
                   {context.topLeft}
                 </div>
                 <div className='part3-question-centre part3-input'>
-                  <span>{context.question}</span>
+                  {questionTwoVisible ? (
+                    <span>{context.questionTwo}</span>
+                  ) : (
+                    <span>{context.question}</span>
+                  )}
                 </div>
                 <div className='part3-option-top-right part3-input part3-option-input'>
                   <span>{context.topRight}</span>
@@ -120,7 +141,6 @@ const Part3 = (props) => {
                   {context.bottomRight}
                 </div>
                 <Part3Lines
-                  key={12121}
                   windowDimensions={windowDimensions}
                   lineClass={lineClass}
                 />

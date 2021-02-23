@@ -82,6 +82,7 @@
   box-sizing: border-box;
   font-size: 12pt;
   background-color: #f5d88b;
+  width: max-content;
 }
 .short-turn-question-input{
   color: blue;

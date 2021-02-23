@@ -20,7 +20,6 @@ const EditPart3 = (props) => {
   const handleFullScreen = useFullScreenHandle();
   const optionPlaceholder = 'option';
   const context = useContext(FCEPart3Context);
-  const [mountLines, setMountLines] = useState(true);
   const [lineClass, setLineClass] = useState('');
   const [windowDimensions, setWindowDimensions] = useState({
     height: null,
@@ -46,14 +45,12 @@ const EditPart3 = (props) => {
   const debouncedHandleResize = debounce(handleResize, 200);
 
   useEffect(() => {
-    setMountLines(true);
     //sends the id of the current test to be displayed to the FCEPart2 context
     if (props.match.params.id !== 'new') {
       context.setDocRef(props.match.params.id);
     } else {
-      //clears context state of previously viewed Test. displays blank test to be created by user.
-      // context.clearState();
-      handleResize();
+      context.clearState();
+      //handleResize();
     }
     if (context.hasFetched) {
       handleResize();
@@ -72,7 +69,6 @@ const EditPart3 = (props) => {
       window.removeEventListener('resize', hideLines);
       window.removeEventListener('resize', debouncedHandleResize);
       window.removeEventListener('fullscreenchange', handleResize);
-      setMountLines(false);
     };
   }, []);
 
@@ -133,22 +129,14 @@ const EditPart3 = (props) => {
             </SideBarTags>
           )}
         </div>
-        {AddToFolderModalOpen && (
-          <Modal
-            className='open-add-folder-modal-btn'
-            heading='Add test to folder'
-          >
-            <AddToMyFolders testId={context.docRef} />
-          </Modal>
-        )}
-        <FullScreen handle={handleFullScreen} key={2351}>
+        <FullScreen handle={handleFullScreen}>
           <main className='holy-grail-content fade-in'>
             <div className='part2-main-row'>
-              <div className='part3-grid-container' key={1235}>
+              <div className='part3-grid-container'>
                 <TextareaAutosize
                   className='part3-option-top-left part3-option-input part3-input '
                   placeholder={optionPlaceholder}
-                  defaultValue={context.topLeft}
+                  value={context.topLeft}
                   onChange={handleTopLeftChange}
                   rowsMin='1'
                 />
@@ -162,36 +150,51 @@ const EditPart3 = (props) => {
                 <TextareaAutosize
                   className='part3-option-top-right part3-input part3-option-input'
                   placeholder={optionPlaceholder}
-                  defaultValue={context.topRight}
+                  value={context.topRight}
                   onChange={handleTopRightChange}
                   rowsMin='1'
                 />
                 <TextareaAutosize
                   className='part3-option-bottom-left part3-input part3-option-input'
                   placeholder={optionPlaceholder}
-                  defaultValue={context.bottomLeft}
+                  value={context.bottomLeft}
                   onChange={handleBottomLeftChange}
                   rowsMin='1'
                 />
                 <TextareaAutosize
                   className='part3-option-bottom-centre part3-input part3-option-input'
                   placeholder={optionPlaceholder}
-                  defaultValue={context.bottomCentre}
+                  value={context.bottomCentre}
                   onChange={handleBottomCentreChange}
                   rowsMin='1'
                 />
                 <TextareaAutosize
                   className='part3-option-bottom-right part3-input part3-option-input '
                   placeholder={optionPlaceholder}
-                  defaultValue={context.bottomRight}
+                  value={context.bottomRight}
                   onChange={handleBottomRightChange}
                   rowsMin='1'
                 />
-
                 <Part3Lines
                   windowDimensions={windowDimensions}
                   lineClass={lineClass}
-                  key={12344}
+                />
+              </div>
+              <div className='part2-edit-question-container part3-questionTwo-container'>
+                <label
+                  className='part2-question-input-label'
+                  htmlFor='question-2'
+                >
+                  Question 2
+                </label>
+                <input
+                  label='question-2'
+                  className='input question-input'
+                  value={context.questionTwo}
+                  placeholder='enter second question'
+                  onChange={(e) =>
+                    context.setQuestionTwo(e.currentTarget.value)
+                  }
                 />
               </div>
               <div className='tool-bar-row'>
