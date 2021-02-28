@@ -12,7 +12,7 @@ const Signin = ({ history }) => {
 
       //redirects if login page was navigated to directly and not via a private route
       if (history) {
-        history.push('/mycontent');
+        history.push('/');
       }
     } catch (error) {
       alert(error);

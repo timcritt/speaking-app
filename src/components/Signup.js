@@ -7,7 +7,7 @@ const Signup = (props) => {
   const { handleSignup, inputs, setInputs, errors } = useContext(firebaseAuth);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('handleSubmit');
+
     //wait to signup
     await handleSignup();
     //push home

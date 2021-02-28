@@ -5,6 +5,7 @@
   justify-content: center;
   box-sizing: border-box;
   padding: 20px; 
+  width:100%;
 }
 
 .fullscreen-enabled .holy-grail-content {

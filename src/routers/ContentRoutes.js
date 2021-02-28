@@ -4,6 +4,7 @@ import MyFolders from 'components/CreatorContent/MyFolders';
 import FolderSummary from 'components/common/FolderSummary';
 
 const ContentRoutes = ({ url, creatorId }) => {
+  console.log('in cotnent rourts', creatorId);
   return (
     <Switch>
       <Route exact path={`${url}/folders`}>
