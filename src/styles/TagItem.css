@@ -22,6 +22,11 @@
 .tag-item:focus {
   outline: none;
 }
+.tag-item:hover {
+  color: #4444c0;
+  border-color: #9494ef;
+  transform: translateX(1px) translateY(1px) scale(1.05);
+}
 
 .tag-item-selected {
   color: #4444c0;

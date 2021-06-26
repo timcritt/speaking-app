@@ -5,9 +5,7 @@ export const FCEPart3Context = createContext();
 
 export const FCEPart3ContextProvider = ({ children }) => {
   const [question, setQuestion] = useState('');
-  const [questionTwo, setQuestionTwo] = useState(
-    'Now decide which is the best'
-  );
+  const [questionTwo, setQuestionTwo] = useState('');
   const [topLeft, setTopLeft] = useState('');
   const [topRight, setTopRight] = useState('');
   const [bottomLeft, setBottomLeft] = useState('');
@@ -28,8 +26,10 @@ export const FCEPart3ContextProvider = ({ children }) => {
     setBottomLeft('');
     setBottomRight('');
     setBottomCentre('');
-    setTestTags([]);
     setHasFetched(true);
+    setTestTags([]);
+    setDocRef(null);
+    setAuthorId(null);
   };
 
   function handleSetTags(tag, selected) {
@@ -56,6 +56,7 @@ export const FCEPart3ContextProvider = ({ children }) => {
         if (data) {
           setDocRef(data.id);
           setQuestion(data.question);
+          setQuestionTwo(data.questionTwo);
           setTopLeft(data.topLeft);
           setTopRight(data.topRight);
           setBottomCentre(data.bottomCentre);

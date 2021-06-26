@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
-import Modal from 'components/common/Modal';
-import AddToMyFolders from 'components/common/AddToMyFolders';
 import CreatorInfo from 'components/common/CreatorInfo';
 import { Fragment } from 'react';
+import deleteTest from 'APIHandlers/deleteTest';
 import { TextareaAutosize } from '@material-ui/core';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
@@ -14,9 +13,10 @@ import Part3Lines from 'components/FCEPart3/Part3Lines';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import debounce from 'auxFunctions/debounce';
 import { FCEPart3Context } from 'context/FCEPart3Context';
+import { useHistory } from 'react-router-dom';
+import { FCEPart3 } from 'APIHandlers/firebaseConsts';
 
 const EditPart3 = (props) => {
-  const [AddToFolderModalOpen, setAddToFolderModalOpen] = useState(false);
   const handleFullScreen = useFullScreenHandle();
   const optionPlaceholder = 'option';
   const context = useContext(FCEPart3Context);
@@ -25,6 +25,7 @@ const EditPart3 = (props) => {
     height: null,
     width: null,
   });
+  var history = useHistory();
 
   const hideLines = () => {
     setLineClass('line-hidden');
@@ -43,6 +44,12 @@ const EditPart3 = (props) => {
   };
 
   const debouncedHandleResize = debounce(handleResize, 200);
+
+  const handleDeleteTest = async () => {
+    await deleteTest(context.docRef, FCEPart3);
+    context.clearState();
+    history.push('/EditFCEPart3/new');
+  };
 
   useEffect(() => {
     //sends the id of the current test to be displayed to the FCEPart2 context
@@ -82,6 +89,7 @@ const EditPart3 = (props) => {
       handleResize();
     }, 100);
   };
+
   const handleTopLeftChange = (e) => {
     context.setTopLeft(e.currentTarget.value);
     setTimeout(function () {
@@ -208,7 +216,7 @@ const EditPart3 = (props) => {
                     bottomRight={context.bottomRight}
                     creatorId={context.authorId}
                     question={context.question}
-                    questionTwo={'question two placeholder'}
+                    questionTwo={context.questionTwo}
                     topLeft={context.topLeft}
                     topRight={context.topRight}
                     tags={context.testTags}
@@ -228,7 +236,7 @@ const EditPart3 = (props) => {
                       </button>
                     </Link>
                   )}
-                  <button className='tool-bar-btn'>
+                  <button className='tool-bar-btn' onClick={handleDeleteTest}>
                     <DeleteForeverOutlinedIcon />
                   </button>
                 </div>

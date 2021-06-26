@@ -19,7 +19,7 @@
 .part3-question-centre {
   background-color: #FAFAFA;
   grid-column: 2;
-  grid-row: 1/6;
+  grid-row: 2/5;
   max-height: 100%;
   max-width: 100%;
   border-radius: 100em;
@@ -92,8 +92,7 @@
 }
 
 .line {
-  transition: opacity 0.5s;
-  opacity: 1;
+  animation: fadeIn 0.5s;
 }
 .line-hidden {
   visibility: hidden;

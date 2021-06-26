@@ -86,9 +86,9 @@ export default function PublishWarningModal({
           topLeft,
           topRight,
           tags
-        ).then((data) => {
-          setDocRef(data.id);
-          // history.push(`/FCEPart3/${docRef.id}`);
+        ).then((response) => {
+          setDocRef(response.id);
+          history.push(`/EditFCEPart3/${response.id}`);
         });
       }
     } else {

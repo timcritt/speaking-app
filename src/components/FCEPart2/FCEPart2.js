@@ -29,6 +29,14 @@ const FCEPart2 = (props) => {
     context.setDocRef(props.match.params.id);
   }, []);
 
+  useEffect(() => {
+    if (shortTurnVisible) {
+      setTime(2000);
+    } else {
+      setTime(6000);
+    }
+  }, [shortTurnVisible]);
+
   const openAddToFolderModal = () => {
     setAddToFolderModalOpen(true);
   };
@@ -37,11 +45,6 @@ const FCEPart2 = (props) => {
   };
   const handleViewShortTurnClick = () => {
     setShortTurnVisible((prevState) => !prevState);
-    if (!shortTurnVisible) {
-      setTime(2000);
-    } else {
-      setTime(6000);
-    }
   };
 
   if (context.hasFetched) {

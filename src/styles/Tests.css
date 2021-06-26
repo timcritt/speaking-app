@@ -19,12 +19,16 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
   
 }
 
 
 .test-preview-container:hover {
   border-color: #f5d88b;
+  transform: translateY(-2px) translateX(2px);
+  -webkit-box-shadow: -7px 7px 7px 0px rgba(0,0,0,0.14); 
+  box-shadow: -7px 7px 7px 0px rgba(0,0,0,0.14);
 }
 
 .test-preview-link {

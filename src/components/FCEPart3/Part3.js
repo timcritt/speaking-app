@@ -22,23 +22,17 @@ const Part3 = (props) => {
   const handleFullScreen = useFullScreenHandle();
   const context = useContext(FCEPart3Context);
   const [lineClass, setLineClass] = useState('');
+  const [questionClass, setQuestionClass] = useState('');
   const [questionTwoVisible, setQuestionTwoVisible] = useState(false);
   const [windowDimensions, setWindowDimensions] = useState({
     height: null,
     width: null,
   });
-  const [time, setTime] = useState(1200);
+  const [time, setTime] = useState(12000);
 
   const handleViewShortTurnClick = () => {
     hideLines();
     setQuestionTwoVisible((prevState) => !prevState);
-
-    if (!questionTwoVisible) {
-      setTime(2000);
-    } else {
-      setTime(6000);
-    }
-    debouncedHandleResize();
   };
 
   const openAddToFolderModal = () => {
@@ -64,14 +58,14 @@ const Part3 = (props) => {
     console.log('lines redrawn');
   };
 
-  const debouncedHandleResize = debounce(handleResize, 200);
+  const debouncedHandleResize = debounce(handleResize, 250);
 
   useEffect(() => {
     //instantly hides the lines on window resize to prevent ugly jumping of lines between positions.
     window.addEventListener('resize', hideLines);
     //listens for window resize and redraws the lines between text areas after a set time. Sets lines to visible when done.
     window.addEventListener('resize', debouncedHandleResize);
-    window.addEventListener('fullscreenchange', handleResize);
+    window.addEventListener('fullscreenchange', debouncedHandleResize);
 
     //cleanup function - removes listeners on unmount
     return () => {
@@ -94,6 +88,17 @@ const Part3 = (props) => {
       handleResize();
     }
   }, [context.hasFetched]);
+
+  useEffect(() => {
+    if (!questionTwoVisible) {
+      setTime(12000);
+      setQuestionClass('');
+    } else {
+      setTime(6000);
+      setQuestionClass('flipped-horizontally');
+    }
+    debouncedHandleResize();
+  }, [questionTwoVisible]);
 
   if (context.hasFetched) {
     return (
@@ -121,12 +126,16 @@ const Part3 = (props) => {
                 <div className='part3-option-top-left part3-input'>
                   {context.topLeft}
                 </div>
-                <div className='part3-question-centre part3-input'>
-                  {questionTwoVisible ? (
-                    <span>{context.questionTwo}</span>
-                  ) : (
-                    <span>{context.question}</span>
-                  )}
+
+                <div className='part3-question-centre part3-input flip-card'>
+                  <div className={`flip-card-inner ${questionClass}`}>
+                    <div className='flip-card-front'>
+                      <span>{context.question}</span>
+                    </div>
+                    <div className='flip-card-back'>
+                      <span>{context.questionTwo}</span>
+                    </div>
+                  </div>
                 </div>
                 <div className='part3-option-top-right part3-input part3-option-input'>
                   <span>{context.topRight}</span>
@@ -147,7 +156,7 @@ const Part3 = (props) => {
               </div>
               <div className='tool-bar-row'>
                 <CreatorInfo authorId={context.authorId} />
-                <Timer time={12000} />
+                <Timer time={time} />
                 <div className='tool-btn-container'>
                   {context.authorId === userId && (
                     <Link

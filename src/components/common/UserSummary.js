@@ -7,14 +7,16 @@ const UserSummary = ({ user }) => {
 
   return (
     <div
-      className='user-summary-container test-preview-container'
+      className='test-preview-container'
       onClick={() => history.push(`/userContent/${user.id}/tests`)}
     >
-      <img
-        className='profile-detail-picture'
-        src={user.profilePicture ? user.profilePicture : profilePlaceHolder}
-      />
-      <h3 className='created-by-text '>{user.userName}</h3>
+      <div className='user-summary-container '>
+        <img
+          className='profile-detail-picture'
+          src={user.profilePicture ? user.profilePicture : profilePlaceHolder}
+        />
+        <h3 className='created-by-text '>{user.userName}</h3>
+      </div>
     </div>
   );
 };
