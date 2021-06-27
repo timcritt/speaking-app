@@ -12,7 +12,7 @@ const Part3Lines = ({ windowDimensions, lineClass }) => {
         within={'part3-grid-container'}
         innerState={windowDimensions}
         from='part3-option-top-left'
-        to='part3-question-centre'
+        to='part3-question-container'
         className={`line ${lineClass}`}
       />
       <LineTo
@@ -20,7 +20,7 @@ const Part3Lines = ({ windowDimensions, lineClass }) => {
         within={'part3-grid-container'}
         innerState={windowDimensions}
         from='part3-option-top-right'
-        to='part3-question-centre'
+        to='part3-question-container'
         className={`line ${lineClass}`}
       />
       <LineTo
@@ -28,7 +28,7 @@ const Part3Lines = ({ windowDimensions, lineClass }) => {
         within={'part3-grid-container'}
         innerState={windowDimensions}
         from='part3-option-bottom-left'
-        to='part3-question-centre'
+        to='part3-question-container'
         className={`line ${lineClass}`}
       />
       <LineTo
@@ -36,7 +36,7 @@ const Part3Lines = ({ windowDimensions, lineClass }) => {
         within={'part3-grid-container'}
         innerState={windowDimensions}
         from='part3-option-bottom-centre'
-        to='part3-question-centre'
+        to='part3-question-container'
         className={`line ${lineClass}`}
       />
       <LineTo
@@ -44,7 +44,7 @@ const Part3Lines = ({ windowDimensions, lineClass }) => {
         within={'part3-grid-container'}
         innerState={windowDimensions}
         from='part3-option-bottom-right'
-        to='part3-question-centre'
+        to='part3-question-container'
         className={`line ${lineClass}`}
       />
     </div>

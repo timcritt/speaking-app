@@ -127,13 +127,19 @@ const Part3 = (props) => {
                   {context.topLeft}
                 </div>
 
-                <div className='part3-question-centre part3-input flip-card'>
-                  <div className={`flip-card-inner ${questionClass}`}>
+                <div className='part3-question-container flip-card'>
+                  <div
+                    className={`flip-card-inner part3-question-centre ${questionClass}`}
+                  >
                     <div className='flip-card-front'>
-                      <span>{context.question}</span>
+                      <span className='part3-question-text'>
+                        {context.question}
+                      </span>
                     </div>
                     <div className='flip-card-back'>
-                      <span>{context.questionTwo}</span>
+                      <span className='part3-question-text'>
+                        {context.questionTwo}
+                      </span>
                     </div>
                   </div>
                 </div>
