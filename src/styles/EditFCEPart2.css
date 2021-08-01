@@ -49,13 +49,10 @@
   background-color: #f4f7fd;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
-@media (min-width: 768px) {
-  .side-bar-left-tags {
-    min-width: 25vw;
-  }
-}
+
 
 .tags-container {
   text-align: center;

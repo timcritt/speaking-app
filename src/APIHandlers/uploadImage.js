@@ -16,7 +16,7 @@ export const uploadImage = async (imageUrl) => {
   } catch (error) {
     console.log(error.message);
   }
-  return Promise.resolve({ url, reference });
+  return { url, reference };
 };
 
 export const uploadFCEPart2Images = async (
@@ -35,7 +35,7 @@ export const uploadFCEPart2Images = async (
     reference: imageTwoReference,
   };
 
-  //if url does not contain 'firebase', the image is in local storage, and so needs to be uploaded
+  //if url does not contain 'firebase', the image is only in local storage, and so needs to be uploaded
   if (!imageOneData.url.includes('firebase')) {
     imageOneData = await uploadImage(imageOneUrl);
   }
@@ -44,5 +44,43 @@ export const uploadFCEPart2Images = async (
     imageTwoData = await uploadImage(imageTwoUrl);
   }
 
-  return Promise.resolve({ imageOneData, imageTwoData });
+  return { imageOneData, imageTwoData };
+};
+
+//checks if user has changed the images of the test then uploads new image and returns new references if so. Returns original references if not.
+export const uploadCAEPart2Images = async (
+  imageOneUrl,
+  imageTwoUrl,
+  imageThreeUrl,
+  imageOneReference,
+  imageTwoReference,
+  imageThreeReference
+) => {
+  let imageOneData = {
+    url: imageOneUrl,
+    reference: imageOneReference,
+  };
+
+  let imageTwoData = {
+    url: imageTwoUrl,
+    reference: imageTwoReference,
+  };
+
+  let imageThreeData = {
+    url: imageThreeUrl,
+    reference: imageThreeReference,
+  };
+
+  if (!imageOneData.url.includes('firebase')) {
+    imageOneData = await uploadImage(imageOneUrl);
+  }
+
+  if (!imageTwoData.url.includes('firebase')) {
+    imageTwoData = await uploadImage(imageTwoUrl);
+  }
+
+  if (!imageThreeData.url.includes('firebase')) {
+    imageThreeData = await uploadImage(imageThreeUrl);
+  }
+  return { imageOneData, imageTwoData, imageThreeData };
 };

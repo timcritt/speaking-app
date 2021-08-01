@@ -32,8 +32,9 @@
 @import 'Share.css';
 @import 'Create.css';
 @import 'spinners.css';
-@Import 'FlipCard.css';
-
+@import 'FlipCard.css';
+@import 'CAEPart2.css';
+@import 'testThumbnail.css';
 
 
 @font-face {

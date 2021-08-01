@@ -1,0 +1,34 @@
+
+.test-preview-container-CAE-Part2 {
+  display: grid;
+  
+}
+
+.test-preview-image-row {
+  display: grid;
+  column-gap: 2px;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  height: 55%;
+}
+
+.test-preview-image-container-left {
+  grid-column: 1/2;
+  
+}
+
+.test-preview-image-container-centre {
+  grid-column: 2/3;
+  background-color: green;
+}
+
+.test-preview-image-container-right {
+
+}
+
+.CAE-Part2-thumbnail-image {
+  vertical-align: bottom;
+  object-fit: cover;
+  width: 100%;
+  min-height: 100%;
+}

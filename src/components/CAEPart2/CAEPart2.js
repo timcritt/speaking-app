@@ -14,26 +14,29 @@ import CreatorInfo from 'components/common/CreatorInfo';
 import { Fragment } from 'react';
 import ShareButton from 'components/common/ShareButton';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { FCEPart2Context } from 'context/FCEPart2Context';
+import { CAEPart2Context } from 'context/CAEPart2Context';
 
 const CAEPart2 = (props) => {
-  const context = useContext(FCEPart2Context);
+  const context = useContext(CAEPart2Context);
   const [AddToFolderModalOpen, setAddToFolderModalOpen] = useState(false);
   const { userId } = useContext(firebaseAuth);
   const handleFullScreen = useFullScreenHandle();
   const [shortTurnVisible, setShortTurnVisible] = useState(false);
   const [time, setTime] = useState(6000);
+  const [questionClass, setQuestionClass] = useState('');
 
   useEffect(() => {
-    //sends the id of the current test to be displayed to the FCEPart2 context
+    //sends the id of the current test to be displayed to the CAEPart2 context
     context.setDocRef(props.match.params.id);
   }, []);
 
   useEffect(() => {
-    if (shortTurnVisible) {
-      setTime(2000);
-    } else {
+    if (!shortTurnVisible) {
       setTime(6000);
+      setQuestionClass('');
+    } else {
+      setTime(2000);
+      setQuestionClass('flipped-vertically');
     }
   }, [shortTurnVisible]);
 
@@ -47,7 +50,7 @@ const CAEPart2 = (props) => {
     setShortTurnVisible((prevState) => !prevState);
   };
 
-  if (context.hasFetched) {
+  if (true) {
     return (
       <Fragment>
         {AddToFolderModalOpen && (
@@ -63,24 +66,75 @@ const CAEPart2 = (props) => {
           <main className='holy-grail-content fade-in'>
             <div className='part2-main-row'>
               <div className='part2-edit-question-row'>
-                <div className='part2-edit-question-container'>
-                  {!shortTurnVisible ? (
-                    <input
-                      label='long-turn'
-                      className='input question-input '
-                      value={context.question}
-                      readOnly={true}
-                      placeholder='ERROR: data not loaded'
-                    />
-                  ) : (
-                    <input
-                      label='short-turn'
-                      className='input question-input short-turn-question-input'
-                      value={`Short turn: ${context.shortTurnQuestion}`}
-                      readOnly={true}
-                      placeholder='ERROR: data not loaded'
-                    />
-                  )}
+                <div className='flip-card-CAE-part2'>
+                  <div
+                    className={`flip-card-inner-CAE-part2  ${questionClass}`}
+                  >
+                    <div className='flip-card-front-CAE-part2'>
+                      <div className='part2-edit-question-container'>
+                        <input
+                          label='long-turn'
+                          className='input question-input '
+                          value={context.questionOne}
+                          readOnly={true}
+                          placeholder='ERROR: data not loaded'
+                        />
+                      </div>
+
+                      <div className='part2-edit-question-container'>
+                        <input
+                          label='long-turn'
+                          className='input question-input '
+                          value={context.questionTwo}
+                          readOnly={true}
+                          placeholder='ERROR: data not loaded'
+                        />
+                      </div>
+                    </div>
+                    <div className='flip-card-back-vertical'>
+                      <div className='part2-edit-question-container'>
+                        <input
+                          label='short-turn'
+                          className='input question-input'
+                          value={`Short turn: ${context.shortTurnQuestion}`}
+                          readOnly={true}
+                          placeholder='ERROR: data not loaded'
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className='CAE-part2-image-row'>
+                <div className='part2-image-container-left'>
+                  <ExamPicture
+                    image={context.imageOneUrl}
+                    setImage={context.setImageOneUrl}
+                  />
+                </div>
+
+                <div className='part2-image-container-centre'>
+                  <ExamPicture
+                    image={context.imageTwoUrl}
+                    setImage={context.setImageTwoUrl}
+                  />
+                </div>
+                <div className='part2-image-container-right'>
+                  <ExamPicture
+                    image={context.imageThreeUrl}
+                    setImage={context.setImageThreeUrl}
+                  />
+                </div>
+              </div>
+
+              <div className='tool-bar-row'>
+                {context.authorId && (
+                  <CreatorInfo authorId={context.authorId} />
+                )}
+                <Timer time={time} />
+                <div className='tool-bar-toggleTurn-container'>
+                  hello
                   <button
                     className={'short-turn-button '}
                     onClick={handleViewShortTurnClick}
@@ -88,31 +142,12 @@ const CAEPart2 = (props) => {
                     {shortTurnVisible ? 'show long turn' : 'show short turn'}
                   </button>
                 </div>
-              </div>
-              <div className='part2-image-row'>
-                <div className='part2-image-container-left'>
-                  <ExamPicture
-                    image={context.imageOneUrl}
-                    setImage={context.setImageOneUrl}
-                  />
-                </div>
-                <div className='part2-image-container-right'>
-                  <ExamPicture
-                    image={context.imageTwoUrl}
-                    setImage={context.setImageTwoUrl}
-                  />
-                </div>
-              </div>
-              <div className='tool-bar-row'>
-                {context.authorId && (
-                  <CreatorInfo authorId={context.authorId} />
-                )}
-                <Timer time={time} />
+
                 <div className='tool-btn-container'>
                   {context.authorId === userId && (
                     <Link
                       to={{
-                        pathname: `/EditFCEPart2/${context.docRef}`,
+                        pathname: `/EditCAEPart2/${context.docRef}`,
                       }}
                     >
                       <button className='tool-bar-btn hide-on-fullscreen'>

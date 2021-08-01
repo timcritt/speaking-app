@@ -1,28 +1,35 @@
 import { projectFirestore } from '../firebase/firebaseIndex';
 import { FCEPart2 } from './firebaseConsts';
 
-const updateTest = async (
+const updateCAEPart2 = async (
   imageOneUrl,
   imageTwoUrl,
-  question,
+  imageThreeUrl,
+  questionOne,
+  questionTwo,
   shortTurnQuestion,
   tags,
   id,
   createdAt,
   imageOneRef,
-  imageTwoRef
+  imageTwoRef,
+  imageThreeRef
 ) => {
-  var objectRef = projectFirestore.collection(FCEPart2).doc(id);
+  var objectRef = projectFirestore.collection('CAEPart2').doc(id);
   await objectRef.update({
     imageOneUrl,
     imageTwoUrl,
-    question,
+    imageThreeUrl,
+    questionOne,
+    questionTwo,
     shortTurnQuestion,
-    updatedAt: createdAt,
     tags,
+    id,
+    createdAt,
     imageOneRef,
     imageTwoRef,
+    imageThreeRef,
   });
 };
 
-export default updateTest;
+export default updateCAEPart2;

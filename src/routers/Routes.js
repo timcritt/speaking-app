@@ -16,35 +16,44 @@ import EditPart3 from 'components/FCEPart3/EditPart3';
 import CreateView from 'components/Create/CreateView';
 import { FCEPart2ContextProvider } from 'context/FCEPart2Context';
 import { FCEPart3ContextProvider } from 'context/FCEPart3Context';
+import { CAEPart2ContextProvider } from 'context/CAEPart2Context';
+import CAEPart2 from 'components/CAEPart2/CAEPart2';
+import EditCAEPart2 from 'components/CAEPart2/EditCAEPart2';
 
 const Routes = () => {
   return (
     <Fragment>
       <FCEPart2ContextProvider>
         <FCEPart3ContextProvider>
-          <Switch>
-            <Route exact path='/home' component={Home} />
-            <PrivateRoute exact path='/create' component={CreateView} />
-            <Route exact path='/' component={Home} />
-            <Route exact path='/signin' component={Signin} />
-            <Route exact path='/signup' component={Signup} />
-            <PrivateRoute
-              exact
-              path='/EditFCEPart2/:id'
-              component={EditFCEPart2}
-            />
-            <Route exact path='/FCEPart2/:id' component={FCEPart2} />
-            <PrivateRoute
-              path='/userContent/:userId'
-              component={CreatorContent}
-            />
-            <Route exact path='/FCEPart3/:id' component={Part3} />
-            <Route exact path='/EditFCEPart3/:id' component={EditPart3} />
-            <Route exact path='/about' component={About} />
-            <Route path='/exploreContent/' component={ExploreContent} />
-            <Route exact path='/folder/:folderId' component={ViewFolder} />
-            <PrivateRoute exact path='/profile/:userId' component={Profile} />
-          </Switch>
+          <CAEPart2ContextProvider>
+            <Switch>
+              <Route exact path='/home' component={Home} />
+              <PrivateRoute exact path='/create' component={CreateView} />
+              <Route exact path='/' component={Home} />
+              <Route exact path='/signin' component={Signin} />
+              <Route exact path='/signup' component={Signup} />
+              <PrivateRoute
+                exact
+                path='/EditFCEPart2/:id'
+                component={EditFCEPart2}
+              />
+              <Route exact path='/FCEPart2/:id' component={FCEPart2} />
+              <PrivateRoute
+                path='/userContent/:userId'
+                component={CreatorContent}
+              />
+              <Route exact path='/FCEPart3/:id' component={Part3} />
+              <Route exact path='/EditFCEPart3/:id' component={EditPart3} />
+
+              <Route exact path='/CAEPart2/:id' component={CAEPart2} />
+              <Route exact path='/EditCAEPart2/:id' component={EditCAEPart2} />
+
+              <Route exact path='/about' component={About} />
+              <Route path='/exploreContent/' component={ExploreContent} />
+              <Route exact path='/folder/:folderId' component={ViewFolder} />
+              <PrivateRoute exact path='/profile/:userId' component={Profile} />
+            </Switch>
+          </CAEPart2ContextProvider>
         </FCEPart3ContextProvider>
       </FCEPart2ContextProvider>
     </Fragment>

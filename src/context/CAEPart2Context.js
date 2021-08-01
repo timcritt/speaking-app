@@ -4,7 +4,7 @@ import getTest from 'APIHandlers/getTest';
 export const CAEPart2Context = createContext();
 
 export const CAEPart2ContextProvider = ({ children }) => {
-  const [question, setQuestion] = useState('');
+  const [questionOne, setQuestionOne] = useState('');
   const [questionTwo, setQuestionTwo] = useState('');
   const [shortTurnQuestion, setShortTurnQuestion] = useState('');
   const [imageOneUrl, setImageOneUrl] = useState(null);
@@ -21,7 +21,8 @@ export const CAEPart2ContextProvider = ({ children }) => {
   const [hasFetched, setHasFetched] = useState(false);
 
   const clearState = () => {
-    setQuestion('');
+    setQuestionOne('');
+    setQuestionTwo('');
     setShortTurnQuestion('');
     setImageOneUrl(null);
     setImageTwoUrl(null);
@@ -48,7 +49,8 @@ export const CAEPart2ContextProvider = ({ children }) => {
           setImageOneRef(data.imageOneRef);
           setImageTwoRef(data.imageTwoRef);
           setImageThreeRef(data.imageThreeRef);
-          setQuestion(data.question);
+          setQuestionOne(data.questionOne);
+          setQuestionTwo(data.questionTwo);
           setShortTurnQuestion(data.shortTurnQuestion);
           setAuthorId(data.userId);
           setTestTags(data.tags);
@@ -63,8 +65,8 @@ export const CAEPart2ContextProvider = ({ children }) => {
   return (
     <CAEPart2Context.Provider
       value={{
-        question,
-        setQuestion,
+        questionOne,
+        setQuestionOne,
         questionTwo,
         setQuestionTwo,
         shortTurnQuestion,

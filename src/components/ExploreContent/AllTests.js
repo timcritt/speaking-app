@@ -96,7 +96,7 @@ const AllTests = ({ creatorId }) => {
         <InputSort
           selectVale={testType}
           handleChange={handleChangeTestType}
-          values={[FCEPart2, FCEPart3]}
+          values={[FCEPart2, FCEPart3, 'CAEPart2']}
         />
 
         <button onClick={() => handleSearchClick()}>Search</button>
