@@ -15,6 +15,48 @@
 }
 
 .tool-bar-toggleTurn-container {
-  background-color: red;
+  grid-column-start: -1;
+  display: flex;
+}
+
+.CAE-part2-short-turn-button {
+  color: grey;
+  border-color: grey;
+  width: 110pt;
+  margin-left: 0;
+  border: solid #dbdbdb 2px;
+  background-color: transparent;
+  transition: all 0.25s ease-out;
+}
+
+.CAE-part2-short-turn-button:hover { 
+  background-color: #FAFAFA;
+  cursor: pointer;
+  color: green;
+  border-color: grey;
+}
+
+.CAE-part2-bottom-input {
+  margin-top: 0px;
+}
+
+.part2-question-questions-and-button-container {
+  display: flex;
+  justify-content: space-between;
   width: 100%;
+ 
+}
+
+.part2-question-flex-column {
+  display: flex;
+  align-items: center;
+}
+
+.part2-question-text {
+  font-size: 1.8em;
+  text-align: left;
+}
+
+.part2-flip-button {
+  
 }

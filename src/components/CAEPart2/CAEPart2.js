@@ -24,7 +24,7 @@ const CAEPart2 = (props) => {
   const [shortTurnVisible, setShortTurnVisible] = useState(false);
   const [time, setTime] = useState(6000);
   const [questionClass, setQuestionClass] = useState('');
-
+  const dataNotLoadedErrorMessage = 'ERROR: missing data';
   useEffect(() => {
     //sends the id of the current test to be displayed to the CAEPart2 context
     context.setDocRef(props.match.params.id);
@@ -71,35 +71,53 @@ const CAEPart2 = (props) => {
                     className={`flip-card-inner-CAE-part2  ${questionClass}`}
                   >
                     <div className='flip-card-front-CAE-part2'>
-                      <div className='part2-edit-question-container'>
-                        <input
-                          label='long-turn'
-                          className='input question-input '
-                          value={context.questionOne}
-                          readOnly={true}
-                          placeholder='ERROR: data not loaded'
-                        />
-                      </div>
-
-                      <div className='part2-edit-question-container'>
-                        <input
-                          label='long-turn'
-                          className='input question-input '
-                          value={context.questionTwo}
-                          readOnly={true}
-                          placeholder='ERROR: data not loaded'
-                        />
+                      <div className='part2-question-questions-and-button-container'>
+                        <div className='part2-question-flex-column'>
+                          <div className='part2-edit-question-container'>
+                            <ul>
+                              <li className='part2-question-text'>
+                                {context.questionOne}
+                              </li>
+                              <li className='part2-question-text'>
+                                {context.questionTwo}
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div className='tool-bar-toggleTurn-container'></div>
+                        <button
+                          className={
+                            'short-turn-button CAE-part2-short-turn-button '
+                          }
+                          onClick={handleViewShortTurnClick}
+                        >
+                          show short turn
+                        </button>
                       </div>
                     </div>
                     <div className='flip-card-back-vertical'>
-                      <div className='part2-edit-question-container'>
-                        <input
-                          label='short-turn'
-                          className='input question-input'
-                          value={`Short turn: ${context.shortTurnQuestion}`}
-                          readOnly={true}
-                          placeholder='ERROR: data not loaded'
-                        />
+                      <div className='part2-question-questions-and-button-container'>
+                        <div className='part2-question-flex-column'>
+                          <div className='part2-edit-question-container'>
+                            <ul>
+                              <li className='part2-question-text'>
+                                {context.shortTurnQuestion
+                                  ? context.shortTurnQuestion
+                                  : dataNotLoadedErrorMessage}
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div className='tool-bar-toggleTurn-container'>
+                          <button
+                            className={
+                              'short-turn-button CAE-part2-short-turn-button '
+                            }
+                            onClick={handleViewShortTurnClick}
+                          >
+                            show long turn
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -133,15 +151,6 @@ const CAEPart2 = (props) => {
                   <CreatorInfo authorId={context.authorId} />
                 )}
                 <Timer time={time} />
-                <div className='tool-bar-toggleTurn-container'>
-                  hello
-                  <button
-                    className={'short-turn-button '}
-                    onClick={handleViewShortTurnClick}
-                  >
-                    {shortTurnVisible ? 'show long turn' : 'show short turn'}
-                  </button>
-                </div>
 
                 <div className='tool-btn-container'>
                   {context.authorId === userId && (

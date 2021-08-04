@@ -95,7 +95,7 @@ const Part3 = (props) => {
       setQuestionClass('');
     } else {
       setTime(6000);
-      setQuestionClass('flipped-horizontally');
+      setQuestionClass('flipped-vertically');
     }
     debouncedHandleResize();
   }, [questionTwoVisible]);
