@@ -10,7 +10,7 @@ const addTest = async (
   tags,
   imageOneRef,
   imageTwoRef,
-  userId
+  creatorId
 ) => {
   return projectFirestore.collection(FCEPart2).add({
     imageOneUrl,
@@ -21,7 +21,7 @@ const addTest = async (
     tags,
     imageOneRef,
     imageTwoRef,
-    userId,
+    creatorId,
   });
 };
 

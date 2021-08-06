@@ -8,15 +8,16 @@ import CreatorInfo from '../common/CreatorInfo';
 import CloseIcon from '@material-ui/icons/Close';
 import { Link } from 'react-router-dom';
 import ShareButton from '../common/ShareButton';
-import { FCEPart2 } from 'APIHandlers/firebaseConsts';
-import { FCEPart3 } from 'APIHandlers/firebaseConsts';
+import { FCEPart2, FCEPart3, CAEPart2 } from 'APIHandlers/firebaseConsts';
 import FCEPart3TestPreviewContent from 'components/FCEPart3/FCEPart3TestPreviewContent';
 import FCEPart2TestPreviewContent from 'components/common/FCEPart2TestPreviewContent';
+import CAEPart2TestPreviewContent from 'components/CAEPart2/CAEPart2TestPreviewContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 const ViewFolder = () => {
   const [FCEPart2Tests, setFCEPart2Tests] = useState(null);
   const [FCEPart3Tests, setFCEPart3Tests] = useState(null);
+  const [CAEPart2Tests, setCAEPart2Tests] = useState(null);
   const [folderTitle, setFolderTitle] = useState(null);
   const [creatorId, setCreatorId] = useState(null);
   const [hasFetched, setHasFetched] = useState(false);
@@ -32,6 +33,7 @@ const ViewFolder = () => {
         const folder = await getFolder(params.folderId);
         const newFCEPart2Tests = await getTestsById(folder.tests, FCEPart2);
         const newFCEPart3Tests = await getTestsById(folder.tests, FCEPart3);
+        const newCAEPart2Tests = await getTestsById(folder.tests, CAEPart2);
 
         if (isMounted) {
           setFolderTitle(folder.title);
@@ -39,6 +41,7 @@ const ViewFolder = () => {
 
           setFCEPart2Tests(newFCEPart2Tests);
           setFCEPart3Tests(newFCEPart3Tests);
+          setCAEPart2Tests(newCAEPart2Tests);
           setHasFetched(true);
         }
       };
@@ -95,10 +98,24 @@ const ViewFolder = () => {
                     </Link>
                   );
                 })}
+              {CAEPart2Tests &&
+                CAEPart2Tests.map((test) => {
+                  return (
+                    <Link
+                      className='test-preview-link'
+                      to={`/CAEPart2/${test.id}`}
+                      key={test.id}
+                    >
+                      <TestPreview testId={test.id} question={test.questionOne}>
+                        <CAEPart2TestPreviewContent test={test} />
+                      </TestPreview>
+                    </Link>
+                  );
+                })}
             </div>
 
             <div className='tool-bar-row'>
-              {creatorId && <CreatorInfo authorId={creatorId} />}
+              {creatorId && <CreatorInfo creatorId={creatorId} />}
 
               <div className='tool-btn-container'>
                 <ShareButton className='tool-bar-btn'></ShareButton>

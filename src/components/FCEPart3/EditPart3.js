@@ -206,15 +206,15 @@ const EditPart3 = (props) => {
                 />
               </div>
               <div className='tool-bar-row'>
-                {context.authorId && (
-                  <CreatorInfo authorId={context.authorId} />
+                {context.creatorId && (
+                  <CreatorInfo creatorId={context.creatorId} />
                 )}
                 <div className='tool-btn-container'>
                   <PublishPart3WarningModal
                     bottomCentre={context.bottomCentre}
                     bottomLeft={context.bottomLeft}
                     bottomRight={context.bottomRight}
-                    creatorId={context.authorId}
+                    creatorId={context.creatorId}
                     question={context.question}
                     questionTwo={context.questionTwo}
                     topLeft={context.topLeft}

@@ -1,26 +1,15 @@
 import React, { useState, useEffect, useContext, Fragment } from 'react';
-import Timer from 'components/common/Timer';
-import { Link } from 'react-router-dom';
-import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import FullscreenOutlinedIcon from '@material-ui/icons/FullscreenOutlined';
-import FullscreenExitOutlinedIcon from '@material-ui/icons/FullscreenExitOutlined';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import { firebaseAuth } from 'context/AuthProvider';
-import PlaylistAddOutlinedIcon from '@material-ui/icons/PlaylistAddOutlined';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import Modal from 'components/common/Modal';
-import AddToMyFolders from 'components/common/AddToMyFolders';
-import CreatorInfo from 'components/common/CreatorInfo';
-import ShareButton from 'components/common/ShareButton';
 import Part3Lines from 'components/FCEPart3/Part3Lines';
-import { FCEPart3Context } from 'context/FCEPart3Context';
 import debounce from 'auxFunctions/debounce';
+import TestToolBarView from 'components/TestCommon/TestToolBarView';
 
 const Part3 = (props) => {
-  const [AddToFolderModalOpen, setAddToFolderModalOpen] = useState(false);
   const { userId } = useContext(firebaseAuth);
   const handleFullScreen = useFullScreenHandle();
-  const context = useContext(FCEPart3Context);
+  const context = useContext(props.context);
   const [lineClass, setLineClass] = useState('');
   const [questionClass, setQuestionClass] = useState('');
   const [questionTwoVisible, setQuestionTwoVisible] = useState(false);
@@ -28,27 +17,18 @@ const Part3 = (props) => {
     height: null,
     width: null,
   });
-  const [time, setTime] = useState(12000);
 
+  const [time, setTime] = useState(12000);
   const handleViewShortTurnClick = () => {
     hideLines();
     setQuestionTwoVisible((prevState) => !prevState);
   };
-
-  const openAddToFolderModal = () => {
-    setAddToFolderModalOpen(true);
-  };
-  const closeAddToFolderModal = () => {
-    setAddToFolderModalOpen(false);
-  };
-
   const hideLines = () => {
     setLineClass('line-hidden');
   };
   const showLines = () => {
     setLineClass('');
   };
-
   const handleResize = () => {
     setWindowDimensions({
       height: window.innerHeight,
@@ -66,7 +46,6 @@ const Part3 = (props) => {
     //listens for window resize and redraws the lines between text areas after a set time. Sets lines to visible when done.
     window.addEventListener('resize', debouncedHandleResize);
     window.addEventListener('fullscreenchange', debouncedHandleResize);
-
     //cleanup function - removes listeners on unmount
     return () => {
       window.removeEventListener('resize', hideLines);
@@ -103,16 +82,6 @@ const Part3 = (props) => {
   if (context.hasFetched) {
     return (
       <Fragment>
-        {AddToFolderModalOpen && (
-          <Modal
-            className='open-add-folder-modal-btn'
-            modalOpen={AddToFolderModalOpen}
-            heading='Add test to folder'
-            setModalOpen={closeAddToFolderModal}
-          >
-            <AddToMyFolders testId={context.docRef} />
-          </Modal>
-        )}
         <FullScreen handle={handleFullScreen}>
           <main className='holy-grail-content fade-in'>
             <div className='part2-main-row'>
@@ -160,48 +129,14 @@ const Part3 = (props) => {
                   lineClass={lineClass}
                 />
               </div>
-              <div className='tool-bar-row'>
-                <CreatorInfo authorId={context.authorId} />
-                <Timer time={time} />
-                <div className='tool-btn-container'>
-                  {context.authorId === userId && (
-                    <Link
-                      to={{
-                        pathname: `/EditFCEPart3/${context.docRef}`,
-                      }}
-                    >
-                      <button className='tool-bar-btn hide-on-fullscreen'>
-                        <EditOutlinedIcon />
-                      </button>
-                    </Link>
-                  )}
-                  <ShareButton
-                    className='tool-bar-btn hide-on-fullscreen'
-                    sharedItemType={'Part 3'}
-                  />
-                  <button
-                    className='tool-bar-btn hide-on-fullscreen'
-                    onClick={() => openAddToFolderModal(true)}
-                  >
-                    <PlaylistAddOutlinedIcon />
-                  </button>
-                  <button
-                    className='tool-bar-btn open-fullscreen-btn hide-on-fullscreen'
-                    onClick={() => handleFullScreen.enter()}
-                  >
-                    <FullscreenOutlinedIcon />
-                  </button>
-                  <button
-                    className='tool-bar-btn close-fullscreen-btn show-on-fullscreen'
-                    onClick={() => handleFullScreen.exit()}
-                  >
-                    <FullscreenExitOutlinedIcon
-                      fontSize='large'
-                      style={{ color: 'black' }}
-                    />
-                  </button>
-                </div>
-              </div>
+              <TestToolBarView
+                creatorId={context.creatorId}
+                userId={userId}
+                docRef={context.docRef}
+                time={time}
+                handleFullScreen={handleFullScreen}
+                testType={props.testType}
+              />
             </div>
           </main>
         </FullScreen>

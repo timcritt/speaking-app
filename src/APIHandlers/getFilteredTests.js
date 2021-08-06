@@ -6,13 +6,10 @@ const getFilteredTests = async (userId, filterTerm, testPart) => {
   var results = projectFirestore.collection(testPart);
 
   if (userId) {
-    results = results.where('userId', '==', userId);
+    results = results.where('creatorId', '==', userId);
   }
-  // if (filterTerm) {
-  //   results = results.orderBy('question');
-  // }
 
-  results = await results.get().then((querySnapshot) => {
+  await results.get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
       tests.push({ ...doc.data(), id: doc.id });
     });

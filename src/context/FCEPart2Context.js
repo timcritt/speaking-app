@@ -12,7 +12,7 @@ export const FCEPart2ContextProvider = ({ children }) => {
   const [imageTwoRef, setImageTwoRef] = useState(null);
   const [testTags, setTestTags] = useState([]);
   const [docRef, setDocRef] = useState(null);
-  const [authorId, setAuthorId] = useState(null);
+  const [creatorId, setCreatorId] = useState(null);
   const [shortTurnVisible, setShortTurnVisible] = useState(false);
   const [time, setTime] = useState(6000);
   const [hasFetched, setHasFetched] = useState(false);
@@ -26,7 +26,7 @@ export const FCEPart2ContextProvider = ({ children }) => {
     setImageTwoRef(null);
     setTestTags([]);
     setDocRef(null);
-    setAuthorId(null);
+    setCreatorId(null);
     setShortTurnVisible(false);
   };
 
@@ -43,7 +43,7 @@ export const FCEPart2ContextProvider = ({ children }) => {
           setImageTwoRef(data.imageTwoRef);
           setQuestion(data.question);
           setShortTurnQuestion(data.shortTurnQuestion);
-          setAuthorId(data.userId);
+          setCreatorId(data.creatorId);
           setTestTags(data.tags);
           setHasFetched(true);
         }
@@ -72,8 +72,8 @@ export const FCEPart2ContextProvider = ({ children }) => {
         setTestTags,
         docRef,
         setDocRef,
-        authorId,
-        setAuthorId,
+        creatorId,
+        setCreatorId,
         shortTurnVisible,
         setShortTurnVisible,
         time,

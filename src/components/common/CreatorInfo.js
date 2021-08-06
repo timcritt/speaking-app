@@ -3,13 +3,13 @@ import defaultProfilePicture from 'img/profile-placeholder.png';
 import { Link } from 'react-router-dom';
 import getUserDetails from 'APIHandlers/getUserDetails';
 
-const CreatorInfo = ({ authorId }) => {
+const CreatorInfo = ({ creatorId }) => {
   const [authorName, setAuthorName] = useState(null);
   const [creatorProfilePicture, setCreatorProfilePicture] = useState(null);
 
-  if (authorId) {
+  if (creatorId) {
     (async () => {
-      const creatorDetails = await getUserDetails(authorId);
+      const creatorDetails = await getUserDetails(creatorId);
       setAuthorName(creatorDetails.userName);
       setCreatorProfilePicture(creatorDetails.profilePicture);
     })();
@@ -34,7 +34,7 @@ const CreatorInfo = ({ authorId }) => {
         <div className='created-by-text'>
           <div>creator: </div>
           {
-            <Link className={'nav-link'} to={`/userContent/${authorId}/tests`}>
+            <Link className={'nav-link'} to={`/userContent/${creatorId}/tests`}>
               {authorName}
             </Link>
           }

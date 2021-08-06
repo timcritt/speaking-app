@@ -12,7 +12,7 @@ const addCAEPart2 = async (
   imageOneRef,
   imageTwoRef,
   imageThreeRef,
-  userId
+  creatorId
 ) => {
   return projectFirestore.collection('CAEPart2').add({
     imageOneUrl,
@@ -26,7 +26,7 @@ const addCAEPart2 = async (
     imageOneRef,
     imageTwoRef,
     imageThreeRef,
-    userId,
+    creatorId,
   });
 };
 

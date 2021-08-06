@@ -15,7 +15,7 @@ export const CAEPart2ContextProvider = ({ children }) => {
   const [imageThreeRef, setImageThreeRef] = useState(null);
   const [testTags, setTestTags] = useState([]);
   const [docRef, setDocRef] = useState(null);
-  const [authorId, setAuthorId] = useState(null);
+  const [creatorId, setCreatorId] = useState(null);
   const [shortTurnVisible, setShortTurnVisible] = useState(false);
   const [time, setTime] = useState(6000);
   const [hasFetched, setHasFetched] = useState(false);
@@ -32,7 +32,7 @@ export const CAEPart2ContextProvider = ({ children }) => {
     setImageThreeRef(null);
     setTestTags([]);
     setDocRef(null);
-    setAuthorId(null);
+    setCreatorId(null);
     setShortTurnVisible(false);
   };
 
@@ -52,7 +52,7 @@ export const CAEPart2ContextProvider = ({ children }) => {
           setQuestionOne(data.questionOne);
           setQuestionTwo(data.questionTwo);
           setShortTurnQuestion(data.shortTurnQuestion);
-          setAuthorId(data.userId);
+          setCreatorId(data.creatorId);
           setTestTags(data.tags);
           setHasFetched(true);
         }
@@ -60,6 +60,7 @@ export const CAEPart2ContextProvider = ({ children }) => {
     } else {
       setHasFetched(true);
     }
+    console.log(creatorId);
   }, [docRef]);
 
   return (
@@ -87,8 +88,8 @@ export const CAEPart2ContextProvider = ({ children }) => {
         setTestTags,
         docRef,
         setDocRef,
-        authorId,
-        setAuthorId,
+        creatorId,
+        setCreatorId,
         shortTurnVisible,
         setShortTurnVisible,
         time,

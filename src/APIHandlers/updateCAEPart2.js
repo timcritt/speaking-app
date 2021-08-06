@@ -1,5 +1,5 @@
 import { projectFirestore } from '../firebase/firebaseIndex';
-import { FCEPart2 } from './firebaseConsts';
+import { CAEPart2 } from './firebaseConsts';
 
 const updateCAEPart2 = async (
   imageOneUrl,
@@ -15,7 +15,7 @@ const updateCAEPart2 = async (
   imageTwoRef,
   imageThreeRef
 ) => {
-  var objectRef = projectFirestore.collection('CAEPart2').doc(id);
+  var objectRef = projectFirestore.collection(CAEPart2).doc(id);
   await objectRef.update({
     imageOneUrl,
     imageTwoUrl,

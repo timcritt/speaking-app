@@ -24,7 +24,7 @@ const FolderSummary = ({ folder }) => {
           <span>{`(${folder.tests.length} tests)`}</span>
         </div>
       </div>
-      <CreatorInfo authorId={folder.userId} />
+      <CreatorInfo creatorId={folder.userId} />
       <div className='folder-summary-toolbar'>
         <DeleteForeverOutlinedIcon
           className='delete-folder-btn'

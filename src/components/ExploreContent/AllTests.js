@@ -3,8 +3,12 @@ import Tests from '../common/Tests';
 import InputSort from '../common/InputSort';
 import SideBarTags from '../common/SideBarTags';
 import getFilteredTests from '../../APIHandlers/getFilteredTests';
-import { FCEPart2 } from 'APIHandlers/firebaseConsts';
-import { FCEPart3 } from 'APIHandlers/firebaseConsts';
+import {
+  FCEPart2,
+  FCEPart3,
+  CAEPart2,
+  CAEPart3,
+} from 'APIHandlers/firebaseConsts';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 const AllTests = ({ creatorId }) => {
@@ -96,7 +100,7 @@ const AllTests = ({ creatorId }) => {
         <InputSort
           selectVale={testType}
           handleChange={handleChangeTestType}
-          values={[FCEPart2, FCEPart3, 'CAEPart2']}
+          values={[FCEPart2, FCEPart3, CAEPart2, CAEPart3]}
         />
 
         <button onClick={() => handleSearchClick()}>Search</button>

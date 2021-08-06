@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const CAEPart2TestPreviewContent = ({ test }) => {
   return (
     <Fragment>
-      <div className='test-preview-image-row ' key={test.id}>
+      <div className='test-preview-image-row' key={test.id}>
         <div className='test-preview-image-container-left'>
           <img className='CAE-Part2-thumbnail-image' src={test.imageOneUrl} />
         </div>

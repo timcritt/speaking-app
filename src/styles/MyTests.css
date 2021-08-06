@@ -14,3 +14,16 @@
   border: none;
   border-bottom: 1px solid blue
 }
+
+.user-tests-container {
+ 
+  height: 0px;
+  overflow: hidden;
+}
+.user-tests-container-expanded {
+  height: 100%;
+}
+
+hr.user-tests-container {
+  border-top: 1px solid red;
+}

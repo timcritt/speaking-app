@@ -1,9 +1,10 @@
 import React, { useState, createContext, useEffect } from 'react';
 import getTest from 'APIHandlers/getTest';
+import { CAEPart3 } from 'APIHandlers/firebaseConsts';
 
-export const FCEPart3Context = createContext();
+export const CAEPart3Context = createContext();
 
-export const FCEPart3ContextProvider = ({ children }) => {
+export const CAEPart3ContextProvider = ({ children }) => {
   const [question, setQuestion] = useState('');
   const [questionTwo, setQuestionTwo] = useState('');
   const [topLeft, setTopLeft] = useState('');
@@ -13,7 +14,7 @@ export const FCEPart3ContextProvider = ({ children }) => {
   const [bottomRight, setBottomRight] = useState('');
   const [testTags, setTestTags] = useState([]);
   const [docRef, setDocRef] = useState(null);
-  const [creatorId, setcreatorId] = useState('');
+  const [creatorId, setCreatorId] = useState('');
   const [changesSaved, setChangesSaved] = useState(false);
   const optionPlaceholder = 'option';
   const [hasFetched, setHasFetched] = useState(false);
@@ -29,7 +30,7 @@ export const FCEPart3ContextProvider = ({ children }) => {
     setHasFetched(true);
     setTestTags([]);
     setDocRef(null);
-    setcreatorId(null);
+    setCreatorId(null);
   };
 
   function handleSetTags(tag, selected) {
@@ -52,7 +53,7 @@ export const FCEPart3ContextProvider = ({ children }) => {
   useEffect(() => {
     setHasFetched(false);
     if (docRef) {
-      getTest('FCEPart3', docRef).then((data) => {
+      getTest('CAEPart3', docRef).then((data) => {
         if (data) {
           setDocRef(data.id);
           setQuestion(data.question);
@@ -62,7 +63,7 @@ export const FCEPart3ContextProvider = ({ children }) => {
           setBottomCentre(data.bottomCentre);
           setBottomLeft(data.bottomLeft);
           setBottomRight(data.bottomRight);
-          setcreatorId(data.creatorId);
+          setCreatorId(data.creatorId);
           setTestTags(data.tags);
           setHasFetched(true);
         }
@@ -73,7 +74,7 @@ export const FCEPart3ContextProvider = ({ children }) => {
   }, [docRef]);
 
   return (
-    <FCEPart3Context.Provider
+    <CAEPart3Context.Provider
       value={{
         question,
         setQuestion,
@@ -94,7 +95,7 @@ export const FCEPart3ContextProvider = ({ children }) => {
         docRef,
         setDocRef,
         creatorId,
-        setcreatorId,
+        setCreatorId,
         changesSaved,
         setChangesSaved,
         optionPlaceholder,
@@ -105,6 +106,6 @@ export const FCEPart3ContextProvider = ({ children }) => {
       }}
     >
       {children}
-    </FCEPart3Context.Provider>
+    </CAEPart3Context.Provider>
   );
 };
