@@ -17,7 +17,7 @@ const AllTests = ({ creatorId }) => {
   const [results, setResults] = useState(null);
   const [sortType, setSortType] = useState('Date');
   const [tagSearchTerm, setTagSearchTerm] = useState('');
-  const [testType, setTestType] = useState(FCEPart2);
+  const [testType, setTestType] = useState('Part2');
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
   const [hasFetched, setHasFetched] = useState(false);
   const [exam, setExam] = useState('FCE');
@@ -27,10 +27,8 @@ const AllTests = ({ creatorId }) => {
   };
 
   useEffect(() => {
-    if (searchButtonClicked) {
-      handleSearchClick();
-    }
-  }, [testType, filterTerm, sortType]);
+    handleSearchClick();
+  }, [exam, testType, filterTerm, sortType, tagSearchTerm]);
 
   const handleChangeTestType = (e) => {
     setTestType(e.currentTarget.value);
@@ -54,34 +52,36 @@ const AllTests = ({ creatorId }) => {
     setHasFetched(false);
     setSearchButtonClicked(true);
 
-    await getFilteredTests(creatorId, filterTerm, testType).then((data) => {
-      var filteredDocs = JSON.parse(JSON.stringify(data));
+    await getFilteredTests(creatorId, filterTerm, exam + testType).then(
+      (data) => {
+        var filteredDocs = JSON.parse(JSON.stringify(data));
 
-      //filter by topic tag
-      if (tagSearchTerm) {
-        filteredDocs = filteredDocs.filter((doc) =>
-          doc.tags.includes(tagSearchTerm)
-        );
+        //filter by topic tag
+        if (tagSearchTerm) {
+          filteredDocs = filteredDocs.filter((doc) =>
+            doc.tags.includes(tagSearchTerm)
+          );
+        }
+
+        //sort alphabetically by question
+        if (sortType === 'Question') {
+          filteredDocs = filteredDocs.sort((a, b) => {
+            var titleA = a.question.toUpperCase();
+            var titleB = b.question.toUpperCase();
+
+            if (titleA < titleB) {
+              return -1;
+            }
+            if (titleA > titleB) {
+              return 1;
+            }
+            return 0;
+          });
+        }
+        setResults(filteredDocs);
+        setHasFetched(true);
       }
-
-      //sort alphabetically by question
-      if (sortType === 'Question') {
-        filteredDocs = filteredDocs.sort((a, b) => {
-          var titleA = a.question.toUpperCase();
-          var titleB = b.question.toUpperCase();
-
-          if (titleA < titleB) {
-            return -1;
-          }
-          if (titleA > titleB) {
-            return 1;
-          }
-          return 0;
-        });
-      }
-      setResults(filteredDocs);
-      setHasFetched(true);
-    });
+    );
   };
 
   return (
@@ -90,7 +90,7 @@ const AllTests = ({ creatorId }) => {
         <InputSort
           selectValue={sortType}
           handleChange={handleChangeSort}
-          values={['Most recent', 'Question']}
+          values={['Most recent', 'oldest']}
         />
         <InputSort
           selectValue={exam}
@@ -100,7 +100,7 @@ const AllTests = ({ creatorId }) => {
         <InputSort
           selectVale={testType}
           handleChange={handleChangeTestType}
-          values={[FCEPart2, FCEPart3, CAEPart2, CAEPart3]}
+          values={['Part2', 'Part3']}
         />
 
         <button onClick={() => handleSearchClick()}>Search</button>
@@ -109,7 +109,7 @@ const AllTests = ({ creatorId }) => {
       {!hasFetched && searchButtonClicked && <LinearProgress />}
       {hasFetched && (
         <Tests
-          testType={testType}
+          testType={exam + testType}
           userId={creatorId}
           filterTerm={filterTerm}
           results={results}

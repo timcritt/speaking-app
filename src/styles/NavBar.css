@@ -4,8 +4,7 @@
   border-bottom: 1px solid #dbdbdb;
 }
 .nav-content-container {
-  width: 75vw;
-  margin: 0 auto;
+  margin: 0 30px;
   text-align: center;
   display: flex;
   justify-content: flex-end;

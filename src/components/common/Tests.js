@@ -28,6 +28,7 @@ const Tests = ({ results = [], testType }) => {
                   <Link
                     className='test-preview-link'
                     to={`/FCEPart2/${doc.id}`}
+                    key={doc.id}
                   >
                     <TestPreview
                       testId={doc.id}

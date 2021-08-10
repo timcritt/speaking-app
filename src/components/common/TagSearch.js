@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import Tag from './Tag';
 
-const tagList = [
+let tagList = [
   'hobbies',
   'fitness',
   'sport',
@@ -13,6 +13,12 @@ const tagList = [
   'home',
   'relationships',
 ];
+
+// tagList.sort((a, b) => {
+//   if (a < b) {
+//     return -1;
+//   } else return 1;
+// });
 
 const Tags = ({ tags, handleSetTags }) => {
   return (

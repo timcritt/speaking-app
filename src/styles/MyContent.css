@@ -1,12 +1,12 @@
 .my-content-content {
   width: 100%;
-  background-color: white;
+  background-color: var(--main-bg-color);
 }
 
 .dashboard-container {
   padding: 30px 30px 10px 30px;
   display: flex;
-  background-color: white;
+  background-color: var(--main-bg-color);
 }
 
 .dashboard-profile-pic-container {
@@ -71,7 +71,7 @@
 }
 
 .dashboard-radio-btn:checked~.dashboard-radio-label {
-  background-color: #ffc800;
+  background-color: var(--button-active-color);;
   transition: all 0.5s 0s ease;
 }
 
@@ -81,8 +81,9 @@
   font-weight: 600;
   font-size: .875rem;
   line-height: 1.285714285714286;
+  /*important needed to override default radio label css*/
   margin-top: 0 !important;
-  border: 1px solid #cecece;
+  border: 1px solid #e6eaea;
   width: 100%;
   justify-content: center;
 }
@@ -90,8 +91,8 @@
 .my-content-main {
   padding: 0 30px 30px;
   display: flex;
-  background-color: white;
+  background-color: var(--main-bg-color);
   display: flex;
   flex-direction: column;
-
+ 
 }
