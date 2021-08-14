@@ -58,6 +58,7 @@ const Part3 = (props) => {
     //sends the id of the current test to be displayed to the FCEPart2 context
     if (props.match.params.id !== 'new') {
       context.setDocRef(props.match.params.id);
+      console.log(props.match.params.id);
     } else {
       //clears context state of previously viewed Test. displays blank test to be created by user.
       // context.clearState();

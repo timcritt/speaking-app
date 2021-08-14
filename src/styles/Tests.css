@@ -127,8 +127,10 @@
 .filter-bar {
   display: flex;
   background-color: #F4F7F6;
-  border: 1px solid #E6EAEA;
+  border: 1px solid #E6EAEA;  
+
 }
+
 .filter-bar-item {
   display: flex;
   align-items: center;
@@ -137,10 +139,14 @@
   border-right: 1px solid #E6EAEA;
   color: black;
   background: transparent;
-  
-  
+  height: 35px;
   transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
 }
+
+.filter-bar-item:last-child {
+  border-right:none;
+}
+
 .filter-bar-item-clickable:hover {
   background:white;
   color: #A7ACAC;

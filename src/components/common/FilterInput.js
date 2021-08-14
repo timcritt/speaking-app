@@ -1,12 +1,15 @@
 import React from 'react';
 
-const FilterInput = ({ placeholder, handleSetFilterTerm }) => {
+const FilterInput = ({ placeholder, handleSetFilterTerm, value }) => {
+  console.log(value);
   return (
     <input
       className='filter-input'
       placeholder={placeholder}
-      onChange={(e) => handleSetFilterTerm(e)}
-    ></input>
+      onChange={handleSetFilterTerm}
+      value={value}
+      onClick={(e) => e.stopPropagation()}
+    />
   );
 };
 

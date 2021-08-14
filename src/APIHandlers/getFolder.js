@@ -4,9 +4,9 @@ import { folders } from './firebaseConsts';
 const getFolder = async (folderId) => {
   var folder;
 
-  await projectFirestore
-    .collection(folders)
-    .doc(folderId)
+  var results = projectFirestore.collection(folders).doc(folderId);
+
+  await results
     .get()
     .then((doc) => {
       if (doc.exists) {

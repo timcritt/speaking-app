@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import FolderOutlinedIcon from '@material-ui/icons/FolderOutlined';
 import updateFolderTests from '../../APIHandlers/updateFolderTests';
+import addTestToFolder from 'APIHandlers/addTestToFolder';
 
-const FolderSummaryShort = ({ folder, testId }) => {
+const FolderSummaryShort = ({ folder, testId, userId }) => {
   const [isInFolder, setIsInFolder] = useState(false);
 
   useEffect(() => {
@@ -14,15 +15,11 @@ const FolderSummaryShort = ({ folder, testId }) => {
   }, [folder, testId, isInFolder]);
 
   const handleChange = () => {
-    var newTestArray;
-
+    console.log(folder.id, testId);
     if (!isInFolder) {
-      newTestArray = [...folder.tests, testId];
-      console.log(newTestArray);
-    } else {
-      newTestArray = folder.tests.filter((test) => test !== testId);
+      addTestToFolder(folder.id, testId, userId);
     }
-    updateFolderTests(folder.id, newTestArray);
+    console.log(folder);
   };
 
   return (

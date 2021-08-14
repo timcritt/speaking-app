@@ -8,7 +8,7 @@ const TestSearchResults = ({ tests, testType, children }) => {
       {tests &&
         tests.map((test) => {
           return (
-            <Link
+            <div
               className='test-preview-link'
               to={`/${testType}/${test.id}`}
               key={`testType` + test.id}
@@ -20,7 +20,7 @@ const TestSearchResults = ({ tests, testType, children }) => {
               >
                 {cloneElement(children, { test: test })}
               </TestPreview>
-            </Link>
+            </div>
           );
         })}
     </div>

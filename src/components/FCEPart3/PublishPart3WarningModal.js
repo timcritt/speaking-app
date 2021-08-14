@@ -55,7 +55,7 @@ export default function PublishWarningModal({
     userId,
   ]);
 
-  const handleOpen = () => {
+  const handleOpen = async () => {
     setOpen(true);
     //const createdAt = timestamp();
     if (complete) {
@@ -88,6 +88,7 @@ export default function PublishWarningModal({
           tags
         ).then((response) => {
           setDocRef(response.id);
+          console.log('response = ', response);
           history.push(`/EditFCEPart3/${response.id}`);
         });
       }

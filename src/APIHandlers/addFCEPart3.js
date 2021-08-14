@@ -1,8 +1,20 @@
 import { projectFirestore } from '../firebase/firebaseIndex';
+import firebase from 'firebase';
 
-const addPart3 =
-  (testType) =>
-  async (
+const addPart3 = async (
+  bottomCentre,
+  bottomLeft,
+  bottomRight,
+  creatorId,
+  question,
+  questionTwo,
+  topLeft,
+  topRight,
+  tags
+) => {
+  const collection = projectFirestore.collection('FCEPart3');
+
+  const result = await collection.add({
     bottomCentre,
     bottomLeft,
     bottomRight,
@@ -11,19 +23,11 @@ const addPart3 =
     questionTwo,
     topLeft,
     topRight,
-    tags
-  ) => {
-    return projectFirestore.collection('Part3').add({
-      bottomCentre,
-      bottomLeft,
-      bottomRight,
-      creatorId,
-      question,
-      questionTwo,
-      topLeft,
-      topRight,
-      tags,
-    });
-  };
+    tags,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+  });
+
+  return result;
+};
 
 export default addPart3;

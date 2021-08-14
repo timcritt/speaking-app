@@ -2,11 +2,12 @@ import { projectFirestore } from '../firebase/firebaseIndex';
 
 const getTest = async (collectionName, testId) => {
   var test;
-  await projectFirestore
-    .collection(collectionName)
-    .doc(testId)
+  var results = projectFirestore.collection(collectionName).doc(testId);
+
+  await results
     .get()
     .then((doc) => {
+      console.log(doc);
       if (doc.exists) {
         test = { ...doc.data(), id: doc.id };
       } else {

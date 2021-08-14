@@ -1,23 +1,30 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Fragment } from 'react';
 
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
-import PlaylistAddOutlinedIcon from '@material-ui/icons/PlaylistAddOutlined';
-import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
+import AddToMyFolders from 'components/common/AddToMyFolders';
+import ShareButton from 'components/common/ShareButton';
 
-const TestPreview = ({ question, children }) => {
+const TestPreview = ({ question, children, testId }) => {
   return (
     <Fragment>
       <div className='test-preview-overlay'>
         <div className='overlay-bottom-right'>
           <div className='circle-icon-container'>
-            <ShareOutlinedIcon />
+            <ShareButton sharedItemType='' iconColour='white' />
           </div>
+          <Link
+            to={`/FCEPart2/${testId}`}
+            className='tool-bar-btn'
+            style={{ color: 'white' }}
+          >
+            <div className='circle-icon-container'>
+              <VisibilityOutlinedIcon />
+            </div>
+          </Link>
           <div className='circle-icon-container'>
-            <VisibilityOutlinedIcon />
-          </div>
-          <div className='circle-icon-container'>
-            <PlaylistAddOutlinedIcon />
+            <AddToMyFolders iconColor={'white'} testId={testId} />
           </div>
         </div>
       </div>

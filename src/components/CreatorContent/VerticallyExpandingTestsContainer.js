@@ -13,6 +13,7 @@ const VerticallyExpandingTestsContainer = ({
   buttonLabel,
   tagFilterTerm,
   sortBy,
+  questionFilterTerm,
   children,
 }) => {
   const [testContainerExpanded, setTestContainerExpanded] = useState(false);
@@ -42,7 +43,8 @@ const VerticallyExpandingTestsContainer = ({
             );
           }
 
-          if (sortBy === 'Oldest') {
+          //sort by date created
+          if (sortBy === 'oldest') {
             userTests = userTests.sort((a, b) => {
               if (a.created >= b.created) {
                 return 1;
@@ -50,7 +52,7 @@ const VerticallyExpandingTestsContainer = ({
                 return -1;
               }
             });
-          } else if (sortBy === 'Most recent') {
+          } else if (sortBy === 'newest') {
             userTests = userTests.sort((a, b) => {
               if (a.created > b.created) {
                 return -1;
@@ -58,6 +60,15 @@ const VerticallyExpandingTestsContainer = ({
                 return 1;
               }
             });
+          }
+
+          //filter by question text
+          if (testType === 'FCEPart2' && questionFilterTerm) {
+            userTests = userTests.filter((test) =>
+              test.question
+                .toUpperCase()
+                .includes(questionFilterTerm.toUpperCase())
+            );
           }
           setTests(userTests);
           setHasFetched(true);
@@ -68,7 +79,7 @@ const VerticallyExpandingTestsContainer = ({
     return () => {
       isMounted = false;
     };
-  }, [params, tagFilterTerm, creatorId, testType, sortBy]);
+  }, [params, tagFilterTerm, creatorId, testType, sortBy, questionFilterTerm]);
 
   if (hasFetched) {
     return (

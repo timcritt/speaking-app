@@ -4,7 +4,7 @@ import firebase from 'firebase';
 //gets an array of tests based on an array of test ids
 const getTestsById = async (testIds, testType) => {
   var tests = [];
-
+  console.log(testIds);
   if (testIds.length > 0) {
     await projectFirestore
       .collection(testType)

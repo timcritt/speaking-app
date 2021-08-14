@@ -13,6 +13,7 @@ import FCEPart3TestPreviewContent from 'components/FCEPart3/FCEPart3TestPreviewC
 import FCEPart2TestPreviewContent from 'components/common/FCEPart2TestPreviewContent';
 import CAEPart2TestPreviewContent from 'components/CAEPart2/CAEPart2TestPreviewContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import getFolderTestsJunctions from 'APIHandlers/getFolderTestsJunctions';
 
 const ViewFolder = () => {
   const [FCEPart2Tests, setFCEPart2Tests] = useState(null);
@@ -30,10 +31,14 @@ const ViewFolder = () => {
     var isMounted = true;
     if (params) {
       const fetchTests = async () => {
+        //returns an array of the testIds in the folder
+        const folderContent = await getFolderTestsJunctions(params.folderId);
+        console.log('folder-content', folderContent);
+
         const folder = await getFolder(params.folderId);
-        const newFCEPart2Tests = await getTestsById(folder.tests, FCEPart2);
-        const newFCEPart3Tests = await getTestsById(folder.tests, FCEPart3);
-        const newCAEPart2Tests = await getTestsById(folder.tests, CAEPart2);
+        const newFCEPart2Tests = await getTestsById(folderContent, FCEPart2);
+        const newFCEPart3Tests = await getTestsById(folderContent, FCEPart3);
+        const newCAEPart2Tests = await getTestsById(folderContent, CAEPart2);
 
         if (isMounted) {
           setFolderTitle(folder.title);

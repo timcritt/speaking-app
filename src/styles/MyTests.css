@@ -5,14 +5,14 @@
 
 .filter-input {
   outline: none;
-  border: none;
-  border-bottom: 1px solid #b4b4b4
+  border: 1px solid #e6eaea;
+  margin-left: 15px;
+    padding: 10px;
 }
 
 .filter-input:focus {
-  outline: none;
-  border: none;
-  border-bottom: 1px solid blue
+  border-bottom: 1px solid var(--button-active-color);
+  
 }
 
 .user-tests-container {
@@ -27,7 +27,7 @@
 .user-tests-container-expanded {
   
   border-top: 0;
-  max-height: 999px;
+  max-height: 2000px;
 }
 
 .tests-container-header {
@@ -153,5 +153,6 @@
   color: #c5c5c5;
   font-weight: 400;
   font-size: 21px;
-  width: 10px;
+  width: 10px; 
 }
+

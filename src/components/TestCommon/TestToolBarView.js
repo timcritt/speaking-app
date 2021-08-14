@@ -5,12 +5,10 @@ import { Link } from 'react-router-dom';
 import CreatorInfo from 'components/common/CreatorInfo';
 import Timer from 'components/common/Timer';
 import ShareButton from 'components/common/ShareButton';
-import Modal from 'components/common/Modal';
 import AddToMyFolders from 'components/common/AddToMyFolders';
 
 //icons
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import PlaylistAddOutlinedIcon from '@material-ui/icons/PlaylistAddOutlined';
 import FullscreenOutlinedIcon from '@material-ui/icons/FullscreenOutlined';
 import FullscreenExitOutlinedIcon from '@material-ui/icons/FullscreenExitOutlined';
 
@@ -22,24 +20,8 @@ const TestToolBarView = ({
   handleFullScreen,
   testType,
 }) => {
-  const openAddToFolderModal = () => {
-    setAddToFolderModalOpen(true);
-  };
-  const closeAddToFolderModal = () => {
-    setAddToFolderModalOpen(false);
-  };
-  const [AddToFolderModalOpen, setAddToFolderModalOpen] = useState(false);
   return (
     <Fragment>
-      {AddToFolderModalOpen && (
-        <Modal
-          className='open-add-folder-modal-btn'
-          heading='Add test to folder'
-          setModalOpen={closeAddToFolderModal}
-        >
-          <AddToMyFolders testId={docRef} />
-        </Modal>
-      )}
       <div className='tool-bar-row'>
         {creatorId && <CreatorInfo creatorId={creatorId} />}
         <Timer time={time} />
@@ -60,12 +42,9 @@ const TestToolBarView = ({
             className='tool-bar-btn hide-on-fullscreen'
             sharedItemType={'FCE Part 2'}
           />
-          <button
-            className='tool-bar-btn hide-on-fullscreen'
-            onClick={() => openAddToFolderModal(true)}
-          >
-            <PlaylistAddOutlinedIcon />
-          </button>
+          <div className='hide-on-fullscreen'>
+            <AddToMyFolders />
+          </div>
           <button
             className='tool-bar-btn open-fullscreen-btn hide-on-fullscreen'
             onClick={() => handleFullScreen.enter()}

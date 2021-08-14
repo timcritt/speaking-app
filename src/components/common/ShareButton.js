@@ -4,7 +4,7 @@ import ShareModalContent from './ShareModalContent';
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 
 //place this component anywhere in the project and it will add a "share current page" ability with a modal that opens on button click.
-const ShareButton = ({ sharedItemType = '' }) => {
+const ShareButton = ({ sharedItemType = '', iconColour = 'black' }) => {
   const [shareModalIsOpen, setShareModalIsOpen] = useState(false);
 
   return (
@@ -24,7 +24,7 @@ const ShareButton = ({ sharedItemType = '' }) => {
         className='tool-bar-btn hide-on-fullscreen'
         onClick={() => setShareModalIsOpen(true)}
       >
-        <ShareOutlinedIcon />
+        <ShareOutlinedIcon style={{ color: `${iconColour}` }} />
       </button>
     </Fragment>
   );

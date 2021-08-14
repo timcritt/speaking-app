@@ -5,7 +5,7 @@ import { timestamp } from '../firebase/firebaseIndex';
 const updateFolder = async (folderId, title, description) => {
   const updatedAt = timestamp();
 
-  var objectRef = await projectFirestore.collection(folders).doc(folderId);
+  var objectRef = projectFirestore.collection(folders).doc(folderId);
   await objectRef.update({
     title,
     description,

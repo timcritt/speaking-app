@@ -2,26 +2,26 @@
   display: flex;
   flex-direction: column;
   align-content: center;
-  background-color: #FAFAFA;
-  border: 1px solid #dbdbdb;
-  padding: 10px;
-
+  background-color: var(--main-bg-color)
+ 
 }
 
 .folder-container {
-  border: 1px solid #c6c6c6;
+  border: 1px solid var(--main-border-color);
   border-radius: 5px;
   margin: 5px;
   display: flex;
   align-items: center;
   padding: 20px;
   box-shadow: 6px 5px 7px -6px rgba(163, 163, 163, 1);
-  background-color: white;
+  background-color: var(--main-bg-color);
   height: 40px;
 }
 
 .folder-container:hover {
-  border-color: #FFC801;
+  background-color: var(--button-active-color);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 .create-folder-form-container {
@@ -78,6 +78,7 @@
 .folder-summary-toolbar {
   display: flex;
   margin-left: auto;
+  align-items: center;
 }
 
 .select-order-by {

@@ -1,17 +1,20 @@
 import React, { Fragment } from 'react';
+import ReactDOM from 'react-dom';
 
 const Modal = ({ modalOpen, setModalOpen, children, heading }) => {
-  return (
+  const handleSetOpen = (e) => {
+    e.stopPropagation();
+    setModalOpen(false);
+  };
+
+  return ReactDOM.createPortal(
     <Fragment>
       <div className='modal-overlay '>
         <div className='modal-content'>
           <div className='modal-header'>
             <div className='modal-header-text'>
               <span>{heading}</span>
-              <button
-                className='modal-close-btn'
-                onClick={() => setModalOpen(false)}
-              >
+              <button className='modal-close-btn' onClick={handleSetOpen}>
                 x
               </button>
             </div>
@@ -19,7 +22,8 @@ const Modal = ({ modalOpen, setModalOpen, children, heading }) => {
           {children}
         </div>
       </div>
-    </Fragment>
+    </Fragment>,
+    document.querySelector('#modal')
   );
 };
 

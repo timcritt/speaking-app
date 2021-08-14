@@ -25,11 +25,7 @@ const Tests = ({ results = [], testType }) => {
             results.map((doc) => {
               if (testType === FCEPart2) {
                 return (
-                  <Link
-                    className='test-preview-link'
-                    to={`/FCEPart2/${doc.id}`}
-                    key={doc.id}
-                  >
+                  <div className='test-preview-link' key={doc.id}>
                     <TestPreview
                       testId={doc.id}
                       question={doc.question}
@@ -37,7 +33,7 @@ const Tests = ({ results = [], testType }) => {
                     >
                       <FCEPart2TestPreviewContent test={doc} key={doc.id} />
                     </TestPreview>
-                  </Link>
+                  </div>
                 );
               } else if (testType === FCEPart3) {
                 return (
@@ -63,14 +59,12 @@ const Tests = ({ results = [], testType }) => {
                 );
               } else if (testType === CAEPart3) {
                 return (
-                  <Link
-                    className='test-preview-link'
-                    to={`/CAEPart3/${doc.id}`}
-                  >
+                  <div>
+                    className='test-preview-link' to={`/CAEPart3/${doc.id}`}>
                     <TestPreview testId={doc.id} question={doc.question}>
                       <FCEPart3TestPreviewContent test={doc} key={doc.id} />
                     </TestPreview>
-                  </Link>
+                  </div>
                 );
               }
               return <h1>fail</h1>;

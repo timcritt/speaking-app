@@ -1,7 +1,6 @@
 
 .test-preview-container-CAE-Part2 {
   display: grid;
-  
 }
 
 .test-preview-image-row {
@@ -14,7 +13,6 @@
 
 .test-preview-image-container-left {
   grid-column: 1/2;
-  
 }
 
 .test-preview-image-container-centre {
@@ -46,16 +44,12 @@
 .test-preview-overlay:hover {
   opacity: 1;
   background: rgb(221,213,208);
-  background: radial-gradient(circle, rgba(221,213,208,0.5214460784313726) 0%, rgba(93,93,93,0.7959558823529411) 94%);
+  background: radial-gradient(circle, rgba(133, 133, 133, 0.459) 15%, rgba(68, 68, 68, 0.719) 94%);
   color:white;
- 
 }
 
-
 .test-preview-overlay:hover + .test-preview-container {
- 
-  transform: scale(1.0125);
- 
+  transform: scale(1.0155);
 }
 
 .overlay-bottom-right {
@@ -72,6 +66,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 9990;
 }
 
 .circle-icon-container:hover {

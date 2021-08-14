@@ -17,14 +17,18 @@ import useComponentVisible from 'hooks/useComponentVisible';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import CancelIcon from '@material-ui/icons/Cancel';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
+import SearchIcon from '@material-ui/icons/Search';
+import FilterInput from 'components/common/FilterInput';
 
 const MyTests = ({ creatorId }) => {
   //state
   const [sortBy, setSortBy] = useState(null);
   const [tagFilterTerm, setTagFilterTerm] = useState(null);
+  const [questionFilterTerm, setQuestionFilterTerm] = useState('');
 
   const itemOne = useComponentVisible(false);
   const itemTwo = useComponentVisible(false);
+  const itemThree = useComponentVisible(false);
 
   const handleSetRecent = (e, label) => {
     e.stopPropagation();
@@ -38,7 +42,7 @@ const MyTests = ({ creatorId }) => {
     itemTwo.setIsComponentVisible(false);
   };
 
-  function handleSetTags(tag, selected) {
+  const handleSetTags = (tag, selected) => {
     if (!selected) {
       //adds tag to the state
       setTagFilterTerm(tag);
@@ -46,7 +50,11 @@ const MyTests = ({ creatorId }) => {
       //removes the tag from the state
       setTagFilterTerm('');
     }
-  }
+  };
+
+  const handleSetQuestionFilterTerm = (e) => {
+    setQuestionFilterTerm(e.currentTarget.value);
+  };
 
   const Option = ({ label, handleClickOption }) => {
     return (
@@ -62,17 +70,21 @@ const MyTests = ({ creatorId }) => {
   const handleResetFilters = () => {
     setSortBy(null);
     setTagFilterTerm(null);
+    setQuestionFilterTerm('');
+    itemThree.setIsComponentVisible(false);
   };
 
   return (
     <Fragment>
       <div className='search-terms-container'>
         <div className='filter-bar'>
+          {/*unclickable filter icon*/}
           <div className='filter-bar-item'>
             <FilterListIcon />
           </div>
           <div className='filter-bar-item'>Filter By</div>
 
+          {/*filter by topic*/}
           <div
             className='filter-bar-item filter-bar-item-clickable'
             onClick={(e) => {
@@ -83,6 +95,7 @@ const MyTests = ({ creatorId }) => {
             <ArrowDropDownIcon />
           </div>
 
+          {/*sort by date created*/}
           <div
             className='filter-bar-item filter-bar-item-clickable'
             onClick={() => {
@@ -100,12 +113,30 @@ const MyTests = ({ creatorId }) => {
               </div>
             )}
           </div>
-          <div className='filter-bar-item filter-bar-item-clickable'>
-            Question <ArrowDropDownIcon />
+
+          {/*filter by question*/}
+          <div
+            className='filter-bar-item filter-bar-item-clickable'
+            onClick={() => {
+              if (questionFilterTerm.length === 0)
+                itemThree.setIsComponentVisible((prevState) => !prevState);
+            }}
+          >
+            <div className='icon-container'>
+              <SearchIcon />
+            </div>
+            question
+            {itemThree.isComponentVisible && (
+              <FilterInput
+                placeholder={'filter by folder name'}
+                handleSetFilterTerm={handleSetQuestionFilterTerm}
+                value={questionFilterTerm}
+              />
+            )}
           </div>
 
           {/* clear filters  */}
-          {(sortBy || tagFilterTerm) && (
+          {(sortBy || tagFilterTerm || questionFilterTerm) && (
             <div
               className='filter-bar-item filter-bar-item-clickable reset-filters-button-container'
               onClick={handleResetFilters}
@@ -117,6 +148,8 @@ const MyTests = ({ creatorId }) => {
             </div>
           )}
         </div>
+
+        {/*filter by tag drop down container*/}
         {itemOne.isComponentVisible && (
           <div ref={itemOne.ref} className='tags-drop-down-visible'>
             <Fragment>
@@ -143,6 +176,7 @@ const MyTests = ({ creatorId }) => {
         creatorId={creatorId}
         tagFilterTerm={tagFilterTerm}
         sortBy={sortBy}
+        questionFilterTerm={questionFilterTerm}
       >
         <TestSearchResults testType={FCEPart2} creatorId={creatorId}>
           <FCEPart2TestPreviewContent />
@@ -155,6 +189,7 @@ const MyTests = ({ creatorId }) => {
         creatorId={creatorId}
         tagFilterTerm={tagFilterTerm}
         sortBy={sortBy}
+        questionFilterTerm={questionFilterTerm}
       >
         <TestSearchResults testType={FCEPart3} creatorId={creatorId}>
           <FCEPart3TestPreviewContent />
@@ -167,6 +202,7 @@ const MyTests = ({ creatorId }) => {
         creatorId={creatorId}
         tagFilterTerm={tagFilterTerm}
         sortBy={sortBy}
+        questionFilterTerm={questionFilterTerm}
       >
         <TestSearchResults testType={CAEPart2} creatorId={creatorId}>
           <CAEPart2TestPreviewContent />
@@ -177,6 +213,9 @@ const MyTests = ({ creatorId }) => {
         buttonLabel={'CAE Part 3'}
         testType={CAEPart3}
         creatorId={creatorId}
+        tagFilterTerm={tagFilterTerm}
+        sortBy={sortBy}
+        questionFilterTerm={questionFilterTerm}
       >
         <TestSearchResults testType={CAEPart3} creatorId={creatorId}>
           <CAEPart3TestPreviewContent />

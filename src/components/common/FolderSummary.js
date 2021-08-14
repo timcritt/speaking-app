@@ -24,8 +24,9 @@ const FolderSummary = ({ folder }) => {
           <span>{`(${folder.tests.length} tests)`}</span>
         </div>
       </div>
-      <CreatorInfo creatorId={folder.userId} />
+
       <div className='folder-summary-toolbar'>
+        <CreatorInfo creatorId={folder.userId} />
         <DeleteForeverOutlinedIcon
           className='delete-folder-btn'
           onClick={() => deleteRecordFirestore(folder.id, folders)}

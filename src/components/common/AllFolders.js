@@ -6,7 +6,6 @@ import FolderSummary from './FolderSummary';
 
 const AllFolders = ({ testId }) => {
   const { docs } = useFirestore(folders, '');
-  console.log('in all folders', folders);
 
   return (
     <FoldersPresentation folders={docs} testId={testId}>
