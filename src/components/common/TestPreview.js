@@ -6,7 +6,7 @@ import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import AddToMyFolders from 'components/common/AddToMyFolders';
 import ShareButton from 'components/common/ShareButton';
 
-const TestPreview = ({ question, children, testId }) => {
+const TestPreview = ({ question, children, testId, testType }) => {
   return (
     <Fragment>
       <div className='test-preview-overlay'>
@@ -15,7 +15,7 @@ const TestPreview = ({ question, children, testId }) => {
             <ShareButton sharedItemType='' iconColour='white' />
           </div>
           <Link
-            to={`/FCEPart2/${testId}`}
+            to={`/${testType}/${testId}`}
             className='tool-bar-btn'
             style={{ color: 'white' }}
           >

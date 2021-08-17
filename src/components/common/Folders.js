@@ -11,7 +11,6 @@ const Folders = ({ folders, testId, children }) => {
               return React.cloneElement(children, {
                 key: folder.id,
                 folder: folder,
-                testArrays: folder.testArrays,
                 testId: testId,
               });
             })}

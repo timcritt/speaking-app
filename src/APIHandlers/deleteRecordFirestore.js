@@ -1,7 +1,7 @@
 import { projectFirestore } from '../firebase/firebaseIndex';
 
-const deleteRecordFirestore = (documentId, collectionName) => {
-  projectFirestore
+const deleteRecordFirestore = async (documentId, collectionName) => {
+  await projectFirestore
     .collection(collectionName)
     .doc(documentId)
     .delete()

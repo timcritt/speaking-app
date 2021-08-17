@@ -41,7 +41,7 @@ const EditFolderModal = ({ modalOpen, folder, setModalOpen }) => {
       await updateFolder(folder.id, localTitle, localDescription);
       setModalOpen(false);
     } else {
-      await addFolder(localTitle, localDescription, [], newTimeStamp, userId);
+      await addFolder(localTitle, localDescription, userId);
       setLocalTitle('');
       setLocalDescription('');
       setModalOpen(false);

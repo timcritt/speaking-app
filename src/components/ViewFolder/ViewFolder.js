@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import ShareButton from '../common/ShareButton';
 import { FCEPart2, FCEPart3, CAEPart2 } from 'APIHandlers/firebaseConsts';
 import FCEPart3TestPreviewContent from 'components/FCEPart3/FCEPart3TestPreviewContent';
-import FCEPart2TestPreviewContent from 'components/common/FCEPart2TestPreviewContent';
+import FCEPart2TestPreviewContent from 'components/FCEPart2/FCEPart2TestPreviewContent';
 import CAEPart2TestPreviewContent from 'components/CAEPart2/CAEPart2TestPreviewContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import getFolderTestsJunctions from 'APIHandlers/getFolderTestsJunctions';
@@ -83,6 +83,7 @@ const ViewFolder = () => {
                         key={test.id}
                         testId={test.id}
                         question={test.question}
+                        testType={FCEPart2}
                       >
                         <FCEPart2TestPreviewContent test={test} />
                       </TestPreview>
@@ -97,7 +98,11 @@ const ViewFolder = () => {
                       to={`/FCEPart3/${test.id}`}
                       key={test.id}
                     >
-                      <TestPreview testId={test.id} question={test.question}>
+                      <TestPreview
+                        testId={test.id}
+                        question={test.question}
+                        testType={FCEPart3}
+                      >
                         <FCEPart3TestPreviewContent test={test} />
                       </TestPreview>
                     </Link>
@@ -111,7 +116,11 @@ const ViewFolder = () => {
                       to={`/CAEPart2/${test.id}`}
                       key={test.id}
                     >
-                      <TestPreview testId={test.id} question={test.questionOne}>
+                      <TestPreview
+                        testId={test.id}
+                        question={test.questionOne}
+                        testType={CAEPart2}
+                      >
                         <CAEPart2TestPreviewContent test={test} />
                       </TestPreview>
                     </Link>

@@ -1,23 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import FolderOutlinedIcon from '@material-ui/icons/FolderOutlined';
-import updateFolderTests from '../../APIHandlers/updateFolderTests';
 import addTestToFolder from 'APIHandlers/addTestToFolder';
+import checkIfTestInFolder from 'APIHandlers/checkIfTestInFolder';
+import deleteTestFromFolder from 'APIHandlers/deleteTestFromFolder';
+import { junctionFolderTest } from 'APIHandlers/firebaseConsts';
 
 const FolderSummaryShort = ({ folder, testId, userId }) => {
   const [isInFolder, setIsInFolder] = useState(false);
 
   useEffect(() => {
-    if (folder.tests.includes(testId)) {
-      setIsInFolder(true);
-    } else {
-      setIsInFolder(false);
-    }
-  }, [folder, testId, isInFolder]);
+    var isMounted = true;
+    const asyncFunction = async () => {
+      const result = await checkIfTestInFolder(folder.id, testId);
 
-  const handleChange = () => {
+      if (result) {
+        setIsInFolder(true);
+      } else {
+        setIsInFolder(false);
+      }
+    };
+    if (isMounted) {
+      asyncFunction();
+    }
+
+    return () => (isMounted = false);
+  }, []);
+
+  const handleChange = async () => {
     console.log(folder.id, testId);
     if (!isInFolder) {
-      addTestToFolder(folder.id, testId, userId);
+      await addTestToFolder(folder.id, testId, userId);
+      setIsInFolder(true);
+    } else {
+      await deleteTestFromFolder(folder.id, testId);
+      setIsInFolder(false);
     }
     console.log(folder);
   };
@@ -25,10 +41,10 @@ const FolderSummaryShort = ({ folder, testId, userId }) => {
   return (
     <div className='folder-container'>
       <div className='folder-info-container'>
-        <span>{`${folder.tests.length} tests`}</span>
         <div className='folder-icon-title-container'>
           <FolderOutlinedIcon />
           <span className='folder-title'>{folder.title}</span>
+          <span>{folder.testCount}</span>
         </div>
       </div>
       <div className='folder-summary-toolbar'>

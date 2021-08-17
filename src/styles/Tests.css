@@ -95,11 +95,14 @@
 }
 
 .part3-test-preview-options-container {
-  background-color: #efefef;
-  height: auto;
+  background-color: #434c4d;
+  height: 250px;
   padding: 10px 15px;
-  margin: 0 10px;
-  font-size: small;
+  font-size: large;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .part3-test-preview-option-container {
@@ -112,7 +115,6 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  
 }
 
 .kebab-menu {
@@ -128,7 +130,6 @@
   display: flex;
   background-color: #F4F7F6;
   border: 1px solid #E6EAEA;  
-
 }
 
 .filter-bar-item {
@@ -145,6 +146,10 @@
 
 .filter-bar-item:last-child {
   border-right:none;
+}
+
+.filter-bar-item-stand-out {
+  border-left: 1px solid var(--main-border-color);
 }
 
 .filter-bar-item-clickable:hover {
@@ -176,4 +181,12 @@
   top:100%;
   left:0;
   z-index: 99;
+}
+
+.user-folders-create-folder {
+  margin-left: auto;
+}
+
+.createNewFolder-container {
+  background-color: red;
 }

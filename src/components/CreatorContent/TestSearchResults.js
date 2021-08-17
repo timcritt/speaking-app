@@ -17,6 +17,7 @@ const TestSearchResults = ({ tests, testType, children }) => {
                 key={test.id}
                 testId={test.id}
                 question={test.question ? test.question : test.questionOne}
+                testType={testType}
               >
                 {cloneElement(children, { test: test })}
               </TestPreview>

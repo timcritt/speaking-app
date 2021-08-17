@@ -1,24 +1,31 @@
 import React, { Fragment } from 'react';
+import { TagCloud } from 'react-tagcloud';
 
-const FCEPart3TestPreviewContent = ({ test }) => {
+const FCEPart3TestPreviewContent = React.memo(({ test }) => {
+  const testOptions = [
+    { value: test.topLeft, count: 10 },
+    { value: test.topRight, count: 12 },
+    { value: test.bottomLeft, count: 18 },
+    { value: test.bottomRight, count: 35 },
+    { value: test.bottomCentre, count: 26 },
+  ];
+
+  const colorOptions = {
+    luminosity: 'light',
+    hue: 'blue',
+  };
+
   return (
     <Fragment>
       <div className='part3-test-preview-options-container' key={test.id}>
-        <div className='part3-test-preview-option-container ellipsis'>
-          <span className='ellipsis'>- {test.topLeft}</span>
-        </div>
-        <div className='part3-test-preview-option-container ellipsis'>
-          <span className='ellipsis'>- {test.topRight}</span>
-        </div>
-        <div className='part3-test-preview-option-container ellipsis'>
-          <span className='ellipsis'> - {test.bottomLeft}</span>
-        </div>
-        <div className='part3-test-preview-option-container ellipsis'>
-          <span className='ellipsis'> - {test.bottomRight}</span>
-        </div>
-        <div className='part3-test-preview-option-container ellipsis'>
-          <span className='ellipsis'>- {test.bottomCentre}</span>
-        </div>
+        <TagCloud
+          minSize={30}
+          maxSize={40}
+          colorOptions={colorOptions}
+          tags={testOptions}
+          style={{ textAlign: 'center' }}
+          shuffle={true}
+        />
       </div>
 
       <div className='test-preview-part-label'>
@@ -26,6 +33,6 @@ const FCEPart3TestPreviewContent = ({ test }) => {
       </div>
     </Fragment>
   );
-};
+});
 
 export default FCEPart3TestPreviewContent;

@@ -8,6 +8,7 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import useComponentVisible from 'hooks/useComponentVisible';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import SearchIcon from '@material-ui/icons/Search';
+import CreateNewFolder from 'components/common/CreateNewFolder';
 
 const FoldersPresentation = ({ folders, testId, addFolder, children }) => {
   const [filterTerm, setFilterTerm] = useState();
@@ -134,22 +135,9 @@ const FoldersPresentation = ({ folders, testId, addFolder, children }) => {
               reset filters
             </div>
           )}
-        </div>
-      </div>
-      <div className='filter-input-container'>
-        {addFolder && (
-          <CreateNewFolderOutlinedIcon
-            className='open-add-folder-modal-btn'
-            onClick={() => setFolderModalOpen(true)}
-          />
-        )}
 
-        {folderModalOpen && (
-          <EditFolderModal
-            modalOpen={folderModalOpen}
-            setModalOpen={setFolderModalOpen}
-          ></EditFolderModal>
-        )}
+          <CreateNewFolder label={'ADD NEW FOLDER'} />
+        </div>
       </div>
 
       <Folders folders={results} testId={testId} children={children}></Folders>

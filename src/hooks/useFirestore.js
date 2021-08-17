@@ -8,7 +8,7 @@ const useFirestore = (collection, userId) => {
     var results = projectFirestore.collection(collection);
     console.log('in useFirestore');
     if (userId) {
-      results = results.where('userId', '==', userId);
+      results = results.where('creatorId', '==', userId);
     }
     if (collection !== 'users') {
       results = results.orderBy('createdAt', 'desc');

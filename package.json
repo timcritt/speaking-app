@@ -21,12 +21,13 @@
     "react-easy-crop": "^3.1.1",
     "react-full-screen": "^0.3.1",
     "react-github-fork-ribbon": "^0.6.0",
-    "react-lineto": "^3.2.0",
+    "react-lineto": "^3.2.1",
     "react-resize-detector": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
     "react-share": "^4.3.1",
     "react-social-sharing": "^3.3.0",
+    "react-tagcloud": "^2.1.1",
     "uuid": "^8.3.0"
   },
   "scripts": {

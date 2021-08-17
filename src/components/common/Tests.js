@@ -11,7 +11,7 @@ import {
   CAEPart3,
 } from 'APIHandlers/firebaseConsts';
 
-import FCEPart2TestPreviewContent from './FCEPart2TestPreviewContent';
+import FCEPart2TestPreviewContent from '../FCEPart2/FCEPart2TestPreviewContent';
 import CAEPart2TestPreviewContent from 'components/CAEPart2/CAEPart2TestPreviewContent';
 
 const Tests = ({ results = [], testType }) => {

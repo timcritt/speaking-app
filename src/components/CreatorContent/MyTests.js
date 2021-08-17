@@ -7,7 +7,7 @@ import {
   CAEPart3,
 } from 'APIHandlers/firebaseConsts';
 import TestSearchResults from 'components/CreatorContent/TestSearchResults';
-import FCEPart2TestPreviewContent from 'components/common/FCEPart2TestPreviewContent';
+import FCEPart2TestPreviewContent from 'components/FCEPart2/FCEPart2TestPreviewContent';
 import FCEPart3TestPreviewContent from 'components/FCEPart3/FCEPart3TestPreviewContent';
 import CAEPart2TestPreviewContent from 'components/CAEPart2/CAEPart2TestPreviewContent';
 import CAEPart3TestPreviewContent from 'components/CAEPart2/CAEPart2TestPreviewContent';

@@ -8,18 +8,16 @@ import {
 //2. increments testCount field of the folder document
 //Transactions are batched to ensure atomicity
 
-const addTestToFolder = async (folderId, testId, creatorId) => {
+const deleteTestFromFolder = async (folderId, testId) => {
   let writeBatch = projectFirestore.batch();
-
-  const createdAt = timestamp();
 
   const junctionRef = projectFirestore.doc(
     `junction_folder_test/${folderId}_${testId}`
   );
 
-  writeBatch.set(junctionRef, { folderId, testId, creatorId, createdAt });
+  writeBatch.delete(junctionRef);
 
-  const newTestCount = increment(1);
+  const newTestCount = increment(-1);
 
   const folderRef = projectFirestore.collection('folders').doc(folderId);
 
@@ -30,4 +28,4 @@ const addTestToFolder = async (folderId, testId, creatorId) => {
   return;
 };
 
-export default addTestToFolder;
+export default deleteTestFromFolder;

@@ -1,4 +1,4 @@
-import { projectFirestore } from '../firebase/firebaseIndex';
+import { projectFirestore, timestamp } from '../firebase/firebaseIndex';
 import firebase from 'firebase';
 
 const addPart3 = async (
@@ -24,7 +24,7 @@ const addPart3 = async (
     topLeft,
     topRight,
     tags,
-    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    createdAt: timestamp(),
   });
 
   return result;

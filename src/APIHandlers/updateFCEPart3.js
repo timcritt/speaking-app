@@ -1,5 +1,5 @@
 import { projectFirestore } from '../firebase/firebaseIndex';
-import { FCEPart2 } from './firebaseConsts';
+import { FCEPart3 } from './firebaseConsts';
 
 const updateFCEPart3 = async (
   bottomCentre,
@@ -13,7 +13,7 @@ const updateFCEPart3 = async (
   tags
 ) => {
   console.log(docRef);
-  var objectRef = projectFirestore.collection('Part3').doc(docRef);
+  var objectRef = projectFirestore.collection(FCEPart3).doc(docRef);
   await objectRef.update({
     bottomCentre,
     bottomLeft,
