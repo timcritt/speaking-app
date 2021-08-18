@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useCallback, Fragment } from 'r
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import { firebaseAuth } from 'context/AuthProvider';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import Part3Lines from 'components/FCEPart3/Part3Lines';
+import Part3Lines from 'components/Part3Common/Part3Lines';
 import debounce from 'auxFunctions/debounce';
 import TestToolBarView from 'components/TestCommon/TestToolBarView';
 
