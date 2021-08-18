@@ -9,7 +9,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { Link } from 'react-router-dom';
 import ShareButton from '../common/ShareButton';
 import { FCEPart2, FCEPart3, CAEPart2 } from 'APIHandlers/firebaseConsts';
-import FCEPart3TestPreviewContent from 'components/FCEPart3/FCEPart3TestPreviewContent';
+import FCEPart3TestPreviewContent from 'components/Part3Common/Part3TestPreviewContent';
 import FCEPart2TestPreviewContent from 'components/FCEPart2/FCEPart2TestPreviewContent';
 import CAEPart2TestPreviewContent from 'components/CAEPart2/CAEPart2TestPreviewContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
