@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { TagCloud } from 'react-tagcloud';
 
-const FCEPart3TestPreviewContent = React.memo(({ test }) => {
+const Part3TestPreviewContent = React.memo(({ test, bottomLabel }) => {
   const testOptions = [
     { value: test.topLeft, count: 10 },
     { value: test.topRight, count: 12 },
@@ -29,10 +29,10 @@ const FCEPart3TestPreviewContent = React.memo(({ test }) => {
       </div>
 
       <div className='test-preview-part-label'>
-        <span>FCE Part 3</span> <span className='kebab-menu'></span>
+        <span>{bottomLabel}</span> <span className='kebab-menu'></span>
       </div>
     </Fragment>
   );
 });
 
-export default FCEPart3TestPreviewContent;
+export default Part3TestPreviewContent;

@@ -3,9 +3,9 @@ import SideBarTags from '../common/SideBarTags';
 import { FCEPart2, FCEPart3, CAEPart2, CAEPart3 } from 'APIHandlers/firebaseConsts';
 import TestSearchResults from 'components/CreatorContent/TestSearchResults';
 import FCEPart2TestPreviewContent from 'components/FCEPart2/FCEPart2TestPreviewContent';
-import FCEPart3TestPreviewContent from 'components/FCEPart3/FCEPart3TestPreviewContent';
+import Part3TestPreviewContent from 'components/Part3Common/Part3TestPreviewContent';
 import CAEPart2TestPreviewContent from 'components/CAEPart2/CAEPart2TestPreviewContent';
-import CAEPart3TestPreviewContent from 'components/CAEPart3/CAEPart3TestPreviewContent';
+// import CAEPart3TestPreviewContent from 'components/CAEPart3/CAEPart3TestPreviewContent';
 import VerticallyExpandingTestsContainer from './VerticallyExpandingTestsContainer';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import useComponentVisible from 'hooks/useComponentVisible';
@@ -19,7 +19,7 @@ const MyTests = ({ creatorId }) => {
   //state
   const [sortBy, setSortBy] = useState(null);
   const [tagFilterTerm, setTagFilterTerm] = useState(null);
-  const [questionFilterTerm, setQuestionFilterTerm] = useState(null);
+  const [questionFilterTerm, setQuestionFilterTerm] = useState('');
 
   const itemOne = useComponentVisible(false);
   const itemTwo = useComponentVisible(false);
@@ -62,7 +62,7 @@ const MyTests = ({ creatorId }) => {
   const handleResetFilters = () => {
     setSortBy(null);
     setTagFilterTerm(null);
-    setQuestionFilterTerm(null);
+    setQuestionFilterTerm('');
     itemThree.setIsComponentVisible(false);
   };
 
@@ -181,7 +181,7 @@ const MyTests = ({ creatorId }) => {
         questionFilterTerm={questionFilterTerm}
       >
         <TestSearchResults testType={FCEPart3} creatorId={creatorId}>
-          <FCEPart3TestPreviewContent />
+          <Part3TestPreviewContent bottomLabel={'FCE Part 3'} />
         </TestSearchResults>
       </VerticallyExpandingTestsContainer>
 
@@ -207,7 +207,7 @@ const MyTests = ({ creatorId }) => {
         questionFilterTerm={questionFilterTerm}
       >
         <TestSearchResults testType={CAEPart3} creatorId={creatorId}>
-          <CAEPart3TestPreviewContent />
+          <Part3TestPreviewContent bottomLabel={'CAE Part 3'} />
         </TestSearchResults>
       </VerticallyExpandingTestsContainer>
     </Fragment>

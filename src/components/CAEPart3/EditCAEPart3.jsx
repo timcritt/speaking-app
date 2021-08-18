@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import EditPart3 from 'components/FCEPart3/EditPart3';
+import EditPart3 from 'components/Part3Common/EditPart3';
 import { CAEPart3 } from 'APIHandlers/firebaseConsts';
 import { CAEPart3Context } from 'context/CAEPart3Context';
 
