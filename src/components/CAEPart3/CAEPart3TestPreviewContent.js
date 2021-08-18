@@ -3,11 +3,11 @@ import { TagCloud } from 'react-tagcloud';
 
 const CAEPart3TestPreviewContent = React.memo(({ test }) => {
   const testOptions = [
-    { value: test.topLeft, count: 10 },
-    { value: test.topRight, count: 12 },
-    { value: test.bottomLeft, count: 18 },
-    { value: test.bottomRight, count: 35 },
-    { value: test.bottomCentre, count: 26 },
+    { value: test.topLeft, count: 10, key: 1 },
+    { value: test.topRight, count: 12, key: 2 },
+    { value: test.bottomLeft, count: 18, key: 3 },
+    { value: test.bottomRight, count: 35, key: 4 },
+    { value: test.bottomCentre, count: 26, key: 5 },
   ];
 
   const colorOptions = {

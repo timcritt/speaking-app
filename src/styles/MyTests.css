@@ -39,6 +39,7 @@
   border: 1px solid #e6eaea;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
+  height: 100px;
 }
 
 .tests-container-header:hover {
