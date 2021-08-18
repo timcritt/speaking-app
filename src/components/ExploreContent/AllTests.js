@@ -3,12 +3,7 @@ import Tests from '../common/Tests';
 import InputSort from '../common/InputSort';
 import SideBarTags from '../common/SideBarTags';
 import getFilteredTests from '../../APIHandlers/getFilteredTests';
-import {
-  FCEPart2,
-  FCEPart3,
-  CAEPart2,
-  CAEPart3,
-} from 'APIHandlers/firebaseConsts';
+import { FCEPart2, FCEPart3, CAEPart2, CAEPart3 } from 'APIHandlers/firebaseConsts';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 const AllTests = ({ creatorId }) => {
@@ -52,36 +47,32 @@ const AllTests = ({ creatorId }) => {
     setHasFetched(false);
     setSearchButtonClicked(true);
 
-    await getFilteredTests(creatorId, filterTerm, exam + testType).then(
-      (data) => {
-        var filteredDocs = JSON.parse(JSON.stringify(data));
+    await getFilteredTests(creatorId, filterTerm, exam + testType).then((data) => {
+      var filteredDocs = JSON.parse(JSON.stringify(data));
 
-        //filter by topic tag
-        if (tagSearchTerm) {
-          filteredDocs = filteredDocs.filter((doc) =>
-            doc.tags.includes(tagSearchTerm)
-          );
-        }
-
-        //sort alphabetically by question
-        if (sortType === 'Question') {
-          filteredDocs = filteredDocs.sort((a, b) => {
-            var titleA = a.question.toUpperCase();
-            var titleB = b.question.toUpperCase();
-
-            if (titleA < titleB) {
-              return -1;
-            }
-            if (titleA > titleB) {
-              return 1;
-            }
-            return 0;
-          });
-        }
-        setResults(filteredDocs);
-        setHasFetched(true);
+      //filter by topic tag
+      if (tagSearchTerm) {
+        filteredDocs = filteredDocs.filter((doc) => doc.tags.includes(tagSearchTerm));
       }
-    );
+
+      //sort alphabetically by question
+      if (sortType === 'Question') {
+        filteredDocs = filteredDocs.sort((a, b) => {
+          var titleA = a.question.toUpperCase();
+          var titleB = b.question.toUpperCase();
+
+          if (titleA < titleB) {
+            return -1;
+          }
+          if (titleA > titleB) {
+            return 1;
+          }
+          return 0;
+        });
+      }
+      setResults(filteredDocs);
+      setHasFetched(true);
+    });
   };
 
   return (
@@ -92,11 +83,7 @@ const AllTests = ({ creatorId }) => {
           handleChange={handleChangeSort}
           values={['Most recent', 'oldest']}
         />
-        <InputSort
-          selectValue={exam}
-          handleChange={handleChangeExam}
-          values={['FCE', 'CAE']}
-        />
+        <InputSort selectValue={exam} handleChange={handleChangeExam} values={['FCE', 'CAE']} />
         <InputSort
           selectVale={testType}
           handleChange={handleChangeTestType}

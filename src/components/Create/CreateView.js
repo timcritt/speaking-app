@@ -23,7 +23,9 @@ const CreateView = () => {
           <Link to='/EditCAEPart2/new'>
             <h2>Part 2</h2>
           </Link>
-          <h2>Part 3</h2>
+          <Link to='/EditCAEPart3/new'>
+            <h2>Part 3</h2>
+          </Link>
           <h2>Part 4</h2>
         </div>
       </div>

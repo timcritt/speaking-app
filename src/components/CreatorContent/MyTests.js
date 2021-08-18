@@ -1,16 +1,11 @@
 import React, { Fragment, useState } from 'react';
 import SideBarTags from '../common/SideBarTags';
-import {
-  FCEPart2,
-  FCEPart3,
-  CAEPart2,
-  CAEPart3,
-} from 'APIHandlers/firebaseConsts';
+import { FCEPart2, FCEPart3, CAEPart2, CAEPart3 } from 'APIHandlers/firebaseConsts';
 import TestSearchResults from 'components/CreatorContent/TestSearchResults';
 import FCEPart2TestPreviewContent from 'components/FCEPart2/FCEPart2TestPreviewContent';
 import FCEPart3TestPreviewContent from 'components/FCEPart3/FCEPart3TestPreviewContent';
 import CAEPart2TestPreviewContent from 'components/CAEPart2/CAEPart2TestPreviewContent';
-import CAEPart3TestPreviewContent from 'components/CAEPart2/CAEPart2TestPreviewContent';
+import CAEPart3TestPreviewContent from 'components/CAEPart3/CAEPart3TestPreviewContent';
 import VerticallyExpandingTestsContainer from './VerticallyExpandingTestsContainer';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import useComponentVisible from 'hooks/useComponentVisible';
@@ -24,7 +19,7 @@ const MyTests = ({ creatorId }) => {
   //state
   const [sortBy, setSortBy] = useState(null);
   const [tagFilterTerm, setTagFilterTerm] = useState(null);
-  const [questionFilterTerm, setQuestionFilterTerm] = useState('');
+  const [questionFilterTerm, setQuestionFilterTerm] = useState(null);
 
   const itemOne = useComponentVisible(false);
   const itemTwo = useComponentVisible(false);
@@ -58,10 +53,7 @@ const MyTests = ({ creatorId }) => {
 
   const Option = ({ label, handleClickOption }) => {
     return (
-      <div
-        className='dropdown-option'
-        onClick={(e) => handleClickOption(e, label)}
-      >
+      <div className='dropdown-option' onClick={(e) => handleClickOption(e, label)}>
         {label}
       </div>
     );
@@ -70,7 +62,7 @@ const MyTests = ({ creatorId }) => {
   const handleResetFilters = () => {
     setSortBy(null);
     setTagFilterTerm(null);
-    setQuestionFilterTerm('');
+    setQuestionFilterTerm(null);
     itemThree.setIsComponentVisible(false);
   };
 
@@ -136,7 +128,7 @@ const MyTests = ({ creatorId }) => {
           </div>
 
           {/* clear filters  */}
-          {(sortBy || tagFilterTerm || questionFilterTerm) && (
+          {(sortBy || tagFilterTerm || (questionFilterTerm && questionFilterTerm.length > 0)) && (
             <div
               className='filter-bar-item filter-bar-item-clickable reset-filters-button-container'
               onClick={handleResetFilters}
@@ -153,10 +145,7 @@ const MyTests = ({ creatorId }) => {
         {itemOne.isComponentVisible && (
           <div ref={itemOne.ref} className='tags-drop-down-visible'>
             <Fragment>
-              <SideBarTags
-                tags={tagFilterTerm}
-                handleSetTags={handleSetTags}
-              ></SideBarTags>
+              <SideBarTags tags={tagFilterTerm} handleSetTags={handleSetTags}></SideBarTags>
               <div
                 className='close-dropdown-container-button'
                 onClick={(e) => {

@@ -1,25 +1,25 @@
 import { projectFirestore } from '../firebase/firebaseIndex';
-import { FCEPart3 } from './firebaseConsts';
 
-const updateFCEPart3 = async (
+const updatePart3 = async (
   bottomCentre,
   bottomLeft,
   bottomRight,
-  question,
-  questionTwo,
+  questionOne,
+  shortTurnQuestion,
   topLeft,
   topRight,
   docRef,
-  tags
+  tags,
+  testType
 ) => {
   console.log(docRef);
-  var objectRef = projectFirestore.collection(FCEPart3).doc(docRef);
+  var objectRef = projectFirestore.collection(testType).doc(docRef);
   await objectRef.update({
     bottomCentre,
     bottomLeft,
     bottomRight,
-    question,
-    questionTwo,
+    questionOne,
+    shortTurnQuestion,
     topLeft,
     topRight,
     tags,
@@ -28,4 +28,4 @@ const updateFCEPart3 = async (
   return Promise.resolve();
 };
 
-export default updateFCEPart3;
+export default updatePart3;

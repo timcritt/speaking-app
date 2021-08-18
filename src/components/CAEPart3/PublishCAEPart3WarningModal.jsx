@@ -3,7 +3,7 @@ import Modal from 'components/common/Modal';
 import PublishIcon from '@material-ui/icons/Publish';
 import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
 import { timestamp } from 'firebase/firebaseIndex';
-import updatePart3 from 'APIHandlers/updatePart3';
+import updateFCEPart3 from 'APIHandlers/updatePart3';
 import addPart3 from 'APIHandlers/addPart3';
 import { firebaseAuth } from 'context/AuthProvider';
 import { useHistory } from 'react-router-dom';
@@ -65,7 +65,7 @@ export default function PublishWarningModal({
       if (docRef) {
         //update fce part 3
         console.log('updating existing part 3');
-        updatePart3(
+        updateFCEPart3(
           bottomCentre,
           bottomLeft,
           bottomRight,
@@ -74,8 +74,7 @@ export default function PublishWarningModal({
           topLeft,
           topRight,
           docRef,
-          tags,
-          testType
+          tags
         );
       } else {
         //upload new Part 3 - only reached if all fields are complete and docRef doesn't exist - i.e., the test has just been created
@@ -94,7 +93,7 @@ export default function PublishWarningModal({
         ).then((response) => {
           setDocRef(response.id);
           console.log('response = ', response);
-          history.push(`/Edit${testType}/${response.id}`);
+          history.push(`/EditFCEPart3/${response.id}`);
         });
       }
     } else {

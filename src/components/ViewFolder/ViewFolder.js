@@ -82,7 +82,7 @@ const ViewFolder = () => {
                       <TestPreview
                         key={test.id}
                         testId={test.id}
-                        question={test.question}
+                        question={test.questionOne}
                         testType={FCEPart2}
                       >
                         <FCEPart2TestPreviewContent test={test} />
@@ -93,16 +93,8 @@ const ViewFolder = () => {
               {FCEPart3Tests &&
                 FCEPart3Tests.map((test) => {
                   return (
-                    <Link
-                      className='test-preview-link'
-                      to={`/FCEPart3/${test.id}`}
-                      key={test.id}
-                    >
-                      <TestPreview
-                        testId={test.id}
-                        question={test.question}
-                        testType={FCEPart3}
-                      >
+                    <Link className='test-preview-link' to={`/FCEPart3/${test.id}`} key={test.id}>
+                      <TestPreview testId={test.id} question={test.question} testType={FCEPart3}>
                         <FCEPart3TestPreviewContent test={test} />
                       </TestPreview>
                     </Link>
@@ -111,16 +103,8 @@ const ViewFolder = () => {
               {CAEPart2Tests &&
                 CAEPart2Tests.map((test) => {
                   return (
-                    <Link
-                      className='test-preview-link'
-                      to={`/CAEPart2/${test.id}`}
-                      key={test.id}
-                    >
-                      <TestPreview
-                        testId={test.id}
-                        question={test.questionOne}
-                        testType={CAEPart2}
-                      >
+                    <Link className='test-preview-link' to={`/CAEPart2/${test.id}`} key={test.id}>
+                      <TestPreview testId={test.id} question={test.questionOne} testType={CAEPart2}>
                         <CAEPart2TestPreviewContent test={test} />
                       </TestPreview>
                     </Link>

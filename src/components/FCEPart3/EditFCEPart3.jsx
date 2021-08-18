@@ -1,0 +1,12 @@
+import React, { useContext } from 'react';
+
+import EditPart3 from 'components/FCEPart3/EditPart3';
+import { FCEPart3 } from 'APIHandlers/firebaseConsts';
+import { FCEPart3Context } from 'context/FCEPart3Context';
+
+const EditFCEPart3 = (props) => {
+  const context = useContext(FCEPart3Context);
+  return <EditPart3 context={context} {...props} testType={FCEPart3} />;
+};
+
+export default EditFCEPart3;
