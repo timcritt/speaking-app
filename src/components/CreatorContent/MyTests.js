@@ -74,11 +74,12 @@ const MyTests = ({ creatorId }) => {
           <div className='filter-bar-item'>
             <FilterListIcon />
           </div>
-          <div className='filter-bar-item'>Filter By</div>
 
           {/*filter by topic*/}
           <div
-            className='filter-bar-item filter-bar-item-clickable'
+            className={`filter-bar-item filter-bar-item-clickable ${
+              tagFilterTerm ? 'filter-selected' : ''
+            }`}
             onClick={(e) => {
               itemOne.setIsComponentVisible((prevState) => !prevState);
             }}
@@ -89,7 +90,9 @@ const MyTests = ({ creatorId }) => {
 
           {/*sort by date created*/}
           <div
-            className='filter-bar-item filter-bar-item-clickable'
+            className={`filter-bar-item filter-bar-item-clickable ${
+              sortBy ? 'filter-selected' : ''
+            }`}
             onClick={() => {
               itemTwo.setIsComponentVisible(true);
               console.log('button clicked');
@@ -108,7 +111,9 @@ const MyTests = ({ creatorId }) => {
 
           {/*filter by question*/}
           <div
-            className='filter-bar-item filter-bar-item-clickable'
+            className={`filter-bar-item filter-bar-item-clickable ${
+              questionFilterTerm !== '' ? 'filter-selected' : ''
+            }`}
             onClick={() => {
               if (questionFilterTerm.length === 0)
                 itemThree.setIsComponentVisible((prevState) => !prevState);
@@ -144,17 +149,15 @@ const MyTests = ({ creatorId }) => {
         {/*filter by tag drop down container*/}
         {itemOne.isComponentVisible && (
           <div ref={itemOne.ref} className='tags-drop-down-visible'>
-            <Fragment>
-              <SideBarTags tags={tagFilterTerm} handleSetTags={handleSetTags}></SideBarTags>
-              <div
-                className='close-dropdown-container-button'
-                onClick={(e) => {
-                  itemOne.setIsComponentVisible((prevState) => !prevState);
-                }}
-              >
-                <CancelIcon />
-              </div>
-            </Fragment>
+            <SideBarTags tags={tagFilterTerm} handleSetTags={handleSetTags}></SideBarTags>
+            <div
+              className='close-dropdown-container-button'
+              onClick={(e) => {
+                itemOne.setIsComponentVisible((prevState) => !prevState);
+              }}
+            >
+              <CancelIcon />
+            </div>
           </div>
         )}
       </div>

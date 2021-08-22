@@ -50,11 +50,7 @@ const EditFCEPart2 = (props) => {
     return (
       <Fragment>
         <div className='side-bar-left-tags hg-sidebar '>
-          <SideBarTags
-            tags={context.testTags}
-            handleSetTags={handleSetTags}
-            title={'Topic Tags'}
-          >
+          <SideBarTags tags={context.testTags} handleSetTags={handleSetTags} title={'Topic Tags'}>
             <p className='advice-text tag-advice'>
               Adding the correct tags will help others find your test
             </p>
@@ -64,25 +60,19 @@ const EditFCEPart2 = (props) => {
           <div className='part2-main-row fade-in'>
             <div className='part2-edit-question-row'>
               <div className='part2-edit-question-container'>
-                <label
-                  className='part2-question-input-label'
-                  htmlFor='long-turn'
-                >
+                <label className='part2-question-input-label' htmlFor='long-turn'>
                   Long turn
                 </label>
                 <input
                   label='long-turn'
                   className='input question-input'
-                  value={context.question}
+                  value={context.questionOne}
                   placeholder='enter long turn question'
-                  onChange={(e) => context.setQuestion(e.currentTarget.value)}
+                  onChange={(e) => context.setQuestionOne(e.currentTarget.value)}
                 />
               </div>
               <div className='part2-edit-question-container'>
-                <label
-                  className='part2-question-input-label'
-                  htmlFor='short-turn'
-                >
+                <label className='part2-question-input-label' htmlFor='short-turn'>
                   Short turn
                 </label>
                 <input
@@ -90,38 +80,27 @@ const EditFCEPart2 = (props) => {
                   className='input question-input '
                   value={context.shortTurnQuestion}
                   placeholder='enter short turn question'
-                  onChange={(e) =>
-                    context.setShortTurnQuestion(e.currentTarget.value)
-                  }
+                  onChange={(e) => context.setShortTurnQuestion(e.currentTarget.value)}
                 />
               </div>
             </div>
             <div className='part2-image-row'>
               <div className='part2-image-container-left'>
-                <ExamPicture
-                  image={context.imageOneUrl}
-                  setImage={context.setImageOneUrl}
-                >
+                <ExamPicture image={context.imageOneUrl} setImage={context.setImageOneUrl}>
                   {context.imageOneUrl ? (
                     <ImageDeleteBtn
                       setImageUrl={context.setImageOneUrl}
                       setImageRef={context.setImageOneRef}
                     />
                   ) : (
-                    <SimpleModal
-                      modalButtonText={'upload'}
-                      setImageUrl={context.setImageOneUrl}
-                    />
+                    <SimpleModal modalButtonText={'upload'} setImageUrl={context.setImageOneUrl} />
                   )}
                 </ExamPicture>
               </div>
 
               <div>
                 <div className='part2-image-container-right'>
-                  <ExamPicture
-                    image={context.imageTwoUrl}
-                    setImage={context.setImageTwoUrl}
-                  >
+                  <ExamPicture image={context.imageTwoUrl} setImage={context.setImageTwoUrl}>
                     {context.imageTwoUrl ? (
                       <ImageDeleteBtn
                         setImageUrl={context.setImageTwoUrl}

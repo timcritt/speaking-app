@@ -8,20 +8,14 @@ const TestSearchResults = ({ tests, testType, children }) => {
       {tests &&
         tests.map((test) => {
           return (
-            <div
-              className='test-preview-link'
-              to={`/${testType}/${test.id}`}
-              key={`testType` + test.id}
+            <TestPreview
+              key={test.id}
+              testId={test.id}
+              questionOne={test.questionOne}
+              testType={testType}
             >
-              <TestPreview
-                key={test.id}
-                testId={test.id}
-                question={test.question ? test.question : test.questionOne}
-                testType={testType}
-              >
-                {cloneElement(children, { test: test })}
-              </TestPreview>
-            </div>
+              {cloneElement(children, { test: test })}
+            </TestPreview>
           );
         })}
     </div>

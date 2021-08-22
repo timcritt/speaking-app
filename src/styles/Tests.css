@@ -129,7 +129,6 @@
 .filter-bar {
   display: flex;
   background-color: #F4F7F6;
-  border: 1px solid #E6EAEA;  
 }
 
 .filter-bar-item {

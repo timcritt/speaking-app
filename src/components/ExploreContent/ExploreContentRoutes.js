@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import AllTests from './AllTests';
-import AllFolders from '../common/AllFolders';
+import AllFolders from './AllFolders';
 import FolderSummary from '../common/FolderSummary';
 import SearchUsers from './SearchUsers';
 

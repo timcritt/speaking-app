@@ -20,36 +20,35 @@ const Tests = ({ results = [], testType }) => {
             results.map((doc) => {
               if (testType === FCEPart2) {
                 return (
-                  <div className='test-preview-link' key={doc.id}>
-                    <TestPreview testId={doc.id} question={doc.question} testType={testType}>
-                      <FCEPart2TestPreviewContent test={doc} key={doc.id} />
-                    </TestPreview>
-                  </div>
+                  <TestPreview testId={doc.id} questionOne={doc.questionOne} testType={testType}>
+                    <FCEPart2TestPreviewContent test={doc} key={doc.id} />
+                  </TestPreview>
                 );
               } else if (testType === FCEPart3) {
                 return (
-                  <Link className='test-preview-link' to={`/FCEPart3/${doc.id}`}>
-                    <TestPreview testId={doc.id} question={doc.question}>
-                      <FCEPart3TestPreviewContent test={doc} key={doc.id} />
-                    </TestPreview>
-                  </Link>
+                  <TestPreview testId={doc.id} questionOne={doc.questionOne}>
+                    <FCEPart3TestPreviewContent
+                      test={doc}
+                      key={doc.id}
+                      bottomLabel={'FCE Part 3'}
+                    />
+                  </TestPreview>
                 );
               } else if (testType === CAEPart2) {
                 return (
-                  <Link className='test-preview-link' to={`/CAEPart2/${doc.id}`}>
-                    <TestPreview testId={doc.id} question={doc.questionOne}>
-                      <CAEPart2TestPreviewContent test={doc} key={doc.id} />
-                    </TestPreview>
-                  </Link>
+                  <TestPreview testId={doc.id} questionOne={doc.questionOne}>
+                    <CAEPart2TestPreviewContent test={doc} key={doc.id} />
+                  </TestPreview>
                 );
               } else if (testType === CAEPart3) {
                 return (
-                  <div>
-                    className='test-preview-link' to={`/CAEPart3/${doc.id}`}>
-                    <TestPreview testId={doc.id} question={doc.question}>
-                      <FCEPart3TestPreviewContent test={doc} key={doc.id} />
-                    </TestPreview>
-                  </div>
+                  <TestPreview testId={doc.id} questionOne={doc.questionOne}>
+                    <FCEPart3TestPreviewContent
+                      test={doc}
+                      key={doc.id}
+                      bottomLabel={'CAE Part 3'}
+                    />
+                  </TestPreview>
                 );
               }
               return <h1>fail</h1>;

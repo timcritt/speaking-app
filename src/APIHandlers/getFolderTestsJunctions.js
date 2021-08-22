@@ -1,6 +1,6 @@
 import { projectFirestore } from '../firebase/firebaseIndex';
 
-//gets tests that are in a folder
+//returns an array of the ids of all tests that are in a folder
 const getFolderTestsJunctions = async (folderId) => {
   console.log('folder ID', folderId);
   const junctions = await projectFirestore
@@ -8,9 +8,7 @@ const getFolderTestsJunctions = async (folderId) => {
     .where('folderId', '==', folderId)
     .get();
 
-  return junctions.docs
-    .filter((doc) => doc.exists)
-    .map((doc) => doc.data().testId);
+  return junctions.docs.filter((doc) => doc.exists).map((doc) => doc.data().testId);
 };
 
 export default getFolderTestsJunctions;

@@ -63,7 +63,7 @@ const VerticallyExpandingTestsContainer = ({
           //filter by question text
           if (testType === 'FCEPart2' && questionFilterTerm && questionFilterTerm.length > 0) {
             userTests = userTests.filter((test) =>
-              test.question.toUpperCase().includes(questionFilterTerm.toUpperCase())
+              test.questionOne.toUpperCase().includes(questionFilterTerm.toUpperCase())
             );
           }
           setTests(userTests);
