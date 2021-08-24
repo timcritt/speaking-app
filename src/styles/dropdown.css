@@ -27,7 +27,7 @@
   border-radius: 5px;
 }
 
-.dropdown:hover .dropdown-content {
+.dropdown-m:hover .dropdown-content {
   display: block;
 }
 
