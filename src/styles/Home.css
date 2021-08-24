@@ -1,6 +1,5 @@
 .home-content {
   background-color: #6658fc;
-  width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8,20 +7,25 @@
 }
 
 .home-page-slogan-container {
-  max-width: 25rem;
   color: white;
 }
 
 .home-page-slogan {
-  font-size: 2.75rem;
+  font-size: 2.75em;
+  text-align: center;
+  margin: 1rem;
 }
 
 .get-started-btn {
-  font-size: 1.5rem;
-  padding: 0.5rem 2rem;
+  font-size: 1.2em;
+  padding: 0.5em 2em;
   background-color: #6a27d5;
   border: none;
   color: white;
   border-radius: 5px;
-  margin: 2px;
+  margin: 0.15em;
+}
+
+.home-btn-container {
+  text-align: center;
 }

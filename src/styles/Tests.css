@@ -4,6 +4,7 @@
   justify-content: space-between;
   position: relative;
   transition: all 0.3s ease-in-out;
+  height: 348px;
 }
 
 .test-preview-container:hover {
@@ -29,7 +30,6 @@
   font-size: small;
   align-items: center;
   box-sizing: border-box;
-  min-height:18%;
   margin:10px;
   text-transform: uppercase;
 
@@ -129,7 +129,6 @@
 .filter-bar {
   display: flex;
   background-color: #F4F7F6;
-  border: 1px solid #E6EAEA;  
 }
 
 .filter-bar-item {
@@ -189,4 +188,8 @@
 
 .createNewFolder-container {
   background-color: red;
+}
+
+.test-preview-question-text {
+  background-color: white;
 }

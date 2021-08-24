@@ -4,7 +4,7 @@ import getTest from 'APIHandlers/getTest';
 export const FCEPart2Context = createContext();
 
 export const FCEPart2ContextProvider = ({ children }) => {
-  const [question, setQuestion] = useState('');
+  const [questionOne, setQuestionOne] = useState('');
   const [shortTurnQuestion, setShortTurnQuestion] = useState('');
   const [imageOneUrl, setImageOneUrl] = useState(null);
   const [imageTwoUrl, setImageTwoUrl] = useState(null);
@@ -18,7 +18,7 @@ export const FCEPart2ContextProvider = ({ children }) => {
   const [hasFetched, setHasFetched] = useState(false);
 
   const clearState = () => {
-    setQuestion('');
+    setQuestionOne('');
     setShortTurnQuestion('');
     setImageOneUrl(null);
     setImageTwoUrl(null);
@@ -41,7 +41,7 @@ export const FCEPart2ContextProvider = ({ children }) => {
           setImageTwoUrl(data.imageTwoUrl);
           setImageOneRef(data.imageOneRef);
           setImageTwoRef(data.imageTwoRef);
-          setQuestion(data.question);
+          setQuestionOne(data.questionOne);
           setShortTurnQuestion(data.shortTurnQuestion);
           setCreatorId(data.creatorId);
           setTestTags(data.tags);
@@ -56,8 +56,8 @@ export const FCEPart2ContextProvider = ({ children }) => {
   return (
     <FCEPart2Context.Provider
       value={{
-        question,
-        setQuestion,
+        questionOne,
+        setQuestionOne,
         shortTurnQuestion,
         setShortTurnQuestion,
         imageOneUrl,

@@ -4,8 +4,8 @@ import getTest from 'APIHandlers/getTest';
 export const FCEPart3Context = createContext();
 
 export const FCEPart3ContextProvider = ({ children }) => {
-  const [question, setQuestion] = useState('');
-  const [questionTwo, setQuestionTwo] = useState('');
+  const [questionOne, setQuestionOne] = useState('');
+  const [shortTurnQuestion, setShortTurnQuestion] = useState('');
   const [topLeft, setTopLeft] = useState('');
   const [topRight, setTopRight] = useState('');
   const [bottomLeft, setBottomLeft] = useState('');
@@ -13,14 +13,14 @@ export const FCEPart3ContextProvider = ({ children }) => {
   const [bottomRight, setBottomRight] = useState('');
   const [testTags, setTestTags] = useState([]);
   const [docRef, setDocRef] = useState(null);
-  const [creatorId, setcreatorId] = useState('');
+  const [creatorId, setCreatorId] = useState('');
   const [changesSaved, setChangesSaved] = useState(false);
   const optionPlaceholder = 'option';
   const [hasFetched, setHasFetched] = useState(false);
 
   const clearState = () => {
-    setQuestion('');
-    setQuestionTwo('');
+    setQuestionOne('');
+    setShortTurnQuestion('');
     setTopLeft('');
     setTopRight('');
     setBottomLeft('');
@@ -29,7 +29,7 @@ export const FCEPart3ContextProvider = ({ children }) => {
     setHasFetched(true);
     setTestTags([]);
     setDocRef(null);
-    setcreatorId(null);
+    setCreatorId(null);
   };
 
   function handleSetTags(tag, selected) {
@@ -55,14 +55,14 @@ export const FCEPart3ContextProvider = ({ children }) => {
       getTest('FCEPart3', docRef).then((data) => {
         if (data) {
           setDocRef(data.id);
-          setQuestion(data.question);
-          setQuestionTwo(data.questionTwo);
+          setQuestionOne(data.questionOne);
+          setShortTurnQuestion(data.shortTurnQuestion);
           setTopLeft(data.topLeft);
           setTopRight(data.topRight);
           setBottomCentre(data.bottomCentre);
           setBottomLeft(data.bottomLeft);
           setBottomRight(data.bottomRight);
-          setcreatorId(data.creatorId);
+          setCreatorId(data.creatorId);
           setTestTags(data.tags);
           setHasFetched(true);
         }
@@ -75,10 +75,10 @@ export const FCEPart3ContextProvider = ({ children }) => {
   return (
     <FCEPart3Context.Provider
       value={{
-        question,
-        setQuestion,
-        questionTwo,
-        setQuestionTwo,
+        questionOne,
+        setQuestionOne,
+        shortTurnQuestion,
+        setShortTurnQuestion,
         topLeft,
         setTopLeft,
         topRight,
@@ -94,7 +94,7 @@ export const FCEPart3ContextProvider = ({ children }) => {
         docRef,
         setDocRef,
         creatorId,
-        setcreatorId,
+        setCreatorId,
         changesSaved,
         setChangesSaved,
         optionPlaceholder,

@@ -30,22 +30,16 @@ const FCEPart2View = (props) => {
           <main className='holy-grail-content fade-in'>
             <div className='part2-main-row'>
               <Part2QuestionRow
-                longTurnQuestions={[context.question]}
+                longTurnQuestions={[context.questionOne]}
                 shortTurnQuestion={context.shortTurnQuestion}
                 setTime={setTime}
               />
               <div className='part2-image-row'>
                 <div className='part2-image-container-left'>
-                  <ExamPicture
-                    image={context.imageOneUrl}
-                    setImage={context.setImageOneUrl}
-                  />
+                  <ExamPicture image={context.imageOneUrl} setImage={context.setImageOneUrl} />
                 </div>
                 <div className='part2-image-container-right'>
-                  <ExamPicture
-                    image={context.imageTwoUrl}
-                    setImage={context.setImageTwoUrl}
-                  />
+                  <ExamPicture image={context.imageTwoUrl} setImage={context.setImageTwoUrl} />
                 </div>
               </div>
               <TestToolBarView

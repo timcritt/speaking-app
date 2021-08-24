@@ -1,21 +1,26 @@
 import { projectFirestore } from '../firebase/firebaseIndex';
 import firebase from 'firebase';
 
-//gets an array of tests based on an array of test ids
+//gets an array of tests of a particular type from an array of test ids
 const getTestsById = async (testIds, testType) => {
-  var tests = [];
-  console.log(testIds);
-  if (testIds.length > 0) {
-    await projectFirestore
-      .collection(testType)
-      .where(firebase.firestore.FieldPath.documentId(), 'in', testIds)
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          tests.push({ ...doc.data(), id: doc.id });
-        });
-      });
-  }
+  const promises = [];
+  const tests = [];
+
+  testIds.forEach((testId) => {
+    promises.push(
+      projectFirestore
+        .collection(testType)
+        .doc(testId)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            tests.push({ ...doc.data(), id: doc.id });
+          }
+        })
+    );
+  });
+
+  await Promise.all(promises);
 
   return tests;
 };

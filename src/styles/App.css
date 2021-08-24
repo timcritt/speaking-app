@@ -37,6 +37,9 @@
 @import 'CAEPart2.css';
 @import 'testThumbnail.css';
 
+* {
+  box-sizing: border-box;
+}
 
 @font-face {
   font-family: 'Digital-7';

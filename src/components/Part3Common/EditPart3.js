@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import CreatorInfo from 'components/common/CreatorInfo';
@@ -8,18 +8,16 @@ import { TextareaAutosize } from '@material-ui/core';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import SideBarTags from 'components/common/SideBarTags';
-import PublishPart3WarningModal from 'components/FCEPart3/PublishPart3WarningModal';
-import Part3Lines from 'components/FCEPart3/Part3Lines';
+import PublishPart3WarningModal from 'components/Part3Common/PublishPart3WarningModal';
+import Part3Lines from 'components/Part3Common/Part3Lines';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import debounce from 'auxFunctions/debounce';
-import { FCEPart3Context } from 'context/FCEPart3Context';
 import { useHistory } from 'react-router-dom';
-import { FCEPart3 } from 'APIHandlers/firebaseConsts';
 
-const EditPart3 = (props) => {
+const EditPart3 = ({ context, testType, ...props }) => {
   const handleFullScreen = useFullScreenHandle();
   const optionPlaceholder = 'option';
-  const context = useContext(FCEPart3Context);
+
   const [lineClass, setLineClass] = useState('');
   const [windowDimensions, setWindowDimensions] = useState({
     height: null,
@@ -34,21 +32,21 @@ const EditPart3 = (props) => {
     setLineClass('');
   };
 
-  const handleResize = () => {
+  const handleResize = useCallback(() => {
     setWindowDimensions({
       height: window.innerHeight,
       width: window.innerWidth,
     });
     showLines();
     console.log('lines redrawn');
-  };
+  }, []);
 
   const debouncedHandleResize = debounce(handleResize, 200);
 
   const handleDeleteTest = async () => {
-    await deleteTest(context.docRef, FCEPart3);
+    await deleteTest(context.docRef, testType);
     context.clearState();
-    history.push('/EditFCEPart3/new');
+    history.push(`/Edit${testType}/new`);
   };
 
   useEffect(() => {
@@ -62,7 +60,7 @@ const EditPart3 = (props) => {
     if (context.hasFetched) {
       handleResize();
     }
-  }, [context.hasFetched]);
+  }, [props.match.params.id]);
 
   useEffect(() => {
     //instantly hides the lines on window resize to prevent jumping lines.
@@ -77,14 +75,14 @@ const EditPart3 = (props) => {
       window.removeEventListener('resize', debouncedHandleResize);
       window.removeEventListener('fullscreenchange', handleResize);
     };
-  }, []);
+  }, [debouncedHandleResize, handleResize]);
 
   function handleSetDocRef(docRef) {
     context.setDocRef(docRef);
   }
 
   const handleQuestionChange = (e) => {
-    context.setQuestion(e.currentTarget.value);
+    context.setQuestionOne(e.currentTarget.value);
     setTimeout(function () {
       handleResize();
     }, 100);
@@ -151,7 +149,7 @@ const EditPart3 = (props) => {
                 <TextareaAutosize
                   className='part3-question-centre part3-input'
                   placeholder='enter question'
-                  value={context.question}
+                  value={context.questionOne}
                   onChange={handleQuestionChange}
                   rowsMin='1'
                 />
@@ -183,40 +181,30 @@ const EditPart3 = (props) => {
                   onChange={handleBottomRightChange}
                   rowsMin='1'
                 />
-                <Part3Lines
-                  windowDimensions={windowDimensions}
-                  lineClass={lineClass}
-                />
+                <Part3Lines windowDimensions={windowDimensions} lineClass={lineClass} />
               </div>
               <div className='part2-edit-question-container part3-questionTwo-container'>
-                <label
-                  className='part2-question-input-label'
-                  htmlFor='question-2'
-                >
+                <label className='part2-question-input-label' htmlFor='question-2'>
                   Question 2
                 </label>
                 <input
                   label='question-2'
                   className='input question-input'
-                  value={context.questionTwo}
+                  defaultValue={context.shortTurnQuestion}
                   placeholder='enter second question'
-                  onChange={(e) =>
-                    context.setQuestionTwo(e.currentTarget.value)
-                  }
+                  onChange={(e) => context.setShortTurnQuestion(e.currentTarget.value)}
                 />
               </div>
               <div className='tool-bar-row'>
-                {context.creatorId && (
-                  <CreatorInfo creatorId={context.creatorId} />
-                )}
+                {context.creatorId && <CreatorInfo creatorId={context.creatorId} />}
                 <div className='tool-btn-container'>
                   <PublishPart3WarningModal
                     bottomCentre={context.bottomCentre}
                     bottomLeft={context.bottomLeft}
                     bottomRight={context.bottomRight}
                     creatorId={context.creatorId}
-                    question={context.question}
-                    questionTwo={context.questionTwo}
+                    questionOne={context.questionOne}
+                    shortTurnQuestion={context.shortTurnQuestion}
                     topLeft={context.topLeft}
                     topRight={context.topRight}
                     tags={context.testTags}
@@ -224,11 +212,12 @@ const EditPart3 = (props) => {
                     setChangesSaved={context.setChangesSaved}
                     docRef={context.docRef}
                     setDocRef={handleSetDocRef}
+                    testType={testType}
                   />
                   {context.docRef && (
                     <Link
                       to={{
-                        pathname: `/FCEPart3/${context.docRef}`,
+                        pathname: `/${testType}/${context.docRef}`,
                       }}
                     >
                       <button className='tool-bar-btn'>

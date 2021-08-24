@@ -1,10 +1,10 @@
-import { projectFirestore } from '../firebase/firebaseIndex';
+import { projectFirestore, timestamp } from '../firebase/firebaseIndex';
 import { FCEPart2 } from './firebaseConsts';
 
 const addTest = async (
   imageOneUrl,
   imageTwoUrl,
-  question,
+  questionOne,
   shortTurnQuestion,
   tags,
   imageOneRef,
@@ -14,9 +14,9 @@ const addTest = async (
   return projectFirestore.collection(FCEPart2).add({
     imageOneUrl,
     imageTwoUrl,
-    question,
+    questionOne,
     shortTurnQuestion,
-    createdAt: projectFirestore.database.ServerValue.TIMESTAMP,
+    createdAt: timestamp(),
     tags,
     imageOneRef,
     imageTwoRef,

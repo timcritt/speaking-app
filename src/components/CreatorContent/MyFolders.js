@@ -3,13 +3,14 @@ import useFirestore from '../../hooks/useFirestore';
 import { folders } from '../../APIHandlers/firebaseConsts';
 import FoldersPresentation from 'components/common/FoldersPresentation';
 import FolderSummary from '../common/FolderSummary';
+import VerticallyExpandingFolder from './VerticallyExpandingFolder';
 
 const MyFolders = ({ testId, creatorId }) => {
   const { docs } = useFirestore(folders, creatorId);
 
   return (
     <FoldersPresentation folders={docs} testId={testId} addFolder={true}>
-      <FolderSummary />
+      <VerticallyExpandingFolder />
     </FoldersPresentation>
   );
 };

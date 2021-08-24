@@ -29,18 +29,13 @@ export default function PublishWarningModal() {
       context.testTags.length > 0 &&
       context.imageOneUrl &&
       context.imageTwoUrl &&
-      context.question
+      context.questionOne
     ) {
       setAllInputsCompleted(true);
     } else {
       setAllInputsCompleted(false);
     }
-  }, [
-    context.imageOneUrl,
-    context.imageTwoUrl,
-    context.testTags,
-    context.question,
-  ]);
+  }, [context.imageOneUrl, context.imageTwoUrl, context.testTags, context.questionOne]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -58,7 +53,7 @@ export default function PublishWarningModal() {
           updateTest(
             data.imageOneData.url,
             data.imageTwoData.url,
-            context.question,
+            context.questionOne,
             context.shortTurnQuestion,
             context.testTags,
             context.docRef,
@@ -78,25 +73,22 @@ export default function PublishWarningModal() {
       } else {
         setOpen(true);
         //if local test has no docId, it's because it's new and doesn't exist on the firestore.
-        uploadFCEPart2Images(context.imageOneUrl, context.imageTwoUrl).then(
-          (data) => {
-            addTest(
-              data.imageOneData.url,
-              data.imageTwoData.url,
-              context.question,
-              context.shortTurnQuestion,
-              createdAt,
-              context.testTags,
-              data.imageOneData.reference,
-              data.imageTwoData.reference,
-              userId
-            ).then((response) => {
-              context.setDocRef(response.id);
-              setUploadComplete(true);
-              history.push(`/EditFCEPart2/${response.id}`);
-            });
-          }
-        );
+        uploadFCEPart2Images(context.imageOneUrl, context.imageTwoUrl).then((data) => {
+          addTest(
+            data.imageOneData.url,
+            data.imageTwoData.url,
+            context.questionOne,
+            context.shortTurnQuestion,
+            context.testTags,
+            data.imageOneData.reference,
+            data.imageTwoData.reference,
+            userId
+          ).then((response) => {
+            context.setDocRef(response.id);
+            setUploadComplete(true);
+            history.push(`/EditFCEPart2/${response.id}`);
+          });
+        });
       }
     } else {
       setOpen(true);
@@ -119,10 +111,8 @@ export default function PublishWarningModal() {
         )}
       </div>
       <ul>
-        {(!context.imageOneUrl || !context.imageTwoUrl) && (
-          <li>select two images</li>
-        )}
-        {!context.question && <li>enter a question</li>}
+        {(!context.imageOneUrl || !context.imageTwoUrl) && <li>select two images</li>}
+        {!context.questionOne && <li>enter a question</li>}
         {context.testTags.length === 0 && <li>select at least one tag</li>}
       </ul>
       <div className='center'>

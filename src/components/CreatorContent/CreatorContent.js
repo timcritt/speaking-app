@@ -24,22 +24,21 @@ const CreatorContent = () => {
     <main className='holy-grail-content fade-in'>
       <div className='my-content-content'>
         <div className='dashboard-container'>
-          <div className='dashboard-profile-pic-container'>
-            <img
-              className='dashboard-image'
-              src={
-                creatorDetails && creatorDetails.profilePicture
-                  ? creatorDetails.profilePicture
-                  : profilePlaceHolder
-              }
-            ></img>
+          <div className='dashboard-user-info-container'>
+            <div className='dashboard-profile-pic-container'>
+              <img
+                className='dashboard-image'
+                src={
+                  creatorDetails && creatorDetails.profilePicture
+                    ? creatorDetails.profilePicture
+                    : profilePlaceHolder
+                }
+              />
+            </div>
+            <span className='dashboard-user-name'>{creatorDetails && creatorDetails.userName}</span>
           </div>
           <div className='dashboard-main'>
-            <div className='dashboard-user-info'>
-              <span className='dashboard-user-name'>
-                {creatorDetails && creatorDetails.userName}
-              </span>
-            </div>
+            <div className='dashboard-user-info'></div>
             <div className='dashboard-button-bar'>
               <DashBoardButton linkTo={`${url}/tests`} label={'Tests'} />
               <DashBoardButton linkTo={`${url}/folders`} label={'Folders'} />
@@ -48,9 +47,7 @@ const CreatorContent = () => {
         </div>
         {/* router goes here */}
         <div className='my-content-main'>
-          {creatorDetails && (
-            <ContentRoutes url={url} creatorId={creatorDetails.userId} />
-          )}
+          {creatorDetails && <ContentRoutes url={url} creatorId={creatorDetails.userId} />}
         </div>
       </div>
     </main>

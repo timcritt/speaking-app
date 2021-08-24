@@ -39,6 +39,7 @@
   border: 1px solid #e6eaea;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
+  height: 60px;
 }
 
 .tests-container-header:hover {
@@ -86,10 +87,11 @@
 .user-tests-container-outer {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .search-terms-container {
-  background: aliceblue;
+  background: var(--main-bg-color);
   position: relative;
 }
 
@@ -113,12 +115,12 @@
   position: absolute;
   width: 100%;
   top: 100%;
-  left: 0;
+  left: -1px;
   border: 1px solid #E6EAEA;
   color: black;
   background: var(--dropdown-menu-bg-color);
-  box-sizing: border-box;
   padding-bottom: 5px;
+  z-index: 2;
 }
 
 .dropdown-option {
@@ -154,5 +156,9 @@
   font-weight: 400;
   font-size: 21px;
   width: 10px; 
+}
+
+.filter-selected {
+  background-color: #d4fff1;
 }
 

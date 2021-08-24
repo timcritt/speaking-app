@@ -1,12 +1,11 @@
 import React, { useState, createContext, useEffect } from 'react';
 import getTest from 'APIHandlers/getTest';
-import { CAEPart3 } from 'APIHandlers/firebaseConsts';
 
 export const CAEPart3Context = createContext();
 
 export const CAEPart3ContextProvider = ({ children }) => {
-  const [question, setQuestion] = useState('');
-  const [questionTwo, setQuestionTwo] = useState('');
+  const [questionOne, setQuestionOne] = useState('');
+  const [shortTurnQuestion, setShortTurnQuestion] = useState('');
   const [topLeft, setTopLeft] = useState('');
   const [topRight, setTopRight] = useState('');
   const [bottomLeft, setBottomLeft] = useState('');
@@ -20,8 +19,8 @@ export const CAEPart3ContextProvider = ({ children }) => {
   const [hasFetched, setHasFetched] = useState(false);
 
   const clearState = () => {
-    setQuestion('');
-    setQuestionTwo('');
+    setQuestionOne('');
+    setShortTurnQuestion('');
     setTopLeft('');
     setTopRight('');
     setBottomLeft('');
@@ -56,8 +55,8 @@ export const CAEPart3ContextProvider = ({ children }) => {
       getTest('CAEPart3', docRef).then((data) => {
         if (data) {
           setDocRef(data.id);
-          setQuestion(data.question);
-          setQuestionTwo(data.questionTwo);
+          setQuestionOne(data.questionOne);
+          setShortTurnQuestion(data.shortTurnQuestion);
           setTopLeft(data.topLeft);
           setTopRight(data.topRight);
           setBottomCentre(data.bottomCentre);
@@ -76,10 +75,10 @@ export const CAEPart3ContextProvider = ({ children }) => {
   return (
     <CAEPart3Context.Provider
       value={{
-        question,
-        setQuestion,
-        questionTwo,
-        setQuestionTwo,
+        questionOne,
+        setQuestionOne,
+        shortTurnQuestion,
+        setShortTurnQuestion,
         topLeft,
         setTopLeft,
         topRight,

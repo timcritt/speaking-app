@@ -10,6 +10,7 @@ const CreatorInfo = ({ creatorId }) => {
   if (creatorId) {
     (async () => {
       const creatorDetails = await getUserDetails(creatorId);
+      console.log(creatorDetails);
       setAuthorName(creatorDetails.userName);
       setCreatorProfilePicture(creatorDetails.profilePicture);
     })();
@@ -25,11 +26,7 @@ const CreatorInfo = ({ creatorId }) => {
         <img
           onError={addDefaultSrc}
           className='profile-picture-small'
-          src={
-            creatorProfilePicture
-              ? creatorProfilePicture
-              : defaultProfilePicture
-          }
+          src={creatorProfilePicture ? creatorProfilePicture : defaultProfilePicture}
         />
         <div className='created-by-text'>
           <div>creator: </div>

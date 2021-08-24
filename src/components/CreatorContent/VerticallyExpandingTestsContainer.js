@@ -38,9 +38,7 @@ const VerticallyExpandingTestsContainer = ({
 
           //filter by topic tag
           if (tagFilterTerm) {
-            userTests = filteredTests.filter((doc) =>
-              doc.tags.includes(tagFilterTerm)
-            );
+            userTests = filteredTests.filter((doc) => doc.tags.includes(tagFilterTerm));
           }
 
           //sort by date created
@@ -63,11 +61,9 @@ const VerticallyExpandingTestsContainer = ({
           }
 
           //filter by question text
-          if (testType === 'FCEPart2' && questionFilterTerm) {
+          if (testType === 'FCEPart2' && questionFilterTerm && questionFilterTerm.length > 0) {
             userTests = userTests.filter((test) =>
-              test.question
-                .toUpperCase()
-                .includes(questionFilterTerm.toUpperCase())
+              test.questionOne.toUpperCase().includes(questionFilterTerm.toUpperCase())
             );
           }
           setTests(userTests);
@@ -85,23 +81,15 @@ const VerticallyExpandingTestsContainer = ({
     return (
       tests.length > 0 && (
         <Fragment>
-          <div
-            className='tests-container-header'
-            onClick={(e) => toggleExpandContainer(e)}
-          >
+          <div className='tests-container-header' onClick={(e) => toggleExpandContainer(e)}>
             <div className='tests-container-heading'>
               <h2>
-                {buttonLabel}{' '}
-                <span className='number-of-tests'>{`(${tests.length})`}</span>
+                {buttonLabel} <span className='number-of-tests'>{`(${tests.length})`}</span>
               </h2>
             </div>
 
             <div className='tests-container-button'>
-              {testContainerExpanded ? (
-                <RemoveRoundedIcon />
-              ) : (
-                <ArrowDropDownIcon />
-              )}
+              {testContainerExpanded ? <RemoveRoundedIcon /> : <ArrowDropDownIcon />}
             </div>
           </div>
           <div className='user-tests-container-outer'>

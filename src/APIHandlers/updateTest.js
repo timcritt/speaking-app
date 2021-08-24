@@ -4,7 +4,7 @@ import { FCEPart2 } from './firebaseConsts';
 const updateTest = async (
   imageOneUrl,
   imageTwoUrl,
-  question,
+  questionOne,
   shortTurnQuestion,
   tags,
   id,
@@ -16,7 +16,7 @@ const updateTest = async (
   await objectRef.update({
     imageOneUrl,
     imageTwoUrl,
-    question,
+    questionOne,
     shortTurnQuestion,
     updatedAt: createdAt,
     tags,

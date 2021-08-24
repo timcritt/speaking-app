@@ -3,8 +3,8 @@ import Modal from 'components/common/Modal';
 import PublishIcon from '@material-ui/icons/Publish';
 import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
 import { timestamp } from 'firebase/firebaseIndex';
-import updateFCEPart3 from 'APIHandlers/updateFCEPart3';
-import addFCEPart3 from 'APIHandlers/addFCEPart3';
+import updatePart3 from 'APIHandlers/updatePart3';
+import addPart3 from 'APIHandlers/addPart3';
 import { firebaseAuth } from 'context/AuthProvider';
 import { useHistory } from 'react-router-dom';
 
@@ -13,14 +13,15 @@ export default function PublishWarningModal({
   bottomLeft,
   bottomRight,
   creatorId,
-  question,
-  questionTwo,
+  questionOne,
+  shortTurnQuestion,
   topLeft,
   topRight,
   tags,
   changesSaved,
   docRef,
   setDocRef,
+  testType,
 }) {
   const [open, setOpen] = useState(false);
   const [complete, setComplete] = useState(false);
@@ -35,7 +36,8 @@ export default function PublishWarningModal({
       bottomCentre &&
       bottomLeft &&
       bottomRight &&
-      question &&
+      questionOne &&
+      shortTurnQuestion &&
       topLeft &&
       topRight &&
       userId
@@ -49,10 +51,11 @@ export default function PublishWarningModal({
     bottomCentre,
     bottomLeft,
     bottomRight,
-    question,
+    questionOne,
     topLeft,
     topRight,
     userId,
+    shortTurnQuestion,
   ]);
 
   const handleOpen = async () => {
@@ -62,34 +65,36 @@ export default function PublishWarningModal({
       if (docRef) {
         //update fce part 3
         console.log('updating existing part 3');
-        updateFCEPart3(
+        updatePart3(
           bottomCentre,
           bottomLeft,
           bottomRight,
-          question,
-          questionTwo,
+          questionOne,
+          shortTurnQuestion,
           topLeft,
           topRight,
           docRef,
-          tags
+          tags,
+          testType
         );
       } else {
         //upload new Part 3 - only reached if all fields are complete and docRef doesn't exist - i.e., the test has just been created
         console.log('updloading new part 3');
-        addFCEPart3(
+        addPart3(
           bottomCentre,
           bottomLeft,
           bottomRight,
           userId,
-          question,
-          questionTwo,
+          questionOne,
+          shortTurnQuestion,
           topLeft,
           topRight,
-          tags
+          tags,
+          testType
         ).then((response) => {
           setDocRef(response.id);
           console.log('response = ', response);
-          history.push(`/EditFCEPart3/${response.id}`);
+          history.push(`/Edit${testType}/${response.id}`);
         });
       }
     } else {
@@ -107,10 +112,7 @@ export default function PublishWarningModal({
         {complete ? (
           <h3>Published!</h3>
         ) : (
-          <h3>
-            Oops! You forgot to complete all the fields and add at least one
-            tag!
-          </h3>
+          <h3>Oops! You forgot to complete all the fields and add at least one tag!</h3>
         )}
       </div>
       <ul></ul>
@@ -122,11 +124,7 @@ export default function PublishWarningModal({
 
   return (
     <Fragment>
-      <button
-        className='tool-bar-btn'
-        onClick={handleOpen}
-        disabled={changesSaved}
-      >
+      <button className='tool-bar-btn' onClick={handleOpen} disabled={changesSaved}>
         {docRef ? <SaveOutlinedIcon /> : <PublishIcon />}
       </button>
       {open && (

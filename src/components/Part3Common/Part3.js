@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext, Fragment } from 'react';
+import React, { useState, useEffect, useContext, useCallback, Fragment } from 'react';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import { firebaseAuth } from 'context/AuthProvider';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import Part3Lines from 'components/FCEPart3/Part3Lines';
+import Part3Lines from 'components/Part3Common/Part3Lines';
 import debounce from 'auxFunctions/debounce';
 import TestToolBarView from 'components/TestCommon/TestToolBarView';
 
@@ -29,14 +29,14 @@ const Part3 = (props) => {
   const showLines = () => {
     setLineClass('');
   };
-  const handleResize = () => {
+  const handleResize = useCallback(() => {
     setWindowDimensions({
       height: window.innerHeight,
       width: window.innerWidth,
     });
     showLines();
     console.log('lines redrawn');
-  };
+  }, [setWindowDimensions]);
 
   const debouncedHandleResize = debounce(handleResize, 250);
 
@@ -52,7 +52,7 @@ const Part3 = (props) => {
       window.removeEventListener('resize', debouncedHandleResize);
       window.removeEventListener('fullscreenchange', handleResize);
     };
-  }, []);
+  }, [debouncedHandleResize, handleResize]);
 
   useEffect(() => {
     //sends the id of the current test to be displayed to the FCEPart2 context
@@ -86,30 +86,19 @@ const Part3 = (props) => {
         <FullScreen handle={handleFullScreen}>
           <main className='holy-grail-content fade-in'>
             <div className='part2-main-row'>
-              <button
-                className={'short-turn-button '}
-                onClick={handleViewShortTurnClick}
-              >
+              <button className={'short-turn-button '} onClick={handleViewShortTurnClick}>
                 show question 2
               </button>
               <div className='part3-grid-container'>
-                <div className='part3-option-top-left part3-input'>
-                  {context.topLeft}
-                </div>
+                <div className='part3-option-top-left part3-input'>{context.topLeft}</div>
 
                 <div className='part3-question-container flip-card'>
-                  <div
-                    className={`flip-card-inner part3-question-centre ${questionClass}`}
-                  >
+                  <div className={`flip-card-inner part3-question-centre ${questionClass}`}>
                     <div className='flip-card-front'>
-                      <span className='part3-question-text'>
-                        {context.question}
-                      </span>
+                      <span className='part3-question-text'>{context.questionOne}</span>
                     </div>
                     <div className='flip-card-back'>
-                      <span className='part3-question-text'>
-                        {context.questionTwo}
-                      </span>
+                      <span className='part3-question-text'>{context.shortTurnQuestion}</span>
                     </div>
                   </div>
                 </div>
@@ -125,10 +114,7 @@ const Part3 = (props) => {
                 <div className='part3-option-bottom-right part3-input part3-option-input'>
                   {context.bottomRight}
                 </div>
-                <Part3Lines
-                  windowDimensions={windowDimensions}
-                  lineClass={lineClass}
-                />
+                <Part3Lines windowDimensions={windowDimensions} lineClass={lineClass} />
               </div>
               <TestToolBarView
                 creatorId={context.creatorId}

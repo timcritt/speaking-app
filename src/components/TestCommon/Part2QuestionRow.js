@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { uniqueId } from 'lodash';
 
-const Part2QuestionRow = ({
-  longTurnQuestions,
-  shortTurnQuestion,
-  setTime,
-}) => {
+const Part2QuestionRow = ({ longTurnQuestions, shortTurnQuestion, setTime }) => {
   const [shortTurnVisible, setShortTurnVisible] = useState(false);
   const handleViewShortTurnClick = () => {
     setShortTurnVisible((prevState) => !prevState);
@@ -33,7 +30,9 @@ const Part2QuestionRow = ({
                   <ul>
                     {longTurnQuestions.map((question) => {
                       return (
-                        <li className='part2-question-text'>{question}</li>
+                        <li key={uniqueId()} className='part2-question-text'>
+                          {question}
+                        </li>
                       );
                     })}
                   </ul>
@@ -55,9 +54,7 @@ const Part2QuestionRow = ({
                 <div className='part2-edit-question-container'>
                   <ul>
                     <li className='part2-question-text'>
-                      {shortTurnQuestion
-                        ? shortTurnQuestion
-                        : dataNotLoadedErrorMessage}
+                      {shortTurnQuestion ? shortTurnQuestion : dataNotLoadedErrorMessage}
                     </li>
                   </ul>
                 </div>

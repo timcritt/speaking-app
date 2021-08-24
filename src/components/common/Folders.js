@@ -2,9 +2,10 @@ import React from 'react';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 const Folders = ({ folders, testId, children }) => {
+  console.log(testId);
   if (folders) {
     return (
-      <div className='my-folders-container'>
+      <div className=''>
         <div className='folders-container'>
           {folders &&
             folders.map((folder) => {

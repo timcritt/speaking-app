@@ -1,7 +1,6 @@
-.nav-container {
+/* .nav-container {
   background-color: white;
-  
-  border-bottom: 1px solid #dbdbdb;
+  border-bottom: 1px solid #e6eaea;
 }
 .nav-content-container {
   margin: 0 30px;
@@ -21,27 +20,15 @@
   transition: border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 }
 
-.nav-container .nav-link {
-  padding: 0 10px 0 10px;
-}
+
 
 .nav-link:hover {
   color: darkgoldenrod;
 }
 
-.profile-picture {
-  border-radius: 50%;
-  border: 3px solid #f5d88b;
-  width: 42px;
-  height: 42px;
-  margin: 0 0 0 10px;
-  box-sizing: border-box;
-}
 
-.nav-container .nav-logo {
-  margin-right: auto;
-  padding-left: 0;
-}
+
+
 
 .nav-container .create-link {
   border: 1px solid #dbdbdb;
@@ -54,4 +41,140 @@
 .create-link:hover {
   border: 1px #f5d88b solid;
   color: black;
+} */
+
+.nav-container {
+  background-color: white;
+  border-bottom: 1px solid #e6eaea;
+  display: flex;
+  align-items: center;
+ 
 }
+
+.nav-logo {
+  display: none;
+}
+
+.nav-link {
+  color: black;
+  text-decoration: none;
+  white-space: nowrap;
+  align-items: center;
+  transition: border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  padding: 10px;
+  float:left;
+  clear: both;
+}
+
+.nav-link:hover {
+  color: darkgoldenrod;
+}
+
+.nav-container .nav-link {
+  padding: 10px;
+}
+
+.profile-picture {
+ 
+  border-radius: 50%;
+  border: 3px solid #f5d88b;
+  width: 42px;
+  height: 42px;
+  margin: 0 0 0 10px;
+  box-sizing: border-box;
+}
+
+.dropdown-m {
+  margin-right: 20px;
+  margin-left: auto;
+}
+
+.nav-content-container {
+  display: none;
+  background-color: white;
+  overflow: auto;
+  padding: 15px 15px;
+  position: fixed;
+  top:0px;
+  z-index: 1;
+  width: 100%;
+} 
+
+.burger-btn {
+  display: flex;
+  align-items: center;
+  padding: 20px 20px;
+  cursor: pointer;
+}
+
+.close-nav-mobile-btn {
+  display: flex;
+  padding: 5px 5px;
+  cursor: pointer;
+}
+
+.isHidden {
+  display: none;
+}
+
+.isVisible {
+  display: inline-block;
+}
+
+
+
+@media screen and (min-width: 800px)  {
+  
+  .nav-content-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+  }
+
+  .close-nav-mobile-btn {
+    display: none;
+  }
+
+  .nav-logo {
+    display: block;
+  }
+
+  .nav-container .nav-link {
+    padding: 0 10px;
+    float: none;
+    clear: none;
+  }
+
+  .dropdown-m {
+    position: relative;
+    display: inline-block;
+    margin-left: auto;
+  }
+
+  .profile-picture {
+    display: inline-block;
+  }
+
+  .burger-btn {
+    display: none;
+    color: green
+  }
+
+  /* without isHidden set to display:flex here, the menu bar stays hidden even when screen is larger than break-point */
+  .isHidden {
+    display: flex;
+  }
+}
+
+
+
+
+
+/* .nav-link {
+  background-color: purple;
+  padding: 0.25em;
+  margin: 0.25em;
+  color: green;
+  display: block;
+} */

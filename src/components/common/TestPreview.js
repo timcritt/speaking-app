@@ -6,19 +6,15 @@ import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import AddToMyFolders from 'components/common/AddToMyFolders';
 import ShareButton from 'components/common/ShareButton';
 
-const TestPreview = ({ question, children, testId, testType }) => {
+const TestPreview = ({ questionOne, children, testId, testType }) => {
   return (
-    <Fragment>
+    <div className='test-preview-link' key={testId}>
       <div className='test-preview-overlay'>
         <div className='overlay-bottom-right'>
           <div className='circle-icon-container'>
             <ShareButton sharedItemType='' iconColour='white' />
           </div>
-          <Link
-            to={`/${testType}/${testId}`}
-            className='tool-bar-btn'
-            style={{ color: 'white' }}
-          >
+          <Link to={`/${testType}/${testId}`} className='tool-bar-btn' style={{ color: 'white' }}>
             <div className='circle-icon-container'>
               <VisibilityOutlinedIcon />
             </div>
@@ -30,11 +26,11 @@ const TestPreview = ({ question, children, testId, testType }) => {
       </div>
       <div className='test-preview-container fade-in'>
         <div className='test-preview-question-container dont-break-out'>
-          <span>{question}</span>
+          <span className='test-preview-question-text'>{questionOne}</span>
         </div>
         {children}
       </div>
-    </Fragment>
+    </div>
   );
 };
 

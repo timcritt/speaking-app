@@ -1,7 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import EditFolderModal from 'components/CreatorContent/EditFolderModal';
 import FilterInput from './FilterInput';
-import CreateNewFolderOutlinedIcon from '@material-ui/icons/CreateNewFolderOutlined';
 import Folders from './Folders';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -11,10 +9,9 @@ import SearchIcon from '@material-ui/icons/Search';
 import CreateNewFolder from 'components/common/CreateNewFolder';
 
 const FoldersPresentation = ({ folders, testId, addFolder, children }) => {
-  const [filterTerm, setFilterTerm] = useState();
+  const [filterTerm, setFilterTerm] = useState('');
   const [results, setResults] = useState();
-  const [sortBy, setSortBy] = useState('ORDER BY');
-  const [folderModalOpen, setFolderModalOpen] = useState(false);
+  const [sortBy, setSortBy] = useState(null);
 
   const itemOne = useComponentVisible(false);
   const itemTwo = useComponentVisible(false);
@@ -34,10 +31,7 @@ const FoldersPresentation = ({ folders, testId, addFolder, children }) => {
 
   const Option = ({ label, handleClickOption }) => {
     return (
-      <div
-        className='dropdown-option'
-        onClick={(e) => handleClickOption(e, label)}
-      >
+      <div className='dropdown-option' onClick={(e) => handleClickOption(e, label)}>
         {label}
       </div>
     );
@@ -85,13 +79,17 @@ const FoldersPresentation = ({ folders, testId, addFolder, children }) => {
           </div>
 
           <div
-            className='filter-bar-item filter-bar-item-clickable'
+            className={`filter-bar-item filter-bar-item-clickable ${
+              sortBy ? 'filter-selected' : ''
+            }`}
             onClick={() => {
               itemTwo.setIsComponentVisible((prevState) => !prevState);
               console.log('button clicked');
             }}
           >
-            <div>{sortBy ? sortBy : 'sort by'}</div>
+            <div stlyle={sortBy ? 'background-color: white' : ''}>
+              {sortBy ? sortBy : 'sort by'}
+            </div>
             <ArrowDropDownIcon />
 
             {itemTwo.isComponentVisible && (
@@ -104,7 +102,9 @@ const FoldersPresentation = ({ folders, testId, addFolder, children }) => {
 
           {/*filter by folder title button*/}
           <div
-            className='filter-bar-item filter-bar-item-clickable'
+            className={`filter-bar-item filter-bar-item-clickable ${
+              filterTerm !== '' ? 'filter-selected' : ''
+            }`}
             onClick={() => {
               itemOne.setIsComponentVisible((prevState) => !prevState);
               console.log('button clicked');
@@ -124,7 +124,7 @@ const FoldersPresentation = ({ folders, testId, addFolder, children }) => {
           </div>
 
           {/* clear filters  */}
-          {(sortBy || filterTerm.length > 0 || itemOne.isComponentVisible) && (
+          {(sortBy || filterTerm || itemOne.isComponentVisible) && (
             <div
               className='filter-bar-item filter-bar-item-clickable reset-filters-button-container'
               onClick={handleResetFilters}
