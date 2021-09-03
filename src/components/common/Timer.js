@@ -11,28 +11,48 @@ const Timer = ({ time }) => {
 
   //monitors changes to default total time passed in as prop
   useEffect(() => {
-    setTicking(false);
-    clearTimeout(timerId);
-    setCurrentTime(time);
+    let unmounted = false;
+    if (!unmounted) {
+      setTicking(false);
+      clearTimeout(timerId);
+      setCurrentTime(time);
+    }
+    return () => {
+      unmounted = true;
+      clearTimeout(timerId);
+    };
   }, [time]);
 
   useEffect(() => {
-    if (ticking && currentTime > 0) {
+    let unmounted = false;
+
+    if (!unmounted && ticking && currentTime > 0) {
       setTimerId(
         setTimeout(() => {
-          setCurrentTime(currentTime - 1);
+          setCurrentTime((currentTime) => currentTime - 1);
         }, 10)
       );
     }
+
+    return () => {
+      unmounted = true;
+      clearTimeout(timerId);
+    };
   }, [currentTime, ticking]);
 
   useEffect(() => {
-    if (ticking) {
+    let unmounted = false;
+
+    if (!unmounted && ticking) {
       setButtonClass('btn-stop');
     } else {
       setButtonClass('btn-start');
     }
-  }, [ticking]);
+    return () => {
+      unmounted = true;
+      clearTimeout(timerId);
+    };
+  }, [ticking, timerId]);
 
   return (
     <div className='timer-container '>

@@ -63,10 +63,10 @@ const VerticallyExpandingFolder = ({ folder }) => {
                 <span className='folder-title'>{folderTitle}</span>
                 <span>({folder.testCount})</span>
               </div>
+              <div className='tests-container-button'>
+                {testContainerExpanded ? <RemoveRoundedIcon /> : <ArrowDropDownIcon />}
+              </div>
             </div>
-          </div>
-          <div className='tests-container-button'>
-            {testContainerExpanded ? <RemoveRoundedIcon /> : <ArrowDropDownIcon />}
           </div>
         </div>
         <div className='user-tests-container-outer'>

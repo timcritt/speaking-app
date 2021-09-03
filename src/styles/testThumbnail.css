@@ -1,8 +1,25 @@
-
 .test-preview-container-CAE-Part2 {
   display: grid;
 }
 
+.test-preview-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+
+.test-preview-link {
+  text-decoration: none;
+  color: black;
+  overflow: hidden;
+  border: solid 1px rgb(230 234 234);
+  border-radius: 2px;
+  margin: 5px;
+  background-color: #fcfcfc;
+  position: relative;
+}
 .test-preview-image-row {
   display: grid;
   column-gap: 2px;
@@ -29,33 +46,41 @@
 
 .test-preview-overlay {
   position: absolute;
-  top:0;
-  z-index: 1;
+  top: 0;
   width: 100%;
   height: 100%;
   opacity: 0;
-  transition: all 0.4s ease-in-out;
+  transition: all 0.3s ease-in-out;
   display: flex;
   justify-content: center;
   align-items: center;
-  
 }
 
-.test-preview-overlay:hover {
+.test-grow-hover-container {
+  overflow: hidden;
+  position: relative;
+}
+
+.test-grow-hover-container:hover .test-preview-overlay {
   opacity: 1;
-  background: rgb(221,213,208);
-  background: radial-gradient(circle, rgba(133, 133, 133, 0.459) 15%, rgba(68, 68, 68, 0.719) 94%);
-  color:white;
+  color: white;
+  background-color: #0000005c;
 }
 
-.test-preview-overlay:hover + .test-preview-container {
-  transform: scale(1.0155);
+.test-preview-grow-on-hover {
+  transition: all 0.4s ease-in-out;
+  overflow: hidden;
+  display: flex;
+}
+
+.test-grow-hover-container:hover .test-preview-grow-on-hover {
+  transform: scale(1.05);
 }
 
 .overlay-bottom-right {
   display: flex;
   justify-content: space-around;
-  width: 50%
+  width: 50%;
 }
 
 .circle-icon-container {
@@ -73,4 +98,28 @@
   border-color: rgb(216, 216, 216);
   color: rgb(216, 216, 216);
   transition: all 0.3s ease-in-out;
+}
+
+@media screen and (min-width: 800px) {
+  .test-preview-link {
+    width: 48%;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .test-preview-link {
+    width: 32%;
+  }
+}
+@media screen and (min-width: 360px) {
+  .test-preview-link {
+    height: auto;
+  }
+}
+
+@media screen and (min-width: 1700px) {
+  .test-preview-link {
+    width: 29%;
+    margin: 2%;
+  }
 }

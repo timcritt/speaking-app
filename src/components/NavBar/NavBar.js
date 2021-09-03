@@ -36,25 +36,27 @@ export const NavBar = () => {
         <Link className='nav-link navItem nav-logo ' to='/home'>
           Orzilla
         </Link>
-        {token && (
-          <Fragment>
-            <Link className='nav-link create-link navItem' to='/create'>
-              Create
-            </Link>
-            <Link className='nav-link' to={`/userContent/${userId}/tests`}>
-              My content
-            </Link>
-          </Fragment>
-        )}
-        <Link className='nav-link navItem' to='/about'>
-          About
-        </Link>
-        <Link className='nav-link navItem' to='/about'>
-          Help
-        </Link>
-        <Link className='nav-link navItem' to='/exploreContent/tests'>
-          Explore content
-        </Link>
+        <div className='nav-buttons'>
+          {token && (
+            <Fragment>
+              <Link className='nav-link create-link navItem' to='/create'>
+                Create
+              </Link>
+              <Link className='nav-link' to={`/userContent/${userId}/tests`}>
+                My content
+              </Link>
+            </Fragment>
+          )}
+          <Link className='nav-link navItem' to='/about'>
+            About
+          </Link>
+          <Link className='nav-link navItem' to='/about'>
+            Help
+          </Link>
+          <Link className='nav-link navItem' to='/exploreContent/tests'>
+            Explore content
+          </Link>
+        </div>
       </div>
       {token ? (
         <div className='dropdown-m'>

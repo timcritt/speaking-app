@@ -12,8 +12,9 @@ ReactDOM.render(
   <div className='holy-grail'>
     <Router>
       <AuthProvider>
-        <header></header>
-        <NavBar />
+        <header>
+          <NavBar />
+        </header>
         <div className='holy-grail-body'>
           <App />
         </div>

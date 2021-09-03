@@ -7,19 +7,24 @@ import Part3TestPreviewContent from 'components/Part3Common/Part3TestPreviewCont
 import CAEPart2TestPreviewContent from 'components/CAEPart2/CAEPart2TestPreviewContent';
 // import CAEPart3TestPreviewContent from 'components/CAEPart3/CAEPart3TestPreviewContent';
 import VerticallyExpandingTestsContainer from './VerticallyExpandingTestsContainer';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import useComponentVisible from 'hooks/useComponentVisible';
+import FilterInput from 'components/common/FilterInput';
+
+//icons
+import CloseIcon from '@material-ui/icons/Close';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import CancelIcon from '@material-ui/icons/Cancel';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import SearchIcon from '@material-ui/icons/Search';
-import FilterInput from 'components/common/FilterInput';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 const MyTests = ({ creatorId }) => {
   //state
   const [sortBy, setSortBy] = useState(null);
   const [tagFilterTerm, setTagFilterTerm] = useState(null);
   const [questionFilterTerm, setQuestionFilterTerm] = useState('');
+
+  const [filterMenuVisible, setFilterMenuVisible] = useState(false);
 
   const itemOne = useComponentVisible(false);
   const itemTwo = useComponentVisible(false);
@@ -66,10 +71,89 @@ const MyTests = ({ creatorId }) => {
     itemThree.setIsComponentVisible(false);
   };
 
+  const toggleFilterMenuVisible = () => {
+    setFilterMenuVisible((prevState) => !prevState);
+  };
+
+  const handleSortRadioChange = (e) => {
+    setSortBy(e.currentTarget.value);
+  };
+
   return (
     <Fragment>
+      <div className={`filter-menu ${filterMenuVisible ? 'isVisible' : 'isHidden'}`}>
+        {/* overlay filter menu for small screens - hidden by default and opens on click*/}
+        <div className='close-nav-mobile-btn' onClick={toggleFilterMenuVisible}>
+          <CloseIcon fontSize='large' />
+        </div>
+        <h1>FILTERS</h1>
+        {/*filter by topic*/}
+        <div className='filter-mobile-row'>
+          <p>Select Topic</p>
+          <SideBarTags tags={tagFilterTerm} handleSetTags={handleSetTags}></SideBarTags>
+        </div>
+        {/*sort by date created*/}
+
+        <div className='filter-mobile-row'>
+          <p>Sorty by</p>
+          <div>
+            <input
+              type='radio'
+              id='newest'
+              name='sortBy'
+              value='newest'
+              checked={sortBy === 'newest'}
+              onChange={handleSortRadioChange}
+            />
+            <label htmlFor='newest'>newest</label>
+          </div>
+          <div>
+            <input
+              type='radio'
+              id='oldest'
+              name='sortyBy'
+              value='oldest'
+              checked={sortBy === 'oldest'}
+              onChange={handleSortRadioChange}
+            />
+            <label htmlFor='oldest'>oldest</label>
+          </div>
+        </div>
+
+        {/*filter by question*/}
+
+        <div className='filter-mobile-row'>
+          <p>Search by question</p>
+          <input
+            id='question'
+            type='text'
+            value={questionFilterTerm}
+            onChange={handleSetQuestionFilterTerm}
+          />
+        </div>
+
+        {/* buttons */}
+        <div className='filter-mobile-button-row'>
+          <button className='btn get-started-btn' onClick={handleResetFilters}>
+            <span className='icon-container'></span>
+            reset filters
+          </button>
+          <button className='btn get-started-btn' onClick={toggleFilterMenuVisible}>
+            apply filters
+          </button>
+        </div>
+      </div>
+
+      {/* filter menu for large screens. visible only for large screens*/}
       <div className='search-terms-container'>
-        <div className='filter-bar'>
+        <div
+          className='filter-bar-item filter-bar-item-clickable see-filters-mobile-btn'
+          onClick={toggleFilterMenuVisible}
+        >
+          <FilterListIcon />
+          <div>FILTERS</div>
+        </div>
+        <div className='filter-bar '>
           {/*unclickable filter icon*/}
           <div className='filter-bar-item'>
             <FilterListIcon />
@@ -114,22 +198,14 @@ const MyTests = ({ creatorId }) => {
             className={`filter-bar-item filter-bar-item-clickable ${
               questionFilterTerm !== '' ? 'filter-selected' : ''
             }`}
-            onClick={() => {
-              if (questionFilterTerm.length === 0)
-                itemThree.setIsComponentVisible((prevState) => !prevState);
-            }}
           >
-            <div className='icon-container'>
-              <SearchIcon />
-            </div>
-            question
-            {itemThree.isComponentVisible && (
-              <FilterInput
-                placeholder={'filter by folder name'}
-                handleSetFilterTerm={handleSetQuestionFilterTerm}
-                value={questionFilterTerm}
-              />
-            )}
+            <SearchIcon />
+
+            <FilterInput
+              placeholder={'search by question'}
+              handleSetFilterTerm={handleSetQuestionFilterTerm}
+              value={questionFilterTerm}
+            />
           </div>
 
           {/* clear filters  */}

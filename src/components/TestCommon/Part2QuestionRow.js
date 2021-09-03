@@ -17,7 +17,7 @@ const Part2QuestionRow = ({ longTurnQuestions, shortTurnQuestion, setTime }) => 
       setTime(2000);
       setQuestionClass('flipped-vertically');
     }
-  }, [shortTurnVisible]);
+  }, [setTime, shortTurnVisible]);
 
   return (
     <div className='part2-edit-question-row'>
@@ -53,9 +53,9 @@ const Part2QuestionRow = ({ longTurnQuestions, shortTurnQuestion, setTime }) => 
               <div className='part2-question-flex-column'>
                 <div className='part2-edit-question-container'>
                   <ul>
-                    <li className='part2-question-text'>
+                    <div className='part2-question-text'>
                       {shortTurnQuestion ? shortTurnQuestion : dataNotLoadedErrorMessage}
-                    </li>
+                    </div>
                   </ul>
                 </div>
               </div>

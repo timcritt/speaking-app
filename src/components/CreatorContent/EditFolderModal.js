@@ -8,9 +8,7 @@ import { firebaseAuth } from '../../context/AuthProvider';
 //if folder is passed down, component functions as an editor. Else, component functions to create new folder
 const EditFolderModal = ({ modalOpen, folder, setModalOpen }) => {
   const [localTitle, setLocalTitle] = useState(folder ? folder.title : '');
-  const [localDescription, setLocalDescription] = useState(
-    folder ? folder.description : ''
-  );
+  const [localDescription, setLocalDescription] = useState(folder ? folder.description : '');
 
   const [hasBeenEdited, setHasBeenEdited] = useState(false);
   const { userId } = useContext(firebaseAuth);
@@ -18,10 +16,7 @@ const EditFolderModal = ({ modalOpen, folder, setModalOpen }) => {
   useEffect(() => {
     //disable the "save changes" button unless a change has been made when in editing mode
     if (folder) {
-      if (
-        localTitle !== folder.title ||
-        localDescription !== folder.description
-      ) {
+      if (localTitle !== folder.title || localDescription !== folder.description) {
         setHasBeenEdited(true);
       } else {
         setHasBeenEdited(false);
@@ -67,11 +62,7 @@ const EditFolderModal = ({ modalOpen, folder, setModalOpen }) => {
           onChange={(e) => setLocalDescription(e.currentTarget.value)}
           defaultValue={localDescription}
         ></input>
-        <button
-          className='modal-big-btn'
-          disabled={!hasBeenEdited}
-          onClick={handleClick}
-        >
+        <button className='modal-big-btn' disabled={!hasBeenEdited} onClick={handleClick}>
           {folder ? 'Save changes' : 'Create'}
         </button>
       </div>

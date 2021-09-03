@@ -20,13 +20,18 @@ const Tests = ({ results = [], testType }) => {
             results.map((doc) => {
               if (testType === FCEPart2) {
                 return (
-                  <TestPreview testId={doc.id} questionOne={doc.questionOne} testType={testType}>
-                    <FCEPart2TestPreviewContent test={doc} key={doc.id} />
+                  <TestPreview
+                    testId={doc.id}
+                    questionOne={doc.questionOne}
+                    testType={testType}
+                    key={doc.id}
+                  >
+                    <FCEPart2TestPreviewContent test={doc} />
                   </TestPreview>
                 );
               } else if (testType === FCEPart3) {
                 return (
-                  <TestPreview testId={doc.id} questionOne={doc.questionOne}>
+                  <TestPreview testId={doc.id} questionOne={doc.questionOne} key={doc.id}>
                     <FCEPart3TestPreviewContent
                       test={doc}
                       key={doc.id}
@@ -36,13 +41,13 @@ const Tests = ({ results = [], testType }) => {
                 );
               } else if (testType === CAEPart2) {
                 return (
-                  <TestPreview testId={doc.id} questionOne={doc.questionOne}>
+                  <TestPreview testId={doc.id} questionOne={doc.questionOne} key={doc.id}>
                     <CAEPart2TestPreviewContent test={doc} key={doc.id} />
                   </TestPreview>
                 );
               } else if (testType === CAEPart3) {
                 return (
-                  <TestPreview testId={doc.id} questionOne={doc.questionOne}>
+                  <TestPreview testId={doc.id} questionOne={doc.questionOne} key={doc.id}>
                     <FCEPart3TestPreviewContent
                       test={doc}
                       key={doc.id}

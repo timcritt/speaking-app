@@ -9,7 +9,8 @@ const Modal = ({ modalOpen, setModalOpen, children, heading }) => {
 
   return ReactDOM.createPortal(
     <Fragment>
-      <div className='modal-overlay '>
+      {/*stopPropagation needed here to prevent bubbling event to the page underneath the modal*/}
+      <div className='modal-overlay ' onClick={(e) => e.stopPropagation()}>
         <div className='modal-content'>
           <div className='modal-header'>
             <div className='modal-header-text'>

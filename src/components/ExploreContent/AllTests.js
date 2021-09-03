@@ -11,6 +11,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import FilterInput from 'components/common/FilterInput';
 
+import CloseIcon from '@material-ui/icons/Close';
+
 const AllTests = ({ creatorId }) => {
   //state
   const [sortBy, setSortBy] = useState(null);
@@ -27,6 +29,8 @@ const AllTests = ({ creatorId }) => {
   const itemThree = useComponentVisible(false);
   const itemFour = useComponentVisible(false);
   const itemFive = useComponentVisible(false);
+
+  const [filterMenuVisible, setFilterMenuVisible] = useState(false);
 
   const Option = ({ label, handleClickOption }) => {
     return (
@@ -83,6 +87,10 @@ const AllTests = ({ creatorId }) => {
     setExam(exam);
   };
 
+  const toggleFilterMenuVisible = () => {
+    setFilterMenuVisible((prevState) => !prevState);
+  };
+
   const handleSearchClick = async () => {
     setHasFetched(false);
     setSearchButtonClicked(true);
@@ -102,9 +110,83 @@ const AllTests = ({ creatorId }) => {
     });
   };
 
+  const handleSortRadioChange = (e) => {
+    setSortBy(e.currentTarget.value);
+  };
+
   return (
     <Fragment>
+      <div className={`filter-menu ${filterMenuVisible ? 'isVisible' : 'isHidden'}`}>
+        {/* overlay filter menu for small screens - hidden by default and opens on click*/}
+        <div className='close-nav-mobile-btn' onClick={toggleFilterMenuVisible}>
+          <CloseIcon fontSize='large' />
+        </div>
+        <h1>FILTERS</h1>
+        {/*filter by topic*/}
+        <div className='filter-mobile-row'>
+          <p>Select Topic</p>
+          <SideBarTags tags={tagFilterTerm} handleSetTags={handleSetTags}></SideBarTags>
+        </div>
+        {/*sort by date created*/}
+
+        <div className='filter-mobile-row'>
+          <p>Sorty by</p>
+          <div>
+            <input
+              type='radio'
+              id='newest'
+              name='sortBy'
+              value='newest'
+              checked={sortBy === 'newest'}
+              onChange={handleSortRadioChange}
+            />
+            <label htmlFor='newest'>newest</label>
+          </div>
+          <div>
+            <input
+              type='radio'
+              id='oldest'
+              name='sortyBy'
+              value='oldest'
+              checked={sortBy === 'oldest'}
+              onChange={handleSortRadioChange}
+            />
+            <label htmlFor='oldest'>oldest</label>
+          </div>
+        </div>
+
+        {/*filter by question*/}
+
+        <div className='filter-mobile-row'>
+          <p>Search by question</p>
+          <input
+            id='question'
+            type='text'
+            value={questionFilterTerm}
+            onChange={handleSetQuestionFilterTerm}
+          />
+        </div>
+
+        {/* buttons */}
+        <div className='filter-mobile-button-row'>
+          <button className='btn get-started-btn' onClick={handleResetFilters}>
+            <span className='icon-container'></span>
+            reset filters
+          </button>
+          <button className='btn get-started-btn' onClick={toggleFilterMenuVisible}>
+            apply filters
+          </button>
+        </div>
+      </div>
       <div className='search-terms-container'>
+        {' '}
+        <div
+          className='filter-bar-item filter-bar-item-clickable see-filters-mobile-btn'
+          onClick={toggleFilterMenuVisible}
+        >
+          <FilterListIcon />
+          <div>FILTERS</div>
+        </div>
         <div className='filter-bar'>
           {/*unclickable filter icon*/}
           <div className='filter-bar-item'>
@@ -226,7 +308,6 @@ const AllTests = ({ creatorId }) => {
             )}
           </div>
         </div>
-
         {/*filter by tag drop down container*/}
         {itemOne.isComponentVisible && (
           <div ref={itemOne.ref} className='tags-drop-down-visible'>

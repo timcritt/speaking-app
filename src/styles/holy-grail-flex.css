@@ -5,10 +5,8 @@
  * min-height: 100% in <body>.
  */
 
-
 .holy-grail {
   min-height: 100vh;
-
 }
 
 /**
@@ -22,11 +20,9 @@
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  background-color: #FAFAFA;
+  background-color: #fafafa;
   justify-content: center;
-  
 }
-
 
 /**
  * Content body item is made
@@ -54,7 +50,6 @@
  */
 
 @media (min-width: 768px) {
-
   /**
 	 * Body items are now side by side
 	 */
@@ -62,9 +57,6 @@
     display: flex;
     flex-direction: row;
   }
-
-  
-
 
   /**
 	 * Sidebars have a basic 260 width
@@ -77,4 +69,13 @@
 
 .centre-vertically {
   align-self: center;
+}
+
+@media (min-width: 1025px) {
+  .holy-grail-content {
+    flex: 1 1 auto;
+    display: flex;
+    background-color: white;
+    max-width: 75vw;
+  }
 }

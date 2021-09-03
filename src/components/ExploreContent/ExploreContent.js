@@ -12,17 +12,18 @@ const ExploreContent = () => {
           <div className='dashboard-container'>
             <div className='dashboard-main'>
               <div className='dashboard-user-info'>
-                <span className='dashboard-user-name'>Explore Content</span>
-              </div>
-              <div className='dashboard-button-bar'>
-                <DashBoardButton linkTo={`${url}/tests`} label={'Tests'} />
-                <DashBoardButton linkTo={`${url}/folders`} label={'Folders'} />
-                <DashBoardButton linkTo={`${url}/users`} label={'Users'} />
+                <span className='content-title'>Explore Content</span>
               </div>
             </div>
           </div>
+
           {/* router goes here */}
           <div className='my-content-main'>
+            <div className='dashboard-button-bar-sm'>
+              <DashBoardButton linkTo={`${url}/tests`} label={'Tests'} />
+              {/*<DashBoardButton linkTo={`${url}/folders`} label={'Folders'} /> */}
+              <DashBoardButton linkTo={`${url}/users`} label={'Users'} />
+            </div>
             <ExploreContentRoutes url={url} creatorId={''} />
           </div>
         </div>

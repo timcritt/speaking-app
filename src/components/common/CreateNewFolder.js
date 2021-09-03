@@ -23,6 +23,7 @@ const CreateNewFolder = ({ label }) => {
         <EditFolderModal
           modalOpen={folderModalOpen}
           setModalOpen={setFolderModalOpen}
+          onClick={(e) => e.stopPropagation()}
         ></EditFolderModal>
       )}
     </div>

@@ -81,37 +81,41 @@ const VerticallyExpandingTestsContainer = ({
     return (
       tests.length > 0 && (
         <Fragment>
-          <div className='tests-container-header' onClick={(e) => toggleExpandContainer(e)}>
+          <div
+            className={`tests-container-header ${
+              testContainerExpanded ? 'test-container-header-expanded' : ''
+            } `}
+            onClick={(e) => toggleExpandContainer(e)}
+          >
             <div className='tests-container-heading'>
               <h2>
                 {buttonLabel} <span className='number-of-tests'>{`(${tests.length})`}</span>
               </h2>
+              <div className='tests-container-button'>
+                {testContainerExpanded ? <RemoveRoundedIcon /> : <ArrowDropDownIcon />}
+              </div>
             </div>
 
-            <div className='tests-container-button'>
-              {testContainerExpanded ? <RemoveRoundedIcon /> : <ArrowDropDownIcon />}
-            </div>
-          </div>
-          <div className='user-tests-container-outer'>
-            <div
-              className={
-                'user-tests-container ' +
-                (testContainerExpanded ? 'user-tests-container-expanded' : '')
-              }
-            >
-              {cloneElement(children, { tests: tests })}
+            <div className='user-tests-container-outer'>
+              <div
+                className={
+                  'user-tests-container ' +
+                  (testContainerExpanded ? 'user-tests-container-expanded' : '')
+                }
+              >
+                {cloneElement(children, { tests: tests })}
+              </div>
             </div>
           </div>
         </Fragment>
       )
     );
-  } else {
-    return (
-      <div className={'full-width'}>
-        <LinearProgress />
-      </div>
-    );
   }
+  return (
+    <div className={'full-width'}>
+      <LinearProgress />
+    </div>
+  );
 };
 
 export default VerticallyExpandingTestsContainer;

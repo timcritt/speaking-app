@@ -34,19 +34,18 @@ const CreatorContent = () => {
                     : profilePlaceHolder
                 }
               />
-            </div>
-            <span className='dashboard-user-name'>{creatorDetails && creatorDetails.userName}</span>
-          </div>
-          <div className='dashboard-main'>
-            <div className='dashboard-user-info'></div>
-            <div className='dashboard-button-bar'>
-              <DashBoardButton linkTo={`${url}/tests`} label={'Tests'} />
-              <DashBoardButton linkTo={`${url}/folders`} label={'Folders'} />
+              <span className='content-title dashboard-user-name'>
+                {creatorDetails && creatorDetails.userName}
+              </span>
             </div>
           </div>
         </div>
         {/* router goes here */}
         <div className='my-content-main'>
+          <div className='dashboard-button-bar-sm'>
+            <DashBoardButton linkTo={`${url}/tests`} label={'Tests'} id={'tests'} />
+            <DashBoardButton linkTo={`${url}/folders`} label={'Folders'} id={'folders'} />
+          </div>
           {creatorDetails && <ContentRoutes url={url} creatorId={creatorDetails.userId} />}
         </div>
       </div>

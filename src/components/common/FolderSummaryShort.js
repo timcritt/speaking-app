@@ -3,7 +3,6 @@ import FolderOutlinedIcon from '@material-ui/icons/FolderOutlined';
 import addTestToFolder from 'APIHandlers/addTestToFolder';
 import checkIfTestInFolder from 'APIHandlers/checkIfTestInFolder';
 import deleteTestFromFolder from 'APIHandlers/deleteTestFromFolder';
-import { junctionFolderTest } from 'APIHandlers/firebaseConsts';
 
 const FolderSummaryShort = ({ folder, testId, userId }) => {
   const [isInFolder, setIsInFolder] = useState(false);
@@ -13,7 +12,7 @@ const FolderSummaryShort = ({ folder, testId, userId }) => {
     const asyncFunction = async () => {
       const result = await checkIfTestInFolder(folder.id, testId);
 
-      if (result) {
+      if (result & isMounted) {
         setIsInFolder(true);
       } else {
         setIsInFolder(false);
