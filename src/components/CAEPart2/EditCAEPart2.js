@@ -49,14 +49,18 @@ const EditCAEPart2 = (props) => {
   if (true) {
     return (
       <Fragment>
+        <div className='side-bar-left-tags hg-sidebar '>
+          <SideBarTags tags={context.testTags} handleSetTags={handleSetTags} title={'Topic Tags'}>
+            <p className='advice-text tag-advice'>
+              Adding the correct tags will help others find your test
+            </p>
+          </SideBarTags>
+        </div>
         <main className='holy-grail-content centre-vertically'>
           <div className='part2-main-row fade-in'>
             <div className='part2-edit-question-row'>
               <div className='part2-edit-question-container'>
-                <label
-                  className='part2-question-input-label'
-                  htmlFor='question-one'
-                >
+                <label className='part2-question-input-label' htmlFor='question-one'>
                   Question 1
                 </label>
                 <input
@@ -64,16 +68,11 @@ const EditCAEPart2 = (props) => {
                   className='input question-input'
                   value={context.questionOne}
                   placeholder='enter question 1'
-                  onChange={(e) =>
-                    context.setQuestionOne(e.currentTarget.value)
-                  }
+                  onChange={(e) => context.setQuestionOne(e.currentTarget.value)}
                 />
               </div>
               <div className='part2-edit-question-container'>
-                <label
-                  className='part2-question-input-label'
-                  htmlFor='question-two'
-                >
+                <label className='part2-question-input-label' htmlFor='question-two'>
                   Question 2
                 </label>
                 <input
@@ -81,17 +80,12 @@ const EditCAEPart2 = (props) => {
                   className='input question-input'
                   value={context.questionTwo}
                   placeholder='enter question 2'
-                  onChange={(e) =>
-                    context.setQuestionTwo(e.currentTarget.value)
-                  }
+                  onChange={(e) => context.setQuestionTwo(e.currentTarget.value)}
                 />
               </div>
 
               <div className='part2-edit-question-container'>
-                <label
-                  className='part2-question-input-label'
-                  htmlFor='short-turn'
-                >
+                <label className='part2-question-input-label' htmlFor='short-turn'>
                   Short turn
                 </label>
                 <input
@@ -99,56 +93,39 @@ const EditCAEPart2 = (props) => {
                   className='input question-input '
                   value={context.shortTurnQuestion}
                   placeholder='enter short turn question'
-                  onChange={(e) =>
-                    context.setShortTurnQuestion(e.currentTarget.value)
-                  }
+                  onChange={(e) => context.setShortTurnQuestion(e.currentTarget.value)}
                 />
               </div>
             </div>
             <div className='CAE-part2-image-row'>
               <div className='part2-image-container-left'>
-                <ExamPicture
-                  image={context.imageOneUrl}
-                  setImage={context.setImageOneUrl}
-                >
+                <ExamPicture image={context.imageOneUrl} setImage={context.setImageOneUrl}>
                   {context.imageOneUrl ? (
                     <ImageDeleteBtn
                       setImageUrl={context.setImageOneUrl}
                       setImageRef={context.setImageOneRef}
                     />
                   ) : (
-                    <SimpleModal
-                      modalButtonText={'upload'}
-                      setImageUrl={context.setImageOneUrl}
-                    />
+                    <SimpleModal modalButtonText={'upload'} setImageUrl={context.setImageOneUrl} />
                   )}
                 </ExamPicture>
               </div>
 
               <div className='part2-image-container-centre'>
-                <ExamPicture
-                  image={context.imageTwoUrl}
-                  setImage={context.setImageTwoUrl}
-                >
+                <ExamPicture image={context.imageTwoUrl} setImage={context.setImageTwoUrl}>
                   {context.imageTwoUrl ? (
                     <ImageDeleteBtn
                       setImageUrl={context.setImageTwoUrl}
                       setImageRef={context.setImageTwoRef}
                     />
                   ) : (
-                    <SimpleModal
-                      modalButtonText={'upload'}
-                      setImageUrl={context.setImageTwoUrl}
-                    />
+                    <SimpleModal modalButtonText={'upload'} setImageUrl={context.setImageTwoUrl} />
                   )}
                 </ExamPicture>
               </div>
 
               <div className='part2-image-container-right'>
-                <ExamPicture
-                  image={context.imageThreeUrl}
-                  setImage={context.setImageThreeUrl}
-                >
+                <ExamPicture image={context.imageThreeUrl} setImage={context.setImageThreeUrl}>
                   {context.imageThreeUrl ? (
                     <ImageDeleteBtn
                       setImageUrl={context.setImageThreeUrl}

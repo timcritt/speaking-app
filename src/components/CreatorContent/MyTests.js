@@ -168,7 +168,7 @@ const MyTests = ({ creatorId }) => {
               itemOne.setIsComponentVisible((prevState) => !prevState);
             }}
           >
-            {tagFilterTerm ? tagFilterTerm : 'topic'}
+            {tagFilterTerm ? `topic: ${tagFilterTerm}` : 'topic'}
             <ArrowDropDownIcon />
           </div>
 
@@ -182,7 +182,7 @@ const MyTests = ({ creatorId }) => {
               console.log('button clicked');
             }}
           >
-            <div>{sortBy ? sortBy : 'sort by'}</div>
+            <div>{sortBy ? `sort by: ${sortBy}` : 'sort by'}</div>
             <ArrowDropDownIcon />
 
             {itemTwo.isComponentVisible && (

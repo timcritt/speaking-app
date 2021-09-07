@@ -23,29 +23,32 @@ const CreatorContent = () => {
   return (
     <main className='holy-grail-content fade-in'>
       <div className='my-content-content'>
-        <div className='dashboard-container'>
-          <div className='dashboard-user-info-container'>
-            <div className='dashboard-profile-pic-container'>
-              <img
-                className='dashboard-image'
-                src={
-                  creatorDetails && creatorDetails.profilePicture
-                    ? creatorDetails.profilePicture
-                    : profilePlaceHolder
-                }
-              />
-              <span className='content-title dashboard-user-name'>
-                {creatorDetails && creatorDetails.userName}
-              </span>
+        <div className='dashboard-background-full-width'>
+          <div className='dashboard-container'>
+            <div className='dashboard-user-info-container'>
+              <div className='dashboard-profile-pic-container'>
+                <img
+                  className='dashboard-image'
+                  src={
+                    creatorDetails && creatorDetails.profilePicture
+                      ? creatorDetails.profilePicture
+                      : profilePlaceHolder
+                  }
+                />
+                <span className='content-title dashboard-user-name'>
+                  {creatorDetails && creatorDetails.userName}
+                </span>
+              </div>
+            </div>
+            <div className='dashboard-button-bar-sm'>
+              <DashBoardButton linkTo={`${url}/tests`} label={'tests'} id={'tests'} />
+              <DashBoardButton linkTo={`${url}/folders`} label={'folders'} id={'folders'} />
             </div>
           </div>
         </div>
+
         {/* router goes here */}
         <div className='my-content-main'>
-          <div className='dashboard-button-bar-sm'>
-            <DashBoardButton linkTo={`${url}/tests`} label={'Tests'} id={'tests'} />
-            <DashBoardButton linkTo={`${url}/folders`} label={'Folders'} id={'folders'} />
-          </div>
           {creatorDetails && <ContentRoutes url={url} creatorId={creatorDetails.userId} />}
         </div>
       </div>

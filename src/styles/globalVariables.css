@@ -1,8 +1,11 @@
 :root {
   --main-bg-color: white;
   --main-border-color: #e6eaea;
+  --filter-selected-color: #fffaa3;
   --header-text-color: #7c7e7d;
   --button-active-color: #ffffff;
   --dropdown-menu-bg-color: #ffffff;
   --dropdown-selector-hover: #9494ef;
+  --header-color: #6658fc;
+  --heading-color: #76969f;
 }

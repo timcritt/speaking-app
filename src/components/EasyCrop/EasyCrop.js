@@ -8,6 +8,7 @@ import { getOrientation } from 'get-orientation/browser';
 import { getCroppedImg, getRotatedImage } from '../../auxFunctions/canvasUtils';
 import { styles } from './styles';
 import ProgressBar from '../ProgressBar';
+import ImageSearch from 'components/common/ImageSearch';
 
 const ORIENTATION_TO_ANGLE = {
   3: 180,
@@ -23,6 +24,7 @@ const EasyCrop = ({ classes, aspect = 4 / 3, setImageUrl }) => {
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [uploadError, setUploadError] = useState(null);
   const [croppedImage, setCroppedImage] = useState(false);
+  const [pickedImagem, setPickedImage] = useState(null);
 
   //access to the function that sets the image on the page
 
@@ -32,11 +34,7 @@ const EasyCrop = ({ classes, aspect = 4 / 3, setImageUrl }) => {
 
   const showCroppedImage = useCallback(async () => {
     try {
-      const croppedImage = await getCroppedImg(
-        imageSrc,
-        croppedAreaPixels,
-        rotation
-      );
+      const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels, rotation);
       //setCroppedImage(croppedImage);
 
       setImageUrl(croppedImage);
@@ -89,10 +87,7 @@ const EasyCrop = ({ classes, aspect = 4 / 3, setImageUrl }) => {
           {!croppedImage && (
             <div className={classes.controls}>
               <div className={classes.sliderContainer}>
-                <Typography
-                  variant='overline'
-                  classes={{ root: classes.sliderLabel }}
-                >
+                <Typography variant='overline' classes={{ root: classes.sliderLabel }}>
                   zoom
                 </Typography>
                 <Slider
@@ -105,10 +100,7 @@ const EasyCrop = ({ classes, aspect = 4 / 3, setImageUrl }) => {
                 />
               </div>
               <div className={classes.sliderContainer}>
-                <Typography
-                  variant='overline'
-                  classes={{ root: classes.sliderLabel }}
-                >
+                <Typography variant='overline' classes={{ root: classes.sliderLabel }}>
                   Rotation
                 </Typography>
                 <Slider
@@ -135,6 +127,7 @@ const EasyCrop = ({ classes, aspect = 4 / 3, setImageUrl }) => {
       ) : (
         <Fragment>
           <input type='file' onChange={onFileChange} accept='image/*' />
+          <ImageSearch setImageSrc={setImageSrc} />
           <span className='upload-error-message'>{uploadError}</span>
         </Fragment>
       )}

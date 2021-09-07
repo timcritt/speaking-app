@@ -4,7 +4,6 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import getTestsById from '../../APIHandlers/getTestsById';
 import TestPreview from '../common/TestPreview';
 import FolderOutlinedIcon from '@material-ui/icons/FolderOutlined';
-import { Link } from 'react-router-dom';
 import { FCEPart2, FCEPart3, CAEPart2, CAEPart3 } from 'APIHandlers/firebaseConsts';
 import Part3TestPreviewContent from 'components/Part3Common/Part3TestPreviewContent';
 import FCEPart2TestPreviewContent from 'components/FCEPart2/FCEPart2TestPreviewContent';
@@ -23,10 +22,13 @@ const VerticallyExpandingFolder = ({ folder }) => {
   const [testContainerExpanded, setTestContainerExpanded] = useState(false);
 
   const toggleExpandContainer = () => {
-    setTestContainerExpanded((prevState) => !prevState);
+    if (folder.testCount > 0) {
+      setTestContainerExpanded((prevState) => !prevState);
+    }
   };
   useEffect(() => {
     var isMounted = true;
+    console.log('recalling gettests');
     if (folder.id) {
       const fetchTests = async () => {
         //returns an array of the testIds in the folder
@@ -55,28 +57,31 @@ const VerticallyExpandingFolder = ({ folder }) => {
   if (hasFetched) {
     return (
       <Fragment>
-        <div className='tests-container-header' onClick={(e) => toggleExpandContainer(e)}>
-          <div className='tests-container-heading'>
+        <div
+          className={`tests-container-header ${
+            testContainerExpanded ? 'test-container-header-expanded' : ''
+          } `}
+        >
+          <div className='tests-container-heading' onClick={(e) => toggleExpandContainer(e)}>
             <div className='folder-info-container'>
               <FolderOutlinedIcon className='folder-summary-icon' />
               <div className='folder-icon-title-container'>
                 <span className='folder-title'>{folderTitle}</span>
                 <span>({folder.testCount})</span>
               </div>
-              <div className='tests-container-button'>
-                {testContainerExpanded ? <RemoveRoundedIcon /> : <ArrowDropDownIcon />}
-              </div>
+            </div>
+            <div className='tests-container-button'>
+              {testContainerExpanded ? <RemoveRoundedIcon /> : <ArrowDropDownIcon />}
             </div>
           </div>
-        </div>
-        <div className='user-tests-container-outer'>
+
           <div
             className={
               'user-tests-container ' +
               (testContainerExpanded ? 'user-tests-container-expanded' : '')
             }
           >
-            <div className='user-tests-container-outer'>
+            <div className='all-tests-container'>
               {FCEPart2Tests &&
                 FCEPart2Tests.map((test) => {
                   return (

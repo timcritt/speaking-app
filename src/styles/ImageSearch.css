@@ -1,0 +1,18 @@
+.image-search-results-container {
+  display: flex;
+
+  width: 25vw;
+  height: 50vh;
+  flex-wrap: wrap;
+  background-color: red;
+  overflow-y: auto;
+}
+
+.image-search-image-container {
+  margin: 2px;
+  display: flex;
+}
+
+.image-search-image {
+  object-fit: cover;
+}

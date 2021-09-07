@@ -85,26 +85,24 @@ const VerticallyExpandingTestsContainer = ({
             className={`tests-container-header ${
               testContainerExpanded ? 'test-container-header-expanded' : ''
             } `}
-            onClick={(e) => toggleExpandContainer(e)}
           >
-            <div className='tests-container-heading'>
+            <div className='tests-container-heading' onClick={(e) => toggleExpandContainer(e)}>
               <h2>
-                {buttonLabel} <span className='number-of-tests'>{`(${tests.length})`}</span>
+                {buttonLabel}
+                <span className='number-of-tests'>{`(${tests.length})`}</span>
               </h2>
               <div className='tests-container-button'>
                 {testContainerExpanded ? <RemoveRoundedIcon /> : <ArrowDropDownIcon />}
               </div>
             </div>
 
-            <div className='user-tests-container-outer'>
-              <div
-                className={
-                  'user-tests-container ' +
-                  (testContainerExpanded ? 'user-tests-container-expanded' : '')
-                }
-              >
-                {cloneElement(children, { tests: tests })}
-              </div>
+            <div
+              className={
+                'user-tests-container ' +
+                (testContainerExpanded ? 'user-tests-container-expanded' : '')
+              }
+            >
+              {cloneElement(children, { tests: tests })}
             </div>
           </div>
         </Fragment>

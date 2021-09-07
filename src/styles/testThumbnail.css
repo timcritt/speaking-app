@@ -5,19 +5,15 @@
 .test-preview-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   position: relative;
   transition: all 0.3s ease-in-out;
 }
 
 .test-preview-link {
-  text-decoration: none;
   color: black;
   overflow: hidden;
-  border: solid 1px rgb(230 234 234);
-  border-radius: 2px;
-  margin: 5px;
-  background-color: #fcfcfc;
+  margin-right: 5px;
   position: relative;
 }
 .test-preview-image-row {
@@ -59,6 +55,7 @@
 .test-grow-hover-container {
   overflow: hidden;
   position: relative;
+  border-radius: 0.25em;
 }
 
 .test-grow-hover-container:hover .test-preview-overlay {
@@ -101,25 +98,4 @@
 }
 
 @media screen and (min-width: 800px) {
-  .test-preview-link {
-    width: 48%;
-  }
-}
-
-@media screen and (min-width: 1400px) {
-  .test-preview-link {
-    width: 32%;
-  }
-}
-@media screen and (min-width: 360px) {
-  .test-preview-link {
-    height: auto;
-  }
-}
-
-@media screen and (min-width: 1700px) {
-  .test-preview-link {
-    width: 29%;
-    margin: 2%;
-  }
 }

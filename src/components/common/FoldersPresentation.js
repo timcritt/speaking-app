@@ -145,7 +145,7 @@ const FoldersPresentation = ({ folders, testId, addFolder, children }) => {
           <FilterListIcon />
           <div>FILTERS</div>
         </div>
-        <div className='filter-bar-item filter-bar-item-clickable see-filters-mobile-btn'>
+        <div className='see-filters-mobile-btn'>
           <CreateNewFolder label={'ADD NEW FOLDER'} />
         </div>
         <div className='filter-bar'>

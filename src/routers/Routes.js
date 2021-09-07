@@ -22,6 +22,7 @@ import { CAEPart2ContextProvider } from 'context/CAEPart2Context';
 import { CAEPart3ContextProvider } from 'context/CAEPart3Context';
 import CAEPart2View from 'components/CAEPart2/CAEPart2View';
 import EditCAEPart2 from 'components/CAEPart2/EditCAEPart2';
+import ImageSearch from 'components/common/ImageSearch';
 
 const Routes = () => {
   return (
@@ -48,6 +49,9 @@ const Routes = () => {
                 <Route exact path='/EditCAEPart2/:id' component={EditCAEPart2} />
                 <Route exact path='/CAEPart3/:id' component={CAEPart3View} />
                 <PrivateRoute exact path='/EditCAEPart3/:id' component={EditCAEPart3} />
+
+                {/*test components*/}
+                <Route exact path='/ImageSearch/' component={ImageSearch} />
 
                 <PrivateRoute path='/userContent/:userId' component={CreatorContent} />
                 <Route exact path='/about' component={About} />
