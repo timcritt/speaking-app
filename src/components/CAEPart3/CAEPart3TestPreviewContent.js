@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react';
 import { TagCloud } from 'react-tagcloud';
+import TestPreviewOverlay from 'components/TestCommon/TestPreviewOverlay';
 
-const CAEPart3TestPreviewContent = React.memo(({ test }) => {
+const CAEPart3TestPreviewContent = React.memo(({ test, testId, testType }) => {
   const testOptions = [
     { value: test.topLeft, count: 10, key: 1 },
     { value: test.topRight, count: 12, key: 2 },
@@ -17,19 +18,21 @@ const CAEPart3TestPreviewContent = React.memo(({ test }) => {
 
   return (
     <Fragment>
-      <div className='part3-test-preview-options-container' key={test.id}>
-        <TagCloud
-          minSize={15}
-          maxSize={30}
-          colorOptions={colorOptions}
-          tags={testOptions}
-          style={{ textAlign: 'center' }}
-          shuffle={true}
-        />
+      <div className='test-grow-hover-container' onClick={(e) => e.stopPropagation()}>
+        <div className='img-wrap test-preview-grow-on-hover' key={test.id}>
+          <TagCloud
+            minSize={15}
+            maxSize={30}
+            colorOptions={colorOptions}
+            tags={testOptions}
+            style={{ textAlign: 'center' }}
+            shuffle={true}
+          />
+        </div>
+        <TestPreviewOverlay testId={testId} testType={testType} />
       </div>
-
       <div className='test-preview-part-label'>
-        <span>CAE Part 3</span> <span className='kebab-menu'></span>
+        <span>CAE Part 3</span>
       </div>
     </Fragment>
   );

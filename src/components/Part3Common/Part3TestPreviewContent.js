@@ -1,13 +1,14 @@
 import React, { Fragment } from 'react';
 import { TagCloud } from 'react-tagcloud';
+import TestPreviewOverlay from 'components/TestCommon/TestPreviewOverlay';
 
-const Part3TestPreviewContent = React.memo(({ test, bottomLabel }) => {
+const CAEPart3TestPreviewContent = React.memo(({ test, testId, testType }) => {
   const testOptions = [
-    { value: test.topLeft, count: 10 },
-    { value: test.topRight, count: 12 },
-    { value: test.bottomLeft, count: 18 },
-    { value: test.bottomRight, count: 35 },
-    { value: test.bottomCentre, count: 26 },
+    { value: test.topLeft, count: 10, key: 1 },
+    { value: test.topRight, count: 12, key: 2 },
+    { value: test.bottomLeft, count: 18, key: 3 },
+    { value: test.bottomRight, count: 35, key: 4 },
+    { value: test.bottomCentre, count: 26, key: 5 },
   ];
 
   const colorOptions = {
@@ -17,22 +18,27 @@ const Part3TestPreviewContent = React.memo(({ test, bottomLabel }) => {
 
   return (
     <Fragment>
-      <div className='part3-test-preview-options-container' key={test.id}>
-        <TagCloud
-          minSize={15}
-          maxSize={30}
-          colorOptions={colorOptions}
-          tags={testOptions}
-          style={{ textAlign: 'center' }}
-          shuffle={true}
-        />
+      <div className='test-grow-hover-container' onClick={(e) => e.stopPropagation()}>
+        <div
+          className='part3-test-preview-options-container test-preview-grow-on-hover'
+          key={test.id}
+        >
+          <TagCloud
+            minSize={15}
+            maxSize={30}
+            colorOptions={colorOptions}
+            tags={testOptions}
+            style={{ textAlign: 'center' }}
+            shuffle={true}
+          />
+        </div>
+        <TestPreviewOverlay testId={testId} testType={testType} />
       </div>
-
       <div className='test-preview-part-label'>
-        <span>{bottomLabel}</span> <span className='kebab-menu'></span>
+        <span>CAE Part 3</span>
       </div>
     </Fragment>
   );
 });
 
-export default Part3TestPreviewContent;
+export default CAEPart3TestPreviewContent;

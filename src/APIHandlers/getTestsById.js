@@ -1,5 +1,4 @@
 import { projectFirestore } from '../firebase/firebaseIndex';
-import firebase from 'firebase';
 
 //gets an array of tests of a particular type from an array of test ids
 const getTestsById = async (testIds, testType) => {

@@ -9,6 +9,7 @@ const updateFolder = async (folderId, title, description) => {
   await objectRef.update({
     title,
     description,
+    updatedAt,
   });
 
   return Promise.resolve();

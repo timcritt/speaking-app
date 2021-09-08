@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from 'react';
 import Modal from '../common/Modal';
 import updateFolder from '../../APIHandlers/updateFolder';
 import addFolder from '../../APIHandlers/addFolder';
-import { timestamp } from '../../firebase/firebaseIndex';
 import { firebaseAuth } from '../../context/AuthProvider';
 
 //if folder is passed down, component functions as an editor. Else, component functions to create new folder
@@ -30,8 +29,6 @@ const EditFolderModal = ({ modalOpen, folder, setModalOpen }) => {
   }, [folder, localDescription, localTitle]);
 
   const handleClick = async () => {
-    const newTimeStamp = timestamp();
-
     if (folder) {
       await updateFolder(folder.id, localTitle, localDescription);
       setModalOpen(false);

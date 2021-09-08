@@ -19,7 +19,7 @@ const CAEPart2View = (props) => {
   useEffect(() => {
     //sends the id of the current test to be displayed to the CAEPart2 context
     context.setDocRef(props.match.params.id);
-  }, []);
+  }, [context, props.match.params.id]);
 
   if (context.hasFetched) {
     console.log(context.creatorId);
@@ -35,22 +35,13 @@ const CAEPart2View = (props) => {
               />
               <div className='CAE-part2-image-row'>
                 <div className='part2-image-container-left'>
-                  <ExamPicture
-                    image={context.imageOneUrl}
-                    setImage={context.setImageOneUrl}
-                  />
+                  <ExamPicture image={context.imageOneUrl} setImage={context.setImageOneUrl} />
                 </div>
                 <div className='part2-image-container-centre'>
-                  <ExamPicture
-                    image={context.imageTwoUrl}
-                    setImage={context.setImageTwoUrl}
-                  />
+                  <ExamPicture image={context.imageTwoUrl} setImage={context.setImageTwoUrl} />
                 </div>
                 <div className='part2-image-container-right'>
-                  <ExamPicture
-                    image={context.imageThreeUrl}
-                    setImage={context.setImageThreeUrl}
-                  />
+                  <ExamPicture image={context.imageThreeUrl} setImage={context.setImageThreeUrl} />
                 </div>
               </div>
               <TestToolBarView

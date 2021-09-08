@@ -27,7 +27,6 @@ const ImageSearch = ({ setImageSrc }) => {
   };
 
   const handleImagePick = async (hit) => {
-    console.log(hit);
     let response = await fetch(hit.largeImageURL);
     let data = await response.blob();
     let metadata = {
@@ -36,7 +35,6 @@ const ImageSearch = ({ setImageSrc }) => {
     let file = new File([data], 'picked.jpg', metadata);
     var url = URL.createObjectURL(file);
     setPickedImage(url);
-    console.log(pickedImage);
     setImageSrc(url);
   };
 
@@ -61,7 +59,6 @@ const ImageSearch = ({ setImageSrc }) => {
   return (
     <div>
       <input onChange={changeSearchTerm} defaultValue={searchTerm} />
-      <img src={pickedImage} />
       <div className='image-search-results-container'>
         {images &&
           images.hits.map((hit) => (
@@ -71,7 +68,7 @@ const ImageSearch = ({ setImageSrc }) => {
               hit={hit}
               onClick={() => handleImagePick(hit)}
             >
-              <img className='image-search-image' src={hit.previewURL} />
+              <img alt='could not load' className='image-search-image' src={hit.previewURL} />
             </div>
           ))}
       </div>

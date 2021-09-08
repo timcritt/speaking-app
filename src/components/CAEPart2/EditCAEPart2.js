@@ -11,7 +11,6 @@ import SimpleModal from 'components/common/SimpleModal';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { useHistory } from 'react-router-dom';
 import { CAEPart2Context } from 'context/CAEPart2Context';
-import { FCEPart2 } from 'APIHandlers/firebaseConsts';
 
 const EditCAEPart2 = (props) => {
   const context = useContext(CAEPart2Context);
@@ -44,9 +43,9 @@ const EditCAEPart2 = (props) => {
       //clears context state of previously viewed Test. displays blank test to be created by user.
       context.clearState();
     }
-  }, []);
+  }, [context, props.match.params.id]);
 
-  if (true) {
+  if (context) {
     return (
       <Fragment>
         <div className='side-bar-left-tags hg-sidebar '>

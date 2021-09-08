@@ -1,11 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+
+//constants
+import { FCEPart2, FCEPart3, CAEPart2, CAEPart3 } from 'APIHandlers/firebaseConsts';
 
 //custom components
 import TestPreview from 'components/common/TestPreview';
-import FCEPart3TestPreviewContent from 'components/Part3Common/Part3TestPreviewContent';
-import { FCEPart2, FCEPart3, CAEPart2, CAEPart3 } from 'APIHandlers/firebaseConsts';
-
+import Part3TestPreviewContent from 'components/Part3Common/Part3TestPreviewContent';
 import FCEPart2TestPreviewContent from '../FCEPart2/FCEPart2TestPreviewContent';
 import CAEPart2TestPreviewContent from 'components/CAEPart2/CAEPart2TestPreviewContent';
 
@@ -31,28 +31,35 @@ const Tests = ({ results = [], testType }) => {
                 );
               } else if (testType === FCEPart3) {
                 return (
-                  <TestPreview testId={doc.id} questionOne={doc.questionOne} key={doc.id}>
-                    <FCEPart3TestPreviewContent
-                      test={doc}
-                      key={doc.id}
-                      bottomLabel={'FCE Part 3'}
-                    />
+                  <TestPreview
+                    testId={doc.id}
+                    questionOne={doc.questionOne}
+                    key={doc.id}
+                    testType={testType}
+                  >
+                    <Part3TestPreviewContent test={doc} />
                   </TestPreview>
                 );
               } else if (testType === CAEPart2) {
                 return (
-                  <TestPreview testId={doc.id} questionOne={doc.questionOne} key={doc.id}>
-                    <CAEPart2TestPreviewContent test={doc} key={doc.id} />
+                  <TestPreview
+                    testId={doc.id}
+                    questionOne={doc.questionOne}
+                    key={doc.id}
+                    testType={testType}
+                  >
+                    <CAEPart2TestPreviewContent test={doc} />
                   </TestPreview>
                 );
               } else if (testType === CAEPart3) {
                 return (
-                  <TestPreview testId={doc.id} questionOne={doc.questionOne} key={doc.id}>
-                    <FCEPart3TestPreviewContent
-                      test={doc}
-                      key={doc.id}
-                      bottomLabel={'CAE Part 3'}
-                    />
+                  <TestPreview
+                    testId={doc.id}
+                    questionOne={doc.questionOne}
+                    key={doc.id}
+                    testType={testType}
+                  >
+                    <Part3TestPreviewContent test={doc} />
                   </TestPreview>
                 );
               }

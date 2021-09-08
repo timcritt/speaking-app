@@ -1,6 +1,5 @@
 import React, { cloneElement } from 'react';
 import TestPreview from '../common/TestPreview';
-import { Link } from 'react-router-dom';
 
 const TestSearchResults = ({ tests, testType, children }) => {
   return (
