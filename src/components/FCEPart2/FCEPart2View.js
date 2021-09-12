@@ -21,7 +21,7 @@ const FCEPart2View = (props) => {
   useEffect(() => {
     //sends the id of the current test to be displayed to the FCEPart2 context
     context.setDocRef(props.match.params.id);
-  }, []);
+  }, [context, props.match.params.id]);
 
   if (context.hasFetched) {
     return (

@@ -13,7 +13,6 @@ const ImageSearch = ({ setImageSrc }) => {
   );
 
   const [images, setImages] = useState(null);
-  const [pickedImage, setPickedImage] = useState(null);
 
   const changeSearchTerm = (e) => {
     setSearchTerm(e.target.value);
@@ -34,7 +33,7 @@ const ImageSearch = ({ setImageSrc }) => {
     };
     let file = new File([data], 'picked.jpg', metadata);
     var url = URL.createObjectURL(file);
-    setPickedImage(url);
+
     setImageSrc(url);
   };
 

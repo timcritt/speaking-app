@@ -1,4 +1,4 @@
-import React, { useState, useCallback, Fragment, useContext } from 'react';
+import React, { useState, useCallback, Fragment } from 'react';
 import Cropper from 'react-easy-crop';
 import Slider from '@material-ui/core/Slider';
 import Button from '@material-ui/core/Button';
@@ -7,7 +7,6 @@ import { withStyles } from '@material-ui/core/styles';
 import { getOrientation } from 'get-orientation/browser';
 import { getCroppedImg, getRotatedImage } from '../../auxFunctions/canvasUtils';
 import { styles } from './styles';
-import ProgressBar from '../ProgressBar';
 import ImageSearch from 'components/common/ImageSearch';
 
 const ORIENTATION_TO_ANGLE = {
@@ -23,8 +22,6 @@ const EasyCrop = ({ classes, aspect = 4 / 3, setImageUrl }) => {
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [uploadError, setUploadError] = useState(null);
-  const [croppedImage, setCroppedImage] = useState(false);
-  const [pickedImagem, setPickedImage] = useState(null);
 
   //access to the function that sets the image on the page
 
@@ -42,7 +39,7 @@ const EasyCrop = ({ classes, aspect = 4 / 3, setImageUrl }) => {
     } catch (e) {
       console.error(e);
     }
-  }, [imageSrc, croppedAreaPixels, rotation]);
+  }, [imageSrc, croppedAreaPixels, rotation, setImageUrl]);
 
   const fileTypes = ['image/png', 'image/jpeg'];
 
@@ -84,45 +81,43 @@ const EasyCrop = ({ classes, aspect = 4 / 3, setImageUrl }) => {
               onZoomChange={setZoom}
             />
           </div>
-          {!croppedImage && (
-            <div className={classes.controls}>
-              <div className={classes.sliderContainer}>
-                <Typography variant='overline' classes={{ root: classes.sliderLabel }}>
-                  zoom
-                </Typography>
-                <Slider
-                  value={zoom}
-                  min={1}
-                  max={3}
-                  step={0.1}
-                  aria-labelledby='Zoom'
-                  onChange={(e, zoom) => setZoom(zoom)}
-                />
-              </div>
-              <div className={classes.sliderContainer}>
-                <Typography variant='overline' classes={{ root: classes.sliderLabel }}>
-                  Rotation
-                </Typography>
-                <Slider
-                  value={rotation}
-                  min={0}
-                  max={360}
-                  step={1}
-                  aria-labelledby='Rotation'
-                  onChange={(e, rotation) => setRotation(rotation)}
-                />
-              </div>
-              <Button
-                onClick={showCroppedImage}
-                variant='contained'
-                color='primary'
-                classes={{ root: classes.cropButton }}
-              >
-                upload
-              </Button>
+
+          <div className={classes.controls}>
+            <div className={classes.sliderContainer}>
+              <Typography variant='overline' classes={{ root: classes.sliderLabel }}>
+                zoom
+              </Typography>
+              <Slider
+                value={zoom}
+                min={1}
+                max={3}
+                step={0.1}
+                aria-labelledby='Zoom'
+                onChange={(e, zoom) => setZoom(zoom)}
+              />
             </div>
-          )}
-          {croppedImage && <ProgressBar file={croppedImage} />}
+            <div className={classes.sliderContainer}>
+              <Typography variant='overline' classes={{ root: classes.sliderLabel }}>
+                Rotation
+              </Typography>
+              <Slider
+                value={rotation}
+                min={0}
+                max={360}
+                step={1}
+                aria-labelledby='Rotation'
+                onChange={(e, rotation) => setRotation(rotation)}
+              />
+            </div>
+            <Button
+              onClick={showCroppedImage}
+              variant='contained'
+              color='primary'
+              classes={{ root: classes.cropButton }}
+            >
+              upload
+            </Button>
+          </div>
         </React.Fragment>
       ) : (
         <Fragment>

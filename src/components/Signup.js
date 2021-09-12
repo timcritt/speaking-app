@@ -33,6 +33,7 @@ const Signup = (props) => {
           value={inputs.email}
         />
         <input
+          type='password'
           className='auth-input'
           onChange={handleChange}
           name='password'
@@ -40,9 +41,7 @@ const Signup = (props) => {
           value={inputs.password}
         />
         <button className='auth-button'>signup</button>
-        {errors.length > 0
-          ? errors.map((error) => <p style={{ color: 'red' }}>{error}</p>)
-          : null}
+        {errors.length > 0 ? errors.map((error) => <p style={{ color: 'red' }}>{error}</p>) : null}
       </form>
     </div>
   );

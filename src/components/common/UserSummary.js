@@ -13,6 +13,7 @@ const UserSummary = ({ user }) => {
       <div className='user-summary-container '>
         <img
           className='profile-detail-picture'
+          alt='could not load'
           src={user.profilePicture ? user.profilePicture : profilePlaceHolder}
         />
         <h3 className='created-by-text '>{user.userName}</h3>

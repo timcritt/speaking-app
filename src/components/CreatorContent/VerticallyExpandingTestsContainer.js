@@ -1,6 +1,5 @@
 import React, { Fragment, useState, useEffect, cloneElement } from 'react';
 import { useParams } from 'react-router-dom';
-import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded';
 import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
 import getFilteredTests from 'APIHandlers/getFilteredTests';
 import LinearProgress from '@material-ui/core/LinearProgress';

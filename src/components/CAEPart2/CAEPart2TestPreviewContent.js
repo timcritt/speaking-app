@@ -6,9 +6,13 @@ const CAEPart2TestPreviewContent = ({ test, testId, testType }) => {
     <Fragment>
       <div className='test-grow-hover-container' onClick={(e) => e.stopPropagation()}>
         <div className='img-wrap test-preview-grow-on-hover' key={test.id}>
-          <img className='thumbnail part3-thumbnail' src={test.imageOneUrl} />
-          <img className='thumbnail part3-thumbnail' src={test.imageTwoUrl} />
-          <img className='thumbnail part3-thumbnail' src={test.imageThreeUrl} />
+          <img alt='could not load' className='thumbnail part3-thumbnail' src={test.imageOneUrl} />
+          <img alt='could not load' className='thumbnail part3-thumbnail' src={test.imageTwoUrl} />
+          <img
+            alt='could not load'
+            className='thumbnail part3-thumbnail'
+            src={test.imageThreeUrl}
+          />
         </div>
         <TestPreviewOverlay testId={testId} testType={testType} />
       </div>

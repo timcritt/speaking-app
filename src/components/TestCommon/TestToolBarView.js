@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 //custom components
@@ -12,14 +12,7 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import FullscreenOutlinedIcon from '@material-ui/icons/FullscreenOutlined';
 import FullscreenExitOutlinedIcon from '@material-ui/icons/FullscreenExitOutlined';
 
-const TestToolBarView = ({
-  creatorId,
-  userId,
-  docRef,
-  time,
-  handleFullScreen,
-  testType,
-}) => {
+const TestToolBarView = ({ creatorId, userId, docRef, time, handleFullScreen, testType }) => {
   return (
     <Fragment>
       <div className='tool-bar-row'>
@@ -38,12 +31,9 @@ const TestToolBarView = ({
               </button>
             </Link>
           )}
-          <ShareButton
-            className='tool-bar-btn hide-on-fullscreen'
-            sharedItemType={'FCE Part 2'}
-          />
+          <ShareButton className='tool-bar-btn hide-on-fullscreen' sharedItemType={'FCE Part 2'} />
           <div className='hide-on-fullscreen'>
-            <AddToMyFolders />
+            <AddToMyFolders testId={docRef} />
           </div>
           <button
             className='tool-bar-btn open-fullscreen-btn hide-on-fullscreen'
@@ -55,10 +45,7 @@ const TestToolBarView = ({
             className='tool-bar-btn close-fullscreen-btn show-on-fullscreen'
             onClick={() => handleFullScreen.exit()}
           >
-            <FullscreenExitOutlinedIcon
-              fontSize='large'
-              style={{ color: 'black' }}
-            />
+            <FullscreenExitOutlinedIcon fontSize='large' style={{ color: 'black' }} />
           </button>
         </div>
       </div>

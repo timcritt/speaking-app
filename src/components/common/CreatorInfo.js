@@ -33,6 +33,7 @@ const CreatorInfo = ({ creatorId }) => {
       <span className='hide-on-fullscreen'>
         <img
           onError={addDefaultSrc}
+          alt='could not load'
           className='profile-picture-small'
           src={creatorProfilePicture ? creatorProfilePicture : defaultProfilePicture}
         />

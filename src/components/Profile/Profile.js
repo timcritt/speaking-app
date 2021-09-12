@@ -5,10 +5,7 @@ import EasyCrop from 'components/EasyCrop/EasyCrop';
 import ProfilePickerModal from 'components/Profile/ProfilePickerModal';
 import ImageContext from 'context/ImageContext';
 import { uploadImage } from 'APIHandlers/uploadImage';
-import {
-  updateUserName,
-  updateUserProfilePicture,
-} from 'APIHandlers/updateUser';
+import { updateUserName, updateUserProfilePicture } from 'APIHandlers/updateUser';
 import { firebaseAuth } from 'context/AuthProvider';
 
 const Profile = () => {
@@ -48,6 +45,7 @@ const Profile = () => {
               <div className='profile-detail-item-container'>
                 <aside className='profile-detail-label-aside'>
                   <img
+                    alt='could not load'
                     className='profile-detail-picture'
                     src={
                       userDetails && userDetails.profilePicture
@@ -100,9 +98,7 @@ const Profile = () => {
               <div className='profile-detail-item-container'>
                 <aside className='profile-detail-label-aside'></aside>
                 <div className='profile-detail-save-btn btn'>
-                  <button onClick={() => handleSaveChanges()}>
-                    save changes
-                  </button>
+                  <button onClick={() => handleSaveChanges()}>save changes</button>
                 </div>
               </div>
             </div>

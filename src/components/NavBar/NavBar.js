@@ -62,6 +62,7 @@ export const NavBar = () => {
         <div className='dropdown-m'>
           <img
             className='profile-picture dropdown '
+            alt='could not load'
             src={
               userDetails && userDetails.profilePicture
                 ? userDetails.profilePicture

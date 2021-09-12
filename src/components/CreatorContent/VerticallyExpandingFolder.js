@@ -17,6 +17,7 @@ const VerticallyExpandingFolder = ({ folder }) => {
   const [CAEPart2Tests, setCAEPart2Tests] = useState(null);
   const [CAEPart3Tests, setCAEPart3Tests] = useState(null);
   const [folderTitle, setFolderTitle] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [creatorId, setCreatorId] = useState(null);
   const [hasFetched, setHasFetched] = useState(false);
   const [testContainerExpanded, setTestContainerExpanded] = useState(false);

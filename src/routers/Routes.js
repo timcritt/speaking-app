@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment } from 'react';
 import Home from 'components/Home/Home';
 import { About } from 'components/About/About';
 import FCEPart2View from 'components/FCEPart2/FCEPart2View';

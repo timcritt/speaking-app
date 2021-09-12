@@ -2,7 +2,6 @@ import React, { useState, useEffect, Fragment, useContext } from 'react';
 import Modal from 'components/common/Modal';
 import PublishIcon from '@material-ui/icons/Publish';
 import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
-import { timestamp } from 'firebase/firebaseIndex';
 import updatePart3 from 'APIHandlers/updatePart3';
 import addPart3 from 'APIHandlers/addPart3';
 import { firebaseAuth } from 'context/AuthProvider';

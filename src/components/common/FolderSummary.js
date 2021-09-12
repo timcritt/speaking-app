@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import FolderOutlinedIcon from '@material-ui/icons/FolderOutlined';
 import { folders } from '../../APIHandlers/firebaseConsts';
 import deleteRecordFirestore from '../../APIHandlers/deleteRecordFirestore';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import { useHistory } from 'react-router-dom';
 
-import CreateNewFolder from 'components/common/CreateNewFolder';
 import CreatorInfo from './CreatorInfo';
 
 const FolderSummary = ({ folder }) => {

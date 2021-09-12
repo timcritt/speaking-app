@@ -63,6 +63,7 @@ const AuthProvider = (props) => {
         userId,
         userDetails,
         setUserDetails,
+        userEmail,
       }}
     >
       {props.children}

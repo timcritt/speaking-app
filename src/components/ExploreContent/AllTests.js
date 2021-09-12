@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, useCallback } from 'react';
 import Tests from './Tests';
 import SideBarTags from '../common/SideBarTags';
 import getFilteredTests from '../../APIHandlers/getFilteredTests';
@@ -71,10 +71,6 @@ const AllTests = ({ creatorId }) => {
     itemThree.setIsComponentVisible(false);
   };
 
-  useEffect(() => {
-    handleSearchClick();
-  }, [sortBy, tagFilterTerm, questionFilterTerm, testType, exam]);
-
   const handleChangeTestType = (e, testType) => {
     itemFive.setIsComponentVisible(false);
     e.stopPropagation();
@@ -91,7 +87,7 @@ const AllTests = ({ creatorId }) => {
     setFilterMenuVisible((prevState) => !prevState);
   };
 
-  const handleSearchClick = async () => {
+  const handleSearchClick = useCallback(async () => {
     setHasFetched(false);
     setSearchButtonClicked(true);
 
@@ -108,11 +104,15 @@ const AllTests = ({ creatorId }) => {
       setResults(filteredDocs);
       setHasFetched(true);
     });
-  };
+  }, [creatorId, exam, questionFilterTerm, tagFilterTerm, testType]);
 
   const handleSortRadioChange = (e) => {
     setSortBy(e.currentTarget.value);
   };
+
+  useEffect(() => {
+    handleSearchClick();
+  }, [handleSearchClick]);
 
   return (
     <Fragment>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import CreatorInfo from 'components/common/CreatorInfo';

@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { TagCloud } from 'react-tagcloud';
 import TestPreviewOverlay from 'components/TestCommon/TestPreviewOverlay';
+import CAEPart3 from 'APIHandlers/firebaseConsts';
 
 const CAEPart3TestPreviewContent = React.memo(({ test, testId, testType }) => {
   const testOptions = [
@@ -32,7 +33,7 @@ const CAEPart3TestPreviewContent = React.memo(({ test, testId, testType }) => {
         <TestPreviewOverlay testId={testId} testType={testType} />
       </div>
       <div className='test-preview-part-label'>
-        <span>CAE Part 3</span>
+        <span>{(testType = CAEPart3 ? 'CAE Part 3' : 'FCE Part 3')}</span>
       </div>
     </Fragment>
   );
