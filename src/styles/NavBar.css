@@ -25,7 +25,7 @@
 }
 
 .nav-link:hover {
-  color: darkgoldenrod;
+  color: #a7a8ed;
 }
 
 .nav-container .nav-link {
@@ -88,7 +88,7 @@
   display: revert;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 1000px) {
   .nav-content-container {
     display: flex;
     flex-direction: row;
@@ -131,7 +131,7 @@
   }
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 1000px) {
   .nav-container {
     display: flex;
 

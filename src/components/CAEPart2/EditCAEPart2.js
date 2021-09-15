@@ -43,7 +43,7 @@ const EditCAEPart2 = (props) => {
       //clears context state of previously viewed Test. displays blank test to be created by user.
       context.clearState();
     }
-  }, [context, props.match.params.id]);
+  }, []);
 
   if (context) {
     return (

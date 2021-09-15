@@ -115,13 +115,14 @@ const EasyCrop = ({ classes, aspect = 4 / 3, setImageUrl }) => {
               color='primary'
               classes={{ root: classes.cropButton }}
             >
-              upload
+              select
             </Button>
           </div>
         </React.Fragment>
       ) : (
         <Fragment>
-          <input type='file' onChange={onFileChange} accept='image/*' />
+          <input type='file' id='imageUpload' onChange={onFileChange} accept='image/*' />
+          <label for='imageUpload'>upload a file</label>
           <ImageSearch setImageSrc={setImageSrc} />
           <span className='upload-error-message'>{uploadError}</span>
         </Fragment>

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 //custom componets
 import FilterInput from 'components/common/FilterInput';
 import SideBarTags from '../common/SideBarTags';
+import DropDownOption from 'components/CreatorContent/DropDownOption';
 
 //icons
 import FilterListIcon from '@material-ui/icons/FilterList';
@@ -10,8 +11,10 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import SearchIcon from '@material-ui/icons/Search';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ExamTypeMenuItems from 'components/ExploreContent/ExamTypeMenuItems';
 
 const FilterMenuDesktop = ({
+  children,
   toggleFilterMenuVisible,
   tagFilterTerm,
   itemOne,
@@ -24,16 +27,8 @@ const FilterMenuDesktop = ({
   handleResetFilters,
   handleSetTags,
 }) => {
-  const Option = ({ label, handleClickOption }) => {
-    return (
-      <div className='dropdown-option' onClick={(e) => handleClickOption(e, label)}>
-        {label}
-      </div>
-    );
-  };
-
   return (
-    <div className='search-terms-container'>
+    <Fragment>
       <div
         className='filter-bar-item filter-bar-item-clickable see-filters-mobile-btn'
         onClick={toggleFilterMenuVisible}
@@ -41,12 +36,9 @@ const FilterMenuDesktop = ({
         <FilterListIcon />
         <div>FILTERS</div>
       </div>
-      <div className='filter-bar '>
-        {/*unclickable filter icon*/}
-        <div className='filter-bar-item'>
-          <FilterListIcon />
-        </div>
+      <div className='exam-type-menu-bar-mobile'>{children}</div>
 
+      <div className='filter-bar'>
         {/*filter by topic*/}
         <div
           className={`filter-bar-item filter-bar-item-clickable ${
@@ -73,8 +65,8 @@ const FilterMenuDesktop = ({
 
           {itemTwo.isComponentVisible && (
             <div ref={itemTwo.ref} className='dropdown-small-visible'>
-              <Option label={'newest'} handleClickOption={handleSetRecent} />
-              <Option label={'oldest'} handleClickOption={handleSetOld} />
+              <DropDownOption label={'newest'} handleClickOption={handleSetRecent} />
+              <DropDownOption label={'oldest'} handleClickOption={handleSetOld} />
             </div>
           )}
         </div>
@@ -106,6 +98,7 @@ const FilterMenuDesktop = ({
             reset filters
           </div>
         )}
+        {children}
       </div>
 
       {/*filter by tag drop down container*/}
@@ -122,7 +115,7 @@ const FilterMenuDesktop = ({
           </div>
         </div>
       )}
-    </div>
+    </Fragment>
   );
 };
 

@@ -13,7 +13,7 @@ const CAEPart3TestPreviewContent = React.memo(({ test, testId, testType }) => {
   ];
 
   const colorOptions = {
-    luminosity: 'light',
+    luminosity: 'dark',
     hue: 'blue',
   };
 

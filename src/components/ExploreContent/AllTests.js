@@ -1,17 +1,11 @@
 import React, { Fragment, useState, useEffect, useCallback } from 'react';
 import Tests from './Tests';
-import SideBarTags from '../common/SideBarTags';
 import getFilteredTests from '../../APIHandlers/getFilteredTests';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import FilterListIcon from '@material-ui/icons/FilterList';
-import CancelIcon from '@material-ui/icons/Cancel';
 import useComponentVisible from 'hooks/useComponentVisible';
-import RotateLeftIcon from '@material-ui/icons/RotateLeft';
-import SearchIcon from '@material-ui/icons/Search';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import FilterInput from 'components/common/FilterInput';
-
-import CloseIcon from '@material-ui/icons/Close';
+import FilterMenuMobile from 'components/CreatorContent/FilterMenuMobile';
+import FilterMenuDesktop from 'components/CreatorContent/FilterMenuDesktop';
+import ExamTypeMenuItems from 'components/ExploreContent/ExamTypeMenuItems';
 
 const AllTests = ({ creatorId }) => {
   //state
@@ -32,13 +26,6 @@ const AllTests = ({ creatorId }) => {
 
   const [filterMenuVisible, setFilterMenuVisible] = useState(false);
 
-  const Option = ({ label, handleClickOption }) => {
-    return (
-      <div className='dropdown-option' onClick={(e) => handleClickOption(e, label)}>
-        {label}
-      </div>
-    );
-  };
   const handleSetQuestionFilterTerm = (e) => {
     setQuestionFilterTerm(e.currentTarget.value);
   };
@@ -112,216 +99,47 @@ const AllTests = ({ creatorId }) => {
 
   useEffect(() => {
     handleSearchClick();
-  }, [handleSearchClick]);
+  }, [handleSearchClick, questionFilterTerm]);
 
   return (
     <Fragment>
-      <div className={`filter-menu ${filterMenuVisible ? 'isVisible' : 'isHidden'}`}>
-        {/* overlay filter menu for small screens - hidden by default and opens on click*/}
-        <div className='close-nav-mobile-btn' onClick={toggleFilterMenuVisible}>
-          <CloseIcon fontSize='large' />
-        </div>
-        <h1>FILTERS</h1>
-        {/*filter by topic*/}
-        <div className='filter-mobile-row'>
-          <p>Select Topic</p>
-          <SideBarTags tags={tagFilterTerm} handleSetTags={handleSetTags}></SideBarTags>
-        </div>
-        {/*sort by date created*/}
+      {/* overlay filter menu for small screens - hidden by default and opens on click*/}
+      <FilterMenuMobile
+        filterMenuVisible={filterMenuVisible}
+        toggleFilterMenuVisible={toggleFilterMenuVisible}
+        tagFilterTerm={tagFilterTerm}
+        handleSetTags={handleSetTags}
+        sortBy={sortBy}
+        handleSortRadioChange={handleSortRadioChange}
+        questionFilterTerm={questionFilterTerm}
+        handleSetQuestionFilterTerm={handleSetQuestionFilterTerm}
+        handleResetFilters={handleResetFilters}
+      />
 
-        <div className='filter-mobile-row'>
-          <p>Sorty by</p>
-          <div>
-            <input
-              type='radio'
-              id='newest'
-              name='sortBy'
-              value='newest'
-              checked={sortBy === 'newest'}
-              onChange={handleSortRadioChange}
-            />
-            <label htmlFor='newest'>newest</label>
-          </div>
-          <div>
-            <input
-              type='radio'
-              id='oldest'
-              name='sortyBy'
-              value='oldest'
-              checked={sortBy === 'oldest'}
-              onChange={handleSortRadioChange}
-            />
-            <label htmlFor='oldest'>oldest</label>
-          </div>
-        </div>
-
-        {/*filter by question*/}
-
-        <div className='filter-mobile-row'>
-          <p>Search by question</p>
-          <input
-            id='question'
-            type='text'
-            value={questionFilterTerm}
-            onChange={handleSetQuestionFilterTerm}
-          />
-        </div>
-
-        {/* buttons */}
-        <div className='filter-mobile-button-row'>
-          <button className='btn get-started-btn' onClick={handleResetFilters}>
-            <span className='icon-container'></span>
-            reset filters
-          </button>
-          <button className='btn get-started-btn' onClick={toggleFilterMenuVisible}>
-            apply filters
-          </button>
-        </div>
-      </div>
+      {/* filter menu for large screens. visible only for large screens*/}
       <div className='search-terms-container'>
-        {' '}
-        <div
-          className='filter-bar-item filter-bar-item-clickable see-filters-mobile-btn'
-          onClick={toggleFilterMenuVisible}
+        <FilterMenuDesktop
+          toggleFilterMenuVisible={toggleFilterMenuVisible}
+          tagFilterTerm={tagFilterTerm}
+          itemOne={itemOne}
+          itemTwo={itemTwo}
+          sortBy={sortBy}
+          handleSetRecent={handleSetRecent}
+          handleSetOld={handleSetOld}
+          questionFilterTerm={questionFilterTerm}
+          handleSetQuestionFilterTerm={handleSetQuestionFilterTerm}
+          handleResetFilters={handleResetFilters}
+          handleSetTags={handleSetTags}
         >
-          <FilterListIcon />
-          <div>FILTERS</div>
-        </div>
-        <div className='filter-bar'>
-          {/*unclickable filter icon*/}
-          <div className='filter-bar-item'>
-            <FilterListIcon />
-          </div>
-
-          {/*filter by topic*/}
-          <div
-            className={`filter-bar-item filter-bar-item-clickable ${
-              tagFilterTerm ? 'filter-selected' : ''
-            }`}
-            onClick={(e) => {
-              itemOne.setIsComponentVisible((prevState) => !prevState);
-            }}
-          >
-            {tagFilterTerm ? tagFilterTerm : 'topic'}
-            <ArrowDropDownIcon />
-          </div>
-
-          {/*sort by date created*/}
-          <div
-            className={`filter-bar-item filter-bar-item-clickable ${
-              sortBy ? 'filter-selected' : ''
-            }`}
-            onClick={() => {
-              itemTwo.setIsComponentVisible(true);
-              console.log('button clicked');
-            }}
-          >
-            <div>{sortBy ? sortBy : 'sort by'}</div>
-            <ArrowDropDownIcon />
-
-            {itemTwo.isComponentVisible && (
-              <div ref={itemTwo.ref} className='dropdown-small-visible'>
-                <Option label={'newest'} handleClickOption={handleSetRecent} />
-                <Option label={'oldest'} handleClickOption={handleSetOld} />
-              </div>
-            )}
-          </div>
-
-          {/*filter by question*/}
-          <div
-            className={`filter-bar-item filter-bar-item-clickable ${
-              questionFilterTerm !== '' ? 'filter-selected' : ''
-            }`}
-            onClick={() => {
-              if (questionFilterTerm.length === 0)
-                itemThree.setIsComponentVisible((prevState) => !prevState);
-            }}
-          >
-            <div className='icon-container'>
-              <SearchIcon />
-            </div>
-            question
-            {itemThree.isComponentVisible && (
-              <FilterInput
-                placeholder={'filter by folder name'}
-                handleSetFilterTerm={handleSetQuestionFilterTerm}
-                value={questionFilterTerm}
-              />
-            )}
-          </div>
-
-          {/* clear filters  */}
-          {(sortBy || tagFilterTerm || (questionFilterTerm && questionFilterTerm.length > 0)) && (
-            <div
-              className='filter-bar-item filter-bar-item-clickable reset-filters-button-container'
-              onClick={handleResetFilters}
-            >
-              <span className='icon-container'>
-                <RotateLeftIcon />
-              </span>
-              reset filters
-            </div>
-          )}
-
-          {/*select Exam*/}
-
-          <div
-            className='filter-bar-item filter-bar-item-clickable'
-            onClick={() => {
-              itemFour.setIsComponentVisible(true);
-              console.log('button clicked');
-            }}
-          >
-            <div>{exam ? exam : 'exam'}</div>
-            <ArrowDropDownIcon />
-
-            {itemFour.isComponentVisible && (
-              <div ref={itemFour.ref} className='dropdown-small-visible'>
-                <Option label={'FCE'} handleClickOption={(e) => handleChangeExam(e, 'FCE')} />
-                <Option label={'CAE'} handleClickOption={(e) => handleChangeExam(e, 'CAE')} />
-              </div>
-            )}
-          </div>
-
-          {/**select part**/}
-          <div
-            className='filter-bar-item filter-bar-item-clickable'
-            onClick={() => {
-              itemFive.setIsComponentVisible(true);
-              console.log('button clicked');
-            }}
-          >
-            <div>{testType ? testType : 'part'}</div>
-            <ArrowDropDownIcon />
-
-            {itemFive.isComponentVisible && (
-              <div ref={itemFive.ref} className='dropdown-small-visible'>
-                <Option
-                  label={'Part 2'}
-                  handleClickOption={(e) => handleChangeTestType(e, 'Part2')}
-                />
-                <Option
-                  label={'Part 3'}
-                  handleClickOption={(e) => handleChangeTestType(e, 'Part3')}
-                />
-              </div>
-            )}
-          </div>
-        </div>
-        {/*filter by tag drop down container*/}
-        {itemOne.isComponentVisible && (
-          <div ref={itemOne.ref} className='tags-drop-down-visible'>
-            <SideBarTags tags={tagFilterTerm} handleSetTags={handleSetTags}></SideBarTags>
-            <div
-              className='close-dropdown-container-button'
-              onClick={(e) => {
-                itemOne.setIsComponentVisible((prevState) => !prevState);
-              }}
-            >
-              <CancelIcon />
-            </div>
-          </div>
-        )}
+          <ExamTypeMenuItems
+            itemFour={itemFour}
+            itemFive={itemFive}
+            testType={testType}
+            exam={exam}
+            handleChangeTestType={handleChangeTestType}
+            handleChangeExam={handleChangeExam}
+          />
+        </FilterMenuDesktop>
       </div>
 
       {!hasFetched && searchButtonClicked && <LinearProgress />}

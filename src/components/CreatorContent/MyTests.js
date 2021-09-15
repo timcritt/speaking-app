@@ -84,19 +84,21 @@ const MyTests = ({ creatorId }) => {
       />
 
       {/* filter menu for large screens. visible only for large screens*/}
-      <FilterMenuDesktop
-        toggleFilterMenuVisible={toggleFilterMenuVisible}
-        tagFilterTerm={tagFilterTerm}
-        itemOne={itemOne}
-        itemTwo={itemTwo}
-        sortBy={sortBy}
-        handleSetRecent={handleSetRecent}
-        handleSetOld={handleSetOld}
-        questionFilterTerm={questionFilterTerm}
-        handleSetQuestionFilterTerm={handleSetQuestionFilterTerm}
-        handleResetFilters={handleResetFilters}
-        handleSetTags={handleSetTags}
-      />
+      <div className='search-terms-container'>
+        <FilterMenuDesktop
+          toggleFilterMenuVisible={toggleFilterMenuVisible}
+          tagFilterTerm={tagFilterTerm}
+          itemOne={itemOne}
+          itemTwo={itemTwo}
+          sortBy={sortBy}
+          handleSetRecent={handleSetRecent}
+          handleSetOld={handleSetOld}
+          questionFilterTerm={questionFilterTerm}
+          handleSetQuestionFilterTerm={handleSetQuestionFilterTerm}
+          handleResetFilters={handleResetFilters}
+          handleSetTags={handleSetTags}
+        />
+      </div>
 
       <VerticallyExpandingTestsContainer
         buttonLabel={'FCE Part 2'}

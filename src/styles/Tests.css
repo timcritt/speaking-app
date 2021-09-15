@@ -23,6 +23,7 @@
 .img-wrap {
   display: inline-block;
   justify-content: center;
+  filter: grayscale(0.5);
 }
 
 .thumbnail {
@@ -64,7 +65,7 @@
 }
 
 .part3-test-preview-options-container {
-  background-color: #434c4d;
+  background-color: #edf1ff;
   height: 250px;
   padding: 10px 15px;
   font-size: large;
@@ -96,7 +97,11 @@
 }
 .filter-bar {
   display: none;
-  margin: 10px 0 0 0;
+  margin: 0;
+}
+
+.exam-type-menu-bar-mobile {
+  display: flex;
 }
 
 .filter-bar-item {
@@ -111,11 +116,7 @@
   margin-right: 20px;
   border-radius: 5px;
   transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
-}
-
-.filter-bar-item:first-child {
-  padding-left: 0;
-  margin-right: 0;
+  font-size: 0.9rem;
 }
 
 .filter-bar-item-stand-out {
@@ -184,7 +185,7 @@
   height: 100%;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 1000px) {
   .filter-bar {
     display: flex;
   }
@@ -194,5 +195,9 @@
 
   .filter-menu {
     display: none;
+  }
+  .exam-type-menu-bar-mobile {
+    display: none;
+    margin: 0;
   }
 }
