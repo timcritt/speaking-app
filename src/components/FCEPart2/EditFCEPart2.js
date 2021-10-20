@@ -1,56 +1,40 @@
-import React, { useEffect, useContext, Fragment } from 'react';
+import React, { useContext, Fragment } from 'react';
 import SideBarTags from 'components/common/SideBarTags';
-import PublishWarningModal from 'components/FCEPart2/PublishWarningModal';
-import { Link } from 'react-router-dom';
-import deleteTest from 'APIHandlers/deleteTest';
-import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
-import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import ExamPicture from 'components/FCEPart2/ExamPicture';
 import ImageDeleteBtn from 'components/FCEPart2/ImageDeleteBtn';
 import SimpleModal from 'components/common/SimpleModal';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { useHistory } from 'react-router-dom';
 import { FCEPart2Context } from 'context/FCEPart2Context';
-import { FCEPart2 } from 'APIHandlers/firebaseConsts';
+import FCEPart2TestToolBarEdit from 'components/TestCommon/FCEPart2TestToolBarEdit';
+import { Prompt } from 'react-router-dom';
+import useLoadTestIntoComponent from 'hooks/useLoadTestIntoComponent';
 
 const EditFCEPart2 = (props) => {
   const context = useContext(FCEPart2Context);
-  var history = useHistory();
 
-  function handleSetTags(tag, selected) {
-    if (!selected) {
-      //adds tag to the state
-      context.setTestTags((prevTags) => {
-        return [...prevTags, tag];
-      });
-    } else {
-      //removes the tag from the state
-      context.setTestTags((prevTags) => {
-        return [...prevTags.filter((currentTag) => currentTag !== tag)];
-      });
-    }
-  }
-  const handleDeleteTest = async () => {
-    await deleteTest(context.docRef, FCEPart2);
-    context.clearState();
-    history.push('/EditFCEPart2/new');
-  };
-
-  useEffect(() => {
-    //sends the id of the current test to be displayed to the FCEPart2 context
-    if (props.match.params.id !== 'new') {
-      context.setDocRef(props.match.params.id);
-    } else {
-      //clears context state of previously viewed Test. displays blank test to be created by user.
-      context.clearState();
-    }
-  }, []);
+  useLoadTestIntoComponent(
+    context.setDocRef,
+    context.clearState,
+    context.fetchTest,
+    context.unsavedChanges,
+    context.setUnsavedChanges,
+    props.match.params.id
+  );
 
   if (context.hasFetched) {
     return (
       <Fragment>
+        <Prompt
+          when={context.unsavedChanges}
+          message='You have unsaved changes. Are you sure you want to leave? All changes will be lost. '
+        />
+
         <div className='side-bar-left-tags hg-sidebar '>
-          <SideBarTags tags={context.testTags} handleSetTags={handleSetTags} title={'Topic Tags'}>
+          <SideBarTags
+            tags={context.testTags}
+            handleSetTags={context.handleSetTags}
+            title={'Topic Tags'}
+          >
             <p className='advice-text tag-advice'>
               Adding the correct tags will help others find your test
             </p>
@@ -68,7 +52,7 @@ const EditFCEPart2 = (props) => {
                   className='input question-input'
                   value={context.questionOne}
                   placeholder='enter long turn question'
-                  onChange={(e) => context.setQuestionOne(e.currentTarget.value)}
+                  onChange={context.handleEditQuestionOne}
                 />
               </div>
               <div className='part2-edit-question-container'>
@@ -80,62 +64,46 @@ const EditFCEPart2 = (props) => {
                   className='input question-input '
                   value={context.shortTurnQuestion}
                   placeholder='enter short turn question'
-                  onChange={(e) => context.setShortTurnQuestion(e.currentTarget.value)}
+                  onChange={context.handleEditShortTurnQuestion}
                 />
               </div>
             </div>
             <div className='part2-image-row'>
               <div className='part2-image-container-left'>
-                <ExamPicture image={context.imageOneUrl} setImage={context.setImageOneUrl}>
+                <ExamPicture image={context.imageOneUrl} setImage={context.handleEditImageOneUrl}>
                   {context.imageOneUrl ? (
                     <ImageDeleteBtn
-                      setImageUrl={context.setImageOneUrl}
-                      setImageRef={context.setImageOneRef}
+                      setImageUrl={context.handleEditImageOneUrl}
+                      setImageRef={context.handleEditImageOneRef}
                     />
                   ) : (
-                    <SimpleModal modalButtonText={'upload'} setImageUrl={context.setImageOneUrl} />
+                    <SimpleModal
+                      modalButtonText={'upload'}
+                      setImageUrl={context.handleEditImageOneUrl}
+                    />
                   )}
                 </ExamPicture>
               </div>
 
               <div>
                 <div className='part2-image-container-right'>
-                  <ExamPicture image={context.imageTwoUrl} setImage={context.setImageTwoUrl}>
+                  <ExamPicture image={context.imageTwoUrl} setImage={context.handleEditImageTwoUrl}>
                     {context.imageTwoUrl ? (
                       <ImageDeleteBtn
-                        setImageUrl={context.setImageTwoUrl}
-                        setImageRef={context.setImageTwoRef}
+                        setImageUrl={context.handleEditImageTwoUrl}
+                        setImageRef={context.handleEditImageTwoRef}
                       />
                     ) : (
                       <SimpleModal
                         modalButtonText={'upload'}
-                        setImageUrl={context.setImageTwoUrl}
+                        setImageUrl={context.handleEditImageTwoUrl}
                       />
                     )}
                   </ExamPicture>
                 </div>
               </div>
             </div>
-            <div className='tool-bar-row'>
-              <div className='tool-btn-container'>
-                <PublishWarningModal />
-                {context.docRef && (
-                  <Link
-                    to={{
-                      pathname: `/FCEPart2/${context.docRef}`,
-                    }}
-                  >
-                    <button className='tool-bar-btn'>
-                      <VisibilityOutlinedIcon />
-                    </button>
-                  </Link>
-                )}
-
-                <button className='tool-bar-btn' onClick={handleDeleteTest}>
-                  <DeleteForeverOutlinedIcon />
-                </button>
-              </div>
-            </div>
+            <FCEPart2TestToolBarEdit context={context} />
           </div>
         </main>
       </Fragment>

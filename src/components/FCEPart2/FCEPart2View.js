@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useContext } from 'react';
+import React, { Fragment, useState, useContext } from 'react';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 //context
 import { firebaseAuth } from 'context/AuthProvider';
@@ -11,6 +11,8 @@ import Part2QuestionRow from 'components/TestCommon/Part2QuestionRow';
 import LinearProgress from '@material-ui/core/LinearProgress';
 //constants
 import { FCEPart2 } from 'APIHandlers/firebaseConsts';
+//custom hooks
+import useLoadTestIntoComponent from 'hooks/useLoadTestIntoComponent';
 
 const FCEPart2View = (props) => {
   const context = useContext(FCEPart2Context);
@@ -18,10 +20,14 @@ const FCEPart2View = (props) => {
   const handleFullScreen = useFullScreenHandle();
   const [time, setTime] = useState(6000);
 
-  useEffect(() => {
-    //sends the id of the current test to be displayed to the FCEPart2 context
-    context.setDocRef(props.match.params.id);
-  }, [context, props.match.params.id]);
+  useLoadTestIntoComponent(
+    context.setDocRef,
+    context.clearState,
+    context.fetchTest,
+    context.unsavedChanges,
+    context.setUnsavedChanges,
+    props.match.params.id
+  );
 
   if (context.hasFetched) {
     return (

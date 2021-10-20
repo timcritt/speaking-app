@@ -12,11 +12,13 @@ import {
 } from 'react-share';
 
 const iconSize = 64;
-const ShareModalContent = () => {
-  const location = window.location.href;
+const ShareModalContent = ({ location }) => {
+  //if no location is passed, component shows the url of the route location.
+  //Share button on a thumnail cannot get the url from window.location, so it is constructed from test type and test ID, both of which are passed down as props.
+  const url = location ? location : window.location.href;
 
   const copyURLtoClipboard = () => {
-    navigator.clipboard.writeText(location);
+    navigator.clipboard.writeText(url);
   };
 
   return (
@@ -52,11 +54,7 @@ const ShareModalContent = () => {
         </TwitterShareButton>
       </div>
       <div className='copy-link-container'>
-        <input
-          className='copy-link-input'
-          value={location}
-          readOnly={true}
-        ></input>
+        <input className='copy-link-input' value={url} readOnly={true}></input>
         <button onClick={copyURLtoClipboard}>copy URL</button>
       </div>
     </React.Fragment>

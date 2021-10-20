@@ -159,7 +159,6 @@ const FoldersPresentation = ({ folders, testId, addFolder, children }) => {
             }`}
             onClick={() => {
               itemTwo.setIsComponentVisible((prevState) => !prevState);
-              console.log('button clicked');
             }}
           >
             <div stlyle={sortBy ? 'background-color: white' : ''}>
@@ -182,7 +181,6 @@ const FoldersPresentation = ({ folders, testId, addFolder, children }) => {
             }`}
             onClick={() => {
               itemOne.setIsComponentVisible((prevState) => !prevState);
-              console.log('button clicked');
             }}
           >
             <div className='icon-container'>

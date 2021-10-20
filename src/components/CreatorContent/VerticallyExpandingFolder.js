@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, useContext } from 'react';
 import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import getTestsById from '../../APIHandlers/getTestsById';
@@ -10,6 +10,8 @@ import FCEPart2TestPreviewContent from 'components/FCEPart2/FCEPart2TestPreviewC
 import CAEPart2TestPreviewContent from 'components/CAEPart2/CAEPart2TestPreviewContent';
 import getFolderTestsJunctions from 'APIHandlers/getFolderTestsJunctions';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import DeleteButton from 'components/common/DeleteButton';
+import { firebaseAuth } from '../../context/AuthProvider';
 
 const VerticallyExpandingFolder = ({ folder }) => {
   const [FCEPart2Tests, setFCEPart2Tests] = useState(null);
@@ -21,6 +23,9 @@ const VerticallyExpandingFolder = ({ folder }) => {
   const [creatorId, setCreatorId] = useState(null);
   const [hasFetched, setHasFetched] = useState(false);
   const [testContainerExpanded, setTestContainerExpanded] = useState(false);
+
+  //context
+  const { userId } = useContext(firebaseAuth);
 
   const toggleExpandContainer = () => {
     if (folder.testCount > 0) {
@@ -71,7 +76,18 @@ const VerticallyExpandingFolder = ({ folder }) => {
                 <span>({folder.testCount})</span>
               </div>
             </div>
+
             <div className='tests-container-button'>
+              <span className='delete-folder-button-container'>
+                {userId === creatorId && (
+                  <DeleteButton
+                    deleteItemType='folder'
+                    iconColour='red'
+                    itemId={folder.id}
+                    firestoreCollection={'folders'}
+                  />
+                )}
+              </span>
               {testContainerExpanded ? <RemoveRoundedIcon /> : <ArrowDropDownIcon />}
             </div>
           </div>

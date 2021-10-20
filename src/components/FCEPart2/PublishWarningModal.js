@@ -65,7 +65,8 @@ export default function PublishWarningModal() {
             context.setImageTwoUrl(data.imageTwoData.url),
             context.setImageOneRef(data.imageOneData.reference),
             context.setImageTwoRef(data.imageTwoData.reference),
-            setUploadComplete(true)
+            setUploadComplete(true),
+            context.setUnsavedChanges(false)
 
             //setChangesSaved(true)
           );
@@ -86,6 +87,7 @@ export default function PublishWarningModal() {
           ).then((response) => {
             context.setDocRef(response.id);
             setUploadComplete(true);
+            context.setUnsavedChanges(false);
             history.push(`/EditFCEPart2/${response.id}`);
           });
         });

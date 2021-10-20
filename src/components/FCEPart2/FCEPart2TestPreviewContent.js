@@ -1,9 +1,6 @@
 import React from 'react';
 import { Fragment } from 'react';
-import { Link } from 'react-router-dom';
-import ShareButton from 'components/common/ShareButton';
-import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
-import AddToMyFolders from 'components/common/AddToMyFolders';
+import TestPreviewOverlay from 'components/TestCommon/TestPreviewOverlay';
 
 const FCEPart2TestPreviewContent = ({ test, testId, testType }) => {
   return (
@@ -13,21 +10,7 @@ const FCEPart2TestPreviewContent = ({ test, testId, testType }) => {
           <img alt='could not load' className='thumbnail' src={test.imageOneUrl}></img>
           <img alt='could not load' className='thumbnail' src={test.imageTwoUrl}></img>
         </div>
-        <div className='test-preview-overlay'>
-          <div className='overlay-bottom-right'>
-            <div className='circle-icon-container'>
-              <ShareButton sharedItemType='' iconColour='white' />
-            </div>
-            <Link to={`/${testType}/${testId}`} className='tool-bar-btn' style={{ color: 'white' }}>
-              <div className='circle-icon-container'>
-                <VisibilityOutlinedIcon />
-              </div>
-            </Link>
-            <div className='circle-icon-container'>
-              <AddToMyFolders iconColor={'white'} testId={testId} />
-            </div>
-          </div>
-        </div>
+        <TestPreviewOverlay testId={testId} testType={testType} />
       </div>
       <div className='test-preview-part-label'>FCE Part 2</div>
     </Fragment>

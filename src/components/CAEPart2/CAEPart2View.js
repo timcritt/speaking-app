@@ -9,6 +9,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Part2QuestionRow from 'components/TestCommon/Part2QuestionRow';
 import TestToolBarView from 'components/TestCommon/TestToolBarView';
 import ExamPicture from 'components/FCEPart2/ExamPicture';
+import useLoadTestIntoComponent from 'hooks/useLoadTestIntoComponent';
 
 const CAEPart2View = (props) => {
   const context = useContext(CAEPart2Context);
@@ -16,10 +17,14 @@ const CAEPart2View = (props) => {
   const handleFullScreen = useFullScreenHandle();
   const [time, setTime] = useState(6000);
 
-  useEffect(() => {
-    //sends the id of the current test to be displayed to the CAEPart2 context
-    context.setDocRef(props.match.params.id);
-  }, [context, props.match.params.id]);
+  useLoadTestIntoComponent(
+    context.setDocRef,
+    context.clearState,
+    context.fetchTest,
+    context.unsavedChanges,
+    context.setUnsavedChanges,
+    props.match.params.id
+  );
 
   if (context.hasFetched) {
     console.log(context.creatorId);

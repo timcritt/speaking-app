@@ -1,14 +1,7 @@
 import { useEffect } from 'react';
 import { projectFirestore, timestamp } from '../firebase/firebaseIndex';
 
-const usePublishTest = (
-  imageOneUrl,
-  imageTwoUrl,
-  question,
-  tags,
-  imageOneRef,
-  imageTwoRef
-) => {
+const usePublishTest = (imageOneUrl, imageTwoUrl, question, tags, imageOneRef, imageTwoRef) => {
   useEffect(() => {
     //references
     const collectionRef = projectFirestore.collection('images');
@@ -22,7 +15,6 @@ const usePublishTest = (
       tags,
       imageOneRef,
       imageTwoRef,
-      userId,
     });
   });
 };

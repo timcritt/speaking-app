@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, Fragment } from 'react';
+import React, { useContext, Fragment } from 'react';
 import SideBarTags from 'components/common/SideBarTags';
 import PublishCAEPart2WarningModal from 'components/CAEPart2/PublishCAEPart2WarningModal';
 import { Link } from 'react-router-dom';
@@ -11,45 +11,41 @@ import SimpleModal from 'components/common/SimpleModal';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { useHistory } from 'react-router-dom';
 import { CAEPart2Context } from 'context/CAEPart2Context';
+import useLoadTestIntoComponent from 'hooks/useLoadTestIntoComponent';
+import { Prompt } from 'react-router-dom';
 
 const EditCAEPart2 = (props) => {
   const context = useContext(CAEPart2Context);
   var history = useHistory();
 
-  function handleSetTags(tag, selected) {
-    if (!selected) {
-      //adds tag to the state
-      context.setTestTags((prevTags) => {
-        return [...prevTags, tag];
-      });
-    } else {
-      //removes the tag from the state
-      context.setTestTags((prevTags) => {
-        return [...prevTags.filter((currentTag) => currentTag !== tag)];
-      });
-    }
-  }
   const handleDeleteTest = async () => {
     await deleteTest(context.docRef, 'CAEPart2');
     context.clearState();
     history.push('/EditCAEPart2/new');
   };
 
-  useEffect(() => {
-    //sends the id of the current test to be displayed to the FCEPart2 context
-    if (props.match.params.id !== 'new') {
-      context.setDocRef(props.match.params.id);
-    } else {
-      //clears context state of previously viewed Test. displays blank test to be created by user.
-      context.clearState();
-    }
-  }, []);
+  useLoadTestIntoComponent(
+    context.setDocRef,
+    context.clearState,
+    context.fetchTest,
+    context.unsavedChanges,
+    context.setUnsavedChanges,
+    props.match.params.id
+  );
 
-  if (context) {
+  if (context.hasFetched) {
     return (
       <Fragment>
+        <Prompt
+          when={context.unsavedChanges}
+          message='You have unsaved changes. Are you sure you want to leave? All changes will be lost. '
+        />
         <div className='side-bar-left-tags hg-sidebar '>
-          <SideBarTags tags={context.testTags} handleSetTags={handleSetTags} title={'Topic Tags'}>
+          <SideBarTags
+            tags={context.testTags}
+            handleSetTags={context.handleSetTags}
+            title={'Topic Tags'}
+          >
             <p className='advice-text tag-advice'>
               Adding the correct tags will help others find your test
             </p>
@@ -67,7 +63,7 @@ const EditCAEPart2 = (props) => {
                   className='input question-input'
                   value={context.questionOne}
                   placeholder='enter question 1'
-                  onChange={(e) => context.setQuestionOne(e.currentTarget.value)}
+                  onChange={context.handleEditQuestionOne}
                 />
               </div>
               <div className='part2-edit-question-container'>
@@ -79,7 +75,7 @@ const EditCAEPart2 = (props) => {
                   className='input question-input'
                   value={context.questionTwo}
                   placeholder='enter question 2'
-                  onChange={(e) => context.setQuestionTwo(e.currentTarget.value)}
+                  onChange={context.handleEditQuestionTwo}
                 />
               </div>
 
@@ -92,48 +88,57 @@ const EditCAEPart2 = (props) => {
                   className='input question-input '
                   value={context.shortTurnQuestion}
                   placeholder='enter short turn question'
-                  onChange={(e) => context.setShortTurnQuestion(e.currentTarget.value)}
+                  onChange={context.handleEditShortTurnQuestion}
                 />
               </div>
             </div>
             <div className='CAE-part2-image-row'>
               <div className='part2-image-container-left'>
-                <ExamPicture image={context.imageOneUrl} setImage={context.setImageOneUrl}>
+                <ExamPicture image={context.imageOneUrl} setImage={context.handleEditImageOneUrl}>
                   {context.imageOneUrl ? (
                     <ImageDeleteBtn
-                      setImageUrl={context.setImageOneUrl}
-                      setImageRef={context.setImageOneRef}
+                      setImageUrl={context.handleEditImageOneUrl}
+                      setImageRef={context.handleEditImageOneRef}
                     />
                   ) : (
-                    <SimpleModal modalButtonText={'upload'} setImageUrl={context.setImageOneUrl} />
+                    <SimpleModal
+                      modalButtonText={'upload'}
+                      setImageUrl={context.handleEditImageOneUrl}
+                    />
                   )}
                 </ExamPicture>
               </div>
 
               <div className='part2-image-container-centre'>
-                <ExamPicture image={context.imageTwoUrl} setImage={context.setImageTwoUrl}>
+                <ExamPicture image={context.imageTwoUrl} setImage={context.handleEditImageTwoUrl}>
                   {context.imageTwoUrl ? (
                     <ImageDeleteBtn
-                      setImageUrl={context.setImageTwoUrl}
-                      setImageRef={context.setImageTwoRef}
+                      setImageUrl={context.handleEditImageTwoUrl}
+                      setImageRef={context.handleEditImageTwoRef}
                     />
                   ) : (
-                    <SimpleModal modalButtonText={'upload'} setImageUrl={context.setImageTwoUrl} />
+                    <SimpleModal
+                      modalButtonText={'upload'}
+                      setImageUrl={context.handleEditImageTwoUrl}
+                    />
                   )}
                 </ExamPicture>
               </div>
 
               <div className='part2-image-container-right'>
-                <ExamPicture image={context.imageThreeUrl} setImage={context.setImageThreeUrl}>
+                <ExamPicture
+                  image={context.imageThreeUrl}
+                  setImage={context.handleEditImageThreeUrl}
+                >
                   {context.imageThreeUrl ? (
                     <ImageDeleteBtn
-                      setImageUrl={context.setImageThreeUrl}
-                      setImageRef={context.setImageThreeRef}
+                      setImageUrl={context.handleEditImageThreeUrl}
+                      setImageRef={context.handleEditImageThreeRef}
                     />
                   ) : (
                     <SimpleModal
                       modalButtonText={'upload'}
-                      setImageUrl={context.setImageThreeUrl}
+                      setImageUrl={context.handleEditImageThreeUrl}
                     />
                   )}
                 </ExamPicture>

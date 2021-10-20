@@ -32,9 +32,7 @@ const TestToolBarView = ({ creatorId, userId, docRef, time, handleFullScreen, te
             </Link>
           )}
           <ShareButton className='tool-bar-btn hide-on-fullscreen' sharedItemType={'FCE Part 2'} />
-          <div className='hide-on-fullscreen'>
-            <AddToMyFolders testId={docRef} />
-          </div>
+          <div className='hide-on-fullscreen'>{userId && <AddToMyFolders testId={docRef} />}</div>
           <button
             className='tool-bar-btn open-fullscreen-btn hide-on-fullscreen'
             onClick={() => handleFullScreen.enter()}

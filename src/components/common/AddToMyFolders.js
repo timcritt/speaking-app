@@ -2,20 +2,16 @@ import React, { useContext, useState, Fragment } from 'react';
 import { firebaseAuth } from '../../context/AuthProvider';
 import useFirestore from '../../hooks/useFirestore';
 import { folders } from '../../APIHandlers/firebaseConsts';
-import FoldersPresentation from 'components/common/FoldersPresentation';
+import Folders from 'components/common/Folders';
 import FolderSummaryShort from './FolderSummaryShort';
 import Modal from 'components/common/Modal';
 import PlaylistAddOutlinedIcon from '@material-ui/icons/PlaylistAddOutlined';
-
+import CreateNewFolder from 'components/common/CreateNewFolder';
 //place component in the HTML where you want the button and icon to appear. The modal displays in an overlay when button is clicked.
 //icon color can be changed by passing in a value as props
 //class of icon can be changed by passing in a value as props
 
-const AddToMyFolders = ({
-  testId,
-  iconColor = 'black',
-  iconClassName = '',
-}) => {
+const AddToMyFolders = ({ testId, iconColor = 'black', iconClassName = '' }) => {
   const [AddToFolderModalOpen, setAddToFolderModalOpen] = useState(false);
   const { userId } = useContext(firebaseAuth);
   const { docs } = useFirestore(folders, userId);
@@ -45,9 +41,14 @@ const AddToMyFolders = ({
             heading='Add test to folder'
             setModalOpen={closeAddToFolderModal}
           >
-            <FoldersPresentation folders={docs} testId={testId}>
+            <div className='search-terms-container'>
+              <div className='filter-bar'>
+                <CreateNewFolder label={'NEW FOLDER'} />
+              </div>
+            </div>
+            <Folders folders={docs} testId={testId}>
               <FolderSummaryShort userId={userId} />
-            </FoldersPresentation>
+            </Folders>
           </Modal>
         )}
       </div>

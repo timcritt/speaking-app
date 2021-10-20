@@ -85,7 +85,8 @@ export default function PublishWarningModal() {
             context.setImageOneRef(data.imageOneData.reference),
             context.setImageTwoRef(data.imageTwoData.reference),
             context.setImageThreeRef(data.imageThreeData.reference),
-            setUploadComplete(true)
+            setUploadComplete(true),
+            context.setUnsavedChanges(false)
 
             //setChangesSaved(true)
           );
@@ -94,30 +95,29 @@ export default function PublishWarningModal() {
         console.log('hello');
         setOpen(true);
         //if local test has no docId, it's because it's new and doesn't exist on the firestore.
-        uploadCAEPart2Images(
-          context.imageOneUrl,
-          context.imageTwoUrl,
-          context.imageThreeUrl
-        ).then((data) => {
-          addCAEPart2(
-            data.imageOneData.url,
-            data.imageTwoData.url,
-            data.imageThreeData.url,
-            context.questionOne,
-            context.questionTwo,
-            context.shortTurnQuestion,
-            createdAt,
-            context.testTags,
-            data.imageOneData.reference,
-            data.imageTwoData.reference,
-            data.imageThreeData.reference,
-            userId
-          ).then((response) => {
-            context.setDocRef(response.id);
-            setUploadComplete(true);
-            history.push(`/EditCAEPart2/${response.id}`);
-          });
-        });
+        uploadCAEPart2Images(context.imageOneUrl, context.imageTwoUrl, context.imageThreeUrl).then(
+          (data) => {
+            addCAEPart2(
+              data.imageOneData.url,
+              data.imageTwoData.url,
+              data.imageThreeData.url,
+              context.questionOne,
+              context.questionTwo,
+              context.shortTurnQuestion,
+              createdAt,
+              context.testTags,
+              data.imageOneData.reference,
+              data.imageTwoData.reference,
+              data.imageThreeData.reference,
+              userId
+            ).then((response) => {
+              context.setDocRef(response.id);
+              setUploadComplete(true);
+              context.setUnsavedChanges(false);
+              history.push(`/EditCAEPart2/${response.id}`);
+            });
+          }
+        );
       }
     } else {
       setOpen(true);
@@ -140,12 +140,8 @@ export default function PublishWarningModal() {
         )}
       </div>
       <ul>
-        {(!context.imageOneUrl || !context.imageTwoUrl) && (
-          <li>select two images</li>
-        )}
-        {!context.questionOne && !context.questionTwo && (
-          <li>enter a question</li>
-        )}
+        {(!context.imageOneUrl || !context.imageTwoUrl) && <li>select two images</li>}
+        {!context.questionOne && !context.questionTwo && <li>enter a question</li>}
         {context.testTags.length === 0 && <li>select at least one tag</li>}
       </ul>
       <div className='center'>
