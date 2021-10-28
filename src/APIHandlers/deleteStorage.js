@@ -1,4 +1,4 @@
-import { projectStorage, projectFirestore } from '../firebase/firebaseIndex';
+import { projectStorage } from '../firebase/firebaseIndex';
 
 const deleteStorage = (itemUrl) => {
   // Create a reference to the file to delete
@@ -12,9 +12,7 @@ const deleteStorage = (itemUrl) => {
     })
     .catch(function (error) {
       // Uh-oh, an error occurred!
-      console.log(
-        'an error occured while deleting from storage: ' + error.message
-      );
+      console.log('an error occured while deleting from storage: ' + error.message);
     });
 };
 

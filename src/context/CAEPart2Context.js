@@ -36,6 +36,9 @@ export const CAEPart2ContextProvider = ({ children }) => {
         setCreatorId(data.creatorId);
         setTestTags(data.tags);
         setHasFetched(true);
+      } else {
+        console.log('could not find test. It may not exist.');
+        setDocRef('new');
       }
     });
   };

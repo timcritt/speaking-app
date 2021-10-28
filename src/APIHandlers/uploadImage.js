@@ -1,4 +1,6 @@
 import { projectStorage } from '../firebase/firebaseIndex';
+import firebase from 'firebase';
+
 import { v4 as uuidv4 } from 'uuid';
 
 //upload new image from localstorage to firestore storage and return reference and download url
@@ -8,11 +10,13 @@ export const uploadImage = async (imageUrl) => {
   const ref = projectStorage.ref(uuidv4());
   let reference;
   try {
-    await ref.put(image).then(async () => {
-      url = await ref.getDownloadURL();
-      reference = ref.fullPath;
-      console.log(reference);
-    });
+    await ref
+      .put(image, { customMetadata: { uid: firebase.auth().currentUser.uid } })
+      .then(async () => {
+        url = await ref.getDownloadURL();
+        reference = ref.fullPath;
+        console.log(reference);
+      });
   } catch (error) {
     console.log(error.message);
   }

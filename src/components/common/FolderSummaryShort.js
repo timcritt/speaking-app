@@ -6,6 +6,7 @@ import deleteTestFromFolder from 'APIHandlers/deleteTestFromFolder';
 
 const FolderSummaryShort = ({ folder, testId, userId }) => {
   const [isInFolder, setIsInFolder] = useState(false);
+  const [checkBoxDisabled, setCheckBoxDisabled] = useState(false);
 
   useEffect(() => {
     var isMounted = true;
@@ -26,13 +27,26 @@ const FolderSummaryShort = ({ folder, testId, userId }) => {
   }, []);
 
   const handleChange = async () => {
-    console.log(folder.id, testId);
+    //disable checkbox to prevent rapid, repeated api calls that could lead to the test count of the folder being innacurate.
+    setCheckBoxDisabled(true);
     if (!isInFolder) {
-      await addTestToFolder(folder.id, testId, userId);
-      setIsInFolder(true);
+      try {
+        await addTestToFolder(folder.id, testId, userId);
+        setIsInFolder(true);
+        setCheckBoxDisabled(false);
+      } catch {
+        setIsInFolder(false);
+        setCheckBoxDisabled(false);
+      }
     } else {
-      await deleteTestFromFolder(folder.id, testId);
-      setIsInFolder(false);
+      try {
+        await deleteTestFromFolder(folder.id, testId);
+        setIsInFolder(false);
+        setCheckBoxDisabled(false);
+      } catch {
+        setIsInFolder(true);
+        setCheckBoxDisabled(false);
+      }
     }
     console.log(folder);
   };
@@ -55,6 +69,7 @@ const FolderSummaryShort = ({ folder, testId, userId }) => {
             value='Bike'
             checked={isInFolder}
             onChange={() => handleChange()}
+            disabled={checkBoxDisabled}
           />
         </span>
       </div>
