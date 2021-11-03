@@ -2,15 +2,7 @@ import firebase from 'firebase';
 import getUserDetails from '../APIHandlers/getUserDetails';
 
 export const authMethods = {
-  signup: (
-    email,
-    password,
-    setErrors,
-    setToken,
-    setUser,
-    setUserEmail,
-    setUserDetails
-  ) => {
+  signup: (email, password, setErrors, setToken, setUser, setUserEmail, setUserDetails) => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
@@ -28,18 +20,10 @@ export const authMethods = {
         setUserDetails(userDetails);
       })
       .catch((err) => {
-        setErrors((prev) => [...prev, err.message]);
+        setErrors([err.message]);
       });
   },
-  signin: (
-    email,
-    password,
-    setErrors,
-    setToken,
-    setUser,
-    setUserEmail,
-    setUserDetails
-  ) => {
+  signin: (email, password, setErrors, setToken, setUser, setUserEmail, setUserDetails) => {
     //change from create users to...
     firebase
       .auth()
@@ -59,7 +43,7 @@ export const authMethods = {
         setUserDetails(userDetails);
       })
       .catch((err) => {
-        setErrors((prev) => [...prev, err.message]);
+        setErrors([err.message]);
       });
   },
   signout: (setErrors, setToken, setUser) => {
@@ -77,7 +61,7 @@ export const authMethods = {
       })
       .catch((err) => {
         //there shouldn't every be an error from firebase but just in case
-        setErrors((prev) => [...prev, err.message]);
+        setErrors([err.message]);
         //whether firebase does the trick or not i want my user to do there thing.
         localStorage.removeItem('token');
         setToken(null);

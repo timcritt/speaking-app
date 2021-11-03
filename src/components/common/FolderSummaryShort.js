@@ -24,7 +24,7 @@ const FolderSummaryShort = ({ folder, testId, userId }) => {
     }
 
     return () => (isMounted = false);
-  }, []);
+  }, [folder.id, testId]);
 
   const handleChange = async () => {
     //disable checkbox to prevent rapid, repeated api calls that could lead to the test count of the folder being innacurate.

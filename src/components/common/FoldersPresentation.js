@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, useContext } from 'react';
 import FilterInput from './FilterInput';
 import Folders from './Folders';
 import FilterListIcon from '@material-ui/icons/FilterList';
@@ -7,10 +7,10 @@ import useComponentVisible from 'hooks/useComponentVisible';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import SearchIcon from '@material-ui/icons/Search';
 import CreateNewFolder from 'components/common/CreateNewFolder';
-
+import { firebaseAuth } from 'context/AuthProvider';
 import CloseIcon from '@material-ui/icons/Close';
 
-const FoldersPresentation = ({ folders, testId, addFolder, children }) => {
+const FoldersPresentation = ({ folders, testId, addFolder, creatorId, children }) => {
   const [filterTerm, setFilterTerm] = useState('');
   const [results, setResults] = useState();
   const [sortBy, setSortBy] = useState(null);
@@ -18,6 +18,8 @@ const FoldersPresentation = ({ folders, testId, addFolder, children }) => {
   const itemOne = useComponentVisible(false);
   const itemTwo = useComponentVisible(false);
   const itemThree = useComponentVisible(false);
+
+  const { userId } = useContext(firebaseAuth);
 
   const [filterMenuVisible, setFilterMenuVisible] = useState(false);
 
@@ -145,9 +147,11 @@ const FoldersPresentation = ({ folders, testId, addFolder, children }) => {
           <FilterListIcon />
           <div>FILTERS</div>
         </div>
-        <div className='see-filters-mobile-btn'>
-          <CreateNewFolder label={'ADD NEW FOLDER'} />
-        </div>
+        {userId === creatorId && (
+          <div className='see-filters-mobile-btn'>
+            <CreateNewFolder label={'ADD NEW FOLDER'} />
+          </div>
+        )}
         <div className='filter-bar'>
           <div className='filter-bar-item'>
             <FilterListIcon />
@@ -208,8 +212,7 @@ const FoldersPresentation = ({ folders, testId, addFolder, children }) => {
               reset filters
             </div>
           )}
-
-          <CreateNewFolder label={'ADD NEW FOLDER'} />
+          {userId === creatorId && <CreateNewFolder label={'ADD NEW FOLDER'} />}
         </div>
       </div>
       <Folders folders={results} testId={testId} children={children}></Folders>

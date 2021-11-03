@@ -1,8 +1,4 @@
-import {
-  projectFirestore,
-  timestamp,
-  increment,
-} from '../firebase/firebaseIndex';
+import { projectFirestore, timestamp, increment } from '../firebase/firebaseIndex';
 
 // 1. creates a new junction_folder_test document in firestore.
 //2. increments testCount field of the folder document
@@ -13,9 +9,7 @@ const addTestToFolder = async (folderId, testId, creatorId) => {
 
   const createdAt = timestamp();
 
-  const junctionRef = projectFirestore.doc(
-    `junction_folder_test/${folderId}_${testId}`
-  );
+  const junctionRef = projectFirestore.doc(`junction_folder_test/${folderId}_${testId}`);
 
   writeBatch.set(junctionRef, { folderId, testId, creatorId, createdAt });
 

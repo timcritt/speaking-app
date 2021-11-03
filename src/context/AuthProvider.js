@@ -20,6 +20,7 @@ const AuthProvider = (props) => {
         setUserId(user.uid);
         const newDetails = await getUserDetails(user.uid);
         setUserDetails(newDetails);
+        setErrors([]);
       }
     });
   }, []);

@@ -1,19 +1,14 @@
 // add useContext
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { firebaseAuth } from '../context/AuthProvider';
 import { Link } from 'react-router-dom';
 
 const Signin = ({ history }) => {
-  const { handleSignin, inputs, setInputs, errors } = useContext(firebaseAuth);
+  const { handleSignin, inputs, setInputs, errors, token } = useContext(firebaseAuth);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await handleSignin(inputs.email, inputs.password);
-
-      //redirects if login page was navigated to directly and not via a private route
-      if (history) {
-        history.push('/');
-      }
     } catch (error) {
       alert(error);
     }
@@ -22,6 +17,15 @@ const Signin = ({ history }) => {
     const { name, value } = e.target;
     setInputs((prev) => ({ ...prev, [name]: value }));
   };
+
+  useEffect(() => {
+    //redirectes to users content page if login successful and login page hasn't been reached from trying to access a private route
+    if (token) {
+      if (history) {
+        history.push(`/`);
+      }
+    }
+  }, [token]);
 
   return (
     <div className='auth-container'>
