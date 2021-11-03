@@ -11,6 +11,7 @@ const TestPreviewOverlay = ({ testType, testId }) => {
 
   //Location is passed down as the link to be used on the ShareButton. Sharebutton url defaults to window.location.href if location prop not provided.
   useEffect(() => {
+    console.log('testPreviewOverlay is mounted');
     setLocation(`${window.location.host}/${testType}/${testId}`);
   }, [testType, testId]);
 

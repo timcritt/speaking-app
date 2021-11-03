@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useRouteMatch } from 'react-router-dom';
 import ContentRoutes from 'routers/ContentRoutes';
 import DashBoardButton from 'components/common/DashBoardButton';
 import getUserDetails from 'APIHandlers/getUserDetails';
 import profilePlaceHolder from 'img/profile-placeholder.png';
+import { firebaseAuth } from 'context/AuthProvider';
 
 const CreatorContent = () => {
   const creatorId = useParams().userId;
   const [creatorDetails, setCreatorDetails] = useState(null);
+  const { userId } = useContext(firebaseAuth);
 
   useEffect(() => {
     if (creatorId) {
@@ -37,7 +39,9 @@ const CreatorContent = () => {
                   }
                 />
                 <span className='content-title dashboard-user-name'>
-                  {creatorDetails && creatorDetails.userName}
+                  {/*shows user name if viewing other users content.  */}
+                  {creatorDetails &&
+                    (creatorDetails.userId === userId ? 'My Content' : creatorDetails.userName)}
                 </span>
               </div>
             </div>
