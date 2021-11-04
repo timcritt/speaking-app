@@ -60,22 +60,14 @@ const VerticallyExpandingTestsContainer = ({
           //sort by date created
           if (sortBy === 'oldest') {
             userTests = await userTests.sort((a, b) => {
-              if (a.createdAt >= b.createdAt) {
-                return 1;
-              } else {
-                return -1;
-              }
+              return a.createdAt.seconds - b.createdAt.seconds;
             });
           } else if (sortBy === 'newest') {
             userTests = await userTests.sort((a, b) => {
-              if (a.createdAt > b.createdAt) {
-                return -1;
-              } else {
-                return 1;
-              }
+              return b.createdAt.seconds - a.createdAt.seconds;
             });
           }
-
+          console.log('sorted', userTests);
           //filter by question text
           if (userTests.length > 0 && questionFilterTerm && questionFilterTerm.length > 0) {
             userTests = await userTests.filter((test) =>

@@ -11,7 +11,6 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import SearchIcon from '@material-ui/icons/Search';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ExamTypeMenuItems from 'components/ExploreContent/ExamTypeMenuItems';
 
 const FilterMenuDesktop = ({
   children,

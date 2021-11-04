@@ -15,6 +15,9 @@ const tagList = [
   'money',
   'work',
   'animals',
+  'technology',
+  'entertainment',
+  'media',
 ];
 
 const Tags = ({ tags, handleSetTags }) => {
