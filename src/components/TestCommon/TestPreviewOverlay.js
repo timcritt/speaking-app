@@ -1,33 +1,43 @@
 import React, { useEffect, useState } from 'react';
-import ShareButton from 'components/common/ShareButton';
 import { Link } from 'react-router-dom';
+
+//3rd party components
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
+
+//custom components
+import ShareButton from 'components/common/ShareButton';
 import AddToMyFolders from 'components/common/AddToMyFolders';
-import { SettingsInputAntennaTwoTone } from '@material-ui/icons';
+
+//custom hooks
+import useToggleClassOnClick from 'hooks/useToggleClassOnClick';
 
 const TestPreviewOverlay = ({ testType, testId }) => {
   //stores the url of the test. is passed down to ShareButton, which appears in the hover overlay.
+
+  const { ref, classApplied, setClassApplied } = useToggleClassOnClick();
 
   const [location, setLocation] = useState();
 
   //Location is passed down as the link to be used on the ShareButton. Sharebutton url defaults to window.location.href if location prop not provided.
   useEffect(() => {
-    console.log('testPreviewOverlay is mounted');
     setLocation(`${window.location.host}/${testType}/${testId}`);
   }, [testType, testId]);
 
-  const [isOpen, setIsOpen] = useState(false);
+  const handleClick = () => {
+    //checks if device is touchscreen. Needed to deal with lack of hover effect on touchscreen devices, which would cause buttons to be accidentally clicked when overlay touched.
+    const isTouchDevice = () => {
+      return (
+        'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0
+      );
+    };
 
-  const handleClick = (e) => {
-    // e.stopPropagation();
-    setIsOpen((prevState) => !prevState);
+    if (isTouchDevice()) {
+      setClassApplied('test-grow-hover-container-hover-mobile');
+    }
   };
 
   return (
-    <div
-      className={`test-preview-overlay ${isOpen ? 'test-grow-hover-container-hover-mobile' : ''} `}
-      onClick={handleClick}
-    >
+    <div className={`test-preview-overlay ${classApplied}`} ref={ref} onClick={handleClick}>
       <div className='overlay-bottom-right'>
         <div className='circle-icon-container'>
           <ShareButton sharedItemType='' iconColour='white' location={location} />

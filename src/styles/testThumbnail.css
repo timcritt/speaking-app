@@ -83,7 +83,7 @@
   display: flex;
 }
 
-/*for touchscreen devices. Enables the buttons once touchscreen user has touched the overlay.*/
+/*for touchscreen devices. Enables the buttons once touchscreen user has touched the overlay. the parent class is only applied after user touches test overlay*/
 .test-grow-hover-container-hover-mobile .overlay-bottom-right {
   pointer-events: unset;
 }
