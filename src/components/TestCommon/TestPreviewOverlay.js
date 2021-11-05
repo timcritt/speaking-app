@@ -3,6 +3,7 @@ import ShareButton from 'components/common/ShareButton';
 import { Link } from 'react-router-dom';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import AddToMyFolders from 'components/common/AddToMyFolders';
+import { SettingsInputAntennaTwoTone } from '@material-ui/icons';
 
 const TestPreviewOverlay = ({ testType, testId }) => {
   //stores the url of the test. is passed down to ShareButton, which appears in the hover overlay.
@@ -15,8 +16,18 @@ const TestPreviewOverlay = ({ testType, testId }) => {
     setLocation(`${window.location.host}/${testType}/${testId}`);
   }, [testType, testId]);
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleClick = (e) => {
+    // e.stopPropagation();
+    setIsOpen((prevState) => !prevState);
+  };
+
   return (
-    <div className='test-preview-overlay'>
+    <div
+      className={`test-preview-overlay ${isOpen ? 'test-grow-hover-container-hover-mobile' : ''} `}
+      onClick={handleClick}
+    >
       <div className='overlay-bottom-right'>
         <div className='circle-icon-container'>
           <ShareButton sharedItemType='' iconColour='white' location={location} />

@@ -20,7 +20,8 @@ const FoldersPresentation = ({ folders, testId, addFolder, creatorId, children }
   const itemThree = useComponentVisible(false);
 
   const { userId } = useContext(firebaseAuth);
-
+  console.log(userId);
+  console.log(creatorId);
   const [filterMenuVisible, setFilterMenuVisible] = useState(false);
 
   const handleSetRecent = (e, label) => {

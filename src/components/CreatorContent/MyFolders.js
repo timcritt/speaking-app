@@ -8,7 +8,7 @@ const MyFolders = ({ testId, creatorId }) => {
   const { docs } = useFirestore(folders, creatorId);
 
   return (
-    <FoldersPresentation folders={docs} testId={testId} addFolder={true}>
+    <FoldersPresentation folders={docs} testId={testId} addFolder={true} creatorId={creatorId}>
       <VerticallyExpandingFolder />
     </FoldersPresentation>
   );

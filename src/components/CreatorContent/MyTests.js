@@ -40,8 +40,9 @@ const MyTests = ({ creatorId }) => {
 
   const handleSetTags = (tag, selected) => {
     if (!selected) {
-      //adds tag to the state
+      //adds tag to the state and closes tag menu on click
       setTagFilterTerm(tag);
+      itemOne.setIsComponentVisible(false);
     } else {
       //removes the tag from the state
       setTagFilterTerm('');
