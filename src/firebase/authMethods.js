@@ -1,26 +1,67 @@
 import firebase from 'firebase';
 import getUserDetails from '../APIHandlers/getUserDetails';
+import { projectFirestore } from '../firebase/firebaseIndex';
+import { uploadImage } from 'APIHandlers/uploadImage';
 
 export const authMethods = {
-  signup: (email, password, setErrors, setToken, setUser, setUserEmail, setUserDetails) => {
+  signup: function (
+    email,
+    password,
+    setErrors,
+    setToken,
+    setUserId,
+    setUserEmail,
+    setUserDetails,
+    userName,
+    imageLocalUrl
+  ) {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       //make res asynchronous so that we can grab the token before saving it.
       .then(async (res) => {
-        const token = await Object.entries(res.user)[5][1].b;
-        const user = res.user;
-        const userDetails = await getUserDetails(user.id);
-        //set token to localStorage
-        await localStorage.setItem('token', token);
-        setToken(window.localStorage.token);
-        await localStorage.setItem('userId', JSON.stringify(user));
-        setUserEmail(user.email);
-        await localStorage.setItem('userDetails', JSON.stringify(userDetails));
-        setUserDetails(userDetails);
+        //create a record to store new user information
+        projectFirestore
+          .collection('users')
+          .doc(res.user.uid)
+          .set({
+            userId: res.user.uid,
+            userName,
+          })
+          .then(async () => {
+            //upload profile pic and grab url and reference
+            const { url, reference } = await uploadImage(imageLocalUrl);
+            //update user record with new profile pic
+            return projectFirestore.collection('users').doc(res.user.uid).update({
+              profilePicture: url,
+              profilePictureReference: reference,
+            });
+          })
+          .then(async () => {
+            //grab and set the token and other details to local storage and state
+            const token = await Object.entries(res.user)[5][1].b;
+            const userId = res.user.uid;
+            console.log(res);
+
+            //set token to localStorage
+            localStorage.setItem('token', token);
+            setToken(window.localStorage.token);
+            localStorage.setItem('user', userId);
+            setUserId(window.localStorage.user);
+            setUserEmail(res.user.email);
+          })
+          .catch((res) => {
+            console.log(res, 'errorrrrrr');
+          });
       })
+      .then(() => {
+        return Promise.resolve('SUCCESS');
+      })
+
       .catch((err) => {
         setErrors([err.message]);
+        console.log(err.message);
+        return Promise.reject('FAIL');
       });
   },
   signin: (email, password, setErrors, setToken, setUser, setUserEmail, setUserDetails) => {
@@ -32,6 +73,7 @@ export const authMethods = {
       .then(async (res) => {
         const token = await Object.entries(res.user)[5][1].b;
         const userId = res.user.uid;
+        console.log(res.user);
         const userDetails = await getUserDetails(userId);
         //set token to localStorage
         await localStorage.setItem('token', token);
@@ -44,6 +86,7 @@ export const authMethods = {
       })
       .catch((err) => {
         setErrors([err.message]);
+        console.log('could not sign up');
       });
   },
   signout: (setErrors, setToken, setUser) => {
@@ -67,7 +110,26 @@ export const authMethods = {
         setToken(null);
         localStorage.removeItem('user');
         setUser(null);
-        console.error(err.message);
+      });
+  },
+  verifyEmailExistsInDatabase: async (email, setErrors) => {
+    const emailExists = await firebase
+      .auth()
+      .fetchSignInMethodsForEmail(email)
+      .then((result) => {
+        return result.length > 0;
+      })
+      .catch((error) => {
+        setErrors([error.message]);
+      });
+    return emailExists;
+  },
+  sendPasswordResetEmail: async (email, setErrors) => {
+    firebase
+      .auth()
+      .sendPasswordResetEmail(email, null)
+      .catch((error) => {
+        setErrors([error.message]);
       });
   },
 };

@@ -12,12 +12,18 @@ const CreatorContent = () => {
   const { userId } = useContext(firebaseAuth);
 
   useEffect(() => {
-    if (creatorId) {
-      (async () => {
-        const details = await getUserDetails(creatorId);
-        setCreatorDetails(details);
-      })();
+    let isLoaded = true;
+    if (isLoaded) {
+      console.log('id from params of CreatorCOntent', creatorId);
+      if (creatorId) {
+        (async () => {
+          const details = await getUserDetails(creatorId);
+          setCreatorDetails(details);
+          console.log(creatorDetails);
+        })();
+      }
     }
+    return () => (isLoaded = false);
   }, [creatorId]);
 
   let { url } = useRouteMatch();

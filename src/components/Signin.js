@@ -1,16 +1,22 @@
 // add useContext
 import React, { useContext, useEffect } from 'react';
 import { firebaseAuth } from '../context/AuthProvider';
-import { Link } from 'react-router-dom';
+import { Link, matchPath } from 'react-router-dom';
 
 const Signin = ({ history }) => {
-  const { handleSignin, inputs, setInputs, errors, token } = useContext(firebaseAuth);
+  const { handleSignin, inputs, setInputs, errors, setErrors, token, userId } =
+    useContext(firebaseAuth);
+
+  useEffect(() => {
+    setErrors([]);
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await handleSignin(inputs.email, inputs.password);
     } catch (error) {
-      alert(error);
+      console.log(error);
     }
   };
   const handleChange = (e) => {
@@ -21,11 +27,14 @@ const Signin = ({ history }) => {
   useEffect(() => {
     //redirectes to users content page if login successful and login page hasn't been reached from trying to access a private route
     if (token) {
-      if (history) {
-        history.push(`/`);
+      console.log(history.location.pathname);
+      if (history.location.pathname === '/signin') {
+        history.push(`/userContent/${userId}/tests`);
+      } else {
+        history.push('/');
       }
     }
-  }, [token]);
+  }, [history, token, userId]);
 
   return (
     <div className='auth-container'>
@@ -56,11 +65,13 @@ const Signin = ({ history }) => {
         />
         <button className='auth-button'>log in</button>
         <div className='auth-help-container'>
-          <span>forgotten password</span>
+          <Link className='auth-link' to='/resetPassword'>
+            <span>forgotten password?</span>
+          </Link>
         </div>
         {errors.length > 0
           ? errors.map((error) => (
-              <p key={error.key} style={{ color: 'red' }}>
+              <p key={error} style={{ color: 'red' }}>
                 {error}
               </p>
             ))

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import EasyCrop from '../EasyCrop/EasyCrop';
+import ImageContext from 'context/ImageContext';
 
 function getModalStyle() {
   const top = 50;
@@ -26,6 +27,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ProfilePickerModal({ modalOpen }) {
+  const context = useContext(ImageContext);
+  console.log(context);
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
@@ -41,7 +44,11 @@ export default function ProfilePickerModal({ modalOpen }) {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <EasyCrop aspect={1}></EasyCrop>
+      <EasyCrop
+        aspect={1}
+        setImageUrl={context.handleSetProfilePicture}
+        setOpen={setOpen}
+      ></EasyCrop>
     </div>
   );
 

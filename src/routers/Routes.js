@@ -23,6 +23,8 @@ import { CAEPart3ContextProvider } from 'context/CAEPart3Context';
 import CAEPart2View from 'components/CAEPart2/CAEPart2View';
 import EditCAEPart2 from 'components/CAEPart2/EditCAEPart2';
 import ImageSearch from 'components/common/ImageSearch';
+import ResetPassword from 'components/ResetPassword';
+import ResetPasswordConfirmation from 'components/ResetPasswordConfirmation';
 
 const Routes = () => {
   return (
@@ -37,6 +39,12 @@ const Routes = () => {
                 <Route exact path='/' component={Home} />
                 <Route exact path='/signin' component={Signin} />
                 <Route exact path='/signup' component={Signup} />
+                <Route exact path='/resetPassword' component={ResetPassword} />
+                <Route
+                  exact
+                  path='/resetPasswordConfirmation'
+                  component={ResetPasswordConfirmation}
+                />
 
                 {/*FCE*/}
                 <PrivateRoute exact path='/EditFCEPart2/:id' component={EditFCEPart2} />

@@ -1,0 +1,15 @@
+.mockup-container {
+  width: auto;
+  height: 50vh;
+  overflow: hidden;
+}
+
+.mockup-screenshot {
+  width: 45vw;
+  height: auto;
+  object-fit: cover;
+
+  position: relative;
+
+  top: 10px;
+}

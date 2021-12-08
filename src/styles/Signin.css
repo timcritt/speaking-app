@@ -4,19 +4,19 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  height: 50vh;
+
   max-width: 400px;
   border-radius: 5px;
   text-align: center;
   overflow: auto;
   display: flex;
   align-items: center;
-  box-shadow: 0 0.25rem 1rem 0 rgba(0, 0, 0, .16);
+  box-shadow: 0 0.25rem 1rem 0 rgba(0, 0, 0, 0.16);
 }
 
 .auth-form {
   background-color: white;
-  padding: 10px 20px 20px 20px;
+  padding: 35px 20px 35px 20px;
 }
 
 .auth-input {
@@ -67,10 +67,22 @@
 }
 
 .auth-link:hover {
-  color: rgb(160, 136, 2)
+  color: rgb(160, 136, 2);
 }
 
 .auth-link-bold {
   font-style: bold;
   text-decoration: underline;
+}
+
+.auth-left {
+  width: 50%;
+  text-align: right;
+  padding-right: 20px;
+}
+
+.auth-right {
+  width: 50%;
+  text-align: left;
+  padding-left: 20px;
 }

@@ -56,13 +56,13 @@ const Profile = () => {
                 </aside>
                 <div className='profile-name-container'>
                   <div className='profile-username'>{userDetails.userName}</div>
-                  <ImageContext.Provider value={handleSetProfilePicture}>
+                  <ImageContext.Provider
+                    value={{ handleSetProfilePicture: handleSetProfilePicture }}
+                  >
                     <ProfilePickerModal
                       aria-labelledby='simple-modal-title'
                       aria-describedby='simple-modal-description'
-                    >
-                      <EasyCrop aspect={1} />
-                    </ProfilePickerModal>
+                    ></ProfilePickerModal>
                   </ImageContext.Provider>
                 </div>
               </div>

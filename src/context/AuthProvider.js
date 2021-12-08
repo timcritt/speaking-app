@@ -25,15 +25,17 @@ const AuthProvider = (props) => {
     });
   }, []);
 
-  const handleSignup = (email, password) => {
-    authMethods.signup(
+  const handleSignup = (userName, imageLocalUrl) => {
+    return authMethods.signup(
       inputs.email,
       inputs.password,
       setErrors,
       setToken,
       setUserId,
       setUserEmail,
-      setUserDetails
+      setUserDetails,
+      userName,
+      imageLocalUrl
     );
   };
   const handleSignin = (email, password) => {
@@ -50,6 +52,13 @@ const AuthProvider = (props) => {
   const handleSignout = () => {
     authMethods.signout(setErrors, setToken, setUserId);
   };
+  const handleResetPassword = () => {
+    authMethods.sendPasswordResetEmail(inputs.email, setUserEmail, setErrors);
+  };
+  //checks if the email address is registered to a user in the database
+  const handleVerifyEmailExists = async (email, setErrors) => {
+    return await authMethods.verifyEmailExistsInDatabase(email, setErrors);
+  };
 
   return (
     <firebaseAuth.Provider
@@ -58,13 +67,16 @@ const AuthProvider = (props) => {
         handleSignin,
         inputs,
         setInputs,
+        setErrors,
         errors,
         handleSignout,
+        handleVerifyEmailExists,
         token,
         userId,
         userDetails,
         setUserDetails,
         userEmail,
+        handleResetPassword,
       }}
     >
       {props.children}

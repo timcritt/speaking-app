@@ -15,7 +15,7 @@ const ORIENTATION_TO_ANGLE = {
   8: -90,
 };
 
-const EasyCrop = ({ classes, aspect = 4 / 3, setImageUrl }) => {
+const EasyCrop = ({ classes, aspect = 4 / 3, setImageUrl, setOpen }) => {
   const [imageSrc, setImageSrc] = useState(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
@@ -35,11 +35,12 @@ const EasyCrop = ({ classes, aspect = 4 / 3, setImageUrl }) => {
       //setCroppedImage(croppedImage);
 
       setImageUrl(croppedImage);
+      setOpen(false);
       //handleSetImage(croppedImage);
     } catch (e) {
       console.error(e);
     }
-  }, [imageSrc, croppedAreaPixels, rotation, setImageUrl]);
+  }, [imageSrc, croppedAreaPixels, rotation, setImageUrl, setOpen]);
 
   const fileTypes = ['image/png', 'image/jpeg'];
 
