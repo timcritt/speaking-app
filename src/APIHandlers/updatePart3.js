@@ -12,7 +12,6 @@ const updatePart3 = async (
   tags,
   testType
 ) => {
-  console.log(docRef);
   var objectRef = projectFirestore.collection(testType).doc(docRef);
   await objectRef.update({
     bottomCentre,

@@ -92,7 +92,7 @@ export default function PublishWarningModal({
           testType
         ).then((response) => {
           setDocRef(response.id);
-          console.log('response = ', response);
+
           history.push(`/EditFCEPart3/${response.id}`);
         });
       }

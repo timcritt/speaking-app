@@ -7,7 +7,6 @@ const getTest = async (collectionName, testId) => {
   await results
     .get()
     .then((doc) => {
-      console.log(doc);
       if (doc.exists) {
         test = { ...doc.data(), id: doc.id };
       } else {

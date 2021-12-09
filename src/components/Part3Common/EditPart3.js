@@ -38,7 +38,6 @@ const EditPart3 = ({ context, testType, ...props }) => {
       width: window.innerWidth,
     });
     showLines();
-    console.log('lines redrawn');
   }, []);
 
   const debouncedHandleResize = debounce(handleResize, 200);

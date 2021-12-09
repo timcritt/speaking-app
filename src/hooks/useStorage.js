@@ -24,7 +24,6 @@ const useStorage = (file) => {
       },
       async () => {
         const url = await ref.getDownloadURL();
-        console.log('use storage', ref.fullPath);
         setStorageRef(ref.fullPath);
         setUrl(url);
       }

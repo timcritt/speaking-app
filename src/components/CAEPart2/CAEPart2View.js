@@ -27,7 +27,6 @@ const CAEPart2View = (props) => {
   );
 
   if (context.hasFetched) {
-    console.log(context.creatorId);
     return (
       <Fragment>
         <FullScreen handle={handleFullScreen}>

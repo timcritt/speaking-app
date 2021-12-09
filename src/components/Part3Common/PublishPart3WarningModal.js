@@ -78,7 +78,7 @@ export default function PublishWarningModal({
         );
       } else {
         //upload new Part 3 - only reached if all fields are complete and docRef doesn't exist - i.e., the test has just been created
-        console.log('updloading new part 3');
+
         addPart3(
           bottomCentre,
           bottomLeft,
@@ -92,7 +92,6 @@ export default function PublishWarningModal({
           testType
         ).then((response) => {
           setDocRef(response.id);
-          console.log('response = ', response);
           history.push(`/Edit${testType}/${response.id}`);
         });
       }

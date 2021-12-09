@@ -18,7 +18,6 @@ function ExamTypeMenuItems({
         className='filter-bar-item filter-bar-item-clickable'
         onClick={() => {
           itemFour.setIsComponentVisible(true);
-          console.log('button clicked');
         }}
       >
         <div>{exam ? exam : 'exam'}</div>

@@ -11,6 +11,11 @@ const AuthProvider = (props) => {
   const [userEmail, setUserEmail] = useState(null);
   const [userDetails, setUserDetails] = useState(null);
 
+  function handleSetUserId(newId) {
+    console.log('new id inside the provider', newId);
+    setUserId(newId);
+  }
+
   useEffect(() => {
     //listens to state change. Persists login even after refresh
     app.auth().onAuthStateChanged(async (user) => {
@@ -25,13 +30,13 @@ const AuthProvider = (props) => {
     });
   }, []);
 
-  const handleSignup = (userName, imageLocalUrl) => {
-    return authMethods.signup(
+  const handleSignup = async (userName, imageLocalUrl) => {
+    return await authMethods.signup(
       inputs.email,
       inputs.password,
       setErrors,
       setToken,
-      setUserId,
+      handleSetUserId,
       setUserEmail,
       setUserDetails,
       userName,

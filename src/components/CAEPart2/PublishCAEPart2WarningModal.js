@@ -92,7 +92,6 @@ export default function PublishWarningModal() {
           );
         });
       } else {
-        console.log('hello');
         setOpen(true);
         //if local test has no docId, it's because it's new and doesn't exist on the firestore.
         uploadCAEPart2Images(context.imageOneUrl, context.imageTwoUrl, context.imageThreeUrl).then(

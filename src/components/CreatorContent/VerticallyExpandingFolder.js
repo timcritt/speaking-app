@@ -34,7 +34,7 @@ const VerticallyExpandingFolder = ({ folder }) => {
   };
   useEffect(() => {
     var isMounted = true;
-    console.log('recalling gettests');
+
     if (folder.id) {
       const fetchTests = async () => {
         //returns an array of the testIds in the folder

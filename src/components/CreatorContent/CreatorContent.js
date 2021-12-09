@@ -14,12 +14,10 @@ const CreatorContent = () => {
   useEffect(() => {
     let isLoaded = true;
     if (isLoaded) {
-      console.log('id from params of CreatorCOntent', creatorId);
       if (creatorId) {
         (async () => {
           const details = await getUserDetails(creatorId);
           setCreatorDetails(details);
-          console.log(creatorDetails);
         })();
       }
     }

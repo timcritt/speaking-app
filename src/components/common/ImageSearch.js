@@ -41,7 +41,6 @@ const ImageSearch = ({ setImageSrc }) => {
     let isMounted = true;
 
     const asyncFetch = async () => {
-      console.log('in fetch');
       await fetch(searchURL)
         .then((response) => response.json())
         .then((data) => setImages(data));

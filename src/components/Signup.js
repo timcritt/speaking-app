@@ -7,22 +7,23 @@ import profilePlaceHolder from 'img/profile-placeholder.png';
 import ProfilePickerModal from 'components/Profile/ProfilePickerModal';
 
 const Signup = (props) => {
-  const { handleSignup, inputs, setInputs, errors, userId, token } = useContext(firebaseAuth);
+  const { handleSignup, inputs, setInputs, errors } = useContext(firebaseAuth);
   const [repeatPassword, setRepeatPassword] = useState('');
   const [imageLocalUrl, setImageLocalUrl] = useState(profilePlaceHolder);
   const [userName, setUserName] = useState('heki');
+  const [isDisabled, setIsDisabled] = useState(false);
 
-  useEffect(() => {
-    if (token) {
-      props.history.push(`/userContent/${userId}/tests`);
-    }
-  }, [props.history, token, userId]);
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsDisabled(true);
     try {
-      handleSignup(userName, imageLocalUrl);
+      // console.log('userId before signup', userId);
+      //signs up and returns the user id. Changes to userId made from inside authMethods weren't reflected here
+      //not sure why. I changed "signup" in authMethodhandle to return value of userId, which gets passed up the chain.
+      const newUserId = await handleSignup(userName, imageLocalUrl);
+      props.history.push(`/userContent/${newUserId}/tests`);
     } catch (err) {
+      setIsDisabled(false);
       console.log(err);
     }
   };
@@ -84,7 +85,9 @@ const Signup = (props) => {
           placeholder='user name'
           value={userName}
         />
-        <button className='auth-button'>sign up</button>
+        <button className='auth-button' disabled={isDisabled}>
+          sign up
+        </button>
         {errors.length > 0 ? errors.map((error) => <p style={{ color: 'red' }}>{error}</p>) : null}
         <div className='auth-help-container'>
           <span>

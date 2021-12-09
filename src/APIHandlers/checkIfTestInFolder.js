@@ -6,14 +6,11 @@ import { junctionFolderTest } from './firebaseConsts';
 
 const checkIfTestInFolder = async (folderId, testId) => {
   var testInFolder = false;
-  var results = projectFirestore
-    .collection(junctionFolderTest)
-    .doc(`${folderId}_${testId}`);
+  var results = projectFirestore.collection(junctionFolderTest).doc(`${folderId}_${testId}`);
 
   await results
     .get()
     .then((doc) => {
-      console.log(doc);
       if (doc.exists) {
         testInFolder = true;
       } else {

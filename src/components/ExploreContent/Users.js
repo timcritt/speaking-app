@@ -5,7 +5,7 @@ import UserSummary from '../common/UserSummary';
 
 const Users = () => {
   const { docs } = useFirestore(users);
-  console.log(docs);
+
   return (
     <div>
       <div className='all-tests-container'>

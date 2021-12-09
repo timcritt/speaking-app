@@ -4,7 +4,7 @@ import { projectFirestore } from '../firebase/firebaseIndex';
 import { uploadImage } from 'APIHandlers/uploadImage';
 
 export const authMethods = {
-  signup: function (
+  signup: async function (
     email,
     password,
     setErrors,
@@ -15,49 +15,50 @@ export const authMethods = {
     userName,
     imageLocalUrl
   ) {
-    firebase
+    return firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      //make res asynchronous so that we can grab the token before saving it.
-      .then(async (res) => {
+      .then(async (userCredential) => {
+        console.log('user signed up with email and password in firestore');
         //create a record to store new user information
-        projectFirestore
+        return await projectFirestore
           .collection('users')
-          .doc(res.user.uid)
+          .doc(userCredential.user.uid)
           .set({
-            userId: res.user.uid,
+            userId: userCredential.user.uid,
             userName,
           })
           .then(async () => {
+            console.log('associated user record created in firestore');
             //upload profile pic and grab url and reference
             const { url, reference } = await uploadImage(imageLocalUrl);
+            console.log('image uploaded');
+
             //update user record with new profile pic
-            return projectFirestore.collection('users').doc(res.user.uid).update({
+            await projectFirestore.collection('users').doc(userCredential.user.uid).update({
               profilePicture: url,
               profilePictureReference: reference,
             });
-          })
-          .then(async () => {
-            //grab and set the token and other details to local storage and state
-            const token = await Object.entries(res.user)[5][1].b;
-            const userId = res.user.uid;
-            console.log(res);
+            console.log('image reference updated on user record');
 
+            const token = await Object.entries(userCredential.user)[5][1].b;
+            const userId = userCredential.user.uid;
+            console.log(userCredential.user);
+            const userDetails = await getUserDetails(userId);
             //set token to localStorage
-            localStorage.setItem('token', token);
+            await localStorage.setItem('token', token);
             setToken(window.localStorage.token);
-            localStorage.setItem('user', userId);
+            await localStorage.setItem('user', userId);
             setUserId(window.localStorage.user);
-            setUserEmail(res.user.email);
+            await localStorage.setItem('userDetails', JSON.stringify(userDetails));
+            setUserDetails(userDetails);
+            return userId;
           })
-          .catch((res) => {
-            console.log(res, 'errorrrrrr');
+          .catch((message) => {
+            console.log(message, 'error');
+            return Promise.reject('something went wrong while signing up user');
           });
       })
-      .then(() => {
-        return Promise.resolve('SUCCESS');
-      })
-
       .catch((err) => {
         setErrors([err.message]);
         console.log(err.message);
@@ -80,7 +81,6 @@ export const authMethods = {
         setToken(window.localStorage.token);
         await localStorage.setItem('user', userId);
         setUser(window.localStorage.user);
-        setUserEmail(res.user.email);
         await localStorage.setItem('userDetails', JSON.stringify(userDetails));
         setUserDetails(userDetails);
       })

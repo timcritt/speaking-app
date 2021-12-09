@@ -1,7 +1,6 @@
 import React, { useState, Fragment, useContext, useEffect } from 'react';
 import getUserDetails from 'APIHandlers/getUserDetails';
 import profilePlaceHolder from 'img/profile-placeholder.png';
-import EasyCrop from 'components/EasyCrop/EasyCrop';
 import ProfilePickerModal from 'components/Profile/ProfilePickerModal';
 import ImageContext from 'context/ImageContext';
 import { uploadImage } from 'APIHandlers/uploadImage';
@@ -20,7 +19,6 @@ const Profile = () => {
 
   const handleSetProfilePicture = async (localURL) => {
     const { url, reference } = await uploadImage(localURL);
-    console.log(url);
     await updateUserProfilePicture(url, reference, userId);
     const details = await getUserDetails(userId);
     setUserDetails(details);

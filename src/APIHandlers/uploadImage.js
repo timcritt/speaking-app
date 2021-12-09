@@ -15,7 +15,6 @@ export const uploadImage = async (imageUrl) => {
       .then(async () => {
         url = await ref.getDownloadURL();
         reference = ref.fullPath;
-        console.log(reference);
       });
   } catch (error) {
     console.log(error.message);

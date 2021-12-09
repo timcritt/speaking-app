@@ -1,7 +1,7 @@
 // add useContext
 import React, { useContext, useEffect } from 'react';
 import { firebaseAuth } from '../context/AuthProvider';
-import { Link, matchPath } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Signin = ({ history }) => {
   const { handleSignin, inputs, setInputs, errors, setErrors, token, userId } =
@@ -27,7 +27,6 @@ const Signin = ({ history }) => {
   useEffect(() => {
     //redirectes to users content page if login successful and login page hasn't been reached from trying to access a private route
     if (token) {
-      console.log(history.location.pathname);
       if (history.location.pathname === '/signin') {
         history.push(`/userContent/${userId}/tests`);
       } else {

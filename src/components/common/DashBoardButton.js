@@ -3,8 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
 const DashBoardButton = ({ linkTo, label }) => {
-  console.log(linkTo, 'rendering');
-
   var history = useHistory();
   let pathname = useLocation().pathname;
 

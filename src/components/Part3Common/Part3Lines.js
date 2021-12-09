@@ -2,8 +2,6 @@ import React from 'react';
 import LineTo from 'react-lineto';
 
 const Part3Lines = ({ windowDimensions, lineClass }) => {
-  console.log('rendering lines');
-
   return (
     <div key={Date.now()} className={'fadeIn'}>
       <LineTo

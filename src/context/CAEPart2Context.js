@@ -121,7 +121,6 @@ export const CAEPart2ContextProvider = ({ children }) => {
     } else {
       setHasFetched(true);
     }
-    console.log(creatorId);
   }, [docRef]);
 
   return (
