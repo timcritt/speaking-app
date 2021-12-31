@@ -4,17 +4,55 @@ import { firebaseAuth } from '../context/AuthProvider';
 import { Link } from 'react-router-dom';
 
 const Signin = ({ history }) => {
-  const { handleSignin, inputs, setInputs, errors, setErrors, token, userId } =
-    useContext(firebaseAuth);
+  const {
+    handleSignin,
+    inputs,
+    setInputs,
+    errors,
+    setErrors,
+    setToken,
+
+    setEmailVerified,
+    setUserId,
+    handleSendEmailVerification,
+  } = useContext(firebaseAuth);
 
   useEffect(() => {
     setErrors([]);
   }, []);
 
+  const handleResendEmail = () => {
+    handleSendEmailVerification();
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await handleSignin(inputs.email, inputs.password);
+      const { token, emailVerified, userId } = await handleSignin(inputs.email, inputs.password);
+      console.log('is verified?', emailVerified);
+
+      console.log('line after handleSignin');
+      if (token) {
+        setUserId(userId);
+        setToken(token);
+        console.log(token);
+        console.log('token is present');
+        setEmailVerified(emailVerified);
+
+        if (emailVerified) {
+          if (history.location.pathname === '/signin') {
+            history.push(`/userContent/${userId}/tests`);
+            console.log('redirecting to user content');
+          } else {
+            console.log('pushing to home or prevously navigated page');
+            history.push('/');
+          }
+        } else {
+          setErrors([
+            'Before using your account, you must verify your email. Please check your email.',
+            <span onClick={handleResendEmail}>'Click here to resend the verification email'</span>,
+          ]);
+        }
+      }
     } catch (error) {
       console.log(error);
     }
@@ -24,16 +62,27 @@ const Signin = ({ history }) => {
     setInputs((prev) => ({ ...prev, [name]: value }));
   };
 
-  useEffect(() => {
-    //redirectes to users content page if login successful and login page hasn't been reached from trying to access a private route
-    if (token) {
-      if (history.location.pathname === '/signin') {
-        history.push(`/userContent/${userId}/tests`);
-      } else {
-        history.push('/');
-      }
-    }
-  }, [history, token, userId]);
+  // useEffect(() => {
+  //   let isMounted = true;
+  //   //redirectes to users content page if login successful and login page hasn't been reached from trying to access a private route
+  //   if (isMounted) {
+  //     if (token) {
+  //       if (emailVerified) {
+  //         if (history.location.pathname === '/signin') {
+  //           history.push(`/userContent/${userId}/tests`);
+  //         } else {
+  //           history.push('/');
+  //         }
+  //       } else {
+  //         history.push('/verifyEmail');
+  //       }
+  //     }
+  //   }
+
+  //   return () => {
+  //     isMounted = false;
+  //   };
+  // }, [emailVerified, history, token, userId]);
 
   return (
     <div className='auth-container'>

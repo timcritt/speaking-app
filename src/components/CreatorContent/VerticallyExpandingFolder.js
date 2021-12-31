@@ -76,7 +76,7 @@ const VerticallyExpandingFolder = ({ folder }) => {
                 <span>({folder.testCount})</span>
               </div>
             </div>
-
+            {testContainerExpanded ? <RemoveRoundedIcon /> : <ArrowDropDownIcon />}
             <div className='tests-container-button'>
               <span className='delete-folder-button-container'>
                 {userId === creatorId && (
@@ -88,7 +88,6 @@ const VerticallyExpandingFolder = ({ folder }) => {
                   />
                 )}
               </span>
-              {testContainerExpanded ? <RemoveRoundedIcon /> : <ArrowDropDownIcon />}
             </div>
           </div>
 
