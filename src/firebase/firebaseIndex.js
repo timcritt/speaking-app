@@ -2,6 +2,9 @@ import firebase from 'firebase';
 import 'firebase/auth';
 import 'firebase/app';
 
+import 'firebase/analytics';
+import 'firebase/auth';
+
 var firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
   authDomain: process.env.REACT_APP_AUTHDOMAIN,
@@ -22,11 +25,4 @@ const projectFirestore = firebase.firestore();
 const timestamp = firebase.firestore.FieldValue.serverTimestamp;
 const increment = firebase.firestore.FieldValue.increment;
 
-export {
-  firebaseAuth,
-  projectStorage,
-  projectFirestore,
-  app,
-  timestamp,
-  increment,
-};
+export { firebaseAuth, projectStorage, projectFirestore, app, timestamp, increment };
