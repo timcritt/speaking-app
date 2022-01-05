@@ -52,26 +52,25 @@ const FolderSummaryShort = ({ folder, testId, userId }) => {
   };
 
   return (
-    <div className='folder-container'>
+    <div className='folder-container' onClick={handleChange}>
       <div className='folder-info-container'>
         <div className='folder-icon-title-container'>
+          <span>
+            <input
+              type='checkbox'
+              id='vehicle1'
+              name='vehicle1'
+              value='Bike'
+              checked={isInFolder}
+              disabled={checkBoxDisabled}
+            />
+          </span>
           <FolderOutlinedIcon />
           <span className='folder-title'>{folder.title}</span>
-          <span>{folder.testCount}</span>
         </div>
       </div>
       <div className='folder-summary-toolbar'>
-        <span>
-          <input
-            type='checkbox'
-            id='vehicle1'
-            name='vehicle1'
-            value='Bike'
-            checked={isInFolder}
-            onChange={() => handleChange()}
-            disabled={checkBoxDisabled}
-          />
-        </span>
+        <span>{folder.testCount}</span>
       </div>
     </div>
   );

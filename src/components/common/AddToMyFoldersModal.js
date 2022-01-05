@@ -10,18 +10,19 @@ function AddToMyFoldersModal({ userId, closeAddToFolderModal, testId }) {
   const { docs } = useFirestore(folders, userId);
   return (
     <Modal
+      onClick={(e) => e.stopPropagation()}
       className='open-add-folder-modal-btn'
-      heading='Add test to folder'
+      heading='Add test to...'
       setModalOpen={closeAddToFolderModal}
     >
-      <div className='search-terms-container'>
-        <div className='filter-bar'>
-          <CreateNewFolder label={'NEW FOLDER'} />
-        </div>
+      <div style={{ maxHeight: '50vh', overflowY: 'scroll' }} onClick={(e) => e.stopPropagation()}>
+        <Folders folders={docs} testId={testId}>
+          <FolderSummaryShort userId={userId} />
+        </Folders>
       </div>
-      <Folders folders={docs} testId={testId}>
-        <FolderSummaryShort userId={userId} />
-      </Folders>
+      <div className='modal-bottom-button-container'>
+        <CreateNewFolder label={'NEW FOLDER'} />
+      </div>
     </Modal>
   );
 }

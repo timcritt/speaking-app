@@ -153,10 +153,6 @@ const FoldersPresentation = ({ folders, testId, addFolder, creatorId, children }
           </div>
         )}
         <div className='filter-bar'>
-          <div className='filter-bar-item'>
-            <FilterListIcon />
-          </div>
-
           <div
             className={`filter-bar-item filter-bar-item-clickable ${
               sortBy ? 'filter-selected' : ''

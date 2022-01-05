@@ -38,7 +38,6 @@ const CreatorInfo = ({ creatorId }) => {
           src={creatorProfilePicture ? creatorProfilePicture : defaultProfilePicture}
         />
         <div className='created-by-text'>
-          <div>creator: </div>
           {
             <Link className={'nav-link'} to={`/userContent/${creatorId}/tests`}>
               {authorName}

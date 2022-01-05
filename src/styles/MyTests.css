@@ -208,9 +208,8 @@
 
 @media screen and (min-width: 1000px) {
   .all-tests-container {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
-
   .search-terms-container {
     margin: 30px 0;
   }
@@ -221,6 +220,6 @@
 
 @media screen and (min-width: 1800px) {
   .all-tests-container {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }

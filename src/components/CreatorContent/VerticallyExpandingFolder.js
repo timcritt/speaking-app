@@ -76,13 +76,15 @@ const VerticallyExpandingFolder = ({ folder }) => {
                 <span>({folder.testCount})</span>
               </div>
             </div>
-            {testContainerExpanded ? <RemoveRoundedIcon /> : <ArrowDropDownIcon />}
+            <div className='tests-container-button'>
+              {testContainerExpanded ? <RemoveRoundedIcon /> : <ArrowDropDownIcon />}
+            </div>
             <div className='tests-container-button'>
               <span className='delete-folder-button-container'>
                 {userId === creatorId && (
                   <DeleteButton
                     deleteItemType='folder'
-                    iconColour='red'
+                    iconColour='inherit'
                     itemId={folder.id}
                     firestoreCollection={'folders'}
                   />

@@ -103,7 +103,6 @@ const VerticallyExpandingTestsContainer = ({
           }
         >
           {cloneElement(children, { tests: filteredTests })}
-          {filteredTests && filteredTests.length === 0 && <div>no tests</div>}
         </div>
       </div>
       {fetching && <LinearProgress />}
