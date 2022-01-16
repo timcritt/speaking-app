@@ -10,6 +10,7 @@ const AuthProvider = (props) => {
   const [userId, setUserId] = useState(null);
   const [userEmail, setUserEmail] = useState(null);
   const [userDetails, setUserDetails] = useState(null);
+  const [emailVerified, setEmailVerified] = useState(false);
 
   function handleSetUserId(newId) {
     console.log('new id inside the provider', newId);
@@ -23,8 +24,11 @@ const AuthProvider = (props) => {
         setToken(window.localStorage.token);
         setUserEmail(user.email);
         setUserId(user.uid);
+        setEmailVerified(user.emailVerified);
+        console.log('authprovider', user.emailVerified);
         const newDetails = await getUserDetails(user.uid);
         setUserDetails(newDetails);
+
         setErrors([]);
       }
     });
@@ -43,15 +47,16 @@ const AuthProvider = (props) => {
       imageLocalUrl
     );
   };
-  const handleSignin = (email, password) => {
-    authMethods.signin(
+  const handleSignin = async (email, password) => {
+    return await authMethods.signin(
       inputs.email,
       inputs.password,
       setErrors,
       setToken,
       setUserId,
       setUserEmail,
-      setUserDetails
+      setUserDetails,
+      setEmailVerified
     );
   };
   const handleSignout = () => {
@@ -63,6 +68,10 @@ const AuthProvider = (props) => {
   //checks if the email address is registered to a user in the database
   const handleVerifyEmailExists = async (email, setErrors) => {
     return await authMethods.verifyEmailExistsInDatabase(email, setErrors);
+  };
+
+  const handleSendEmailVerification = async () => {
+    return await authMethods.sendVerificationEmail();
   };
 
   return (
@@ -77,11 +86,16 @@ const AuthProvider = (props) => {
         handleSignout,
         handleVerifyEmailExists,
         token,
+        setToken,
         userId,
+        setUserId,
         userDetails,
         setUserDetails,
         userEmail,
         handleResetPassword,
+        emailVerified,
+        setEmailVerified,
+        handleSendEmailVerification,
       }}
     >
       {props.children}

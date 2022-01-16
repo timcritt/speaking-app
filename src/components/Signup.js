@@ -10,21 +10,24 @@ const Signup = (props) => {
   const { handleSignup, inputs, setInputs, errors } = useContext(firebaseAuth);
   const [repeatPassword, setRepeatPassword] = useState('');
   const [imageLocalUrl, setImageLocalUrl] = useState(profilePlaceHolder);
-  const [userName, setUserName] = useState('heki');
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [userName, setUserName] = useState('');
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsDisabled(true);
-    try {
-      // console.log('userId before signup', userId);
-      //signs up and returns the user id. Changes to userId made from inside authMethods weren't reflected here
-      //not sure why. I changed "signup" in authMethodhandle to return value of userId, which gets passed up the chain.
-      const newUserId = await handleSignup(userName, imageLocalUrl);
-      props.history.push(`/userContent/${newUserId}/tests`);
-    } catch (err) {
-      setIsDisabled(false);
-      console.log(err);
+    if (userName) {
+      try {
+        // console.log('userId before signup', userId);
+        //signs up and returns the user id. Changes to userId made from inside authMethods weren't reflected here
+        //not sure why. I changed "signup" in authMethodhandle to return value of userId, which gets passed up the chain.
+        const newUserId = await handleSignup(userName, imageLocalUrl);
+        props.history.push(`/userContent/${newUserId}/tests`);
+      } catch (err) {
+        setIsDisabled(false);
+        console.log(err);
+      }
     }
   };
 
@@ -36,53 +39,71 @@ const Signup = (props) => {
     setRepeatPassword(e.target.value);
   };
   const handleChangeUserName = (e) => {
-    setUserName(e.target.currentValue);
+    setUserName(e.target.value);
   };
+
+  useEffect(() => {
+    let isMounted = true;
+
+    if (isMounted) {
+      if (userName && userName.length > 0) {
+        setIsDisabled(false);
+      } else {
+        setIsDisabled(true);
+      }
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [userName]);
 
   return (
     <div className='auth-container'>
       <form className='auth-form' onSubmit={(e) => handleSubmit(e)}>
-        <div>
-          <img alt='could not load' className='profile-detail-picture' src={imageLocalUrl} />
+        {/* <div>
+           <img alt='could not load' className='profile-detail-picture' src={imageLocalUrl} />
 
-          <div className='profile-name-container'>
+         <div className='profile-name-container'>
             <ImageContext.Provider value={{ handleSetProfilePicture: setImageLocalUrl }}>
               <ProfilePickerModal
                 aria-labelledby='simple-modal-title'
                 aria-describedby='simple-modal-description'
               ></ProfilePickerModal>
             </ImageContext.Provider>
-          </div>
         </div>
+        </div>*/}
         <input
           className='auth-input'
           onChange={handleChange}
           name='email'
-          placeholder='email'
+          placeholder='email*'
           value={inputs.email}
         />
         <input
           type='password'
+          autoComplete='new-password'
           className='auth-input'
           onChange={handleChange}
           name='password'
-          placeholder='password'
+          placeholder='password*'
           value={inputs.password}
         />
         <input
           type='password'
+          autoComplete='new-password'
           className='auth-input'
           onChange={handleRepeatUserNameChange}
           name='repeat-password'
-          placeholder='repeat password'
+          placeholder='confirm password*'
           value={repeatPassword}
         />
         <input
           type='text'
-          className='auth-input'
+          className={`auth-input ${passwordsMatch ? '' : 'red-border'}`}
           onChange={handleChangeUserName}
           name='userName'
-          placeholder='user name'
+          placeholder='display name*'
           value={userName}
         />
         <button className='auth-button' disabled={isDisabled}>

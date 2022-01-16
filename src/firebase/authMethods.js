@@ -1,7 +1,6 @@
 import firebase from 'firebase';
 import getUserDetails from '../APIHandlers/getUserDetails';
 import { projectFirestore } from '../firebase/firebaseIndex';
-import { uploadImage } from 'APIHandlers/uploadImage';
 
 export const authMethods = {
   signup: async function (
@@ -31,15 +30,15 @@ export const authMethods = {
           .then(async () => {
             console.log('associated user record created in firestore');
             //upload profile pic and grab url and reference
-            const { url, reference } = await uploadImage(imageLocalUrl);
-            console.log('image uploaded');
+            //const { url, reference } = await uploadImage(imageLocalUrl);
+            //console.log('image uploaded');
 
             //update user record with new profile pic
-            await projectFirestore.collection('users').doc(userCredential.user.uid).update({
-              profilePicture: url,
-              profilePictureReference: reference,
-            });
-            console.log('image reference updated on user record');
+            // await projectFirestore.collection('users').doc(userCredential.user.uid).update({
+            //   profilePicture: url,
+            //   profilePictureReference: reference,
+            // });
+            // console.log('image reference updated on user record');
 
             const token = await Object.entries(userCredential.user)[5][1].b;
             const userId = userCredential.user.uid;
@@ -65,29 +64,48 @@ export const authMethods = {
         return Promise.reject('FAIL');
       });
   },
-  signin: (email, password, setErrors, setToken, setUser, setUserEmail, setUserDetails) => {
+  checkIfEmailVerified: async () => {
+    return await firebase.auth.currentUser.emailVerified;
+  },
+  signin: async function (
+    email,
+    password,
+    setErrors,
+    setToken,
+    setUser,
+    setUserEmail,
+    setUserDetails,
+    setEmailVerified
+  ) {
     //change from create users to...
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      //everything is almost exactly the same as the function above
-      .then(async (res) => {
-        const token = await Object.entries(res.user)[5][1].b;
-        const userId = res.user.uid;
-        console.log(res.user);
-        const userDetails = await getUserDetails(userId);
-        //set token to localStorage
-        await localStorage.setItem('token', token);
-        setToken(window.localStorage.token);
-        await localStorage.setItem('user', userId);
-        setUser(window.localStorage.user);
-        await localStorage.setItem('userDetails', JSON.stringify(userDetails));
-        setUserDetails(userDetails);
-      })
-      .catch((err) => {
-        setErrors([err.message]);
-        console.log('could not sign up');
-      });
+    return (
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        //everything is almost exactly the same as the function above
+        .then(async (userCredential) => {
+          const token = await Object.entries(userCredential.user)[5][1].b;
+          const userId = userCredential.user.uid;
+          console.log(userCredential.user);
+          const userDetails = await getUserDetails(userId);
+          //set token to localStorage
+          await localStorage.setItem('token', token);
+          setToken(window.localStorage.token);
+          await localStorage.setItem('user', userId);
+          setUser(window.localStorage.user);
+          await localStorage.setItem('userDetails', JSON.stringify(userDetails));
+          setUserDetails(userDetails);
+          //check if user has verified their account via link in email
+          const emailVerified = userCredential.user.emailVerified;
+          console.log('emailVerified in authmethod', emailVerified);
+          console.log('signed in');
+          return { token, emailVerified, userId };
+        })
+        .catch((err) => {
+          setErrors([err.message]);
+          console.log('could not sign up');
+        })
+    );
   },
   signout: (setErrors, setToken, setUser) => {
     // signOut is a no argument function
@@ -112,6 +130,7 @@ export const authMethods = {
         setUser(null);
       });
   },
+
   verifyEmailExistsInDatabase: async (email, setErrors) => {
     const emailExists = await firebase
       .auth()
@@ -131,5 +150,8 @@ export const authMethods = {
       .catch((error) => {
         setErrors([error.message]);
       });
+  },
+  sendVerificationEmail: async () => {
+    firebase.auth().currentUser.sendEmailVerification();
   },
 };

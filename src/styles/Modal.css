@@ -19,7 +19,7 @@
   width: 30vw;
   max-height: 60vh;
   cursor: default;
-  padding: 20px;
+  padding: 2px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -41,16 +41,19 @@
   align-content: center;
   height: fit-content;
   font-size: 1.5rem;
-  background-color: #5459fa;
-  color: white;
+  background-color: white;
+  color: var(--header-text-color);
+  border-bottom: var(--main-border-color) solid 1px;
 }
 
 .modal-close-btn {
   background-color: transparent;
   border: none;
-  color: white;
   font-size: 1.5rem;
   cursor: pointer;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
 }
 
 .modal-big-btn {
@@ -65,7 +68,7 @@
   }
 }
 
-.modal-content ::-webkit-scrollbar {
+/* .modal-content ::-webkit-scrollbar {
   width: 10px;
 }
 
@@ -81,11 +84,20 @@
 
 .modal-content ::-webkit-scrollbar-thumb:hover {
   background-color: #5459fa;
-}
+} */
 
 .modal-button-container {
   display: flex;
   justify-content: center;
+}
+
+.modal-bottom-button-container {
+  border-top: var(--main-border-color) solid 1px;
+}
+
+.modal-bottom-button-container .filter-bar-item {
+  margin: 10px;
+  border: none;
 }
 
 .modal-warning-text {

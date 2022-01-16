@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { firebaseAuth } from '../../context/AuthProvider';
 
 //3rd party components
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
@@ -13,7 +14,7 @@ import useToggleClassOnClick from 'hooks/useToggleClassOnClick';
 
 const TestPreviewOverlay = ({ testType, testId }) => {
   //stores the url of the test. is passed down to ShareButton, which appears in the hover overlay.
-
+  const { token } = useContext(firebaseAuth);
   const { ref, classApplied, setClassApplied } = useToggleClassOnClick();
 
   const [location, setLocation] = useState();
@@ -47,9 +48,11 @@ const TestPreviewOverlay = ({ testType, testId }) => {
             <VisibilityOutlinedIcon />
           </div>
         </Link>
-        <div className='circle-icon-container'>
-          <AddToMyFolders iconColor={'white'} testId={testId} />
-        </div>
+        {token && (
+          <div className='circle-icon-container'>
+            <AddToMyFolders iconColor={'white'} testId={testId} />
+          </div>
+        )}
       </div>
     </div>
   );
