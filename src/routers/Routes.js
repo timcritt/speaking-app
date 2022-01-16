@@ -61,7 +61,7 @@ const Routes = () => {
                 {/*test components*/}
                 <Route exact path='/ImageSearch/' component={ImageSearch} />
 
-                <PrivateRoute path='/userContent/:userId' component={CreatorContent} />
+                <Route path='/userContent/:userId' component={CreatorContent} />
                 <Route exact path='/about' component={About} />
                 <Route path='/exploreContent/' component={ExploreContent} />
                 <Route exact path='/folder/:folderId' component={ViewFolder} />

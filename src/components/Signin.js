@@ -3,86 +3,24 @@ import React, { useContext, useEffect } from 'react';
 import { firebaseAuth } from '../context/AuthProvider';
 import { Link } from 'react-router-dom';
 
-const Signin = ({ history }) => {
-  const {
-    handleSignin,
-    inputs,
-    setInputs,
-    errors,
-    setErrors,
-    setToken,
+//custom hooks
+import useSignin from 'hooks/useSignin';
 
-    setEmailVerified,
-    setUserId,
-    handleSendEmailVerification,
-  } = useContext(firebaseAuth);
+const Signin = ({ history }) => {
+  const { signin, inputs, setInputs, errors, setErrors } = useSignin();
 
   useEffect(() => {
     setErrors([]);
   }, []);
 
-  const handleResendEmail = () => {
-    handleSendEmailVerification();
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const { token, emailVerified, userId } = await handleSignin(inputs.email, inputs.password);
-      console.log('is verified?', emailVerified);
-
-      console.log('line after handleSignin');
-      if (token) {
-        setUserId(userId);
-        setToken(token);
-        console.log(token);
-        console.log('token is present');
-        setEmailVerified(emailVerified);
-
-        if (emailVerified) {
-          if (history.location.pathname === '/signin') {
-            history.push(`/userContent/${userId}/tests`);
-            console.log('redirecting to user content');
-          } else {
-            console.log('pushing to home or prevously navigated page');
-            history.push('/');
-          }
-        } else {
-          setErrors([
-            'Before using your account, you must verify your email. Please check your email.',
-            <span onClick={handleResendEmail}>'Click here to resend the verification email'</span>,
-          ]);
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    signin();
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInputs((prev) => ({ ...prev, [name]: value }));
   };
-
-  // useEffect(() => {
-  //   let isMounted = true;
-  //   //redirectes to users content page if login successful and login page hasn't been reached from trying to access a private route
-  //   if (isMounted) {
-  //     if (token) {
-  //       if (emailVerified) {
-  //         if (history.location.pathname === '/signin') {
-  //           history.push(`/userContent/${userId}/tests`);
-  //         } else {
-  //           history.push('/');
-  //         }
-  //       } else {
-  //         history.push('/verifyEmail');
-  //       }
-  //     }
-  //   }
-
-  //   return () => {
-  //     isMounted = false;
-  //   };
-  // }, [emailVerified, history, token, userId]);
 
   return (
     <div className='auth-container'>
@@ -111,12 +49,13 @@ const Signin = ({ history }) => {
           placeholder='password'
           value={inputs.password}
         />
-        <button className='auth-button'>log in</button>
         <div className='auth-help-container'>
           <Link className='auth-link' to='/resetPassword'>
             <span>forgotten password?</span>
           </Link>
         </div>
+        <button className='auth-button'>log in</button>
+
         {errors.length > 0
           ? errors.map((error) => (
               <p key={error} style={{ color: 'red' }}>
