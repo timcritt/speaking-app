@@ -1,7 +1,6 @@
 import firebase from 'firebase';
 import getUserDetails from '../APIHandlers/getUserDetails';
 import { projectFirestore } from '../firebase/firebaseIndex';
-import { uploadImage } from 'APIHandlers/uploadImage';
 
 export const authMethods = {
   signup: async function (

@@ -1,17 +1,15 @@
-// add useContext
-import React, { useContext, useEffect } from 'react';
-import { firebaseAuth } from '../context/AuthProvider';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 //custom hooks
 import useSignin from 'hooks/useSignin';
 
-const Signin = ({ history }) => {
+const Signin = () => {
   const { signin, inputs, setInputs, errors, setErrors } = useSignin();
 
   useEffect(() => {
     setErrors([]);
-  }, []);
+  }, [setErrors]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,7 +38,6 @@ const Signin = ({ history }) => {
           placeholder='email'
           value={inputs.email}
         />
-
         <input
           type='password'
           className='auth-input'
