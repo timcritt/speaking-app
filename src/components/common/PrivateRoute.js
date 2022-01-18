@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Route } from 'react-router-dom';
 import { firebaseAuth } from '../../context/AuthProvider';
-import Signin from '../Signin';
+import Signin from '../Signin/Signin';
 
 const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
   const { token, emailVerified } = useContext(firebaseAuth);

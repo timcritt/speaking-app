@@ -1,10 +1,11 @@
-import React, { Fragment, useState, useEffect, cloneElement } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { Fragment, useState, cloneElement } from 'react';
 import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
 import getFilteredTests from 'APIHandlers/getFilteredTests';
 import LinearProgress from '@material-ui/core/LinearProgress';
-
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+
+//custom hooks
+import useFilterTests from './useFilterTests';
 
 const VerticallyExpandingTestsContainer = ({
   creatorId,
@@ -40,49 +41,7 @@ const VerticallyExpandingTestsContainer = ({
     }
   };
 
-  //get user id from params
-  const params = useParams();
-
-  //get tests and apply search filters
-  useEffect(() => {
-    var isMounted = true;
-
-    if (params && tests) {
-      const filterTests = async () => {
-        if (isMounted) {
-          var userTests = await JSON.parse(JSON.stringify(tests));
-
-          //filter by topic tag
-          if (tagFilterTerm) {
-            userTests = await userTests.filter((doc) => doc.tags.includes(tagFilterTerm));
-          }
-
-          //sort by date created
-          if (sortBy === 'oldest') {
-            userTests = await userTests.sort((a, b) => {
-              return a.createdAt.seconds - b.createdAt.seconds;
-            });
-          } else if (sortBy === 'newest') {
-            userTests = await userTests.sort((a, b) => {
-              return b.createdAt.seconds - a.createdAt.seconds;
-            });
-          }
-          console.log('sorted', userTests);
-          //filter by question text
-          if (userTests.length > 0 && questionFilterTerm && questionFilterTerm.length > 0) {
-            userTests = await userTests.filter((test) =>
-              test.questionOne.toUpperCase().includes(questionFilterTerm.toUpperCase())
-            );
-          }
-          setFilteredTests(userTests);
-        }
-      };
-      filterTests();
-    }
-    return () => {
-      isMounted = false;
-    };
-  }, [questionFilterTerm, tagFilterTerm, sortBy, params, tests]);
+  useFilterTests(tests, tagFilterTerm, sortBy, questionFilterTerm, setFilteredTests);
 
   return (
     <Fragment>

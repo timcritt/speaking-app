@@ -8,7 +8,7 @@ import TestSearchResults from 'components/CreatorContent/TestSearchResults';
 import FCEPart2TestPreviewContent from 'components/FCEPart2/FCEPart2TestPreviewContent';
 import Part3TestPreviewContent from 'components/Part3Common/Part3TestPreviewContent';
 import CAEPart2TestPreviewContent from 'components/CAEPart2/CAEPart2TestPreviewContent';
-import VerticallyExpandingTestsContainer from './VerticallyExpandingTestsContainer';
+import VerticallyExpandingTestsContainer from './VerticallyExpandingTestContainer/VerticallyExpandingTestsContainer';
 
 //custom hooks
 import useComponentVisible from 'hooks/useComponentVisible';

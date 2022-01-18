@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 //custom hooks
-import useSignin from 'hooks/useSignin';
+import useSignin from 'components/Signin/useSignin';
 
 const Signin = () => {
   const { signin, inputs, setInputs, errors, setErrors } = useSignin();

@@ -6,7 +6,7 @@ import EditFCEPart2 from 'components/FCEPart2/EditFCEPart2';
 import CreatorContent from 'components/CreatorContent/CreatorContent';
 import { Route, Switch } from 'react-router-dom';
 import Signup from 'components/Signup';
-import Signin from 'components/Signin';
+import Signin from 'components/Signin/Signin';
 import PrivateRoute from 'components/common/PrivateRoute';
 import ViewFolder from 'components/ViewFolder/ViewFolder';
 import ExploreContent from 'components/ExploreContent/ExploreContent';
