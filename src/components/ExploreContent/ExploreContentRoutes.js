@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import AllTests from './AllTests';
 import AllFolders from './AllFolders';
 import FolderSummary from '../common/FolderSummary';
-import SearchUsers from './SearchUsers';
+import SearchUsers from './Users/SearchUsers';
 
 const ExploreContentRoutes = ({ url, creatorId }) => {
   return (

@@ -9,5 +9,10 @@
 }
 
 .user-search-button {
-padding: 8px;
+  padding: 8px;
+}
+
+.search-results-message {
+  display: flex;
+  justify-content: center;
 }
