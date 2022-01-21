@@ -6,6 +6,7 @@
 @import 'Footer.css';
 @import 'Exam.css';
 @import 'FCEPart2.css';
+@import 'ProgressBar.css';
 @import 'Timer.css';
 @import 'Header.css';
 @import 'EditFCEPart2.css';
@@ -15,7 +16,7 @@
 @import 'dropdown.css';
 @import 'Signin.css';
 @import 'EasyCrop.css';
-@import 'ProgressBar.css';
+
 @import 'Tests.css';
 @import 'ToolBar.css';
 @import 'FullScreen.css';

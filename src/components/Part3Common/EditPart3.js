@@ -49,7 +49,7 @@ const EditPart3 = ({ context, testType, ...props }) => {
   };
 
   useEffect(() => {
-    //sends the id of the current test to be displayed to the FCEPart2 context
+    //sends the id of the current test to be displayed to the FCEPart3 context
     if (props.match.params.id !== 'new') {
       context.setDocRef(props.match.params.id);
     } else {

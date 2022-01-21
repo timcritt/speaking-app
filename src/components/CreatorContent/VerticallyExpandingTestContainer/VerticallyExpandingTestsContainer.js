@@ -46,7 +46,7 @@ const VerticallyExpandingTestsContainer = ({
   return (
     <Fragment>
       <div
-        className={`tests-container-header ${
+        className={`${fetching && 'progress-bar'} tests-container-header ${
           testContainerExpanded ? 'test-container-header-expanded' : ''
         } `}
       >
@@ -64,7 +64,6 @@ const VerticallyExpandingTestsContainer = ({
           {cloneElement(children, { tests: filteredTests })}
         </div>
       </div>
-      {fetching && <LinearProgress />}
     </Fragment>
   );
 };

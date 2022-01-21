@@ -1,10 +1,10 @@
 // add useContext
 import React, { useContext, useState, useEffect } from 'react';
-import { firebaseAuth } from '../context/AuthProvider';
+import { firebaseAuth } from '../../context/AuthProvider';
 import { Link, withRouter } from 'react-router-dom';
-import ImageContext from 'context/ImageContext';
+//import ImageContext from 'context/ImageContext';
 import profilePlaceHolder from 'img/profile-placeholder.png';
-import ProfilePickerModal from 'components/Profile/ProfilePickerModal';
+//import ProfilePickerModal from 'components/Profile/ProfilePickerModal';
 
 const Signup = (props) => {
   const { handleSignup, inputs, setInputs, errors } = useContext(firebaseAuth);
@@ -14,12 +14,20 @@ const Signup = (props) => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [passwordsMatch, setPasswordsMatch] = useState(true);
 
+  const handleCheckPasswordMatch = (e) => {
+    setRepeatPassword(e.target.value);
+    if (inputs.password.trim() !== e.target.value.trim()) {
+      setPasswordsMatch(false);
+    } else {
+      setPasswordsMatch(true);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsDisabled(true);
     if (userName) {
       try {
-        // console.log('userId before signup', userId);
         //signs up and returns the user id. Changes to userId made from inside authMethods weren't reflected here
         //not sure why. I changed "signup" in authMethodhandle to return value of userId, which gets passed up the chain.
         const newUserId = await handleSignup(userName, imageLocalUrl);
@@ -35,9 +43,7 @@ const Signup = (props) => {
     const { name, value } = e.target;
     setInputs((prev) => ({ ...prev, [name]: value }));
   };
-  const handleRepeatUserNameChange = (e) => {
-    setRepeatPassword(e.target.value);
-  };
+
   const handleChangeUserName = (e) => {
     setUserName(e.target.value);
   };
@@ -92,15 +98,15 @@ const Signup = (props) => {
         <input
           type='password'
           autoComplete='new-password'
-          className='auth-input'
-          onChange={handleRepeatUserNameChange}
+          className={`auth-input ${passwordsMatch ? 'green-border' : 'red-border'}`}
+          onChange={handleCheckPasswordMatch}
           name='repeat-password'
-          placeholder='confirm password*'
+          placeholder='reenter password'
           value={repeatPassword}
         />
         <input
           type='text'
-          className={`auth-input ${passwordsMatch ? '' : 'red-border'}`}
+          className={`auth-input `}
           onChange={handleChangeUserName}
           name='userName'
           placeholder='display name*'

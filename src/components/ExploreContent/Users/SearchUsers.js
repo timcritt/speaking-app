@@ -1,7 +1,5 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 import Users from './Users';
-import useFirestore from '../../../hooks/useFirestore';
-import { users } from '../../../APIHandlers/firebaseConsts';
 import useGetUsers from './useGetUsers';
 
 const SearchUsers = () => {
