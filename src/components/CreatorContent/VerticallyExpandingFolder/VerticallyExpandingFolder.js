@@ -57,11 +57,11 @@ const VerticallyExpandingFolder = ({ folder }) => {
   return (
     <Fragment>
       <div
-        className={`tests-container-header ${
+        className={`${fetching && 'progress-bar'} tests-container-header   ${
           testContainerExpanded ? 'test-container-header-expanded' : ''
         } `}
       >
-        <div className='tests-container-heading' onClick={(e) => toggleExpandContainer(e)}>
+        <div className={`tests-container-heading`} onClick={(e) => toggleExpandContainer(e)}>
           <div className='folder-info-container'>
             <FolderOutlinedIcon className='folder-summary-icon' />
             <div className='folder-icon-title-container'>
@@ -148,8 +148,8 @@ const VerticallyExpandingFolder = ({ folder }) => {
         </div>
       </div>
       {fetching && (
-        <div className={'full-width'}>
-          <LinearProgress />
+        <div className='progress'>
+          <span className='progress-bar' style={{ width: '75%' }}></span>
         </div>
       )}
     </Fragment>

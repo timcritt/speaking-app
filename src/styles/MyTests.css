@@ -40,9 +40,9 @@
   justify-content: space-between;
   margin-top: 5px;
   padding: 0 20px;
-  background: white;
   border: 1px solid #e6eaea;
   border-radius: 5px;
+  background-color: white;
 }
 
 .tests-container-header:hover {

@@ -78,9 +78,18 @@ const AllTests = ({ creatorId }) => {
     setHasFetched(false);
     setSearchButtonClicked(true);
 
-    await getFilteredTests(creatorId, questionFilterTerm, exam + testType).then((data) => {
+    await getFilteredTests(creatorId, questionFilterTerm, exam + testType).then(async (data) => {
       var filteredDocs = JSON.parse(JSON.stringify(data));
-
+      //sort by date created
+      if (sortBy === 'oldest') {
+        filteredDocs = await filteredDocs.sort((a, b) => {
+          return a.createdAt.seconds - b.createdAt.seconds;
+        });
+      } else if (sortBy === 'newest') {
+        filteredDocs = await filteredDocs.sort((a, b) => {
+          return b.createdAt.seconds - a.createdAt.seconds;
+        });
+      }
       //filter by topic tag
       if (tagFilterTerm) {
         filteredDocs = filteredDocs.filter((doc) => doc.tags.includes(tagFilterTerm));
@@ -91,7 +100,7 @@ const AllTests = ({ creatorId }) => {
       setResults(filteredDocs);
       setHasFetched(true);
     });
-  }, [creatorId, exam, questionFilterTerm, tagFilterTerm, testType]);
+  }, [creatorId, exam, questionFilterTerm, sortBy, tagFilterTerm, testType]);
 
   const handleSortRadioChange = (e) => {
     setSortBy(e.currentTarget.value);

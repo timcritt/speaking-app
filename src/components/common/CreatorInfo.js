@@ -34,7 +34,7 @@ const CreatorInfo = ({ creatorId }) => {
         <img
           onError={addDefaultSrc}
           alt='could not load'
-          className='profile-picture-small'
+          className='profile-picture-small '
           src={creatorProfilePicture ? creatorProfilePicture : defaultProfilePicture}
         />
         <div className='created-by-text'>

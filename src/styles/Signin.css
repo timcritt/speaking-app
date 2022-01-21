@@ -86,3 +86,10 @@
   text-align: left;
   padding-left: 20px;
 }
+
+.red-border {
+  border: solid 1px red;
+}
+.green-border {
+  border: solid 1px green;
+}

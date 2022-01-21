@@ -1,5 +1,29 @@
+.progress {
+}
 .progress-bar {
-  background-color: #F5D88B;
-  height: 3px;
-  margin-top: 20px;
+  box-shadow: 0 4px 10px 0 rgba(33, 33, 33, 0.15);
+  border-radius: 4px;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar::before {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 500px;
+  top: 0;
+  height: 100%;
+  width: 300px;
+  background: linear-gradient(to right, transparent 0%, #e9fcffcc 50%, transparent 100%);
+  animation: load 0.75s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+@keyframes load {
+  from {
+    left: -150px;
+  }
+  to {
+    left: 100%;
+  }
 }
