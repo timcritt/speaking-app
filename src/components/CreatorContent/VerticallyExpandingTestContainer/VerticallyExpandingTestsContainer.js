@@ -45,23 +45,26 @@ const VerticallyExpandingTestsContainer = ({
 
   return (
     <Fragment>
-      <div
-        className={`${fetching && 'progress-bar'} tests-container-header ${
-          testContainerExpanded ? 'test-container-header-expanded' : ''
-        } `}
-      >
-        <div className='tests-container-heading' onClick={(e) => toggleExpandContainer(e)}>
-          <h2>{buttonLabel}</h2>
-          <div className='tests-container-button'>
-            {testContainerExpanded ? <RemoveRoundedIcon /> : <ArrowDropDownIcon />}
-          </div>
-        </div>
+      <div className={`${fetching && 'loading-bar animate '}`}>
         <div
-          className={
-            'user-tests-container ' + (testContainerExpanded ? 'user-tests-container-expanded' : '')
-          }
+          className={`${fetching && 'loading-span '} tests-container-header ${
+            testContainerExpanded ? 'test-container-header-expanded' : ''
+          } `}
         >
-          {cloneElement(children, { tests: filteredTests })}
+          <div className='tests-container-heading' onClick={(e) => toggleExpandContainer(e)}>
+            <h2>{buttonLabel}</h2>
+            <div className='tests-container-button'>
+              {testContainerExpanded ? <RemoveRoundedIcon /> : <ArrowDropDownIcon />}
+            </div>
+          </div>
+          <div
+            className={
+              'user-tests-container ' +
+              (testContainerExpanded ? 'user-tests-container-expanded' : '')
+            }
+          >
+            {cloneElement(children, { tests: filteredTests })}
+          </div>
         </div>
       </div>
     </Fragment>

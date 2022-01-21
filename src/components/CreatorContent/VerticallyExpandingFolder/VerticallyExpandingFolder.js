@@ -1,6 +1,5 @@
 import React, { Fragment, useState, useEffect, useContext } from 'react';
 import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import getTestsById from '../../../APIHandlers/getTestsById';
 import TestPreview from '../../common/TestPreview';
 import FolderOutlinedIcon from '@material-ui/icons/FolderOutlined';
@@ -56,102 +55,105 @@ const VerticallyExpandingFolder = ({ folder }) => {
 
   return (
     <Fragment>
-      <div
-        className={`${fetching && 'progress-bar'} tests-container-header   ${
-          testContainerExpanded ? 'test-container-header-expanded' : ''
-        } `}
-      >
-        <div className={`tests-container-heading`} onClick={(e) => toggleExpandContainer(e)}>
-          <div className='folder-info-container'>
-            <FolderOutlinedIcon className='folder-summary-icon' />
-            <div className='folder-icon-title-container'>
-              <span className='folder-title'>{folder.title}</span>
-              <span>({folder.testCount})</span>
+      <div className={`${fetching && 'loading-bar animate '}`}>
+        <div
+          className={`tests-container-header ${fetching && 'loading-span '}  ${
+            testContainerExpanded ? 'test-container-header-expanded' : ''
+          } `}
+        >
+          <div className={`tests-container-heading`} onClick={(e) => toggleExpandContainer(e)}>
+            <div className='folder-info-container'>
+              <FolderOutlinedIcon className='folder-summary-icon' />
+              <div className='folder-icon-title-container'>
+                <span className='folder-title'>{folder.title}</span>
+                <span>({folder.testCount})</span>
+              </div>
+            </div>
+            <div className='tests-container-button'>
+              {testContainerExpanded ? <RemoveRoundedIcon /> : <ArrowDropDownIcon />}
+            </div>
+            <div className='tests-container-button'>
+              <span className='delete-folder-button-container'>
+                {userId === folder.creatorId && (
+                  <DeleteButton
+                    deleteItemType='folder'
+                    iconColour='inherit'
+                    itemId={folder.id}
+                    firestoreCollection={'folders'}
+                  />
+                )}
+              </span>
             </div>
           </div>
-          <div className='tests-container-button'>
-            {testContainerExpanded ? <RemoveRoundedIcon /> : <ArrowDropDownIcon />}
-          </div>
-          <div className='tests-container-button'>
-            <span className='delete-folder-button-container'>
-              {userId === folder.creatorId && (
-                <DeleteButton
-                  deleteItemType='folder'
-                  iconColour='inherit'
-                  itemId={folder.id}
-                  firestoreCollection={'folders'}
-                />
-              )}
-            </span>
-          </div>
-        </div>
 
-        <div
-          className={
-            'user-tests-container ' + (testContainerExpanded ? 'user-tests-container-expanded' : '')
-          }
-        >
-          <div className='all-tests-container'>
-            {FCEPart2Tests &&
-              FCEPart2Tests.map((test) => {
-                return (
-                  <TestPreview
-                    key={test.id}
-                    testId={test.id}
-                    questionOne={test.questionOne}
-                    testType={FCEPart2}
-                  >
-                    <FCEPart2TestPreviewContent test={test} />
-                  </TestPreview>
-                );
-              })}
-            {FCEPart3Tests &&
-              FCEPart3Tests.map((test) => {
-                return (
-                  <TestPreview
-                    key={test.id}
-                    testId={test.id}
-                    questionOne={test.questionOne}
-                    testType={FCEPart3}
-                  >
-                    <Part3TestPreviewContent test={test} bottomLabel={'FCE Part 3'} />
-                  </TestPreview>
-                );
-              })}
-            {CAEPart2Tests &&
-              CAEPart2Tests.map((test) => {
-                return (
-                  <TestPreview
-                    key={test.id}
-                    testId={test.id}
-                    questionOne={test.questionOne}
-                    testType={CAEPart2}
-                  >
-                    <CAEPart2TestPreviewContent test={test} />
-                  </TestPreview>
-                );
-              })}
-            {CAEPart3Tests &&
-              CAEPart3Tests.map((test) => {
-                return (
-                  <TestPreview
-                    key={test.id}
-                    testId={test.id}
-                    questionOne={test.questionOne}
-                    testType={CAEPart3}
-                  >
-                    <Part3TestPreviewContent test={test} bottomLabel={'CAE Part 3'} />
-                  </TestPreview>
-                );
-              })}
+          <div
+            className={
+              'user-tests-container ' +
+              (testContainerExpanded ? 'user-tests-container-expanded' : '')
+            }
+          >
+            <div className='all-tests-container'>
+              {FCEPart2Tests &&
+                FCEPart2Tests.map((test) => {
+                  return (
+                    <TestPreview
+                      key={test.id}
+                      testId={test.id}
+                      questionOne={test.questionOne}
+                      testType={FCEPart2}
+                    >
+                      <FCEPart2TestPreviewContent test={test} />
+                    </TestPreview>
+                  );
+                })}
+              {FCEPart3Tests &&
+                FCEPart3Tests.map((test) => {
+                  return (
+                    <TestPreview
+                      key={test.id}
+                      testId={test.id}
+                      questionOne={test.questionOne}
+                      testType={FCEPart3}
+                    >
+                      <Part3TestPreviewContent test={test} bottomLabel={'FCE Part 3'} />
+                    </TestPreview>
+                  );
+                })}
+              {CAEPart2Tests &&
+                CAEPart2Tests.map((test) => {
+                  return (
+                    <TestPreview
+                      key={test.id}
+                      testId={test.id}
+                      questionOne={test.questionOne}
+                      testType={CAEPart2}
+                    >
+                      <CAEPart2TestPreviewContent test={test} />
+                    </TestPreview>
+                  );
+                })}
+              {CAEPart3Tests &&
+                CAEPart3Tests.map((test) => {
+                  return (
+                    <TestPreview
+                      key={test.id}
+                      testId={test.id}
+                      questionOne={test.questionOne}
+                      testType={CAEPart3}
+                    >
+                      <Part3TestPreviewContent test={test} bottomLabel={'CAE Part 3'} />
+                    </TestPreview>
+                  );
+                })}
+            </div>
           </div>
         </div>
+        {fetching && (
+          <div className='progress'>
+            <span className='progress-bar' style={{ width: '75%' }}></span>
+          </div>
+        )}
       </div>
-      {fetching && (
-        <div className='progress'>
-          <span className='progress-bar' style={{ width: '75%' }}></span>
-        </div>
-      )}
     </Fragment>
   );
 };
