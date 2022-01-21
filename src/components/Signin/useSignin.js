@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { firebaseAuth } from '../context/AuthProvider';
+import { firebaseAuth } from '../../context/AuthProvider';
 import { useHistory } from 'react-router-dom';
 
 const useSignin = () => {
