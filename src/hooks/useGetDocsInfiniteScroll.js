@@ -4,7 +4,7 @@ import pagination from 'APIHandlers/pagination.js';
 
 // PROBLEM: it's currently impossible with firebase to check if a string in the database contains another.
 // Only exact mathches will return results.
-const useGetDocsInfiniteScroll = (userName, setDocs, docs) => {
+const useGetDocsInfiniteScroll = (userName, setDocs, filterBy, searchTerm) => {
   const [lastKey, setLastKey] = useState('');
   const [nextDocs_loading, setNextPostsLoading] = useState(false);
 
@@ -13,11 +13,11 @@ const useGetDocsInfiniteScroll = (userName, setDocs, docs) => {
     if (lastKey.length > 0) {
       setNextPostsLoading(true);
       pagination
-        .postsNextBatch(lastKey)
+        .postsNextBatch(lastKey, filterBy, searchTerm)
         .then((res) => {
           setLastKey(res.lastKey);
           // add new posts to old posts
-          setDocs(() => docs.concat(res.results));
+          setDocs((prevDocs) => prevDocs.concat(res.results));
           setNextPostsLoading(false);
         })
         .catch((err) => {
@@ -41,7 +41,7 @@ const useGetDocsInfiniteScroll = (userName, setDocs, docs) => {
       });
   }, [setDocs]);
 
-  return { fetchMorePosts, nextDocs_loading };
+  return { fetchMorePosts, nextDocs_loading, setLastKey };
 
   // useEffect(() => {
   //   var results = projectFirestore.collection('users');
