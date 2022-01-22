@@ -1,11 +1,11 @@
 import React, { Fragment, useState } from 'react';
 import Users from './Users';
-import useGetUsers from './useGetUsers';
+import useGetDocsInfiniteScroll from 'hooks/useGetDocsInfiniteScroll';
 
 const SearchUsers = () => {
   const [searchTerm, setSearchTerm] = useState();
-
-  const { docs } = useGetUsers(searchTerm);
+  const [docs, setDocs] = useState();
+  const { fetchMorePosts, nextDocs_loading } = useGetDocsInfiniteScroll(searchTerm, setDocs, docs);
 
   const handleChange = (e) => {
     setSearchTerm(e.currentTarget.value);
@@ -23,6 +23,8 @@ const SearchUsers = () => {
         <button className='user-search-button'>search</button>
       </div>
       <Users users={docs} />
+      {nextDocs_loading && 'loading'}
+      <button onClick={fetchMorePosts}>get more posts</button>
     </Fragment>
   );
 };

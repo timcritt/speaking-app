@@ -1,7 +1,6 @@
 import React, { Fragment, useState, cloneElement } from 'react';
 import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
 import getFilteredTests from 'APIHandlers/getFilteredTests';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 //custom hooks

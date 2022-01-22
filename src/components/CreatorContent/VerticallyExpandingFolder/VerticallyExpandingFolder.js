@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useContext } from 'react';
+import React, { Fragment, useState, useContext } from 'react';
 import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
 import getTestsById from '../../../APIHandlers/getTestsById';
 import TestPreview from '../../common/TestPreview';
