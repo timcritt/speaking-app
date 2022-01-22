@@ -1,14 +1,19 @@
 import React, { Fragment, useState } from 'react';
 import Users from './Users';
-import useGetUsers from './useGetUsers';
+import useGetDocsInfiniteScroll from 'hooks/useGetDocsInfiniteScroll';
+import pagination from 'APIHandlers/pagination.js';
 
 const SearchUsers = () => {
   const [searchTerm, setSearchTerm] = useState();
-
-  const { docs } = useGetUsers(searchTerm);
+  const [docs, setDocs] = useState();
+  const { fetchMorePosts, nextDocs_loading } = useGetDocsInfiniteScroll(searchTerm, setDocs, docs);
 
   const handleChange = (e) => {
     setSearchTerm(e.currentTarget.value);
+  };
+  const handleClickSearch = async () => {
+    const { results } = await pagination.postsFirstBatch();
+    setDocs(results);
   };
 
   return (
@@ -19,10 +24,14 @@ const SearchUsers = () => {
           className='user-search-input'
           placeholder='enter the name of a user'
           onChange={handleChange}
-        ></input>
-        <button className='user-search-button'>search</button>
+        />
+        <button className='user-search-button' onClick={handleClickSearch}>
+          search
+        </button>
       </div>
       <Users users={docs} />
+      {nextDocs_loading && 'loading'}
+      <button onClick={fetchMorePosts}>get more posts</button>
     </Fragment>
   );
 };

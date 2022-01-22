@@ -8,7 +8,7 @@ const Users = ({ users }) => {
       {users && users.length ? (
         <div className='all-tests-container'>
           {users.map((doc) => (
-            <UserSummary key={doc.id} user={doc} />
+            <UserSummary key={doc.userId} user={doc} />
           ))}
         </div>
       ) : (
