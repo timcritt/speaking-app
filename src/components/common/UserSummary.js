@@ -8,7 +8,7 @@ const UserSummary = ({ user }) => {
   return (
     <div
       className='test-preview-container'
-      onClick={() => history.push(`/userContent/${user.id}/tests`)}
+      onClick={() => history.push(`/userContent/${user.userId}/tests`)}
     >
       <div className='user-summary-container '>
         <img

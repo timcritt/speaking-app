@@ -7,12 +7,7 @@ const pagination = {
    */
   postsFirstBatch: async function () {
     try {
-      const data = await projectFirestore
-        .collection('users')
-        .orderBy('userId')
-        //.orderBy('createdAt', 'desc')
-        .limit(5)
-        .get();
+      const data = await projectFirestore.collection('users').orderBy('userId').limit(5).get();
       console.log(data);
       let results = [];
       let lastKey = '';
@@ -23,7 +18,6 @@ const pagination = {
         });
         lastKey = doc.id;
       });
-      console.log(results);
       return { results, lastKey };
     } catch (e) {
       console.log(e);
