@@ -11,8 +11,7 @@ export const authMethods = {
     setUserId,
     setUserEmail,
     setUserDetails,
-    userName,
-    imageLocalUrl
+    userName
   ) {
     return firebase
       .auth()
@@ -29,17 +28,6 @@ export const authMethods = {
           })
           .then(async () => {
             console.log('associated user record created in firestore');
-            //upload profile pic and grab url and reference
-            //const { url, reference } = await uploadImage(imageLocalUrl);
-            //console.log('image uploaded');
-
-            //update user record with new profile pic
-            // await projectFirestore.collection('users').doc(userCredential.user.uid).update({
-            //   profilePicture: url,
-            //   profilePictureReference: reference,
-            // });
-            // console.log('image reference updated on user record');
-
             const token = await Object.entries(userCredential.user)[5][1].b;
             const userId = userCredential.user.uid;
             console.log(userCredential.user);

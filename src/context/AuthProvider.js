@@ -43,8 +43,7 @@ const AuthProvider = (props) => {
       handleSetUserId,
       setUserEmail,
       setUserDetails,
-      userName,
-      imageLocalUrl
+      userName
     );
   };
   const handleSignin = async (email, password) => {

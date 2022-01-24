@@ -2,14 +2,16 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { firebaseAuth } from '../context/AuthProvider';
 import { Link, withRouter } from 'react-router-dom';
+<<<<<<< Updated upstream:src/components/Signup.js
 import ImageContext from 'context/ImageContext';
 import profilePlaceHolder from 'img/profile-placeholder.png';
 import ProfilePickerModal from 'components/Profile/ProfilePickerModal';
+=======
+>>>>>>> Stashed changes:src/components/Signup/Signup.js
 
 const Signup = (props) => {
   const { handleSignup, inputs, setInputs, errors } = useContext(firebaseAuth);
   const [repeatPassword, setRepeatPassword] = useState('');
-  const [imageLocalUrl, setImageLocalUrl] = useState(profilePlaceHolder);
   const [userName, setUserName] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
   const [passwordsMatch, setPasswordsMatch] = useState(true);
@@ -22,7 +24,7 @@ const Signup = (props) => {
         // console.log('userId before signup', userId);
         //signs up and returns the user id. Changes to userId made from inside authMethods weren't reflected here
         //not sure why. I changed "signup" in authMethodhandle to return value of userId, which gets passed up the chain.
-        const newUserId = await handleSignup(userName, imageLocalUrl);
+        const newUserId = await handleSignup(userName);
         props.history.push(`/userContent/${newUserId}/tests`);
       } catch (err) {
         setIsDisabled(false);
@@ -61,18 +63,6 @@ const Signup = (props) => {
   return (
     <div className='auth-container'>
       <form className='auth-form' onSubmit={(e) => handleSubmit(e)}>
-        {/* <div>
-           <img alt='could not load' className='profile-detail-picture' src={imageLocalUrl} />
-
-         <div className='profile-name-container'>
-            <ImageContext.Provider value={{ handleSetProfilePicture: setImageLocalUrl }}>
-              <ProfilePickerModal
-                aria-labelledby='simple-modal-title'
-                aria-describedby='simple-modal-description'
-              ></ProfilePickerModal>
-            </ImageContext.Provider>
-        </div>
-        </div>*/}
         <input
           className='auth-input'
           onChange={handleChange}
