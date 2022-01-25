@@ -2,9 +2,8 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { firebaseAuth } from '../../context/AuthProvider';
 import { Link, withRouter } from 'react-router-dom';
-//import ImageContext from 'context/ImageContext';
+
 import profilePlaceHolder from 'img/profile-placeholder.png';
-//import ProfilePickerModal from 'components/Profile/ProfilePickerModal';
 
 const Signup = (props) => {
   const { handleSignup, inputs, setInputs, errors } = useContext(firebaseAuth);
