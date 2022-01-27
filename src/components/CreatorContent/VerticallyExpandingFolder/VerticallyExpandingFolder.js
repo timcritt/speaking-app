@@ -1,11 +1,11 @@
 import React, { Fragment, useState, useContext } from 'react';
 import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
 import getTestsById from '../../../APIHandlers/getTestsById';
-import TestPreview from '../../common/TestPreview';
+import TestPreview from 'components/TestPreview/TestPreview';
 import FolderOutlinedIcon from '@material-ui/icons/FolderOutlined';
 import { FCEPart2, FCEPart3, CAEPart2, CAEPart3 } from 'APIHandlers/firebaseConsts';
 import Part3TestPreviewContent from 'components/Part3Common/Part3TestPreviewContent';
-import FCEPart2TestPreviewContent from 'components/FCEPart2/FCEPart2TestPreviewContent';
+import FCEPart2TestPreviewContent from 'components/FCEPart2/FCEPart2TestPreviewContent/FCEPart2TestPreviewContent';
 import CAEPart2TestPreviewContent from 'components/CAEPart2/CAEPart2TestPreviewContent';
 import getFolderTestsJunctions from 'APIHandlers/getFolderTestsJunctions';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -148,11 +148,6 @@ const VerticallyExpandingFolder = ({ folder }) => {
             </div>
           </div>
         </div>
-        {fetching && (
-          <div className='progress'>
-            <span className='progress-bar' style={{ width: '75%' }}></span>
-          </div>
-        )}
       </div>
     </Fragment>
   );

@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import TestPreviewOverlay from 'components/TestCommon/TestPreviewOverlay';
+import TestPreviewOverlay from 'components/TestPreviewOverlay/TestPreviewOverlay';
 
 const CAEPart2TestPreviewContent = ({ test, testId, testType }) => {
   return (

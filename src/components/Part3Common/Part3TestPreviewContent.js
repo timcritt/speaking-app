@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { TagCloud } from 'react-tagcloud';
-import TestPreviewOverlay from 'components/TestCommon/TestPreviewOverlay';
+import TestPreviewOverlay from 'components/TestPreviewOverlay/TestPreviewOverlay';
 import { CAEPart3 } from 'APIHandlers/firebaseConsts';
 
 const CAEPart3TestPreviewContent = React.memo(({ test, testId, testType }) => {

@@ -2,20 +2,6 @@
   display: grid;
 }
 
-.test-preview-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  position: relative;
-  transition: all 0.3s ease-in-out;
-}
-
-.test-preview-link {
-  color: black;
-  overflow: hidden;
-  margin-right: 5px;
-  position: relative;
-}
 .test-preview-image-row {
   display: grid;
   column-gap: 2px;
@@ -38,82 +24,6 @@
   object-fit: cover;
   width: 100%;
   min-height: 100%;
-}
-
-.test-preview-overlay {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  transition: all 0.3s ease-in-out;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.test-grow-hover-container {
-  overflow: hidden;
-  position: relative;
-  border-radius: 0.25em;
-}
-
-/*restricts hover effect to devices with mouse*/
-@media (hover: hover) {
-  .test-grow-hover-container:hover .test-preview-overlay {
-    opacity: 1;
-    color: white;
-    background-color: #0000005c;
-  }
-  /*buttons on overlay are disabled by default to prevent accidental clicks when overlay is hidden. This activates them for devices with mouse*/
-  .test-preview-overlay:hover .overlay-bottom-right {
-    pointer-events: unset;
-  }
-}
-
-.test-grow-hover-container-hover-mobile {
-  opacity: 1;
-  color: white;
-  background-color: #0000005c;
-}
-
-.test-preview-grow-on-hover {
-  transition: all 0.3s ease-in-out;
-  overflow: hidden;
-  display: flex;
-}
-
-/*for touchscreen devices. Enables the buttons once touchscreen user has touched the overlay. the parent class is only applied after user touches test overlay*/
-.test-grow-hover-container-hover-mobile .overlay-bottom-right {
-  pointer-events: unset;
-}
-
-.test-grow-hover-container:hover .test-preview-grow-on-hover {
-  transform: scale(1.05);
-}
-
-.overlay-bottom-right {
-  display: flex;
-  justify-content: space-around;
-  width: 50%;
-  pointer-events: none;
-}
-
-.circle-icon-container {
-  border: 2px solid white;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9990;
-}
-
-.circle-icon-container:hover {
-  border-color: rgb(216, 216, 216);
-  color: rgb(216, 216, 216);
-  transition: all 0.3s ease-in-out;
 }
 
 @media screen and (min-width: 800px) {

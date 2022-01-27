@@ -12,6 +12,9 @@ import AddToMyFolders from 'components/common/AddToMyFolders';
 //custom hooks
 import useToggleClassOnClick from 'hooks/useToggleClassOnClick';
 
+//styles
+import styles from './TestPreviewOverlay.module.css';
+
 const TestPreviewOverlay = ({ testType, testId }) => {
   //stores the url of the test. is passed down to ShareButton, which appears in the hover overlay.
   const { token } = useContext(firebaseAuth);
@@ -33,23 +36,23 @@ const TestPreviewOverlay = ({ testType, testId }) => {
     };
 
     if (isTouchDevice()) {
-      setClassApplied('test-grow-hover-container-hover-mobile');
+      setClassApplied(styles.mobile);
     }
   };
 
   return (
-    <div className={`test-preview-overlay ${classApplied}`} ref={ref} onClick={handleClick}>
-      <div className='overlay-bottom-right'>
-        <div className='circle-icon-container'>
+    <div className={`${styles.container} ${classApplied}`} ref={ref} onClick={handleClick}>
+      <div className={styles.button_container}>
+        <div className={styles.icon_container}>
           <ShareButton sharedItemType='' iconColour='white' location={location} />
         </div>
         <Link to={`/${testType}/${testId}`} className='tool-bar-btn' style={{ color: 'white' }}>
-          <div className='circle-icon-container'>
+          <div className={styles.icon_container}>
             <VisibilityOutlinedIcon />
           </div>
         </Link>
         {token && (
-          <div className='circle-icon-container'>
+          <div className={styles.icon_container}>
             <AddToMyFolders iconColor={'white'} testId={testId} />
           </div>
         )}

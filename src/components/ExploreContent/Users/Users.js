@@ -1,5 +1,4 @@
 import React from 'react';
-
 import UserSummary from 'components/common/UserSummary';
 
 const Users = ({ users }) => {
