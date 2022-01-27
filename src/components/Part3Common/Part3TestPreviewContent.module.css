@@ -1,0 +1,11 @@
+.options_container {
+  background-color: #edf1ff;
+  height: 250px;
+  padding: 10px 15px;
+  font-size: large;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}

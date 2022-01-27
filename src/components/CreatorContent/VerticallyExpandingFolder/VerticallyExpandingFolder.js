@@ -115,7 +115,7 @@ const VerticallyExpandingFolder = ({ folder }) => {
                       questionOne={test.questionOne}
                       testType={FCEPart3}
                     >
-                      <Part3TestPreviewContent test={test} bottomLabel={'FCE Part 3'} />
+                      <Part3TestPreviewContent test={test} />
                     </TestPreview>
                   );
                 })}
