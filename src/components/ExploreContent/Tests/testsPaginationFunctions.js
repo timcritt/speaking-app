@@ -1,6 +1,6 @@
 import { projectFirestore } from 'firebase/firebaseIndex';
 
-const pagination = {
+const testsPaginationFunctions = {
   /**
    * this function will be fired when you first time run the app,
    * and it will fetch first 5 posts, here I retrieve them in descending order, until the last added post appears first.
@@ -59,4 +59,4 @@ const pagination = {
   },
 };
 
-export default pagination;
+export default testsPaginationFunctions;

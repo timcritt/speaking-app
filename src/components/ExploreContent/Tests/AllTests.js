@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect, useCallback } from 'react';
 import Tests from './Tests';
-import getFilteredTests from '../../APIHandlers/getFilteredTests';
+import getFilteredTests from '../../../APIHandlers/getFilteredTests';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import useComponentVisible from 'hooks/useComponentVisible';
 import FilterMenuMobile from 'components/CreatorContent/FilterMenuMobile';

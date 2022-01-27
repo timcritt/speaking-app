@@ -5,7 +5,7 @@ import { FCEPart2, FCEPart3, CAEPart2, CAEPart3 } from 'APIHandlers/firebaseCons
 
 //custom components
 import TestPreview from 'components/common/TestPreview';
-import FCEPart2TestPreviewContent from '../FCEPart2/FCEPart2TestPreviewContent';
+import FCEPart2TestPreviewContent from '../../FCEPart2/FCEPart2TestPreviewContent';
 import CAEPart2TestPreviewContent from 'components/CAEPart2/CAEPart2TestPreviewContent';
 import Part3TestPreviewContent from 'components/Part3Common/Part3TestPreviewContent';
 

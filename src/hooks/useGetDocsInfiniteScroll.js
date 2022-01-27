@@ -4,7 +4,7 @@ import pagination from 'APIHandlers/pagination.js';
 
 // PROBLEM: it's currently impossible with firebase to check if a string in the database contains another.
 // Only exact mathches will return results.
-const useGetDocsInfiniteScroll = (userName, setDocs, filterBy, searchTerm) => {
+const useGetDocsInfiniteScroll = (setDocs, filterBy, searchTerm) => {
   const [lastKey, setLastKey] = useState('');
   const [nextDocs_loading, setNextPostsLoading] = useState(false);
 

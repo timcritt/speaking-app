@@ -8,7 +8,6 @@ const SearchUsers = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [docs, setDocs] = useState([]);
   const { fetchMorePosts, nextDocs_loading, setLastKey } = useGetDocsInfiniteScroll(
-    searchTerm,
     setDocs,
     filterBy,
     searchTerm
