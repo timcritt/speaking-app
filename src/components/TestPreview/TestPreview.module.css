@@ -29,7 +29,6 @@
 }
 
 .grow_hover_container {
-  background-color: green;
   overflow: hidden;
   position: relative;
   border-radius: 0.25em;
@@ -43,7 +42,13 @@
   transition: all 0.3s ease-in-out;
   overflow: hidden;
   display: flex;
-  background: purple;
+}
+
+.label_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px 0 0 0;
 }
 
 @media (hover: hover) {
@@ -51,7 +56,7 @@
   .grow_hover_container:hover > div {
     opacity: 1;
     color: white;
-    background-color: #0000005c;
+    background: linear-gradient(311deg, rgb(73 182 175 / 72%) 10%, #44a2b3d9 50%, #4375b9c7 100%);
   }
   /*buttons on overlay are disabled by default to prevent accidental clicks when overlay is hidden. This activates them for devices with mouse*/
   .test-preview-overlay:hover .overlay-bottom-right {

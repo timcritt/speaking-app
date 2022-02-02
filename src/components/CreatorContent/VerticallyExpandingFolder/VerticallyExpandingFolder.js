@@ -12,6 +12,8 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import DeleteButton from 'components/common/DeleteButton';
 import { firebaseAuth } from '../../../context/AuthProvider';
 
+import LoadingBar from 'components/LoadingBar/LoadingBar';
+
 const VerticallyExpandingFolder = ({ folder }) => {
   const [FCEPart2Tests, setFCEPart2Tests] = useState(null);
   const [FCEPart3Tests, setFCEPart3Tests] = useState(null);
@@ -55,13 +57,13 @@ const VerticallyExpandingFolder = ({ folder }) => {
 
   return (
     <Fragment>
-      <div className={`${fetching && 'loading-bar animate '}`}>
-        <div
-          className={`tests-container-header ${fetching && 'loading-span '}  ${
-            testContainerExpanded ? 'test-container-header-expanded' : ''
-          } `}
-        >
-          <div className={`tests-container-heading`} onClick={(e) => toggleExpandContainer(e)}>
+      <div
+        className={`tests-container-header ${
+          testContainerExpanded ? 'test-container-header-expanded' : ''
+        } `}
+      >
+        <LoadingBar fetching={fetching}>
+          <div className='tests-container-heading' onClick={(e) => toggleExpandContainer(e)}>
             <div className='folder-info-container'>
               <FolderOutlinedIcon className='folder-summary-icon' />
               <div className='folder-icon-title-container'>
@@ -147,7 +149,7 @@ const VerticallyExpandingFolder = ({ folder }) => {
                 })}
             </div>
           </div>
-        </div>
+        </LoadingBar>
       </div>
     </Fragment>
   );

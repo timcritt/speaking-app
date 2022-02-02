@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { uniqueId } from 'lodash';
 
+//CSS module
+import styles from './Part2QuestionRow.module.css';
+
 const Part2QuestionRow = ({ longTurnQuestions, shortTurnQuestion, setTime }) => {
   const [shortTurnVisible, setShortTurnVisible] = useState(false);
   const handleViewShortTurnClick = () => {
@@ -15,58 +18,33 @@ const Part2QuestionRow = ({ longTurnQuestions, shortTurnQuestion, setTime }) => 
       setQuestionClass('');
     } else {
       setTime(2000);
-      setQuestionClass('flipped-vertically');
+      setQuestionClass(styles.flipped_vertically);
     }
   }, [setTime, shortTurnVisible]);
 
   return (
-    <div className='part2-edit-question-row'>
-      <div className='flip-card-CAE-part2'>
-        <div className={`flip-card-inner-CAE-part2  ${questionClass}`}>
-          <div className='flip-card-front-CAE-part2'>
-            <div className='part2-question-questions-and-button-container'>
-              <div className='part2-question-flex-column'>
-                <div className='part2-edit-question-container'>
-                  <ul>
-                    {longTurnQuestions.map((question) => {
-                      return (
-                        <li key={uniqueId()} className='part2-question-text'>
-                          {question}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              </div>
-              <div className='tool-bar-toggleTurn-container'>
-                <button
-                  className={'short-turn-button CAE-part2-short-turn-button '}
-                  onClick={handleViewShortTurnClick}
-                >
-                  show short turn
-                </button>
-              </div>
+    <div className={styles.container} onClick={handleViewShortTurnClick}>
+      <div className={styles.flip_card_container}>
+        <div className={`${styles.flip_card_inner} ${questionClass}`}>
+          <div className={`${styles.flip_card_front} ${styles.flip_card_face}`}>
+            <div className={styles.question_text_container}>
+              <ul>
+                {longTurnQuestions.map((question) => {
+                  return (
+                    <li key={uniqueId()} className={styles.question_text}>
+                      {question}
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
           </div>
-          <div className='flip-card-back-vertical'>
-            <div className='part2-question-questions-and-button-container'>
-              <div className='part2-question-flex-column'>
-                <div className='part2-edit-question-container'>
-                  <ul>
-                    <div className='part2-question-text'>
-                      {shortTurnQuestion ? shortTurnQuestion : dataNotLoadedErrorMessage}
-                    </div>
-                  </ul>
-                </div>
-              </div>
-              <div className='tool-bar-toggleTurn-container'>
-                <button
-                  className={'short-turn-button CAE-part2-short-turn-button '}
-                  onClick={handleViewShortTurnClick}
-                >
-                  show long turn
-                </button>
-              </div>
+          <div className={`${styles.flip_card_back_vertical} + ${styles.flip_card_face}`}>
+            <div className={styles.question_text_container}>
+              <ul className={styles.question_text}>
+                <span>short turn: </span>
+                {shortTurnQuestion ? shortTurnQuestion : dataNotLoadedErrorMessage}
+              </ul>
             </div>
           </div>
         </div>

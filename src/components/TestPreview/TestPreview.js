@@ -16,7 +16,7 @@ const TestPreview = ({ questionOne, children, testId, testType, testLabel }) => 
           <TestPreviewOverlay testId={testId} testType={testType} />
         </div>
       </div>
-      <div className='test-preview-part-label'>{testLabel}</div>
+      <div className={styles.label_container}>{testLabel}</div>
       <div className={`${styles.question_container} dont-break-out`}>
         <span className={styles.question_text}>{questionOne}</span>
       </div>

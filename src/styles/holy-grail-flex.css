@@ -31,7 +31,8 @@
 .holy-grail-content {
   flex: 1 1 auto;
   display: flex;
-  background-color: white;
+  background-color: transparent;
+  z-index: 2;
 }
 
 /**
@@ -75,6 +76,5 @@
   .holy-grail-content {
     flex: 1 1 auto;
     display: flex;
-    background-color: white;
   }
 }

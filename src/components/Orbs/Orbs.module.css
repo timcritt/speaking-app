@@ -1,0 +1,118 @@
+.orbs_container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.orb {
+  position: absolute;
+}
+
+.orb_inner {
+  transform-origin: center;
+  animation: vertical infinite 8s;
+  border-radius: 100%;
+  height: 100%;
+  width: 100%;
+}
+
+.gradient_1 {
+  background: linear-gradient(266deg, rgba(73, 182, 175, 0.9) 10%, #44a2b3 50%, #4375b9 100%);
+}
+
+.gradient_2 {
+  background: linear-gradient(141deg, rgb(95 73 182 / 95%) 35%, #4480b3 81%, #4375b9e6 100%);
+}
+
+.gradient_3 {
+  background: linear-gradient(150deg, rgb(73, 86, 182, 0.85) 10%, #676fa8 50%, #4375b9 100%);
+}
+
+.gradient_4 {
+  background: linear-gradient(303deg, rgba(73, 182, 175, 0.75) 10%, #4499b3 18%, #4375b9 100%);
+}
+
+.gradient_5 {
+  background: linear-gradient(98deg, rgba(73, 182, 175, 0.8) 10%, #44a2b3 50%, #4375b9 100%);
+}
+
+.gradient_6 {
+  background: linear-gradient(64deg, rgba(73, 182, 175, 0.5) 10%, #44a2b3cc 50%, #4375b952 100%);
+}
+
+.gradient_7 {
+  background: linear-gradient(267deg, rgba(73, 182, 175) 10%, #44a2b3 50%, #4375b9 100%);
+}
+
+.gradient_8 {
+  background: red;
+}
+
+.orbs_container :nth-child(1) {
+  top: -100px;
+  width: 500px;
+  height: 500px;
+  transform: translate3d(-50%, 0, 0);
+  left: 50%;
+  z-index: 2;
+}
+
+.orbs_container :nth-child(2) {
+  top: -251px;
+  z-index: 2;
+  left: 50px;
+}
+
+.orbs_container :nth-child(3) {
+  top: -221px;
+  left: -167px;
+}
+
+.orbs_container :nth-child(4) {
+  top: -102px;
+  left: 334px;
+}
+
+.orbs_container :nth-child(5) {
+  top: -100px;
+  right: 200px;
+}
+
+.orbs_container :nth-child(6) {
+  top: -200px;
+  right: 142px;
+  z-index: 2;
+}
+.orbs_container :nth-child(7) {
+  top: -222px;
+  right: -99px;
+}
+
+.orbs_container :nth-child(8) {
+  z-index: 5;
+}
+
+.orb .small {
+  width: 50px;
+  height: 50px;
+}
+
+.orb .medium {
+  width: 400px;
+  height: 400px;
+}
+
+@keyframes vertical {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(10px) scale(0.98);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}

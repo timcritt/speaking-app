@@ -27,7 +27,7 @@ const CreatorContent = () => {
   let { url } = useRouteMatch();
 
   return (
-    <main className='holy-grail-content fade-in'>
+    <main className='holy-grail-content'>
       <div className='my-content-content'>
         <div className='dashboard-background-full-width'>
           <div className='dashboard-container'>
