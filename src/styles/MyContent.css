@@ -74,7 +74,7 @@
 
 .dashboard-radio-btn:checked ~ .dashboard-radio-label {
   transition: all 0.5s ease;
-  border-bottom: 2px solid var(--header-color);
+  border-bottom: 2px solid purple;
   box-sizing: border-box;
 }
 
@@ -87,7 +87,7 @@
   line-height: 1.285714285714286;
   text-transform: capitalize;
   margin-right: 20px;
-  color: var(--header-color);
+  color: black;
 }
 
 .my-content-main {
@@ -105,7 +105,7 @@
 .content-title {
   font-weight: bold;
   font-size: 2.5rem;
-  color: var(--header-color);
+  color: #7c7e7d;
   align-self: center;
 }
 

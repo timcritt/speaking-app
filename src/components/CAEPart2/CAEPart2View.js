@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useContext } from 'react';
+import React, { Fragment, useState, useContext } from 'react';
 //Context
 import { firebaseAuth } from 'context/AuthProvider';
 import { CAEPart2Context } from 'context/CAEPart2Context';

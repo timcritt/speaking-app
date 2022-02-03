@@ -1,6 +1,6 @@
 import React, { cloneElement, Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import TestPreview from '../common/TestPreview';
+import TestPreview from 'components/TestPreview/TestPreview';
 
 const TestSearchResults = ({ tests, testType, children }) => {
   return (

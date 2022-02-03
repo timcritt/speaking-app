@@ -1,16 +1,18 @@
 import React, { Fragment, useState, useContext } from 'react';
 import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
 import getTestsById from '../../../APIHandlers/getTestsById';
-import TestPreview from '../../common/TestPreview';
+import TestPreview from 'components/TestPreview/TestPreview';
 import FolderOutlinedIcon from '@material-ui/icons/FolderOutlined';
 import { FCEPart2, FCEPart3, CAEPart2, CAEPart3 } from 'APIHandlers/firebaseConsts';
 import Part3TestPreviewContent from 'components/Part3Common/Part3TestPreviewContent';
-import FCEPart2TestPreviewContent from 'components/FCEPart2/FCEPart2TestPreviewContent';
+import FCEPart2TestPreviewContent from 'components/FCEPart2/FCEPart2TestPreviewContent/FCEPart2TestPreviewContent';
 import CAEPart2TestPreviewContent from 'components/CAEPart2/CAEPart2TestPreviewContent';
 import getFolderTestsJunctions from 'APIHandlers/getFolderTestsJunctions';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import DeleteButton from 'components/common/DeleteButton';
 import { firebaseAuth } from '../../../context/AuthProvider';
+
+import LoadingBar from 'components/LoadingBar/LoadingBar';
 
 const VerticallyExpandingFolder = ({ folder }) => {
   const [FCEPart2Tests, setFCEPart2Tests] = useState(null);
@@ -55,13 +57,13 @@ const VerticallyExpandingFolder = ({ folder }) => {
 
   return (
     <Fragment>
-      <div className={`${fetching && 'loading-bar animate '}`}>
-        <div
-          className={`tests-container-header ${fetching && 'loading-span '}  ${
-            testContainerExpanded ? 'test-container-header-expanded' : ''
-          } `}
-        >
-          <div className={`tests-container-heading`} onClick={(e) => toggleExpandContainer(e)}>
+      <div
+        className={`tests-container-header ${
+          testContainerExpanded ? 'test-container-header-expanded' : ''
+        } `}
+      >
+        <LoadingBar fetching={fetching}>
+          <div className='tests-container-heading' onClick={(e) => toggleExpandContainer(e)}>
             <div className='folder-info-container'>
               <FolderOutlinedIcon className='folder-summary-icon' />
               <div className='folder-icon-title-container'>
@@ -115,7 +117,7 @@ const VerticallyExpandingFolder = ({ folder }) => {
                       questionOne={test.questionOne}
                       testType={FCEPart3}
                     >
-                      <Part3TestPreviewContent test={test} bottomLabel={'FCE Part 3'} />
+                      <Part3TestPreviewContent test={test} />
                     </TestPreview>
                   );
                 })}
@@ -147,12 +149,7 @@ const VerticallyExpandingFolder = ({ folder }) => {
                 })}
             </div>
           </div>
-        </div>
-        {fetching && (
-          <div className='progress'>
-            <span className='progress-bar' style={{ width: '75%' }}></span>
-          </div>
-        )}
+        </LoadingBar>
       </div>
     </Fragment>
   );

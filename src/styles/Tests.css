@@ -1,10 +1,3 @@
-.test-preview-question-container {
-  color: black;
-  font-size: small;
-  align-items: center;
-  box-sizing: border-box;
-}
-
 .dont-break-out {
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -18,12 +11,6 @@
   -moz-hyphens: auto;
   -webkit-hyphens: auto;
   hyphens: auto;
-}
-
-.img-wrap {
-  display: inline-block;
-  justify-content: center;
-  filter: grayscale(0.5);
 }
 
 .thumbnail {
@@ -73,17 +60,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 100%;
 }
 
 .part3-test-preview-option-container {
   display: block;
-}
-
-.test-preview-part-label {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 5px 0 0 0;
 }
 
 .kebab-menu {
@@ -162,10 +143,6 @@
 
 .createNewFolder-container {
   background-color: red;
-}
-
-.test-preview-question-text {
-  font-size: 1rem;
 }
 
 .see-filters-mobile-btn {

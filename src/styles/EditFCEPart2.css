@@ -2,7 +2,7 @@
   font-size: 16pt;
   box-sizing: border-box;
   flex-grow: 1;
-  background-color: #FAFAFA;
+  background-color: #fafafa;
 }
 
 .input {
@@ -18,7 +18,6 @@
 
 .input:focus {
   border: 1px solid rgb(139, 152, 211);
-
 }
 
 :root {
@@ -52,11 +51,9 @@
   justify-content: center;
 }
 
-
-
 .tags-container {
   text-align: center;
-  
+  z-index: 3;
 }
 
 .advice-text {
@@ -83,7 +80,7 @@
 
 .part2-edit-question-row {
   grid-column: 1/-1;
-  grid-row:1;
+  grid-row: 1;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -98,8 +95,3 @@
   display: flex;
   align-items: center;
 }
-
-
-
-
-

@@ -1,10 +1,15 @@
-import React, { Fragment, useState, cloneElement } from 'react';
+import React, { useState, cloneElement } from 'react';
+
+//icons
 import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
 import getFilteredTests from 'APIHandlers/getFilteredTests';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 //custom hooks
 import useFilterTests from './useFilterTests';
+
+//custom components
+import LoadingBar from 'components/LoadingBar/LoadingBar';
 
 const VerticallyExpandingTestsContainer = ({
   creatorId,
@@ -43,30 +48,27 @@ const VerticallyExpandingTestsContainer = ({
   useFilterTests(tests, tagFilterTerm, sortBy, questionFilterTerm, setFilteredTests);
 
   return (
-    <Fragment>
-      <div className={`${fetching && 'loading-bar animate '}`}>
-        <div
-          className={`${fetching && 'loading-span '} tests-container-header ${
-            testContainerExpanded ? 'test-container-header-expanded' : ''
-          } `}
-        >
-          <div className='tests-container-heading' onClick={(e) => toggleExpandContainer(e)}>
-            <h2>{buttonLabel}</h2>
-            <div className='tests-container-button'>
-              {testContainerExpanded ? <RemoveRoundedIcon /> : <ArrowDropDownIcon />}
-            </div>
-          </div>
-          <div
-            className={
-              'user-tests-container ' +
-              (testContainerExpanded ? 'user-tests-container-expanded' : '')
-            }
-          >
-            {cloneElement(children, { tests: filteredTests })}
+    <div
+      className={`tests-container-header ${
+        testContainerExpanded ? 'test-container-header-expanded' : ''
+      } `}
+    >
+      <LoadingBar fetching={fetching}>
+        <div className='tests-container-heading' onClick={(e) => toggleExpandContainer(e)}>
+          <h2>{buttonLabel}</h2>
+          <div className='tests-container-button'>
+            {testContainerExpanded ? <RemoveRoundedIcon /> : <ArrowDropDownIcon />}
           </div>
         </div>
-      </div>
-    </Fragment>
+        <div
+          className={
+            'user-tests-container ' + (testContainerExpanded ? 'user-tests-container-expanded' : '')
+          }
+        >
+          {cloneElement(children, { tests: filteredTests })}
+        </div>{' '}
+      </LoadingBar>
+    </div>
   );
 };
 

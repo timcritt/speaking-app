@@ -39,7 +39,6 @@
   flex-direction: column;
   justify-content: space-between;
   margin-top: 5px;
-  padding: 0 20px;
   border: 1px solid #e6eaea;
   border-radius: 5px;
   background-color: white;
@@ -71,6 +70,7 @@
   display: flex;
   white-space: nowrap;
   cursor: pointer;
+  padding: 0 15px;
 }
 
 .tests-container-button {
@@ -93,6 +93,7 @@
   column-gap: 20px;
   row-gap: 35px;
   margin-bottom: 20px;
+  padding: 5px 15px;
 }
 
 .search-terms-container {

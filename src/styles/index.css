@@ -8,8 +8,9 @@ body {
 
 header {
   width: 100%;
-  background-color: white;
-  border-bottom: 1px solid #eaeef0;
+  /* background-color: white; */
+  /* border-bottom: 1px solid #eaeef0; */
+  z-index: 3;
 }
 
 code {

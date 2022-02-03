@@ -1,9 +1,11 @@
 import React, { Fragment } from 'react';
 import { TagCloud } from 'react-tagcloud';
-import TestPreviewOverlay from 'components/TestCommon/TestPreviewOverlay';
-import { CAEPart3 } from 'APIHandlers/firebaseConsts';
+import TestPreviewOverlay from 'components/TestPreviewOverlay/TestPreviewOverlay';
 
-const CAEPart3TestPreviewContent = React.memo(({ test, testId, testType }) => {
+//css modules
+import styles from './Part3TestPreviewContent.module.css';
+
+const Part3TestPreviewContent = React.memo(({ test, testId, testType }) => {
   const testOptions = [
     { value: test.topLeft, count: 10, key: 1 },
     { value: test.topRight, count: 12, key: 2 },
@@ -19,27 +21,19 @@ const CAEPart3TestPreviewContent = React.memo(({ test, testId, testType }) => {
 
   return (
     <Fragment>
-      <div className='test-grow-hover-container' onClick={(e) => e.stopPropagation()}>
-        <div
-          className='part3-test-preview-options-container test-preview-grow-on-hover'
-          key={test.id}
-        >
-          <TagCloud
-            minSize={15}
-            maxSize={30}
-            colorOptions={colorOptions}
-            tags={testOptions}
-            style={{ textAlign: 'center' }}
-            shuffle={true}
-          />
-        </div>
-        <TestPreviewOverlay testId={testId} testType={testType} />
+      <div className={styles.options_container}>
+        <TagCloud
+          minSize={15}
+          maxSize={30}
+          colorOptions={colorOptions}
+          tags={testOptions}
+          style={{ textAlign: 'center' }}
+          shuffle={true}
+        />
       </div>
-      <div className='test-preview-part-label'>
-        <span>{testType === CAEPart3 ? 'CAE Part 3' : 'FCE Part 3'}</span>
-      </div>
+      <TestPreviewOverlay testId={testId} testType={testType} />
     </Fragment>
   );
 });
 
-export default CAEPart3TestPreviewContent;
+export default Part3TestPreviewContent;

@@ -5,7 +5,7 @@ import { FCEPart2, FCEPart3, CAEPart2, CAEPart3 } from 'APIHandlers/firebaseCons
 import FilterMenuMobile from 'components/CreatorContent/FilterMenuMobile';
 import FilterMenuDesktop from 'components/CreatorContent/FilterMenuDesktop';
 import TestSearchResults from 'components/CreatorContent/TestSearchResults';
-import FCEPart2TestPreviewContent from 'components/FCEPart2/FCEPart2TestPreviewContent';
+import FCEPart2TestPreviewContent from 'components/FCEPart2/FCEPart2TestPreviewContent/FCEPart2TestPreviewContent';
 import Part3TestPreviewContent from 'components/Part3Common/Part3TestPreviewContent';
 import CAEPart2TestPreviewContent from 'components/CAEPart2/CAEPart2TestPreviewContent';
 import VerticallyExpandingTestsContainer from './VerticallyExpandingTestContainer/VerticallyExpandingTestsContainer';

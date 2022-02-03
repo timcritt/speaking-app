@@ -3,13 +3,14 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import AuthProvider from './context/AuthProvider';
 import './fonts/digital-7.ttf';
-
+import Orbs from 'components/Orbs/Orbs';
 import './styles/index.css';
 import App from './components/App';
 import { NavBar } from './components/NavBar/NavBar';
 
 ReactDOM.render(
   <div className='holy-grail'>
+    <Orbs />
     <Router>
       <AuthProvider>
         <header>
