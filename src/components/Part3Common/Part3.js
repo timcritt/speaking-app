@@ -5,12 +5,13 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Part3Lines from 'components/Part3Common/Part3Lines';
 import debounce from 'auxFunctions/debounce';
 import TestToolBar from 'components/TestCommon/TestToolBar';
+import ToolBarButtonsView from 'components/TestCommon/ToolBarButtonsView';
 import Timer from 'components/common/Timer';
 
 const Part3 = (props) => {
   const { userId } = useContext(firebaseAuth);
   const handleFullScreen = useFullScreenHandle();
-  const context = useContext(props.context);
+  const context = useContext(props.part3Context);
   const [lineClass, setLineClass] = useState('');
   const [questionClass, setQuestionClass] = useState('');
   const [questionTwoVisible, setQuestionTwoVisible] = useState(false);
@@ -116,7 +117,19 @@ const Part3 = (props) => {
                 </div>
                 <Part3Lines windowDimensions={windowDimensions} lineClass={lineClass} />
               </div>
-              <TestToolBar creatorId={context.creatorId} timer={<Timer time={time} />} buttons />
+              <TestToolBar
+                creatorId={context.creatorId}
+                timer={<Timer time={time} />}
+                buttons={
+                  <ToolBarButtonsView
+                    userId={userId}
+                    creatorId={context.creatorId}
+                    testType={props.testType}
+                    docRef={context.docRef}
+                    handleFullScreen={handleFullScreen}
+                  />
+                }
+              />
             </div>
           </main>
         </FullScreen>

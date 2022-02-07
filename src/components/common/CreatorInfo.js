@@ -13,7 +13,7 @@ const CreatorInfo = ({ creatorId }) => {
     if (creatorId) {
       (async () => {
         const creatorDetails = await getUserDetails(creatorId);
-        if (!unmounted) {
+        if (!unmounted && creatorDetails) {
           setAuthorName(creatorDetails.userName);
           setCreatorProfilePicture(creatorDetails.profilePicture);
         }

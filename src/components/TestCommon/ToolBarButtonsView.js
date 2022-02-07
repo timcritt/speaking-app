@@ -9,9 +9,9 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import FullscreenOutlinedIcon from '@material-ui/icons/FullscreenOutlined';
 import FullscreenExitOutlinedIcon from '@material-ui/icons/FullscreenExitOutlined';
 
-import styles from './ToolBarButtonsFCEPart2.module.css';
+import styles from './ToolBarButtons.module.css';
 
-const ToolBarButtons = ({ userId, creatorId, testType, docRef, handleFullScreen }) => {
+const ToolBarButtonsView = ({ userId, creatorId, testType, docRef, handleFullScreen }) => {
   return (
     <Fragment>
       {creatorId === userId && (
@@ -25,7 +25,7 @@ const ToolBarButtons = ({ userId, creatorId, testType, docRef, handleFullScreen 
           </button>
         </Link>
       )}
-      <ShareButton styles={styles} className={`hide-on-fullscreen`} sharedItemType={'FCE Part 2'} />
+      <ShareButton styles={styles} className={`hide-on-fullscreen`} sharedItemType={'test'} />
       <div className='hide-on-fullscreen'>
         {userId && <AddToMyFolders styles={styles} testId={docRef} />}
       </div>
@@ -45,4 +45,4 @@ const ToolBarButtons = ({ userId, creatorId, testType, docRef, handleFullScreen 
   );
 };
 
-export default ToolBarButtons;
+export default ToolBarButtonsView;

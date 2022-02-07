@@ -4,12 +4,12 @@ import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import { firebaseAuth } from 'context/AuthProvider';
 import { FCEPart2Context } from 'context/FCEPart2Context';
 //3rd party components
+import LinearProgress from '@material-ui/core/LinearProgress';
+//custom components
 import ExamPicture from 'components/FCEPart2/ExamPicture';
 import TestToolBar from 'components/TestCommon/TestToolBar';
 import Part2QuestionRow from 'components/TestCommon/Part2QuestionRow';
-//custom components
-import LinearProgress from '@material-ui/core/LinearProgress';
-import ToolBarButtonsFCEPart2 from './ToolBarButtons2';
+import ToolBarButtonsFCEPart2 from '../TestCommon/ToolBarButtonsView';
 import Timer from 'components/common/Timer';
 //constants
 import { FCEPart2 } from 'APIHandlers/firebaseConsts';

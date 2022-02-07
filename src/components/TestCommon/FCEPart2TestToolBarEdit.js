@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import PublishWarningModal from 'components/FCEPart2/PublishWarningModal';
 import { Link } from 'react-router-dom';
@@ -17,32 +17,32 @@ function TestToolBarEdit({ context }) {
     history.push('/EditFCEPart2/new');
   };
 
-  return (
-    <TestToolBar>
-      <div className='tool-btn-container'>
-        <PublishWarningModal />
-        {context.docRef && (
-          <Link
-            to={{
-              pathname: `/FCEPart2/${context.docRef}`,
-            }}
-          >
-            <button className='tool-bar-btn'>
-              <VisibilityOutlinedIcon />
-            </button>
-          </Link>
-        )}
+  const buttons = (
+    <Fragment>
+      <PublishWarningModal />
+      {context.docRef && (
+        <Link
+          to={{
+            pathname: `/FCEPart2/${context.docRef}`,
+          }}
+        >
+          <button className='tool-bar-btn'>
+            <VisibilityOutlinedIcon />
+          </button>
+        </Link>
+      )}
 
-        <DeleteButton
-          itemId={context.docRef}
-          deleteItemType={'test'}
-          firestoreCollection={FCEPart2}
-          iconColour={'#fa5454'}
-          handleDelete={handleDeleteTest}
-        />
-      </div>
-    </TestToolBar>
+      <DeleteButton
+        itemId={context.docRef}
+        deleteItemType={'test'}
+        firestoreCollection={FCEPart2}
+        iconColour={'#fa5454'}
+        handleDelete={handleDeleteTest}
+      />
+    </Fragment>
   );
+
+  return <TestToolBar buttons={buttons} />;
 }
 
 export default TestToolBarEdit;
