@@ -1,16 +1,19 @@
-/*flex container has flex-direction: column*/
-.timer-container {
+.container {
   color: #9d9c9c;
   text-align: center;
-  font-size: xx-large;
+  font-size: 1.6rem;
   font-family: digital-7;
   grid-column-start: 3;
 }
 
-/*generic class for all timer buttons*/
-.timer-btn {
-  padding: 7px 10px 3px 10px;
-  width: 70px;
+.button_container {
+  display: flex;
+  align-content: center;
+}
+
+.btn {
+  padding: 0.2rem 0.2rem 0rem 0.2rem;
+  width: 4rem;
   margin: 2px;
   color: #dbdbdb;
   cursor: pointer;
@@ -19,46 +22,46 @@
   transition: all 0.25s ease-out;
 }
 
-.timer-btn:hover {
+.btn:hover {
   color: grey;
   border-color: grey;
 }
 
-.btn-start:hover {
+.start:hover {
   color: green;
 }
 
-.btn-start:focus {
+.start:focus {
   outline: none;
 }
 
-.btn-stop:hover {
+.stop:hover {
   color: #c82333;
 }
 
-.btn-stop:focus {
+.stop:focus {
   outline: none;
 }
 
-.btn-stop:disabled {
+.stop:disabled {
   color: #dbdbdb;
   cursor: default;
 }
 
-.btn-stop:disabled:hover {
+.stop:disabled:hover {
   color: #dbdbdb;
   border-color: #dbdbdb;
   cursor: default;
 }
 
-.btn-reset {
+.reset {
   cursor: pointer;
 }
 
-.btn-reset:hover {
+.reset:hover {
   color: blue;
 }
 
-.btn-reset:focus {
+.reset:focus {
   outline: none;
 }

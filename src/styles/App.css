@@ -7,7 +7,7 @@
 @import 'Exam.css';
 @import 'FCEPart2.css';
 @import 'ProgressBar.css';
-@import 'Timer.css';
+
 @import 'Header.css';
 @import 'EditFCEPart2.css';
 @import 'placeholder.css';
@@ -18,7 +18,7 @@
 @import 'EasyCrop.css';
 
 @import 'Tests.css';
-@import 'ToolBar.css';
+
 @import 'FullScreen.css';
 @import 'logo.css';
 @import 'MyContent.css';
@@ -39,6 +39,7 @@
 @import 'testThumbnail.css';
 @import 'ImageSearch.css';
 @import 'Mockup.css';
+@import 'common.css';
 
 * {
   box-sizing: border-box;

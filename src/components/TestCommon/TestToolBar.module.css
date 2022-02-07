@@ -1,0 +1,35 @@
+.container {
+  grid-column: 1/4;
+  grid-row: 3;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 1fr repeat(3, auto) 1fr;
+  grid-column-gap: 5px;
+  justify-items: center;
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+  box-sizing: border-box;
+  margin: 5px 10px 10px 10px;
+  background-color: #fafafa;
+}
+.creator_info_container {
+  display: none;
+}
+
+.btn_container {
+  display: none;
+}
+
+@media (min-width: 540px) {
+  .btn_container {
+    grid-column-start: 5;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+  }
+  .creator_info_container {
+    margin-right: auto;
+    align-self: center;
+    display: flex;
+  }
+}

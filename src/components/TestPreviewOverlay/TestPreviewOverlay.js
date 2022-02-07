@@ -44,7 +44,7 @@ const TestPreviewOverlay = ({ testType, testId }) => {
     <div className={`${styles.container} ${classApplied}`} ref={ref} onClick={handleClick}>
       <div className={styles.button_container}>
         <div className={styles.icon_container}>
-          <ShareButton sharedItemType='' iconColour='white' location={location} />
+          <ShareButton sharedItemType='test' iconColour='white' location={location} />
         </div>
         <Link to={`/${testType}/${testId}`} className='tool-bar-btn' style={{ color: 'white' }}>
           <div className={styles.icon_container}>
@@ -52,7 +52,7 @@ const TestPreviewOverlay = ({ testType, testId }) => {
           </div>
         </Link>
         {token && (
-          <div className={styles.icon_container}>
+          <div className={`${styles.icon_container} tool-bar-btn`}>
             <AddToMyFolders iconColor={'white'} testId={testId} />
           </div>
         )}

@@ -6,6 +6,7 @@
   max-height: 100%;
   max-width: 100%;
   z-index: 999;
+  cursor: pointer;
 }
 
 .flip-card-inner {

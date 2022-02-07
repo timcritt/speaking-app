@@ -4,7 +4,8 @@ import { firebaseAuth } from 'context/AuthProvider';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Part3Lines from 'components/Part3Common/Part3Lines';
 import debounce from 'auxFunctions/debounce';
-import TestToolBarView from 'components/TestCommon/TestToolBarView';
+import TestToolBar from 'components/TestCommon/TestToolBar';
+import Timer from 'components/common/Timer';
 
 const Part3 = (props) => {
   const { userId } = useContext(firebaseAuth);
@@ -85,14 +86,14 @@ const Part3 = (props) => {
         <FullScreen handle={handleFullScreen}>
           <main className='holy-grail-content fade-in'>
             <div className='part2-main-row'>
-              <button className={'short-turn-button '} onClick={handleViewShortTurnClick}>
-                show question 2
-              </button>
               <div className='part3-grid-container'>
                 <div className='part3-option-top-left part3-input'>{context.topLeft}</div>
 
                 <div className='part3-question-container flip-card'>
-                  <div className={`flip-card-inner part3-question-centre ${questionClass}`}>
+                  <div
+                    className={`flip-card-inner part3-question-centre ${questionClass}`}
+                    onClick={handleViewShortTurnClick}
+                  >
                     <div className='flip-card-front'>
                       <span className='part3-question-text'>{context.questionOne}</span>
                     </div>
@@ -115,14 +116,7 @@ const Part3 = (props) => {
                 </div>
                 <Part3Lines windowDimensions={windowDimensions} lineClass={lineClass} />
               </div>
-              <TestToolBarView
-                creatorId={context.creatorId}
-                userId={userId}
-                docRef={context.docRef}
-                time={time}
-                handleFullScreen={handleFullScreen}
-                testType={props.testType}
-              />
+              <TestToolBar creatorId={context.creatorId} timer={<Timer time={time} />} buttons />
             </div>
           </main>
         </FullScreen>

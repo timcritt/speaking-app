@@ -9,7 +9,7 @@ import PlaylistAddOutlinedIcon from '@material-ui/icons/PlaylistAddOutlined';
 //icon color can be changed by passing in a value as props
 //class of icon can be changed by passing in a value as props
 
-const AddToMyFolders = ({ testId, iconColor = 'black', iconClassName = '' }) => {
+const AddToMyFolders = ({ styles, testId, iconColor = 'black', iconClassName = '' }) => {
   const [AddToFolderModalOpen, setAddToFolderModalOpen] = useState(false);
   const { userId } = useContext(firebaseAuth);
 
@@ -26,7 +26,7 @@ const AddToMyFolders = ({ testId, iconColor = 'black', iconClassName = '' }) => 
     <Fragment>
       <div>
         <button
-          className='tool-bar-btn '
+          className={'tool-bar-btn'}
           style={{ color: `${iconColor}` }}
           onClickCapture={openAddToFolderModal}
         >

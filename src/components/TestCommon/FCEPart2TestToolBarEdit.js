@@ -6,6 +6,7 @@ import DeleteButton from 'components/common/DeleteButton';
 import deleteTest from 'APIHandlers/deleteTest';
 import { useHistory } from 'react-router-dom';
 import { FCEPart2 } from 'APIHandlers/firebaseConsts';
+import TestToolBar from 'components/TestCommon/TestToolBar';
 
 function TestToolBarEdit({ context }) {
   var history = useHistory();
@@ -17,7 +18,7 @@ function TestToolBarEdit({ context }) {
   };
 
   return (
-    <div className='tool-bar-row'>
+    <TestToolBar>
       <div className='tool-btn-container'>
         <PublishWarningModal />
         {context.docRef && (
@@ -40,7 +41,7 @@ function TestToolBarEdit({ context }) {
           handleDelete={handleDeleteTest}
         />
       </div>
-    </div>
+    </TestToolBar>
   );
 }
 
