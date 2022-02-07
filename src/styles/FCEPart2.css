@@ -69,17 +69,11 @@
   vertical-align: bottom;
   object-fit: cover;
   width: 100%;
-  min-height: 50vh;
 }
 
 .timer-row {
   display: flex;
   padding: 10px;
-}
-
-.part2-button-container {
-  display: flex;
-  align-content: center;
 }
 
 .short-turn-button {
@@ -98,17 +92,17 @@
 
 @media screen and (min-width: 768px) {
   .part2-main-row {
-    max-width: 95vw;
+    max-width: 85rem;
   }
 }
 
 @media screen and (min-width: 1200px) {
   .part2-main-row {
-    max-width: 85vw;
+    max-width: 85rem;
   }
 }
 @media screen and (min-width: 1600px) {
   .part2-main-row {
-    max-width: 75vw;
+    max-width: 85rem;
   }
 }

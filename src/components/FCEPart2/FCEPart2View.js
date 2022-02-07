@@ -5,10 +5,12 @@ import { firebaseAuth } from 'context/AuthProvider';
 import { FCEPart2Context } from 'context/FCEPart2Context';
 //3rd party components
 import ExamPicture from 'components/FCEPart2/ExamPicture';
-import TestToolBarView from 'components/TestCommon/TestToolBarView';
+import TestToolBar from 'components/TestCommon/TestToolBar';
 import Part2QuestionRow from 'components/TestCommon/Part2QuestionRow';
 //custom components
 import LinearProgress from '@material-ui/core/LinearProgress';
+import ToolBarButtonsFCEPart2 from './ToolBarButtons2';
+import Timer from 'components/common/Timer';
 //constants
 import { FCEPart2 } from 'APIHandlers/firebaseConsts';
 //custom hooks
@@ -27,6 +29,16 @@ const FCEPart2View = (props) => {
     context.unsavedChanges,
     context.setUnsavedChanges,
     props.match.params.id
+  );
+
+  const buttons = (
+    <ToolBarButtonsFCEPart2
+      userId={userId}
+      creatorId={context.creatorId}
+      testType={FCEPart2}
+      docRef={context.docRef}
+      handleFullScreen={handleFullScreen}
+    />
   );
 
   if (context.hasFetched) {
@@ -48,13 +60,10 @@ const FCEPart2View = (props) => {
                   <ExamPicture image={context.imageTwoUrl} setImage={context.setImageTwoUrl} />
                 </div>
               </div>
-              <TestToolBarView
+              <TestToolBar
                 creatorId={context.creatorId}
-                userId={userId}
-                docRef={context.docRef}
-                time={time}
-                handleFullScreen={handleFullScreen}
-                testType={FCEPart2}
+                timer={<Timer time={time} />}
+                buttons={buttons}
               />
             </div>
           </main>

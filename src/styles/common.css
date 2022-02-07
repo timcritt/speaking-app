@@ -1,0 +1,6 @@
+.tool-bar-btn {
+  background: transparent;
+  border: none;
+  display: flex;
+  cursor: pointer;
+}

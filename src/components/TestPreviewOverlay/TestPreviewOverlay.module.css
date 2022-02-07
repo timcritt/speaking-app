@@ -49,6 +49,12 @@
   transition: all 0.3s ease-in-out;
 }
 
+.icon_container:hover * {
+  border-color: rgb(216, 216, 216);
+  color: rgb(216, 216, 216);
+  transition: all 0.3s ease-in-out;
+}
+
 .mobile {
   opacity: 1;
   color: white;

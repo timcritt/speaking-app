@@ -1,19 +1,18 @@
 import React, { Fragment, useState, useContext } from 'react';
 //Context
-import { firebaseAuth } from 'context/AuthProvider';
 import { CAEPart2Context } from 'context/CAEPart2Context';
 //3rd party modules
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 //custom modules
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Part2QuestionRow from 'components/TestCommon/Part2QuestionRow';
-import TestToolBarView from 'components/TestCommon/TestToolBarView';
+import TestToolBar from 'components/TestCommon/TestToolBar';
 import ExamPicture from 'components/FCEPart2/ExamPicture';
 import useLoadTestIntoComponent from 'hooks/useLoadTestIntoComponent';
+import Timer from 'components/common/Timer';
 
 const CAEPart2View = (props) => {
   const context = useContext(CAEPart2Context);
-  const { userId } = useContext(firebaseAuth);
   const handleFullScreen = useFullScreenHandle();
   const [time, setTime] = useState(6000);
 
@@ -48,14 +47,7 @@ const CAEPart2View = (props) => {
                   <ExamPicture image={context.imageThreeUrl} setImage={context.setImageThreeUrl} />
                 </div>
               </div>
-              <TestToolBarView
-                creatorId={context.creatorId}
-                userId={userId}
-                docRef={context.docRef}
-                time={time}
-                handleFullScreen={handleFullScreen}
-                testType={'CAEPart2'}
-              />
+              <TestToolBar creatorId={context.creatorId} timer={<Timer time={time} />} />
             </div>
           </main>
         </FullScreen>

@@ -14,6 +14,8 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import debounce from 'auxFunctions/debounce';
 import { useHistory } from 'react-router-dom';
 
+import TestToolBar from 'components/TestCommon/TestToolBar';
+
 const EditPart3 = ({ context, testType, ...props }) => {
   const handleFullScreen = useFullScreenHandle();
   const optionPlaceholder = 'option';
@@ -194,7 +196,7 @@ const EditPart3 = ({ context, testType, ...props }) => {
                   onChange={(e) => context.setShortTurnQuestion(e.currentTarget.value)}
                 />
               </div>
-              <div className='tool-bar-row'>
+              <TestToolBar>
                 {context.creatorId && <CreatorInfo creatorId={context.creatorId} />}
                 <div className='tool-btn-container'>
                   <PublishPart3WarningModal
@@ -228,7 +230,7 @@ const EditPart3 = ({ context, testType, ...props }) => {
                     <DeleteForeverOutlinedIcon />
                   </button>
                 </div>
-              </div>
+              </TestToolBar>
             </div>
           </main>
         </FullScreen>

@@ -11,7 +11,7 @@
 .get-started-btn {
   font-size: 1.2em;
   padding: 0.5em 1em;
-  background-color: #6a27d5;
+  background-color: #2785d5;
   border: none;
   color: white;
   border-radius: 5px;
@@ -20,4 +20,5 @@
 
 .home-btn-container {
   text-align: center;
+  margin-top: 300px;
 }
