@@ -10,6 +10,7 @@ import TestToolBar from 'components/TestCommon/TestToolBar';
 import ExamPicture from 'components/FCEPart2/ExamPicture';
 import useLoadTestIntoComponent from 'hooks/useLoadTestIntoComponent';
 import Timer from 'components/common/Timer';
+import ToolBarButtonsView from 'components/TestCommon/ToolBarButtonsView';
 
 const CAEPart2View = (props) => {
   const context = useContext(CAEPart2Context);
@@ -47,7 +48,17 @@ const CAEPart2View = (props) => {
                   <ExamPicture image={context.imageThreeUrl} setImage={context.setImageThreeUrl} />
                 </div>
               </div>
-              <TestToolBar creatorId={context.creatorId} timer={<Timer time={time} />} />
+              <TestToolBar
+                creatorId={context.creatorId}
+                timer={<Timer time={time} />}
+                buttons={
+                  <ToolBarButtonsView
+                    testType={'CAEPart2'}
+                    handleFullScreen={handleFullScreen}
+                    docRef={context.docRef}
+                  />
+                }
+              />
             </div>
           </main>
         </FullScreen>
