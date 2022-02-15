@@ -1,0 +1,26 @@
+.image_centre_btn {
+  display: flex;
+  position: absolute;
+  width: fit-content;
+  height: fit-content;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  padding: 0;
+  border: none;
+}
+
+.delete_image_btn {
+  background: transparent;
+  background-color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0px 4px 10px 1px rgba(0, 0, 0, 0.452);
+  transition: color 0.25s ease-in-out;
+}
+
+.delete_image_btn:hover {
+  color: rgb(184, 5, 5);
+}

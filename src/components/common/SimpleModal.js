@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
+
 import EasyCrop from '../EasyCrop/EasyCrop';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
@@ -47,9 +48,9 @@ export default function SimpleModal({ modalButtonText, setImageUrl }) {
   );
 
   return (
-    <div>
-      <button className='btn image-centre-btn upload-btn' onClick={handleOpen}>
-        <CloudUploadIcon />
+    <Fragment>
+      <button className='btn upload-btn' onClick={handleOpen}>
+        upload
       </button>
       <Modal
         open={open}
@@ -59,6 +60,6 @@ export default function SimpleModal({ modalButtonText, setImageUrl }) {
       >
         {body}
       </Modal>
-    </div>
+    </Fragment>
   );
 }

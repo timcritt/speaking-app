@@ -6,7 +6,6 @@ import { FCEPart2Context } from 'context/FCEPart2Context';
 //3rd party components
 import LinearProgress from '@material-ui/core/LinearProgress';
 //custom components
-import ExamPicture from 'components/FCEPart2/ExamPicture';
 import TestToolBar from 'components/TestCommon/TestToolBar';
 import Part2QuestionRow from 'components/TestCommon/Part2QuestionRow';
 import ToolBarButtonsFCEPart2 from '../TestCommon/ToolBarButtonsView';
@@ -15,6 +14,9 @@ import Timer from 'components/common/Timer';
 import { FCEPart2 } from 'APIHandlers/firebaseConsts';
 //custom hooks
 import useLoadTestIntoComponent from 'hooks/useLoadTestIntoComponent';
+
+//CSS Modules
+import styles from './FCEPart2View.module.css';
 
 const FCEPart2View = (props) => {
   const context = useContext(FCEPart2Context);
@@ -46,25 +48,28 @@ const FCEPart2View = (props) => {
       <Fragment>
         <FullScreen handle={handleFullScreen}>
           <main className='holy-grail-content fade-in'>
-            <div className='part2-main-row'>
-              <Part2QuestionRow
-                longTurnQuestions={[context.questionOne]}
-                shortTurnQuestion={context.shortTurnQuestion}
-                setTime={setTime}
-              />
-              <div className='part2-image-row'>
-                <div className='part2-image-container-left'>
-                  <ExamPicture image={context.imageOneUrl} setImage={context.setImageOneUrl} />
-                </div>
-                <div className='part2-image-container-right'>
-                  <ExamPicture image={context.imageTwoUrl} setImage={context.setImageTwoUrl} />
-                </div>
+            <div className={styles.container}>
+              <div className={styles.question_row}>
+                <Part2QuestionRow
+                  longTurnQuestions={[context.questionOne]}
+                  shortTurnQuestion={context.shortTurnQuestion}
+                  setTime={setTime}
+                />
               </div>
-              <TestToolBar
-                creatorId={context.creatorId}
-                timer={<Timer time={time} />}
-                buttons={buttons}
-              />
+
+              <div className={styles.left_image_container}>
+                <img src={context.imageOneUrl} />
+              </div>
+              <div className={styles.right_image_container}>
+                <img src={context.imageTwoUrl} />
+              </div>
+              <div className={styles.tool_bar_container}>
+                <TestToolBar
+                  creatorId={context.creatorId}
+                  timer={<Timer time={time} />}
+                  buttons={buttons}
+                />
+              </div>
             </div>
           </main>
         </FullScreen>

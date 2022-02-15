@@ -125,7 +125,7 @@ export default function PublishWarningModal() {
 
   return (
     <Fragment>
-      <button className='tool-bar-btn' onClick={handleOpen}>
+      <button className='' onClick={handleOpen}>
         {context.docRef ? <SaveOutlinedIcon /> : <PublishIcon />}
       </button>
       {open && (

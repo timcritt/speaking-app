@@ -1,6 +1,7 @@
 .btn {
   border-radius: 3px;
-  cursor: pointer
+  cursor: pointer;
+  border: 1px solid grey;
 }
 
 .save-btn {
@@ -41,14 +42,15 @@
 }
 
 .upload-btn {
-  border: white 1px solid;
+  padding: 8px 30px;
+  background: #4aa8b4;
+  border: none;
+  color: white;
 }
 
 .upload-btn:hover {
-  background-color: #d1d1d1;
+  background-color: #65b7c2;
 }
 
 .upload-btn:focus {
-  outline: none;
-  border: solid 2px #9494ef
 }

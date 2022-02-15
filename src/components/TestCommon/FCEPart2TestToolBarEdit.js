@@ -6,7 +6,8 @@ import DeleteButton from 'components/common/DeleteButton';
 import deleteTest from 'APIHandlers/deleteTest';
 import { useHistory } from 'react-router-dom';
 import { FCEPart2 } from 'APIHandlers/firebaseConsts';
-import TestToolBar from 'components/TestCommon/TestToolBar';
+
+import styles from './FCEPart2TestToolBarEdit.module.css';
 
 function TestToolBarEdit({ context }) {
   var history = useHistory();
@@ -26,7 +27,7 @@ function TestToolBarEdit({ context }) {
             pathname: `/FCEPart2/${context.docRef}`,
           }}
         >
-          <button className='tool-bar-btn'>
+          <button>
             <VisibilityOutlinedIcon />
           </button>
         </Link>
@@ -42,7 +43,7 @@ function TestToolBarEdit({ context }) {
     </Fragment>
   );
 
-  return <TestToolBar buttons={buttons} />;
+  return <div className={styles.container}>{buttons}</div>;
 }
 
 export default TestToolBarEdit;

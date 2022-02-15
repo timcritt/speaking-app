@@ -9,6 +9,14 @@
 .button_container {
   display: flex;
   align-content: center;
+  align-items: center;
+}
+
+.time_display {
+  padding: 0 15px;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .btn {
