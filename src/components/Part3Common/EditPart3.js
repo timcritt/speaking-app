@@ -61,7 +61,7 @@ const EditPart3 = ({ context, testType, ...props }) => {
     if (context.hasFetched) {
       handleResize();
     }
-  }, [props.match.params.id]);
+  }, [context, handleResize, props.match.params.id]);
 
   useEffect(() => {
     //instantly hides the lines on window resize to prevent jumping lines.
@@ -119,6 +119,41 @@ const EditPart3 = ({ context, testType, ...props }) => {
       handleResize();
     }, 100);
   };
+
+  const buttons = (
+    <Fragment>
+      <PublishPart3WarningModal
+        bottomCentre={context.bottomCentre}
+        bottomLeft={context.bottomLeft}
+        bottomRight={context.bottomRight}
+        creatorId={context.creatorId}
+        questionOne={context.questionOne}
+        shortTurnQuestion={context.shortTurnQuestion}
+        topLeft={context.topLeft}
+        topRight={context.topRight}
+        tags={context.testTags}
+        changesSaved={context.changesSaved}
+        setChangesSaved={context.setChangesSaved}
+        docRef={context.docRef}
+        setDocRef={handleSetDocRef}
+        testType={testType}
+      />
+      {context.docRef && (
+        <Link
+          to={{
+            pathname: `/${testType}/${context.docRef}`,
+          }}
+        >
+          <button className='tool-bar-btn'>
+            <VisibilityOutlinedIcon />
+          </button>
+        </Link>
+      )}
+      <button className='tool-bar-btn' onClick={handleDeleteTest}>
+        <DeleteForeverOutlinedIcon />
+      </button>
+    </Fragment>
+  );
 
   if (context.hasFetched) {
     return (
@@ -196,40 +231,8 @@ const EditPart3 = ({ context, testType, ...props }) => {
                   onChange={(e) => context.setShortTurnQuestion(e.currentTarget.value)}
                 />
               </div>
-              <TestToolBar>
+              <TestToolBar buttons={buttons}>
                 {context.creatorId && <CreatorInfo creatorId={context.creatorId} />}
-                <div className='tool-btn-container'>
-                  <PublishPart3WarningModal
-                    bottomCentre={context.bottomCentre}
-                    bottomLeft={context.bottomLeft}
-                    bottomRight={context.bottomRight}
-                    creatorId={context.creatorId}
-                    questionOne={context.questionOne}
-                    shortTurnQuestion={context.shortTurnQuestion}
-                    topLeft={context.topLeft}
-                    topRight={context.topRight}
-                    tags={context.testTags}
-                    changesSaved={context.changesSaved}
-                    setChangesSaved={context.setChangesSaved}
-                    docRef={context.docRef}
-                    setDocRef={handleSetDocRef}
-                    testType={testType}
-                  />
-                  {context.docRef && (
-                    <Link
-                      to={{
-                        pathname: `/${testType}/${context.docRef}`,
-                      }}
-                    >
-                      <button className='tool-bar-btn'>
-                        <VisibilityOutlinedIcon />
-                      </button>
-                    </Link>
-                  )}
-                  <button className='tool-bar-btn' onClick={handleDeleteTest}>
-                    <DeleteForeverOutlinedIcon />
-                  </button>
-                </div>
               </TestToolBar>
             </div>
           </main>

@@ -1,4 +1,4 @@
-.part3-grid-container {
+/* .part3-grid-container {
   grid-column: 1/-1;
   grid-row: auto;
   display: grid;
@@ -34,16 +34,16 @@
   background-color: #fafafa;
   grid-column: 2;
   grid-row: 2/5;
-  /*padding: 0.5ch;*/
+
   font-size: 2vmin;
-}
+} */
 
 .part3-question-text {
   margin: 1.5vmin 2.5vmin;
   font-size: 2.5vmin;
 }
 
-.part3-option-top-left {
+/* .part3-option-top-left {
   grid-column: 1;
   grid-row: 1/3;
   z-index: 99;
@@ -63,8 +63,8 @@
 .part3-option-bottom-right {
   grid-column: 3/3;
   grid-row: 4/6;
-}
-.part3-option {
+} */
+/* .part3-option {
   border-radius: 20px;
   padding: 1vmin 2vmin;
   text-align: center;
@@ -76,7 +76,7 @@
   align-items: center;
 }
 /*************specific to EditPart3******************/
-.part3-input {
+/* .part3-input {
   background-color: #fafafa;
   font-size: 2.5vmin;
   resize: none;
@@ -102,7 +102,7 @@
   grid-column: 2;
   grid-row: 1/6;
 }
-
+*/
 .line {
   animation: fadeIn 0.5s;
 }
@@ -111,8 +111,7 @@
   opacity: 0;
   pointer-events: none;
 }
-
-@keyframes fadeIn {
+*/ @keyframes fadeIn {
   0% {
     opacity: 0;
   }
@@ -121,10 +120,10 @@
   }
 }
 
-.part3-questionTwo-container {
+/* .part3-questionTwo-container {
   grid-column: 1/-1;
   grid-row: auto;
-}
+} */
 
 .part3-thumbnail {
   max-width: 33.333%;

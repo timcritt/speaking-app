@@ -57,10 +57,7 @@ function DeleteButton({
         </Modal>
       )}
 
-      <button
-        className='tool-bar-btn delete-folder-btn hide-on-fullscreen'
-        onClick={handleOpenModal}
-      >
+      <button className='delete_button' onClick={handleOpenModal}>
         <HighlightOffIcon style={{ color: `${iconColour}` }} />
       </button>
     </Fragment>

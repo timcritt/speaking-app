@@ -7,9 +7,12 @@ import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Part2QuestionRow from 'components/TestCommon/Part2QuestionRow';
 import TestToolBar from 'components/TestCommon/TestToolBar';
-import ExamPicture from 'components/FCEPart2/ExamPicture';
 import useLoadTestIntoComponent from 'hooks/useLoadTestIntoComponent';
 import Timer from 'components/common/Timer';
+import ToolBarButtonsView from 'components/TestCommon/ToolBarButtonsView';
+
+//CSS Modules
+import styles from './CAEPart2View.module.css';
 
 const CAEPart2View = (props) => {
   const context = useContext(CAEPart2Context);
@@ -30,24 +33,34 @@ const CAEPart2View = (props) => {
       <Fragment>
         <FullScreen handle={handleFullScreen}>
           <main className='holy-grail-content fade-in'>
-            <div className='part2-main-row'>
-              <Part2QuestionRow
-                longTurnQuestions={[context.questionOne, context.questionTwo]}
-                shortTurnQuestion={context.shortTurnQuestion}
-                setTime={setTime}
-              />
-              <div className='CAE-part2-image-row'>
-                <div className='part2-image-container-left'>
-                  <ExamPicture image={context.imageOneUrl} setImage={context.setImageOneUrl} />
-                </div>
-                <div className='part2-image-container-centre'>
-                  <ExamPicture image={context.imageTwoUrl} setImage={context.setImageTwoUrl} />
-                </div>
-                <div className='part2-image-container-right'>
-                  <ExamPicture image={context.imageThreeUrl} setImage={context.setImageThreeUrl} />
-                </div>
+            <div className={styles.container}>
+              <div className={styles.question_row}>
+                <Part2QuestionRow
+                  longTurnQuestions={[context.questionOne, context.questionTwo]}
+                  shortTurnQuestion={context.shortTurnQuestion}
+                  setTime={setTime}
+                />
               </div>
-              <TestToolBar creatorId={context.creatorId} timer={<Timer time={time} />} />
+              <div className={styles.left_image_container}>
+                <img src={context.imageOneUrl} />
+              </div>
+              <div className={styles.centre_image_container}>
+                <img src={context.imageTwoUrl} />
+              </div>
+              <div className={styles.right_image_container}>
+                <img src={context.imageThreeUrl} />
+              </div>
+              <TestToolBar
+                creatorId={context.creatorId}
+                timer={<Timer time={time} />}
+                buttons={
+                  <ToolBarButtonsView
+                    testType={'CAEPart2'}
+                    handleFullScreen={handleFullScreen}
+                    docRef={context.docRef}
+                  />
+                }
+              />
             </div>
           </main>
         </FullScreen>

@@ -1,7 +1,16 @@
 import React from 'react';
 import LineTo from 'react-lineto';
 
-const Part3Lines = ({ windowDimensions, lineClass }) => {
+const Part3Lines = ({
+  windowDimensions,
+  lineClass,
+  top_left,
+  top_right,
+  bottom_left,
+  bottom_centre,
+  bottom_right,
+  centre,
+}) => {
   return (
     <div key={Date.now()} className={'fadeIn'}>
       <LineTo
@@ -9,40 +18,40 @@ const Part3Lines = ({ windowDimensions, lineClass }) => {
         zIndex={0}
         within={'part3-grid-container'}
         innerState={windowDimensions}
-        from='part3-option-top-left'
-        to='part3-question-centre'
+        from={top_left}
+        to={centre}
         className={`line ${lineClass}`}
       />
       <LineTo
         borderColor={'#dbdbdb'}
         within={'part3-grid-container'}
         innerState={windowDimensions}
-        from='part3-option-top-right'
-        to='part3-question-centre'
+        from={top_right}
+        to={centre}
         className={`line ${lineClass}`}
       />
       <LineTo
         borderColor={'#dbdbdb'}
         within={'part3-grid-container'}
         innerState={windowDimensions}
-        from='part3-option-bottom-left'
-        to='part3-question-centre'
+        from={bottom_centre}
+        to={centre}
         className={`line ${lineClass}`}
       />
       <LineTo
         borderColor={'#dbdbdb'}
         within={'part3-grid-container'}
         innerState={windowDimensions}
-        from='part3-option-bottom-centre'
-        to='part3-question-centre'
+        from={bottom_left}
+        to={centre}
         className={`line ${lineClass}`}
       />
       <LineTo
         borderColor={'#dbdbdb'}
         within={'part3-grid-container'}
         innerState={windowDimensions}
-        from='part3-option-bottom-right'
-        to='part3-question-centre'
+        from={bottom_right}
+        to={centre}
         className={`line ${lineClass}`}
       />
     </div>

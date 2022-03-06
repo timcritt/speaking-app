@@ -1,0 +1,61 @@
+.container {
+  background-color: white;
+  margin: 0 auto;
+  padding: 5vh 5vw;
+  width: 95%;
+  max-width: 65rem;
+  border-radius: 10px;
+  border: 0.1em solid #ebebeb;
+}
+
+.question_row {
+  background-color: white;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.image_row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));
+  column-gap: 10px;
+  margin: 20px 0;
+}
+
+.tags_container {
+  border-right: none;
+}
+
+.image_container {
+  position: relative;
+  align-self: center;
+  width: 100%;
+  text-align: center;
+}
+
+.image_container > img {
+  object-fit: cover;
+  height: auto;
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.tool_bar_container {
+  background-color: white;
+  border-top: none;
+}
+
+.btn_container {
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px 0;
+}
+
+.btn_container > button {
+  margin: 3px 10px 5px 0px;
+}
+
+.check_box {
+  background-color: red;
+}

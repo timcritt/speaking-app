@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import FolderOutlinedIcon from '@material-ui/icons/FolderOutlined';
 import addTestToFolder from 'APIHandlers/addTestToFolder';
 import checkIfTestInFolder from 'APIHandlers/checkIfTestInFolder';
@@ -8,7 +8,7 @@ const FolderSummaryShort = ({ folder, testId, userId }) => {
   const [isInFolder, setIsInFolder] = useState(false);
   const [checkBoxDisabled, setCheckBoxDisabled] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     var isMounted = true;
     const asyncFunction = async () => {
       const result = await checkIfTestInFolder(folder.id, testId);
@@ -63,6 +63,7 @@ const FolderSummaryShort = ({ folder, testId, userId }) => {
               value='Bike'
               checked={isInFolder}
               disabled={checkBoxDisabled}
+              onChange={(e) => e.preventDefault()}
             />
           </span>
           <FolderOutlinedIcon />

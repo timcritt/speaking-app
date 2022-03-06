@@ -1,4 +1,6 @@
 import React, { Fragment } from 'react';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import styles from './ImageDeleteBtn.module.css';
 
 const ImageDeleteBtn = ({ setImageUrl, setImageRef }) => {
   const handleDelete = () => {
@@ -8,8 +10,11 @@ const ImageDeleteBtn = ({ setImageUrl, setImageRef }) => {
 
   return (
     <Fragment>
-      <button className='image-centre-btn delete-btn' onClick={() => handleDelete()}>
-        Delete
+      <button
+        className={`${styles.image_centre_btn} ${styles.delete_image_btn}`}
+        onClick={() => handleDelete()}
+      >
+        <HighlightOffIcon fontSize='large' />
       </button>
     </Fragment>
   );

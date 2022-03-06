@@ -1,0 +1,9 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  background-color: red;
+  color: black;
+}

@@ -124,7 +124,6 @@ const EasyCrop = ({ classes, aspect = 4 / 3, setImageUrl, setOpen }) => {
         <Fragment>
           <input type='file' id='imageUpload' onChange={onFileChange} accept='image/*' />
           <label for='imageUpload'>upload a file</label>
-          <ImageSearch setImageSrc={setImageSrc} />
           <span className='upload-error-message'>{uploadError}</span>
         </Fragment>
       )}

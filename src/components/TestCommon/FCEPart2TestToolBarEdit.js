@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import PublishWarningModal from 'components/FCEPart2/PublishWarningModal';
 import { Link } from 'react-router-dom';
@@ -6,7 +6,8 @@ import DeleteButton from 'components/common/DeleteButton';
 import deleteTest from 'APIHandlers/deleteTest';
 import { useHistory } from 'react-router-dom';
 import { FCEPart2 } from 'APIHandlers/firebaseConsts';
-import TestToolBar from 'components/TestCommon/TestToolBar';
+
+import styles from './FCEPart2TestToolBarEdit.module.css';
 
 function TestToolBarEdit({ context }) {
   var history = useHistory();
@@ -17,32 +18,32 @@ function TestToolBarEdit({ context }) {
     history.push('/EditFCEPart2/new');
   };
 
-  return (
-    <TestToolBar>
-      <div className='tool-btn-container'>
-        <PublishWarningModal />
-        {context.docRef && (
-          <Link
-            to={{
-              pathname: `/FCEPart2/${context.docRef}`,
-            }}
-          >
-            <button className='tool-bar-btn'>
-              <VisibilityOutlinedIcon />
-            </button>
-          </Link>
-        )}
+  const buttons = (
+    <Fragment>
+      <PublishWarningModal />
+      {context.docRef && (
+        <Link
+          to={{
+            pathname: `/FCEPart2/${context.docRef}`,
+          }}
+        >
+          <button>
+            <VisibilityOutlinedIcon />
+          </button>
+        </Link>
+      )}
 
-        <DeleteButton
-          itemId={context.docRef}
-          deleteItemType={'test'}
-          firestoreCollection={FCEPart2}
-          iconColour={'#fa5454'}
-          handleDelete={handleDeleteTest}
-        />
-      </div>
-    </TestToolBar>
+      <DeleteButton
+        itemId={context.docRef}
+        deleteItemType={'test'}
+        firestoreCollection={FCEPart2}
+        iconColour={'#fa5454'}
+        handleDelete={handleDeleteTest}
+      />
+    </Fragment>
   );
+
+  return <div className={styles.container}>{buttons}</div>;
 }
 
 export default TestToolBarEdit;

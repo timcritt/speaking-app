@@ -6,6 +6,10 @@
   max-width: 85rem;
 }
 
+.nav-container .isVisible {
+  background-color: #459ab5;
+}
+
 .nav-logo {
   display: none;
 }
