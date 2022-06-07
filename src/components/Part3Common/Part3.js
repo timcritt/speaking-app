@@ -24,7 +24,7 @@ const Part3 = (props) => {
     width: null,
   });
 
-  const [time, setTime] = useState(60000);
+  const [time, setTime] = useState(120000);
   const handleViewShortTurnClick = () => {
     hideLines();
     setQuestionTwoVisible((prevState) => !prevState);
