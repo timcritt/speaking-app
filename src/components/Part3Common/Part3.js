@@ -24,7 +24,7 @@ const Part3 = (props) => {
     width: null,
   });
 
-  const [time, setTime] = useState(12000);
+  const [time, setTime] = useState(60000);
   const handleViewShortTurnClick = () => {
     hideLines();
     setQuestionTwoVisible((prevState) => !prevState);
@@ -76,10 +76,10 @@ const Part3 = (props) => {
 
   useEffect(() => {
     if (!questionTwoVisible) {
-      setTime(12000);
+      setTime(120000);
       setQuestionClass('');
     } else {
-      setTime(6000);
+      setTime(60000);
       setQuestionClass('flipped-vertically');
     }
     debouncedHandleResize();
