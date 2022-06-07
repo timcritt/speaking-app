@@ -78,7 +78,7 @@ const Timer = ({ time }) => {
           <RotateLeftOutlinedIcon />
         </button>
         <div className={styles.time_display}>
-          {currentTime > 0 ? parseInt(currentTime / 1000) : 'time up!'}
+          {currentTime > 0 ? parseInt(currentTime / 100) : 'time up!'}
         </div>
       </div>
     </div>
