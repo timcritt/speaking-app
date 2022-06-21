@@ -7,7 +7,13 @@ import styles from './Part2QuestionRow.module.css';
 const shortTurnLabel = <span className={'fade-in flip180'}>short turn</span>;
 const longTurnLabel = <span className={'fade-in'}>long turn</span>;
 
-const Part2QuestionRow = ({ longTurnQuestions, shortTurnQuestion, setTime }) => {
+const Part2QuestionRow = ({
+  longTurnQuestions,
+  shortTurnQuestion,
+  setTime,
+  longTime,
+  shortTime,
+}) => {
   const [shortTurnVisible, setShortTurnVisible] = useState(false);
   const handleViewShortTurnClick = () => {
     setShortTurnVisible((prevState) => !prevState);
@@ -17,10 +23,10 @@ const Part2QuestionRow = ({ longTurnQuestions, shortTurnQuestion, setTime }) => 
 
   useEffect(() => {
     if (!shortTurnVisible) {
-      setTime(6000);
+      setTime(longTime);
       setQuestionClass('');
     } else {
-      setTime(2000);
+      setTime(shortTime);
       setQuestionClass(styles.flipped_vertically);
     }
   }, [setTime, shortTurnVisible]);

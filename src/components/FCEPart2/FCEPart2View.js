@@ -19,6 +19,10 @@ import useLoadTestIntoComponent from 'hooks/useLoadTestIntoComponent';
 import styles from './FCEPart2View.module.css';
 
 const FCEPart2View = (props) => {
+  //max time for short and long terms. Passed down to question row so that flipping it results in time change
+  const shortTime = '2000';
+  const longTime = '6000';
+
   const context = useContext(FCEPart2Context);
   const { userId } = useContext(firebaseAuth);
   const handleFullScreen = useFullScreenHandle();
@@ -54,6 +58,8 @@ const FCEPart2View = (props) => {
                   longTurnQuestions={[context.questionOne]}
                   shortTurnQuestion={context.shortTurnQuestion}
                   setTime={setTime}
+                  longTime={longTime}
+                  shortTime={shortTime}
                 />
               </div>
 
