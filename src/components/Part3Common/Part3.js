@@ -12,6 +12,9 @@ import Part2QuestionRow from 'components/TestCommon/Part2QuestionRow';
 
 import styles from './Part3.module.css';
 
+//hooks
+import useToggleShortTurn from 'hooks/useToggleShortTurn';
+
 const Part3 = (props) => {
   const { userId } = useContext(firebaseAuth);
   const handleFullScreen = useFullScreenHandle();
@@ -24,11 +27,12 @@ const Part3 = (props) => {
     width: null,
   });
 
-  const [time, setTime] = useState(120000);
-  const handleViewShortTurnClick = () => {
-    hideLines();
-    setQuestionTwoVisible((prevState) => !prevState);
-  };
+  const longTime = '12000';
+  const shortTime = '6000';
+
+  const [time, setTime] = useState(longTime);
+
+
   const hideLines = () => {
     setLineClass('line-hidden');
   };
@@ -74,16 +78,18 @@ const Part3 = (props) => {
     }
   }, [context.hasFetched]);
 
-  useEffect(() => {
-    if (!questionTwoVisible) {
-      setTime(120000);
-      setQuestionClass('');
-    } else {
-      setTime(60000);
-      setQuestionClass('flipped-vertically');
-    }
-    debouncedHandleResize();
-  }, [questionTwoVisible]);
+
+  // useEffect(() => {
+  //   if (!questionTwoVisible) {
+  //     setTime(12000);
+  //     setQuestionClass('');
+  //   } else {
+  //     setTime(6000);
+  //     setQuestionClass('flipped-vertically');
+  //   }
+  //   debouncedHandleResize();
+  // }, [questionTwoVisible]);
+
 
   if (context.hasFetched) {
     return (
@@ -101,6 +107,8 @@ const Part3 = (props) => {
                     longTurnQuestions={[context.questionOne]}
                     shortTurnQuestion={context.shortTurnQuestion}
                     setTime={setTime}
+                    longTime={longTime}
+                    shortTime={shortTime}
                   />
                 </div>
                 <div className={styles.top_right}>
