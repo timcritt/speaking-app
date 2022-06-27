@@ -32,6 +32,7 @@ const Part3 = (props) => {
 
   const [time, setTime] = useState(longTime);
 
+
   const hideLines = () => {
     setLineClass('line-hidden');
   };
@@ -77,6 +78,7 @@ const Part3 = (props) => {
     }
   }, [context.hasFetched]);
 
+
   // useEffect(() => {
   //   if (!questionTwoVisible) {
   //     setTime(12000);
@@ -87,6 +89,7 @@ const Part3 = (props) => {
   //   }
   //   debouncedHandleResize();
   // }, [questionTwoVisible]);
+
 
   if (context.hasFetched) {
     return (
