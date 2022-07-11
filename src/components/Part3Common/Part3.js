@@ -13,7 +13,7 @@ import Part2QuestionRow from 'components/TestCommon/Part2QuestionRow';
 import styles from './Part3.module.css';
 
 //hooks
-import useToggleShortTurn from 'hooks/useToggleShortTurn';
+// import useToggleShortTurn from 'hooks/useToggleShortTurn';
 
 const Part3 = (props) => {
   const { userId } = useContext(firebaseAuth);

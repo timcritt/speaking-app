@@ -16,6 +16,8 @@ import { useHistory } from 'react-router-dom';
 
 import TestToolBar from 'components/TestCommon/TestToolBar';
 
+import styles from './Part3.module.css';
+
 const EditPart3 = ({ context, testType, ...props }) => {
   const handleFullScreen = useFullScreenHandle();
   const optionPlaceholder = 'option';
@@ -61,7 +63,7 @@ const EditPart3 = ({ context, testType, ...props }) => {
     if (context.hasFetched) {
       handleResize();
     }
-  }, [context, handleResize, props.match.params.id]);
+  }, [handleResize, props.match.params.id]);
 
   useEffect(() => {
     //instantly hides the lines on window resize to prevent jumping lines.
@@ -173,51 +175,74 @@ const EditPart3 = ({ context, testType, ...props }) => {
         </div>
         <FullScreen handle={handleFullScreen}>
           <main className='holy-grail-content fade-in'>
-            <div className='part2-main-row'>
-              <div className='part3-grid-container'>
-                <TextareaAutosize
-                  className='part3-option-top-left part3-option-input part3-input '
-                  placeholder={optionPlaceholder}
-                  value={context.topLeft}
-                  onChange={handleTopLeftChange}
-                  rowsMin='1'
+            <div className={styles.container}>
+              <div className={`${styles.grid_container} part3-grid-container`}>
+                <div className={`${styles.centre} part3-question-container part3-question-centre`}>
+                  <TextareaAutosize
+                    className={styles.option_container}
+                    placeholder='enter question'
+                    value={context.questionOne}
+                    onChange={handleQuestionChange}
+                    rowsMin='1'
+                  />
+                </div>
+                <div className={styles.top_right}>
+                  <TextareaAutosize
+                    className={styles.option_container}
+                    placeholder={optionPlaceholder}
+                    value={context.topRight}
+                    onChange={handleTopRightChange}
+                    rowsMin='1'
+                  />
+                </div>
+                <div className={styles.top_left}>
+                  <TextareaAutosize
+                    className={styles.option_container}
+                    placeholder={optionPlaceholder}
+                    value={context.topLeft}
+                    onChange={handleTopLeftChange}
+                    rowsMin='1'
+                  />
+                </div>
+
+                <div className={styles.bottom_left}>
+                  <TextareaAutosize
+                    className={styles.option_container}
+                    placeholder={optionPlaceholder}
+                    value={context.bottomLeft}
+                    onChange={handleBottomLeftChange}
+                    rowsMin='1'
+                  />
+                </div>
+                <div className={styles.bottom_centre}>
+                  <TextareaAutosize
+                    className={styles.option_container}
+                    placeholder={optionPlaceholder}
+                    value={context.bottomCentre}
+                    onChange={handleBottomCentreChange}
+                    rowsMin='1'
+                  />
+                </div>
+                <div className={styles.bottom_right}>
+                  <TextareaAutosize
+                    className={styles.option_container}
+                    placeholder={optionPlaceholder}
+                    value={context.bottomRight}
+                    onChange={handleBottomRightChange}
+                    rowsMin='1'
+                  />
+                </div>
+
+                <Part3Lines
+                  windowDimensions={windowDimensions}
+                  lineClass={lineClass}
+                  top_left={styles.top_left}
+                  top_right={styles.top_right}
+                  bottom_left={styles.bottom_left}
+                  bottom_right={styles.bottom_right}
+                  bottom_centre={styles.bottom_centre}
+                  centre={styles.centre}
                 />
-                <TextareaAutosize
-                  className='part3-question-centre part3-input'
-                  placeholder='enter question'
-                  value={context.questionOne}
-                  onChange={handleQuestionChange}
-                  rowsMin='1'
-                />
-                <TextareaAutosize
-                  className='part3-option-top-right part3-input part3-option-input'
-                  placeholder={optionPlaceholder}
-                  value={context.topRight}
-                  onChange={handleTopRightChange}
-                  rowsMin='1'
-                />
-                <TextareaAutosize
-                  className='part3-option-bottom-left part3-input part3-option-input'
-                  placeholder={optionPlaceholder}
-                  value={context.bottomLeft}
-                  onChange={handleBottomLeftChange}
-                  rowsMin='1'
-                />
-                <TextareaAutosize
-                  className='part3-option-bottom-centre part3-input part3-option-input'
-                  placeholder={optionPlaceholder}
-                  value={context.bottomCentre}
-                  onChange={handleBottomCentreChange}
-                  rowsMin='1'
-                />
-                <TextareaAutosize
-                  className='part3-option-bottom-right part3-input part3-option-input '
-                  placeholder={optionPlaceholder}
-                  value={context.bottomRight}
-                  onChange={handleBottomRightChange}
-                  rowsMin='1'
-                />
-                <Part3Lines windowDimensions={windowDimensions} lineClass={lineClass} />
               </div>
               <div className='part2-edit-question-container part3-questionTwo-container'>
                 <label className='part2-question-input-label' htmlFor='question-2'>

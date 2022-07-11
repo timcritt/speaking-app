@@ -1,5 +1,4 @@
 .container {
-  display: grid;
   grid-template-areas:
     'content'
     'tool-bar';
@@ -97,4 +96,14 @@
   text-align: center;
   z-index: 2;
   font-size: 3vmin;
+}
+
+textarea {
+  resize: none;
+  border: none;
+  background-color: transparent;
+}
+
+textarea:focus {
+  background-color: rgb(153, 193, 245);
 }
