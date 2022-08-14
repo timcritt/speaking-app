@@ -8,6 +8,7 @@ import TestPreview from 'components/TestPreview/TestPreview';
 import FCEPart2TestPreviewContent from '../FCEPart2/FCEPart2TestPreviewContent/FCEPart2TestPreviewContent';
 import CAEPart2TestPreviewContent from 'components/CAEPart2/CAEPart2TestPreviewContent';
 import Part3TestPreviewContent from 'components/Part3Common/Part3TestPreviewContent';
+import Part4TestPreviewContent from 'components/Part4/Part4TestPreviewContent';
 
 const Tests = ({ results = [], testType }) => {
   console.log(testType);
@@ -26,6 +27,7 @@ const Tests = ({ results = [], testType }) => {
                     testType={testType}
                     key={doc.id}
                     testLabel={'test'}
+                    testTags={doc.tags}
                   >
                     <FCEPart2TestPreviewContent test={doc} />
                   </TestPreview>
@@ -37,6 +39,7 @@ const Tests = ({ results = [], testType }) => {
                     questionOne={doc.questionOne}
                     key={doc.id}
                     testType={testType}
+                    testTags={doc.tags}
                   >
                     <Part3TestPreviewContent test={doc} />
                   </TestPreview>
@@ -48,6 +51,7 @@ const Tests = ({ results = [], testType }) => {
                     questionOne={doc.questionOne}
                     key={doc.id}
                     testType={testType}
+                    testTags={doc.tags}
                   >
                     <CAEPart2TestPreviewContent test={doc} />
                   </TestPreview>
@@ -59,8 +63,15 @@ const Tests = ({ results = [], testType }) => {
                     questionOne={doc.questionOne}
                     key={doc.id}
                     testType={testType}
+                    testTags={doc.tags}
                   >
                     <Part3TestPreviewContent test={doc} />
+                  </TestPreview>
+                );
+              } else if (testType === 'FCEPart4') {
+                return (
+                  <TestPreview testId={doc.id} key={doc.id} testType={testType} testTags={doc.tags}>
+                    <Part4TestPreviewContent test={doc} />
                   </TestPreview>
                 );
               }

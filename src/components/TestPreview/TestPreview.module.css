@@ -63,3 +63,8 @@
     pointer-events: unset;
   }
 }
+.tags_container {
+  color: #a1a1a1;
+  margin-top: 10px;
+  text-align: center;
+}

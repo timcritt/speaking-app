@@ -13,7 +13,7 @@ const updatePart3 = async (
   testType
 ) => {
   var objectRef = projectFirestore.collection(testType).doc(docRef);
-  await objectRef.update({
+  return await objectRef.update({
     bottomCentre,
     bottomLeft,
     bottomRight,
@@ -23,8 +23,6 @@ const updatePart3 = async (
     topRight,
     tags,
   });
-
-  return Promise.resolve();
 };
 
 export default updatePart3;

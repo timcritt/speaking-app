@@ -7,6 +7,7 @@ import FilterMenuDesktop from 'components/CreatorContent/FilterMenuDesktop';
 import TestSearchResults from 'components/CreatorContent/TestSearchResults';
 import FCEPart2TestPreviewContent from 'components/FCEPart2/FCEPart2TestPreviewContent/FCEPart2TestPreviewContent';
 import Part3TestPreviewContent from 'components/Part3Common/Part3TestPreviewContent';
+import Part4TestPreviewContent from 'components/Part4/Part4TestPreviewContent';
 import CAEPart2TestPreviewContent from 'components/CAEPart2/CAEPart2TestPreviewContent';
 import VerticallyExpandingTestsContainer from './VerticallyExpandingTestContainer/VerticallyExpandingTestsContainer';
 
@@ -124,6 +125,19 @@ const MyTests = ({ creatorId }) => {
       >
         <TestSearchResults testType={FCEPart3} creatorId={creatorId}>
           <Part3TestPreviewContent bottomLabel={'FCE Part 3'} />
+        </TestSearchResults>
+      </VerticallyExpandingTestsContainer>
+
+      <VerticallyExpandingTestsContainer
+        buttonLabel={'FCE Part 4'}
+        testType={'FCEPart4'}
+        creatorId={creatorId}
+        tagFilterTerm={tagFilterTerm}
+        sortBy={sortBy}
+        questionFilterTerm={questionFilterTerm}
+      >
+        <TestSearchResults testType={'FCEPart4'} creatorId={creatorId}>
+          <Part4TestPreviewContent bottomLabel={'FCE Part 4'} />
         </TestSearchResults>
       </VerticallyExpandingTestsContainer>
 
