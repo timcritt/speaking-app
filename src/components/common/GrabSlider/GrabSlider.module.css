@@ -1,0 +1,89 @@
+.tag_container_outer {
+  margin-top: 25px;
+  display: flex;
+  position: relative;
+}
+
+.tag_container_inner {
+  width: 100%;
+  display: flex;
+  overflow-x: hidden;
+  overflow-y: hidden;
+
+  position: relative;
+  /*needed here to ensure that element.scrollWidth and element.clientWidth are the same when no scrolling*/
+  box-sizing: content-box;
+}
+
+.scroll_child {
+  padding: 10px;
+  margin: 0 5px;
+  border: solid #dbdbdb 1px;
+  border-radius: 10px;
+  display: inline-block;
+  color: grey;
+  user-select: none;
+}
+
+.left_button_container {
+  box-shadow: 13px 0px 12px 6px #f9fafa;
+  z-index: 1;
+  background-color: #f9fafa;
+  border: none;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 100%;
+  position: absolute;
+}
+
+.right_button_container {
+  box-shadow: -13px 0px 12px 6px #f9fafa;
+  z-index: 1;
+  background-color: #f9fafa;
+  border: none;
+  position: absolute;
+  right: 0;
+  height: 100%;
+}
+
+.tag_container_inner::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+.chevron {
+  font-size: 25px;
+}
+
+.button:hover {
+  border: 1px #dbdbdb solid;
+}
+
+.button {
+  border-radius: 100%;
+  background-color: #f9fafa;
+  height: 100%;
+  cursor: pointer;
+  aspect-ratio: 1/1;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 2px;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+/* class 'grabable' is applied conditionally in the component if the length of the div is such that it is scrollable */
+.active.grabable {
+  background: rgba(255, 255, 255, 0.3);
+  cursor: grabbing;
+  cursor: -webkit-grabbing;
+  transform: scale(1);
+  user-select: none;
+}
+
+.grabable {
+  cursor: grab;
+}
