@@ -13,10 +13,12 @@ import DeleteButton from 'components/common/DeleteButton';
 import { firebaseAuth } from '../../../context/AuthProvider';
 
 import LoadingBar from 'components/LoadingBar/LoadingBar';
+import Part4TestPreviewContent from 'components/Part4/Part4TestPreviewContent';
 
 const VerticallyExpandingFolder = ({ folder }) => {
   const [FCEPart2Tests, setFCEPart2Tests] = useState(null);
   const [FCEPart3Tests, setFCEPart3Tests] = useState(null);
+  const [FCEPart4Tests, setFCEPart4Tests] = useState(null);
   const [CAEPart2Tests, setCAEPart2Tests] = useState(null);
   const [CAEPart3Tests, setCAEPart3Tests] = useState(null);
 
@@ -36,10 +38,13 @@ const VerticallyExpandingFolder = ({ folder }) => {
           const folderContent = await getFolderTestsJunctions(folder.id);
           const newFCEPart2Tests = await getTestsById(folderContent, FCEPart2);
           const newFCEPart3Tests = await getTestsById(folderContent, FCEPart3);
+          const newFCEPart4Tests = await getTestsById(folderContent, 'FCEPart4');
           const newCAEPart2Tests = await getTestsById(folderContent, CAEPart2);
           const newCAEPart3Tests = await getTestsById(folderContent, CAEPart3);
+
           setFCEPart2Tests(newFCEPart2Tests);
           setFCEPart3Tests(newFCEPart3Tests);
+          setFCEPart4Tests(newFCEPart4Tests);
           setCAEPart2Tests(newCAEPart2Tests);
           setCAEPart3Tests(newCAEPart3Tests);
           setFetching(false);
@@ -103,6 +108,7 @@ const VerticallyExpandingFolder = ({ folder }) => {
                       testId={test.id}
                       questionOne={test.questionOne}
                       testType={FCEPart2}
+                      testTags={test.tags}
                     >
                       <FCEPart2TestPreviewContent test={test} />
                     </TestPreview>
@@ -116,8 +122,22 @@ const VerticallyExpandingFolder = ({ folder }) => {
                       testId={test.id}
                       questionOne={test.questionOne}
                       testType={FCEPart3}
+                      testTags={test.tags}
                     >
                       <Part3TestPreviewContent test={test} />
+                    </TestPreview>
+                  );
+                })}
+              {FCEPart4Tests &&
+                FCEPart4Tests.map((test) => {
+                  return (
+                    <TestPreview
+                      key={test.id}
+                      testId={test.id}
+                      testType={'FCEPart4'}
+                      testTags={test.tags}
+                    >
+                      <Part4TestPreviewContent test={test} />
                     </TestPreview>
                   );
                 })}
@@ -129,6 +149,7 @@ const VerticallyExpandingFolder = ({ folder }) => {
                       testId={test.id}
                       questionOne={test.questionOne}
                       testType={CAEPart2}
+                      testTags={test.tags}
                     >
                       <CAEPart2TestPreviewContent test={test} />
                     </TestPreview>
@@ -142,6 +163,7 @@ const VerticallyExpandingFolder = ({ folder }) => {
                       testId={test.id}
                       questionOne={test.questionOne}
                       testType={CAEPart3}
+                      testTags={test.tags}
                     >
                       <Part3TestPreviewContent test={test} bottomLabel={'CAE Part 3'} />
                     </TestPreview>

@@ -17,6 +17,7 @@ const TestSearchResults = ({ tests, testType, children }) => {
               <TestPreview
                 key={test.id}
                 testId={test.id}
+                testTags={test.tags}
                 questionOne={test.questionOne}
                 testType={testType}
               >

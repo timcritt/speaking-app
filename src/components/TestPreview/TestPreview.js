@@ -4,7 +4,8 @@ import styles from './TestPreview.module.css';
 
 //Thumnail template for preview of each test type
 
-const TestPreview = ({ questionOne, children, testId, testType, testLabel }) => {
+const TestPreview = ({ questionOne, children, testId, testType, testLabel, testTags }) => {
+  console.log(testTags);
   return (
     <div className={styles.outer_container} key={testId}>
       <div className={`${styles.inner_container} fade-in`}>
@@ -18,7 +19,12 @@ const TestPreview = ({ questionOne, children, testId, testType, testLabel }) => 
       </div>
       <div className={styles.label_container}>{testLabel}</div>
       <div className={`${styles.question_container} dont-break-out`}>
-        <span className={styles.question_text}>{questionOne}</span>
+        {testType !== 'FCEPart4' && <span className={styles.question_text}>{questionOne}</span>}
+      </div>
+      <div className={styles.tags_container}>
+        {testTags.map((test) => {
+          return <span>{`#${test} `}</span>;
+        })}
       </div>
     </div>
   );

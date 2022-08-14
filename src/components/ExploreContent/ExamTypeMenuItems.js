@@ -51,6 +51,10 @@ function ExamTypeMenuItems({
               label={'Part 3'}
               handleClickOption={(e) => handleChangeTestType(e, 'Part3')}
             />
+            <DropDownOption
+              label={'Part 4'}
+              handleClickOption={(e) => handleChangeTestType(e, 'Part4')}
+            />
           </div>
         )}
       </div>

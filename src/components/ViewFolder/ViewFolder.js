@@ -85,6 +85,7 @@ const ViewFolder = () => {
                   testId={test.id}
                   question={test.question}
                   testType={FCEPart2}
+                  testTags={test.tags}
                 >
                   <FCEPart2TestPreviewContent test={test} />
                 </TestPreview>
@@ -95,7 +96,12 @@ const ViewFolder = () => {
           FCEPart3Tests.map((test) => {
             return (
               <Link className='test-preview-link' to={`/FCEPart3/${test.id}`} key={test.id}>
-                <TestPreview testId={test.id} question={test.question} testType={FCEPart3}>
+                <TestPreview
+                  testId={test.id}
+                  question={test.question}
+                  testType={FCEPart3}
+                  testTags={test.tags}
+                >
                   <Part3TestPreviewContent test={test} bottomLabel='FCE Part 3' />
                 </TestPreview>
               </Link>
@@ -105,7 +111,12 @@ const ViewFolder = () => {
           CAEPart2Tests.map((test) => {
             return (
               <Link className='test-preview-link' to={`/CAEPart2/${test.id}`} key={test.id}>
-                <TestPreview testId={test.id} question={test.questionOne} testType={CAEPart2}>
+                <TestPreview
+                  testId={test.id}
+                  question={test.questionOne}
+                  testType={CAEPart2}
+                  testTags={test.tags}
+                >
                   <CAEPart2TestPreviewContent test={test} />
                 </TestPreview>
               </Link>
@@ -115,7 +126,12 @@ const ViewFolder = () => {
           CAEPart3Tests.map((test) => {
             return (
               <Link className='test-preview-link' to={`/CAEPart2/${test.id}`} key={test.id}>
-                <TestPreview testId={test.id} question={test.questionOne} testType={CAEPart3}>
+                <TestPreview
+                  testId={test.id}
+                  question={test.questionOne}
+                  testType={CAEPart3}
+                  testTags={test.tags}
+                >
                   <Part3TestPreviewContent test={test} bottomLabel={'FCE Part 3'} />
                 </TestPreview>
               </Link>

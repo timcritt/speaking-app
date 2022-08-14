@@ -15,7 +15,9 @@ const CreateView = () => {
           <Link to='EditFCEPart3/new'>
             <h2>Part 3</h2>
           </Link>
-          <h2>Part 4</h2>
+          <Link to='/EditFCEPart4/new'>
+            <h2>Part 4</h2>
+          </Link>
         </div>
         <div className='create-single-level-container'>
           <h1>CAE</h1>
@@ -26,7 +28,9 @@ const CreateView = () => {
           <Link to='/EditCAEPart3/new'>
             <h2>Part 3</h2>
           </Link>
-          <h2>Part 4</h2>
+          <Link to='/EditCAEPart4/new'>
+            <h2>Part 4</h2>
+          </Link>
         </div>
       </div>
     </main>
