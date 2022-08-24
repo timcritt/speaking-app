@@ -4,16 +4,22 @@ import pagination from 'APIHandlers/pagination.js';
 
 // PROBLEM: it's currently impossible with firebase to check if a string in the database contains another.
 // Only exact mathches will return results.
-const useGetDocsInfiniteScroll = (userName, setDocs, filterBy, searchTerm) => {
+const useGetDocsInfiniteScroll = (
+  userName,
+  setDocs,
+  filterBy,
+  searchTerm,
+  collection,
+  tagFilterTerm
+) => {
   const [lastKey, setLastKey] = useState('');
   const [nextDocs_loading, setNextPostsLoading] = useState(false);
 
   const fetchMorePosts = () => {
-    console.log('in fetch more psots');
     if (lastKey.length > 0) {
       setNextPostsLoading(true);
       pagination
-        .postsNextBatch(lastKey, filterBy, searchTerm)
+        .postsNextBatch(lastKey, filterBy, searchTerm, collection, tagFilterTerm)
         .then((res) => {
           setLastKey(res.lastKey);
           // add new posts to old posts
@@ -28,9 +34,8 @@ const useGetDocsInfiniteScroll = (userName, setDocs, filterBy, searchTerm) => {
   };
 
   useEffect(() => {
-    // first 5 posts
     pagination
-      .postsFirstBatch()
+      .postsFirstBatch(null, null, collection, tagFilterTerm)
       .then((res) => {
         setDocs(res.results);
         console.log(res.lastKey);
@@ -39,7 +44,7 @@ const useGetDocsInfiniteScroll = (userName, setDocs, filterBy, searchTerm) => {
       .catch((err) => {
         console.log(err);
       });
-  }, [setDocs]);
+  }, [collection, setDocs]);
 
   return { fetchMorePosts, nextDocs_loading, setLastKey };
 

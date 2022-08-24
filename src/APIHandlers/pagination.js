@@ -1,28 +1,33 @@
-import { projectFirestore } from 'firebase/firebaseIndex';
+import { projectFirestore, fieldPath } from 'firebase/firebaseIndex';
 
 const pagination = {
   /**
    * this function will be fired when you first time run the app,
    * and it will fetch first 5 posts, here I retrieve them in descending order, until the last added post appears first.
    */
-  postsFirstBatch: async function (filterBy, searchTerm) {
+  postsFirstBatch: async function (filterBy, searchTerm, collection, tagFilterTerm) {
     try {
-      let data = projectFirestore.collection('users');
+      let data = projectFirestore.collection(collection);
 
       if (filterBy && searchTerm) {
         data = data.where(filterBy, '==', searchTerm);
       }
 
-      data = await data.orderBy('userId').limit(5).get();
+      if (tagFilterTerm) {
+        data = data.where('tags', 'array-contains', tagFilterTerm);
+      }
+
+      data = await data.orderBy(fieldPath.documentId()).limit(2).get();
       console.log(data);
       let results = [];
       let lastKey = '';
       data.forEach((doc) => {
         results.push({
           ...doc.data(),
-          userId: doc.data().userId,
+          id: doc.id,
         });
-        lastKey = doc.id;
+        lastKey = doc.ref.id;
+        console.log(doc.ref.id);
       });
       return { results, lastKey };
     } catch (e) {
@@ -35,22 +40,28 @@ const pagination = {
    * it receive key of last post in previous batch, then fetch next 5 posts
    * starting after last fetched post.
    */
-  postsNextBatch: async (key, filterBy, searchTerm) => {
+  postsNextBatch: async (key, filterBy, searchTerm, collection, tagFilterTerm) => {
     try {
-      var data = projectFirestore.collection('users');
-      if (filterBy && searchTerm) {
-        data = data.where('userName', '==', 'Chonk');
+      var data = projectFirestore.collection(collection);
+      // if (filterBy && searchTerm) {
+      //   data = data.where('userName', '==', 'Chonk');
+      // }
+
+      if (tagFilterTerm) {
+        data = data.where('tags', 'array-contains', tagFilterTerm);
       }
-      data = await data.orderBy('userId').startAfter(key).limit(5).get();
+
+      data = await data.orderBy(fieldPath.documentId()).startAfter(key).limit(2).get();
 
       let results = [];
       let lastKey = '';
       data.forEach((doc) => {
         results.push({
           ...doc.data(),
-          userId: doc.data().userId,
+          id: doc.id,
         });
-        lastKey = doc.id;
+        lastKey = doc.ref.id;
+        console.log(doc.ref.id);
       });
       return { results, lastKey };
     } catch (e) {

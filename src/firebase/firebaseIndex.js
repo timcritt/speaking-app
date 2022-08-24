@@ -22,7 +22,8 @@ firebase.analytics();
 const firebaseAuth = firebase.auth();
 const projectStorage = firebase.storage();
 const projectFirestore = firebase.firestore();
+const fieldPath = firebase.firestore.FieldPath;
 const timestamp = firebase.firestore.FieldValue.serverTimestamp;
 const increment = firebase.firestore.FieldValue.increment;
 
-export { firebaseAuth, projectStorage, projectFirestore, app, timestamp, increment };
+export { firebaseAuth, projectStorage, projectFirestore, app, timestamp, increment, fieldPath };
