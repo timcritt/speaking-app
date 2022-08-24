@@ -21,6 +21,8 @@ const SearchTests = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [docs, setDocs] = useState([]);
 
+  const [direction, setDirection] = useState('desc');
+
   const [filterMenuVisible, setFilterMenuVisible] = useState(false);
   const itemOne = useComponentVisible(false);
   const itemTwo = useComponentVisible(false);
@@ -28,25 +30,22 @@ const SearchTests = () => {
   const itemFour = useComponentVisible(false);
   const itemFive = useComponentVisible(false);
 
-  const { fetchMorePosts, nextDocs_loading, setLastKey } = useGetDocsInfiniteScroll(
-    searchTerm,
+  const { fetchMorePosts, nextDocs_loading, setLastKey, lastKey } = useGetDocsInfiniteScroll(
     setDocs,
-    filterBy,
-    searchTerm,
     exam + testType,
-    tagFilterTerm
+    tagFilterTerm,
+    direction
   );
 
   const handleClickSearch = useCallback(async () => {
     const { results, lastKey } = await pagination.postsFirstBatch(
-      filterBy,
-      searchTerm,
       exam + testType,
-      tagFilterTerm
+      tagFilterTerm,
+      direction
     );
     setLastKey(() => lastKey);
     setDocs(() => results);
-  }, [exam, searchTerm, setLastKey, tagFilterTerm, testType]);
+  }, [direction, exam, setLastKey, tagFilterTerm, testType]);
 
   const toggleFilterMenuVisible = () => {
     setFilterMenuVisible((prevState) => !prevState);
@@ -57,12 +56,16 @@ const SearchTests = () => {
   const handleSetRecent = (e, label) => {
     e.stopPropagation();
     setSortBy(label);
+    setDirection(() => 'asc');
+    console.log('handleSetRecent: ', label, direction);
     itemTwo.setIsComponentVisible(false);
   };
 
   const handleSetOld = (e, label) => {
     e.stopPropagation();
     setSortBy(label);
+    setDirection(() => 'desc');
+    console.log('handleSetOld: ', label, direction);
     itemTwo.setIsComponentVisible(false);
   };
 
@@ -129,7 +132,7 @@ const SearchTests = () => {
       <Tests testType={exam + testType} results={docs} />
 
       {nextDocs_loading && 'loading'}
-      <button onClick={fetchMorePosts}>get more posts</button>
+      {lastKey && <button onClick={fetchMorePosts}>get more posts</button>}
     </Fragment>
   );
 };

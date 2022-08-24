@@ -1,4 +1,4 @@
-import React, { cloneElement, Fragment } from 'react';
+import React, { cloneElement } from 'react';
 import { Link } from 'react-router-dom';
 import TestPreview from 'components/TestPreview/TestPreview';
 
@@ -13,17 +13,15 @@ const TestSearchResults = ({ tests, testType, children }) => {
       {tests &&
         tests.map((test) => {
           return (
-            <Fragment>
-              <TestPreview
-                key={test.id}
-                testId={test.id}
-                testTags={test.tags}
-                questionOne={test.questionOne}
-                testType={testType}
-              >
-                {cloneElement(children, { test: test })}
-              </TestPreview>
-            </Fragment>
+            <TestPreview
+              key={test.id}
+              testId={test.id}
+              testTags={test.tags}
+              questionOne={test.questionOne}
+              testType={testType}
+            >
+              {cloneElement(children, { test: test })}
+            </TestPreview>
           );
         })}
     </div>

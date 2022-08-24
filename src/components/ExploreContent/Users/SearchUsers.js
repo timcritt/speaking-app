@@ -8,7 +8,7 @@ const SearchUsers = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [docs, setDocs] = useState([]);
 
-  const collection = 'FCEPart2';
+  const collection = 'users';
 
   const { fetchMorePosts, nextDocs_loading, setLastKey } = useGetDocsInfiniteScroll(
     searchTerm,

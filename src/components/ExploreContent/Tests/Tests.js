@@ -11,8 +11,6 @@ import Part3TestPreviewContent from 'components/Part3Common/Part3TestPreviewCont
 import Part4TestPreviewContent from 'components/Part4/Part4TestPreviewContent';
 
 const Tests = ({ results = [], testType }) => {
-  console.log(testType);
-
   return (
     <main>
       <div className='explore-content-main'>
