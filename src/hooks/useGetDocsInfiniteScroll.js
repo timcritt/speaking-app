@@ -56,7 +56,7 @@ const useGetDocsInfiniteScroll = (setDocs, collection, tagFilterTerm, direction,
     };
   }, [collection, direction, orderBy, setDocs, tagFilterTerm]);
 
-  //apply observer to the target html item and load next posts when item is on screen
+  //apply observer to the target html item at the bottom of all the loaded images and load next images when item is on screen
   useEffect(() => {
     let current = containerRef.current;
 
@@ -66,12 +66,16 @@ const useGetDocsInfiniteScroll = (setDocs, collection, tagFilterTerm, direction,
 
     function handleIntersection(entries, observer) {
       const entry = entries[0];
-
-      if (entry.isIntersecting && lastKey) {
-        observer.unobserve(entry.target);
-        (async () => {
-          await fetchMorePosts();
-        })();
+      try {
+        if (entry.isIntersecting && lastKey) {
+          //must unobserve to prevent multiple calls to fetchMorePosts
+          observer.unobserve(entry.target);
+          (async () => {
+            await fetchMorePosts();
+          })();
+        }
+      } catch (error) {
+        console.log(error);
       }
     }
 

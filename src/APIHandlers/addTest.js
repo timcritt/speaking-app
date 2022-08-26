@@ -11,7 +11,7 @@ const addTest = async (
   imageTwoRef,
   creatorId
 ) => {
-  return projectFirestore.collection(FCEPart2).add({
+  return await projectFirestore.collection(FCEPart2).add({
     imageOneUrl,
     imageTwoUrl,
     questionOne,

@@ -13,8 +13,8 @@ const SearchTests = () => {
   const [questionFilterTerm, setQuestionFilterTerm] = useState('');
 
   const [testType, setTestType] = useState('Part2');
-  const [searchButtonClicked, setSearchButtonClicked] = useState(false);
-  const [hasFetched, setHasFetched] = useState(true);
+  //const [searchButtonClicked, setSearchButtonClicked] = useState(false);
+  //const [hasFetched, setHasFetched] = useState(true);
   const [exam, setExam] = useState('FCE');
   const [docs, setDocs] = useState([]);
   const [direction, setDirection] = useState('desc');
@@ -122,7 +122,7 @@ const SearchTests = () => {
       <Tests testType={exam + testType} results={docs} />
       {nextDocs_loading && 'loading'}
       {/*the ref in the bottom div is observed by intersectionObsever. When the div is scrolled to and on screen, it triggers more images to load*/}
-      <div onClick={fetchMorePosts} ref={containerRef}></div>
+      <div ref={containerRef}></div>
     </Fragment>
   );
 };

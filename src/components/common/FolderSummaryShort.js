@@ -1,8 +1,10 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect, useCallback } from 'react';
 import FolderOutlinedIcon from '@material-ui/icons/FolderOutlined';
 import addTestToFolder from 'APIHandlers/addTestToFolder';
 import checkIfTestInFolder from 'APIHandlers/checkIfTestInFolder';
 import deleteTestFromFolder from 'APIHandlers/deleteTestFromFolder';
+
+import { throttle } from 'lodash';
 
 const FolderSummaryShort = ({ folder, testId, userId }) => {
   const [isInFolder, setIsInFolder] = useState(false);
@@ -26,30 +28,40 @@ const FolderSummaryShort = ({ folder, testId, userId }) => {
     return () => (isMounted = false);
   }, [folder.id, testId]);
 
-  const handleChange = async () => {
-    //disable checkbox to prevent rapid, repeated api calls that could lead to the test count of the folder being innacurate.
-    setCheckBoxDisabled(true);
-    if (!isInFolder) {
-      try {
-        await addTestToFolder(folder.id, testId, userId);
-        setIsInFolder(true);
-        setCheckBoxDisabled(false);
-      } catch {
-        setIsInFolder(false);
-        setCheckBoxDisabled(false);
+  const throttledAddTestsToFolder = useCallback(() => {
+    throttle(addTestToFolder(folder.id, testId, userId), 1000, { leading: true, trailing: false });
+    setIsInFolder(() => true);
+    setCheckBoxDisabled(false);
+  }, [folder.id, testId, userId, setIsInFolder]);
+
+  const handleChange = useCallback(() => {
+    (async () => {
+      console.log('isInFoler', isInFolder);
+      //disable checkbox to prevent rapid, repeated api calls that could lead to the test count of the folder being innacurate.
+      setCheckBoxDisabled(true);
+      if (!isInFolder) {
+        try {
+          console.log('about to fire throttled function');
+          throttledAddTestsToFolder();
+          setIsInFolder(() => true);
+        } catch {
+          setIsInFolder(false);
+          setCheckBoxDisabled(false);
+        }
+      } else {
+        try {
+          await deleteTestFromFolder(folder.id, testId);
+          setIsInFolder(false);
+          setCheckBoxDisabled(false);
+        } catch {
+          setIsInFolder(true);
+          setCheckBoxDisabled(false);
+        }
       }
-    } else {
-      try {
-        await deleteTestFromFolder(folder.id, testId);
-        setIsInFolder(false);
-        setCheckBoxDisabled(false);
-      } catch {
-        setIsInFolder(true);
-        setCheckBoxDisabled(false);
-      }
-    }
-    console.log(folder);
-  };
+    })();
+  }, [folder.id, isInFolder, testId, throttledAddTestsToFolder]);
+
+  //const throttledHandleChange = throttle(handleChange, 5000, { leading: true, trailing: false });
 
   return (
     <div className='folder-container' onClick={handleChange}>

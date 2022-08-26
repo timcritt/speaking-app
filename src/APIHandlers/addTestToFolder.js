@@ -5,6 +5,7 @@ import { projectFirestore, timestamp, increment } from '../firebase/firebaseInde
 //Transactions are batched to ensure atomicity
 
 const addTestToFolder = async (folderId, testId, creatorId) => {
+  console.log('addTestToFolder is firing');
   let writeBatch = projectFirestore.batch();
 
   const createdAt = timestamp();
@@ -23,5 +24,7 @@ const addTestToFolder = async (folderId, testId, creatorId) => {
 
   return;
 };
+
+//const throttledAdtestToFolder =
 
 export default addTestToFolder;

@@ -1,5 +1,4 @@
 import { projectFirestore, timestamp } from '../firebase/firebaseIndex';
-import firebase from 'firebase';
 
 const addCAEPart3 = async (
   bottomCentre,
