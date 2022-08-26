@@ -1,23 +1,15 @@
 import { projectFirestore, fieldPath } from 'firebase/firebaseIndex';
 
 const pagination = {
-  /**
-   * this function will be fired when you first time run the app,
-   * and it will fetch first 5 posts, here I retrieve them in descending order, until the last added post appears first.
-   */
-  postsFirstBatch: async function (collection, tagFilterTerm, direction) {
+  postsFirstBatch: async function (collection, tagFilterTerm, direction, orderBy) {
     try {
       let data = projectFirestore.collection(collection);
-      console.log('postFirstBatch', direction);
-      // if (filterBy && searchTerm) {
-      //   data = data.where(filterBy, '==', searchTerm);
-      // }
 
       if (tagFilterTerm) {
         data = data.where('tags', 'array-contains', tagFilterTerm);
       }
 
-      data = await data.orderBy('createdAt', direction).limit(4).get();
+      data = await data.orderBy(orderBy, direction).limit(8).get();
 
       let results = [];
       let lastKey = '';
@@ -34,24 +26,15 @@ const pagination = {
     }
   },
 
-  /**
-   * this function will be fired each time the user click on 'More Posts' button,
-   * it receive key of last post in previous batch, then fetch next 5 posts
-   * starting after last fetched post.
-   */
-  postsNextBatch: async function (key, collection, tagFilterTerm, direction) {
+  postsNextBatch: async function (key, collection, tagFilterTerm, direction, orderBy) {
     try {
-      console.log('postNextBatch', direction);
       let data = projectFirestore.collection(collection);
-      // if (filterBy && searchTerm) {
-      //   data = data.where('userName', '==', 'Chonk');
-      // }
 
       if (tagFilterTerm) {
         data = data.where('tags', 'array-contains', tagFilterTerm);
       }
 
-      data = await data.orderBy('createdAt', direction).startAfter(key).limit(4).get();
+      data = await data.orderBy(orderBy, direction).startAfter(key).limit(4).get();
 
       let results = [];
       let lastKey = '';

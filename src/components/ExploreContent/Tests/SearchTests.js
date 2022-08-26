@@ -1,7 +1,6 @@
-import React, { Fragment, useState, useEffect, useCallback } from 'react';
+import React, { Fragment, useState, useRef, useEffect, useCallback } from 'react';
 
 import useGetDocsInfiniteScroll from 'hooks/useGetDocsInfiniteScroll';
-import pagination from 'APIHandlers/pagination.js';
 import Tests from 'components/ExploreContent/Tests/Tests.js';
 import FilterMenuDesktop from 'components/CreatorContent/FilterMenuDesktop';
 import useComponentVisible from 'hooks/useComponentVisible';
@@ -14,15 +13,16 @@ const SearchTests = () => {
   const [questionFilterTerm, setQuestionFilterTerm] = useState('');
 
   const [testType, setTestType] = useState('Part2');
-  // const [searchButtonClicked, setSearchButtonClicked] = useState(false);
-  // const [hasFetched, setHasFetched] = useState(false);
+  const [searchButtonClicked, setSearchButtonClicked] = useState(false);
+  const [hasFetched, setHasFetched] = useState(true);
   const [exam, setExam] = useState('FCE');
-  const filterBy = 'userName';
-  const [searchTerm, setSearchTerm] = useState('');
   const [docs, setDocs] = useState([]);
-
   const [direction, setDirection] = useState('desc');
 
+  //constants
+  const orderBy = 'createdAt';
+
+  //custom hooks for controlling behaviour of menus
   const [filterMenuVisible, setFilterMenuVisible] = useState(false);
   const itemOne = useComponentVisible(false);
   const itemTwo = useComponentVisible(false);
@@ -30,29 +30,22 @@ const SearchTests = () => {
   const itemFour = useComponentVisible(false);
   const itemFive = useComponentVisible(false);
 
-  const { fetchMorePosts, nextDocs_loading, setLastKey, lastKey } = useGetDocsInfiniteScroll(
+  const { fetchMorePosts, nextDocs_loading, containerRef } = useGetDocsInfiniteScroll(
     setDocs,
     exam + testType,
     tagFilterTerm,
-    direction
+    direction,
+    orderBy
   );
-
-  const handleClickSearch = useCallback(async () => {
-    const { results, lastKey } = await pagination.postsFirstBatch(
-      exam + testType,
-      tagFilterTerm,
-      direction
-    );
-    setLastKey(() => lastKey);
-    setDocs(() => results);
-  }, [direction, exam, setLastKey, tagFilterTerm, testType]);
 
   const toggleFilterMenuVisible = () => {
     setFilterMenuVisible((prevState) => !prevState);
   };
+
   const handleSetQuestionFilterTerm = (e) => {
     setQuestionFilterTerm(e.currentTarget.value);
   };
+
   const handleSetRecent = (e, label) => {
     e.stopPropagation();
     setSortBy(label);
@@ -98,10 +91,6 @@ const SearchTests = () => {
     setExam(exam);
   };
 
-  useEffect(() => {
-    handleClickSearch();
-  }, [handleClickSearch]);
-
   return (
     <Fragment>
       {/* filter menu for large screens. visible only for large screens*/}
@@ -129,10 +118,11 @@ const SearchTests = () => {
           />
         </FilterMenuDesktop>
       </div>
-      <Tests testType={exam + testType} results={docs} />
 
+      <Tests testType={exam + testType} results={docs} />
       {nextDocs_loading && 'loading'}
-      {lastKey && <button onClick={fetchMorePosts}>get more posts</button>}
+      {/*the ref in the bottom div is observed by intersectionObsever. When the div is scrolled to and on screen, it triggers more images to load*/}
+      <div onClick={fetchMorePosts} ref={containerRef}></div>
     </Fragment>
   );
 };
