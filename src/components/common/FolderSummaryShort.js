@@ -1,14 +1,15 @@
-import React, { useState, useLayoutEffect, useCallback } from 'react';
+import React, { useState, useLayoutEffect, useRef } from 'react';
 import FolderOutlinedIcon from '@material-ui/icons/FolderOutlined';
 import addTestToFolder from 'APIHandlers/addTestToFolder';
 import checkIfTestInFolder from 'APIHandlers/checkIfTestInFolder';
 import deleteTestFromFolder from 'APIHandlers/deleteTestFromFolder';
-
 import { throttle } from 'lodash';
 
 const FolderSummaryShort = ({ folder, testId, userId }) => {
   const [isInFolder, setIsInFolder] = useState(false);
   const [checkBoxDisabled, setCheckBoxDisabled] = useState(false);
+
+  const tickBoxRef = useRef();
 
   useLayoutEffect(() => {
     var isMounted = true;
@@ -28,40 +29,36 @@ const FolderSummaryShort = ({ folder, testId, userId }) => {
     return () => (isMounted = false);
   }, [folder.id, testId]);
 
-  const throttledAddTestsToFolder = useCallback(() => {
-    throttle(addTestToFolder(folder.id, testId, userId), 1000, { leading: true, trailing: false });
-    setIsInFolder(() => true);
-    setCheckBoxDisabled(false);
-  }, [folder.id, testId, userId, setIsInFolder]);
-
-  const handleChange = useCallback(() => {
-    (async () => {
-      console.log('isInFoler', isInFolder);
-      //disable checkbox to prevent rapid, repeated api calls that could lead to the test count of the folder being innacurate.
-      setCheckBoxDisabled(true);
-      if (!isInFolder) {
-        try {
-          console.log('about to fire throttled function');
-          throttledAddTestsToFolder();
-          setIsInFolder(() => true);
-        } catch {
-          setIsInFolder(false);
-          setCheckBoxDisabled(false);
-        }
-      } else {
-        try {
-          await deleteTestFromFolder(folder.id, testId);
-          setIsInFolder(false);
-          setCheckBoxDisabled(false);
-        } catch {
-          setIsInFolder(true);
-          setCheckBoxDisabled(false);
-        }
+  const handleChange = async () => {
+    //disable checkbox to prevent rapid, repeated api calls that could lead to the test count of the folder being innacurate.
+    setCheckBoxDisabled(true);
+    if (!isInFolder) {
+      try {
+        await addTestToFolder(folder.id, testId, userId);
+        setIsInFolder(() => true);
+      } catch (error) {
+        console.log(error);
+        setIsInFolder(false);
       }
-    })();
-  }, [folder.id, isInFolder, testId, throttledAddTestsToFolder]);
 
-  //const throttledHandleChange = throttle(handleChange, 5000, { leading: true, trailing: false });
+      setTimeout(() => {
+        setCheckBoxDisabled(() => false);
+      }, 1000);
+    } else {
+      try {
+        await deleteTestFromFolder(folder.id, testId);
+        setIsInFolder(false);
+      } catch (error) {
+        console.log(error);
+        setIsInFolder(true);
+      }
+
+      setTimeout(() => {
+        setCheckBoxDisabled(() => false);
+      }, 1000);
+    }
+    console.log(folder);
+  };
 
   return (
     <div className='folder-container' onClick={handleChange}>
@@ -69,10 +66,11 @@ const FolderSummaryShort = ({ folder, testId, userId }) => {
         <div className='folder-icon-title-container'>
           <span>
             <input
+              ref={tickBoxRef}
               type='checkbox'
-              id='vehicle1'
-              name='vehicle1'
-              value='Bike'
+              id='tickBox'
+              name='tickBox'
+              value='none'
               checked={isInFolder}
               disabled={checkBoxDisabled}
               onChange={(e) => e.preventDefault()}
