@@ -3,36 +3,33 @@ import FolderOutlinedIcon from '@material-ui/icons/FolderOutlined';
 import addTestToFolder from 'APIHandlers/addTestToFolder';
 import checkIfTestInFolder from 'APIHandlers/checkIfTestInFolder';
 import deleteTestFromFolder from 'APIHandlers/deleteTestFromFolder';
-import { throttle } from 'lodash';
 
 const FolderSummaryShort = ({ folder, testId, userId }) => {
   const [isInFolder, setIsInFolder] = useState(false);
-  const [checkBoxDisabled, setCheckBoxDisabled] = useState(false);
 
   const tickBoxRef = useRef();
 
   useLayoutEffect(() => {
     var isMounted = true;
-    const asyncFunction = async () => {
-      const result = await checkIfTestInFolder(folder.id, testId);
 
-      if (result & isMounted) {
-        setIsInFolder(true);
-      } else {
-        setIsInFolder(false);
-      }
-    };
     if (isMounted) {
-      asyncFunction();
+      (async () => {
+        const result = await checkIfTestInFolder(folder.id, testId);
+        if (result & isMounted) {
+          setIsInFolder(true);
+        } else {
+          setIsInFolder(false);
+        }
+      })();
     }
 
     return () => (isMounted = false);
   }, [folder.id, testId]);
 
   const handleChange = async (e) => {
-    //disable checkbox to prevent rapid, repeated api calls that could lead to the test count of the folder being innacurate.
     e.preventDefault();
     if (!isInFolder && !tickBoxRef.current.disabled) {
+      //disable checkbox to prevent rapid, repeated api calls that could lead to the test count of the folder being innacurate.
       tickBoxRef.current.disabled = true;
       try {
         await addTestToFolder(folder.id, testId, userId);
@@ -42,9 +39,7 @@ const FolderSummaryShort = ({ folder, testId, userId }) => {
         setIsInFolder(false);
       }
 
-      setTimeout(() => {
-        tickBoxRef.current.disabled = false;
-      }, 1000);
+      tickBoxRef.current.disabled = false;
     } else if (!tickBoxRef.current.disabled) {
       tickBoxRef.current.disabled = true;
       try {
@@ -55,9 +50,7 @@ const FolderSummaryShort = ({ folder, testId, userId }) => {
         setIsInFolder(true);
       }
 
-      setTimeout(() => {
-        tickBoxRef.current.disabled = false;
-      }, 2000);
+      tickBoxRef.current.disabled = false;
     }
     console.log(folder);
   };
