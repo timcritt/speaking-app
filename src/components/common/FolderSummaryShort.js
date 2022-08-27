@@ -29,10 +29,11 @@ const FolderSummaryShort = ({ folder, testId, userId }) => {
     return () => (isMounted = false);
   }, [folder.id, testId]);
 
-  const handleChange = async () => {
+  const handleChange = async (e) => {
     //disable checkbox to prevent rapid, repeated api calls that could lead to the test count of the folder being innacurate.
-    setCheckBoxDisabled(true);
-    if (!isInFolder) {
+    e.preventDefault();
+    if (!isInFolder && !tickBoxRef.current.disabled) {
+      tickBoxRef.current.disabled = true;
       try {
         await addTestToFolder(folder.id, testId, userId);
         setIsInFolder(() => true);
@@ -42,9 +43,10 @@ const FolderSummaryShort = ({ folder, testId, userId }) => {
       }
 
       setTimeout(() => {
-        setCheckBoxDisabled(() => false);
+        tickBoxRef.current.disabled = false;
       }, 1000);
     } else {
+      tickBoxRef.current.disabled = true;
       try {
         await deleteTestFromFolder(folder.id, testId);
         setIsInFolder(false);
@@ -54,8 +56,8 @@ const FolderSummaryShort = ({ folder, testId, userId }) => {
       }
 
       setTimeout(() => {
-        setCheckBoxDisabled(() => false);
-      }, 1000);
+        tickBoxRef.current.disabled = false;
+      }, 2000);
     }
     console.log(folder);
   };
@@ -72,7 +74,6 @@ const FolderSummaryShort = ({ folder, testId, userId }) => {
               name='tickBox'
               value='none'
               checked={isInFolder}
-              disabled={checkBoxDisabled}
               onChange={(e) => e.preventDefault()}
             />
           </span>
