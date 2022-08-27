@@ -1,43 +1,71 @@
 import React, { Fragment, useState, useEffect, useCallback } from 'react';
-import Tests from './Tests/Tests';
-import getFilteredTests from '../../APIHandlers/getFilteredTests';
-import LinearProgress from '@material-ui/core/LinearProgress';
+
+import useGetDocsInfiniteScroll from 'hooks/useGetDocsInfiniteScroll';
+import pagination from 'APIHandlers/pagination.js';
+import Tests from 'components/ExploreContent/Tests/Tests.js';
+import FilterMenuDesktop from 'components/CreatorContent/FilterMenuDesktop';
 import useComponentVisible from 'hooks/useComponentVisible';
 import FilterMenuMobile from 'components/CreatorContent/FilterMenuMobile';
-import FilterMenuDesktop from 'components/CreatorContent/FilterMenuDesktop';
 import ExamTypeMenuItems from 'components/ExploreContent/ExamTypeMenuItems';
 
-const AllTests = ({ creatorId }) => {
-  //state
+const SearchTests = () => {
   const [sortBy, setSortBy] = useState(null);
   const [tagFilterTerm, setTagFilterTerm] = useState(null);
   const [questionFilterTerm, setQuestionFilterTerm] = useState('');
-  const [results, setResults] = useState(null);
-  const [testType, setTestType] = useState('Part2');
-  const [searchButtonClicked, setSearchButtonClicked] = useState(false);
-  const [hasFetched, setHasFetched] = useState(false);
-  const [exam, setExam] = useState('FCE');
 
+  const [testType, setTestType] = useState('Part2');
+  // const [searchButtonClicked, setSearchButtonClicked] = useState(false);
+  // const [hasFetched, setHasFetched] = useState(false);
+  const [exam, setExam] = useState('FCE');
+  const filterBy = 'userName';
+  const [searchTerm, setSearchTerm] = useState('');
+  const [docs, setDocs] = useState([]);
+
+  const [direction, setDirection] = useState('desc');
+
+  const [filterMenuVisible, setFilterMenuVisible] = useState(false);
   const itemOne = useComponentVisible(false);
   const itemTwo = useComponentVisible(false);
   const itemThree = useComponentVisible(false);
   const itemFour = useComponentVisible(false);
   const itemFive = useComponentVisible(false);
 
-  const [filterMenuVisible, setFilterMenuVisible] = useState(false);
+  const { fetchMorePosts, nextDocs_loading, setLastKey, lastKey } = useGetDocsInfiniteScroll(
+    setDocs,
+    exam + testType,
+    tagFilterTerm,
+    direction
+  );
 
+  const handleClickSearch = useCallback(async () => {
+    const { results, lastKey } = await pagination.postsFirstBatch(
+      exam + testType,
+      tagFilterTerm,
+      direction
+    );
+    setLastKey(() => lastKey);
+    setDocs(() => results);
+  }, [direction, exam, setLastKey, tagFilterTerm, testType]);
+
+  const toggleFilterMenuVisible = () => {
+    setFilterMenuVisible((prevState) => !prevState);
+  };
   const handleSetQuestionFilterTerm = (e) => {
     setQuestionFilterTerm(e.currentTarget.value);
   };
   const handleSetRecent = (e, label) => {
     e.stopPropagation();
     setSortBy(label);
+    setDirection(() => 'asc');
+    console.log('handleSetRecent: ', label, direction);
     itemTwo.setIsComponentVisible(false);
   };
 
   const handleSetOld = (e, label) => {
     e.stopPropagation();
     setSortBy(label);
+    setDirection(() => 'desc');
+    console.log('handleSetOld: ', label, direction);
     itemTwo.setIsComponentVisible(false);
   };
 
@@ -70,61 +98,12 @@ const AllTests = ({ creatorId }) => {
     setExam(exam);
   };
 
-  const toggleFilterMenuVisible = () => {
-    setFilterMenuVisible((prevState) => !prevState);
-  };
-
-  const handleSearchClick = useCallback(async () => {
-    setHasFetched(false);
-    setSearchButtonClicked(true);
-
-    await getFilteredTests(creatorId, questionFilterTerm, exam + testType).then(async (data) => {
-      var filteredDocs = JSON.parse(JSON.stringify(data));
-      //sort by date created
-      if (sortBy === 'oldest') {
-        filteredDocs = await filteredDocs.sort((a, b) => {
-          return a.createdAt.seconds - b.createdAt.seconds;
-        });
-      } else if (sortBy === 'newest') {
-        filteredDocs = await filteredDocs.sort((a, b) => {
-          return b.createdAt.seconds - a.createdAt.seconds;
-        });
-      }
-      //filter by topic tag
-      if (tagFilterTerm) {
-        filteredDocs = filteredDocs.filter((doc) => doc.tags.includes(tagFilterTerm));
-      }
-
-      //sort alphabetically by question
-
-      setResults(filteredDocs);
-      setHasFetched(true);
-    });
-  }, [creatorId, exam, questionFilterTerm, sortBy, tagFilterTerm, testType]);
-
-  const handleSortRadioChange = (e) => {
-    setSortBy(e.currentTarget.value);
-  };
-
   useEffect(() => {
-    handleSearchClick();
-  }, [handleSearchClick, questionFilterTerm]);
+    handleClickSearch();
+  }, [handleClickSearch]);
 
   return (
     <Fragment>
-      {/* overlay filter menu for small screens - hidden by default and opens on click*/}
-      <FilterMenuMobile
-        filterMenuVisible={filterMenuVisible}
-        toggleFilterMenuVisible={toggleFilterMenuVisible}
-        tagFilterTerm={tagFilterTerm}
-        handleSetTags={handleSetTags}
-        sortBy={sortBy}
-        handleSortRadioChange={handleSortRadioChange}
-        questionFilterTerm={questionFilterTerm}
-        handleSetQuestionFilterTerm={handleSetQuestionFilterTerm}
-        handleResetFilters={handleResetFilters}
-      />
-
       {/* filter menu for large screens. visible only for large screens*/}
       <div className='search-terms-container'>
         <FilterMenuDesktop
@@ -150,11 +129,12 @@ const AllTests = ({ creatorId }) => {
           />
         </FilterMenuDesktop>
       </div>
+      <Tests testType={exam + testType} results={docs} />
 
-      {!hasFetched && searchButtonClicked && <LinearProgress />}
-      {hasFetched && <Tests testType={exam + testType} results={results} />}
+      {nextDocs_loading && 'loading'}
+      {lastKey && <button onClick={fetchMorePosts}>get more posts</button>}
     </Fragment>
   );
 };
 
-export default AllTests;
+export default SearchTests;

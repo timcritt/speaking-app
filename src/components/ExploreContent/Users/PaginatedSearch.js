@@ -1,17 +1,14 @@
 import React, { Fragment, useState } from 'react';
-import Users from './Users';
-import useGetDocsInfiniteScroll from 'hooks/useGetDocsInfiniteScroll';
-import pagination from 'APIHandlers/pagination.js';
 
-const SearchUsers = () => {
-  const filterBy = 'userName';
+import useGetDocsInfiniteScroll from 'hooks/useGetDocsInfiniteScroll';
+
+const PaginatedSearch = ({ filterBy, collection, resultsPresentation, orderBy }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [docs, setDocs] = useState([]);
 
-  const collection = 'users';
+  console.log(collection);
 
-  const { fetchMorePosts, nextDocs_loading, setLastKey } = useGetDocsInfiniteScroll(
-    searchTerm,
+  const { fetchMorePosts, nextDocs_loading, setLastKey, pagination } = useGetDocsInfiniteScroll(
     setDocs,
     filterBy,
     searchTerm,
@@ -21,8 +18,14 @@ const SearchUsers = () => {
   const handleChange = (e) => {
     setSearchTerm(e.currentTarget.value);
   };
+
   const handleClickSearch = async () => {
-    const { results, lastKey } = await pagination.postsFirstBatch(filterBy, searchTerm, collection);
+    const { results, lastKey } = await pagination.postsFirstBatch(
+      filterBy,
+      searchTerm,
+      collection,
+      orderBy
+    );
     setLastKey(lastKey);
     setDocs(results);
   };
@@ -40,11 +43,11 @@ const SearchUsers = () => {
           search
         </button>
       </div>
-      <Users users={docs} />
+      {resultsPresentation(docs)}
       {nextDocs_loading && 'loading'}
       <button onClick={fetchMorePosts}>get more posts</button>
     </Fragment>
   );
 };
 
-export default SearchUsers;
+export default PaginatedSearch;

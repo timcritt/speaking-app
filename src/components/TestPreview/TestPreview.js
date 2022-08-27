@@ -1,11 +1,11 @@
 import React from 'react';
 import TestPreviewOverlay from 'components/TestPreviewOverlay/TestPreviewOverlay';
 import styles from './TestPreview.module.css';
+import { v4 as uuidv4 } from 'uuid';
 
 //Thumnail template for preview of each test type
 
 const TestPreview = ({ questionOne, children, testId, testType, testLabel, testTags }) => {
-  console.log(testTags);
   return (
     <div className={styles.outer_container} key={testId}>
       <div className={`${styles.inner_container} fade-in`}>
@@ -22,8 +22,8 @@ const TestPreview = ({ questionOne, children, testId, testType, testLabel, testT
         {testType !== 'FCEPart4' && <span className={styles.question_text}>{questionOne}</span>}
       </div>
       <div className={styles.tags_container}>
-        {testTags.map((test) => {
-          return <span>{`#${test} `}</span>;
+        {testTags.map((tag) => {
+          return <span key={uuidv4()}>{`#${tag} `}</span>;
         })}
       </div>
     </div>

@@ -1,7 +1,6 @@
 import React from 'react';
 
 const FilterInput = ({ placeholder, handleSetFilterTerm, value }) => {
-  console.log(value);
   return (
     <input
       className='filter-input'
