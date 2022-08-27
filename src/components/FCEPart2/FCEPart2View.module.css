@@ -13,8 +13,14 @@
   background-color: white;
 }
 
+/* dealing with fullscreen stlying */
+:fullscreen .container {
+  width: 100vw;
+}
+
 .question_row {
   grid-area: question;
+  font-size: 1em;
 }
 .left_image_container {
   grid-area: imageOne;
@@ -41,4 +47,9 @@
 
 .tool_bar_container {
   grid-area: tool_bar;
+}
+
+/* sets the base font size for fullscreen mode. Font size of all children scales with em values */
+:fullscreen .container {
+  font-size: 1.4rem;
 }

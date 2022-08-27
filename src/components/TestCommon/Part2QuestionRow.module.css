@@ -94,8 +94,8 @@
   z-index: 999;
   background-color: white;
   transition: all 0.3s;
-  font-size: 1rem;
-  color: grey;
+  font-size: 1em;
+  color: #c9c9c9;
 }
 
 .flip180 {
