@@ -45,7 +45,7 @@ const FolderSummaryShort = ({ folder, testId, userId }) => {
       setTimeout(() => {
         tickBoxRef.current.disabled = false;
       }, 1000);
-    } else {
+    } else if (!tickBoxRef.current.disabled) {
       tickBoxRef.current.disabled = true;
       try {
         await deleteTestFromFolder(folder.id, testId);
