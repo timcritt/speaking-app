@@ -1,12 +1,15 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect, useRef } from 'react';
 import FolderOutlinedIcon from '@material-ui/icons/FolderOutlined';
 import addTestToFolder from 'APIHandlers/addTestToFolder';
 import checkIfTestInFolder from 'APIHandlers/checkIfTestInFolder';
 import deleteTestFromFolder from 'APIHandlers/deleteTestFromFolder';
+import { throttle } from 'lodash';
 
 const FolderSummaryShort = ({ folder, testId, userId }) => {
   const [isInFolder, setIsInFolder] = useState(false);
   const [checkBoxDisabled, setCheckBoxDisabled] = useState(false);
+
+  const tickBoxRef = useRef();
 
   useLayoutEffect(() => {
     var isMounted = true;
@@ -26,27 +29,35 @@ const FolderSummaryShort = ({ folder, testId, userId }) => {
     return () => (isMounted = false);
   }, [folder.id, testId]);
 
-  const handleChange = async () => {
+  const handleChange = async (e) => {
     //disable checkbox to prevent rapid, repeated api calls that could lead to the test count of the folder being innacurate.
-    setCheckBoxDisabled(true);
-    if (!isInFolder) {
+    e.preventDefault();
+    if (!isInFolder && !tickBoxRef.current.disabled) {
+      tickBoxRef.current.disabled = true;
       try {
         await addTestToFolder(folder.id, testId, userId);
-        setIsInFolder(true);
-        setCheckBoxDisabled(false);
-      } catch {
+        setIsInFolder(() => true);
+      } catch (error) {
+        console.log(error);
         setIsInFolder(false);
-        setCheckBoxDisabled(false);
       }
+
+      setTimeout(() => {
+        tickBoxRef.current.disabled = false;
+      }, 1000);
     } else {
+      tickBoxRef.current.disabled = true;
       try {
         await deleteTestFromFolder(folder.id, testId);
         setIsInFolder(false);
-        setCheckBoxDisabled(false);
-      } catch {
+      } catch (error) {
+        console.log(error);
         setIsInFolder(true);
-        setCheckBoxDisabled(false);
       }
+
+      setTimeout(() => {
+        tickBoxRef.current.disabled = false;
+      }, 2000);
     }
     console.log(folder);
   };
@@ -57,12 +68,12 @@ const FolderSummaryShort = ({ folder, testId, userId }) => {
         <div className='folder-icon-title-container'>
           <span>
             <input
+              ref={tickBoxRef}
               type='checkbox'
-              id='vehicle1'
-              name='vehicle1'
-              value='Bike'
+              id='tickBox'
+              name='tickBox'
+              value='none'
               checked={isInFolder}
-              disabled={checkBoxDisabled}
               onChange={(e) => e.preventDefault()}
             />
           </span>

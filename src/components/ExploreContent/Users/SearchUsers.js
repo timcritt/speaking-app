@@ -4,25 +4,31 @@ import useGetDocsInfiniteScroll from 'hooks/useGetDocsInfiniteScroll';
 import pagination from 'APIHandlers/pagination.js';
 
 const SearchUsers = () => {
-  const filterBy = 'userName';
   const [searchTerm, setSearchTerm] = useState('');
   const [docs, setDocs] = useState([]);
 
   const collection = 'users';
+  const orderBy = 'userId';
+  const direction = 'asc';
 
-  const { fetchMorePosts, nextDocs_loading, setLastKey } = useGetDocsInfiniteScroll(
-    searchTerm,
+  const { nextDocs_loading, setLastKey, containerRef } = useGetDocsInfiniteScroll(
     setDocs,
-    filterBy,
-    searchTerm,
-    collection
+    collection,
+    null,
+    direction,
+    orderBy
   );
 
   const handleChange = (e) => {
     setSearchTerm(e.currentTarget.value);
   };
   const handleClickSearch = async () => {
-    const { results, lastKey } = await pagination.postsFirstBatch(filterBy, searchTerm, collection);
+    const { results, lastKey } = await pagination.postsFirstBatch(
+      collection,
+      null,
+      direction,
+      orderBy
+    );
     setLastKey(lastKey);
     setDocs(results);
   };
@@ -42,7 +48,7 @@ const SearchUsers = () => {
       </div>
       <Users users={docs} />
       {nextDocs_loading && 'loading'}
-      <button onClick={fetchMorePosts}>get more posts</button>
+      <div ref={containerRef}></div>
     </Fragment>
   );
 };

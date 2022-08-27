@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 
 //custom componets
-import FilterInput from 'components/common/FilterInput';
+//import FilterInput from 'components/common/FilterInput';
 import SideBarTags from '../common/SideBarTags';
 import DropDownOption from 'components/CreatorContent/DropDownOption';
 
@@ -9,7 +9,7 @@ import DropDownOption from 'components/CreatorContent/DropDownOption';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import CancelIcon from '@material-ui/icons/Cancel';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
-import SearchIcon from '@material-ui/icons/Search';
+//import SearchIcon from '@material-ui/icons/Search';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 const FilterMenuDesktop = ({
@@ -70,8 +70,8 @@ const FilterMenuDesktop = ({
           )}
         </div>
 
-        {/*filter by question*/}
-        <div
+        {/*filter by question: Firebase doesn't currently allow partial hits when searching by string value*/}
+        {/*<div
           className={`filter-bar-item filter-bar-item-clickable ${
             questionFilterTerm !== '' ? 'filter-selected' : ''
           }`}
@@ -83,7 +83,7 @@ const FilterMenuDesktop = ({
             handleSetFilterTerm={handleSetQuestionFilterTerm}
             value={questionFilterTerm}
           />
-        </div>
+        </div>*/}
 
         {/* clear filters  */}
         {(sortBy || tagFilterTerm || (questionFilterTerm && questionFilterTerm.length > 0)) && (

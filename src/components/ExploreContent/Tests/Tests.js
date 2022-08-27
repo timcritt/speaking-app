@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 //constants
 import { FCEPart2, FCEPart3, CAEPart2, CAEPart3 } from 'APIHandlers/firebaseConsts';
@@ -16,7 +16,7 @@ const Tests = ({ results = [], testType }) => {
       <div className='explore-content-main'>
         <div className='all-tests-container'>
           {results && results.length > 0 ? (
-            results.map((doc) => {
+            results.map((doc, index) => {
               if (testType === FCEPart2) {
                 return (
                   <TestPreview

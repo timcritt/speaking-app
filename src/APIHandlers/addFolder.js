@@ -6,7 +6,7 @@ const addFolder = async (title, description, creatorId) => {
   const testCount = 0;
   const createdAt = firebase.firestore.FieldValue.serverTimestamp();
   try {
-    await projectFirestore.collection(folders).add({
+    return await projectFirestore.collection(folders).add({
       title,
       description,
       createdAt,

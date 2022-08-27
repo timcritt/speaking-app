@@ -14,7 +14,7 @@ const addCAEPart2 = async (
   imageThreeRef,
   creatorId
 ) => {
-  return projectFirestore.collection('CAEPart2').add({
+  return await projectFirestore.collection('CAEPart2').add({
     imageOneUrl,
     imageTwoUrl,
     imageThreeUrl,
