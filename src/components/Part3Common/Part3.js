@@ -51,27 +51,13 @@ const Part3 = (props) => {
   };
 
   const handleResize = useCallback(() => {
-    const debounced = throttle(
-      function resize() {
-        setWindowDimensions({
-          height: window.innerHeight,
-          width: window.innerWidth,
-        });
-        showLines();
-        console.log('lines redrawn');
-      },
-      250,
-      { leading: false, trailing: true }
-    );
-
-    let doit;
-    window.onresize = function () {
-      clearTimeout(doit);
-      doit = setTimeout(debounced, 250);
-    };
+    setWindowDimensions({
+      height: window.innerHeight,
+      width: window.innerWidth,
+    });
+    showLines();
+    console.log('lines redrawn');
   }, []);
-
-  //const debouncedHandleResize = debounce(handleResize, 250);
 
   useEffect(() => {
     //instantly hides the lines on window resize to prevent ugly jumping of lines between positions.
@@ -99,18 +85,7 @@ const Part3 = (props) => {
     if (context.hasFetched) {
       handleResize();
     }
-  }, [context.hasFetched]);
-
-  // useEffect(() => {
-  //   if (!questionTwoVisible) {
-  //     setTime(12000);
-  //     setQuestionClass('');
-  //   } else {
-  //     setTime(6000);
-  //     setQuestionClass('flipped-vertically');
-  //   }
-  //   debouncedHandleResize();
-  // }, [questionTwoVisible]);
+  }, [context, context.hasFetched, handleResize, props.match.params.id]);
 
   if (context.hasFetched) {
     return (
