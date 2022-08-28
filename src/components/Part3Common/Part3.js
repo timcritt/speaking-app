@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useContext, useCallback, Fragment } from 'react';
+import React, { useState, useEffect, useContext, useCallback, Fragment, useRef } from 'react';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import { firebaseAuth } from 'context/AuthProvider';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Part3Lines from 'components/Part3Common/Part3Lines';
-import debounce from 'auxFunctions/debounce';
+// import debounce from 'auxFunctions/debounce';
+import throttle from 'lodash/throttle';
 import TestToolBar from 'components/TestCommon/TestToolBar';
 import ToolBarButtonsView from 'components/TestCommon/ToolBarButtonsView';
 import Timer from 'components/common/Timer';
@@ -32,13 +33,23 @@ const Part3 = (props) => {
 
   const [time, setTime] = useState(longTime);
 
-
   const hideLines = () => {
     setLineClass('line-hidden');
   };
   const showLines = () => {
     setLineClass('');
   };
+
+  const timeout = useRef();
+
+  const handleDebounce = () => {
+    //Clear the previous timeout.
+    clearTimeout(timeout.current);
+    timeout.current = setTimeout(() => {
+      handleResize();
+    }, 600);
+  };
+
   const handleResize = useCallback(() => {
     setWindowDimensions({
       height: window.innerHeight,
@@ -46,23 +57,21 @@ const Part3 = (props) => {
     });
     showLines();
     console.log('lines redrawn');
-  }, [setWindowDimensions]);
-
-  const debouncedHandleResize = debounce(handleResize, 250);
+  }, []);
 
   useEffect(() => {
     //instantly hides the lines on window resize to prevent ugly jumping of lines between positions.
     window.addEventListener('resize', hideLines);
     //listens for window resize and redraws the lines between text areas after a set time. Sets lines to visible when done.
-    window.addEventListener('resize', debouncedHandleResize);
-    window.addEventListener('fullscreenchange', debouncedHandleResize);
+    window.addEventListener('resize', handleDebounce);
+    window.addEventListener('fullscreenchange', handleResize);
     //cleanup function - removes listeners on unmount
     return () => {
       window.removeEventListener('resize', hideLines);
-      window.removeEventListener('resize', debouncedHandleResize);
+      window.removeEventListener('resize', handleDebounce);
       window.removeEventListener('fullscreenchange', handleResize);
     };
-  }, [debouncedHandleResize, handleResize]);
+  }, [handleResize]);
 
   useEffect(() => {
     //sends the id of the current test to be displayed to the FCEPart2 context
@@ -76,20 +85,7 @@ const Part3 = (props) => {
     if (context.hasFetched) {
       handleResize();
     }
-  }, [context.hasFetched]);
-
-
-  // useEffect(() => {
-  //   if (!questionTwoVisible) {
-  //     setTime(12000);
-  //     setQuestionClass('');
-  //   } else {
-  //     setTime(6000);
-  //     setQuestionClass('flipped-vertically');
-  //   }
-  //   debouncedHandleResize();
-  // }, [questionTwoVisible]);
-
+  }, [context, context.hasFetched, handleResize, props.match.params.id]);
 
   if (context.hasFetched) {
     return (

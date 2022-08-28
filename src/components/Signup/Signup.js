@@ -2,8 +2,8 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { firebaseAuth } from '../../context/AuthProvider';
 import { Link, withRouter } from 'react-router-dom';
-
 import profilePlaceHolder from 'img/profile-placeholder.png';
+import firebase from 'firebase';
 
 const Signup = (props) => {
   const { handleSignup, inputs, setInputs, errors } = useContext(firebaseAuth);
@@ -28,8 +28,22 @@ const Signup = (props) => {
     if (userName) {
       try {
         //signs up and returns the user id. Changes to userId made from inside authMethods weren't reflected here
-        //not sure why. I changed "signup" in authMethodhandle to return value of userId, which gets passed up the chain.
+        //not sure why. EDIT: It was to do with closures.
+        //I changed "signup" in authMethodhandle to return value of userId, which gets passed up the chain.
         const newUserId = await handleSignup(userName, imageLocalUrl);
+
+        // try {
+        //   const addUser = firebase.functions().httpsCallable('createProfileTwo');
+        //   await addUser({
+        //     userName: 'inside Signup Module',
+        //     uid: newUserId,
+        //   }).then((response) => {
+        //     console.log(response);
+        //   });
+        // } catch (error) {
+        //   console.log(error);
+        // }
+
         props.history.push(`/userContent/${newUserId}/tests`);
       } catch (err) {
         setIsDisabled(false);
@@ -114,6 +128,7 @@ const Signup = (props) => {
         <button className='auth-button' disabled={isDisabled}>
           sign up
         </button>
+
         {errors.length > 0 ? errors.map((error) => <p style={{ color: 'red' }}>{error}</p>) : null}
         <div className='auth-help-container'>
           <span>
