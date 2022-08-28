@@ -28,7 +28,8 @@ const Signup = (props) => {
     if (userName) {
       try {
         //signs up and returns the user id. Changes to userId made from inside authMethods weren't reflected here
-        //not sure why. I changed "signup" in authMethodhandle to return value of userId, which gets passed up the chain.
+        //not sure why. EDIT: It was to do with closures.
+        //I changed "signup" in authMethodhandle to return value of userId, which gets passed up the chain.
         const newUserId = await handleSignup(userName, imageLocalUrl);
 
         // try {

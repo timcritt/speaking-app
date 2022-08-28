@@ -16,6 +16,7 @@
 /* dealing with fullscreen stlying */
 :fullscreen .container {
   width: 100vw;
+  margin: 0 100px;
 }
 
 .question_row {
@@ -52,4 +53,14 @@
 /* sets the base font size for fullscreen mode. Font size of all children scales with em values */
 :fullscreen .container {
   font-size: 1.4rem;
+}
+
+:fullscreen .left_image_container > img {
+  max-height: 100%;
+  aspect-ratio: 1/1;
+}
+
+:fullscreen .right_image_container > img {
+  max-height: 100%;
+  aspect-ratio: 1/1;
 }

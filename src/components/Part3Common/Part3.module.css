@@ -10,11 +10,6 @@
   background-color: white;
 }
 
-.fullscreen-enabled.container {
-  max-width: 95vw;
-  background-color: red;
-}
-
 .grid_container {
   grid-area: content;
   display: grid;
@@ -106,4 +101,8 @@ textarea {
 
 textarea:focus {
   background-color: rgb(153, 193, 245);
+}
+
+:fullscreen .grid_container {
+  height: 100vh;
 }
