@@ -45,23 +45,25 @@ const createThumbsForExistingPartFce = async () => {
     console.log('has fetched blob', blobOne);
 
     //convert imageOne to thumbnail
-    const imageOneThumbData = await readAndCompressImage(blobOne, config).then(
+    const resizedImageOne = await readAndCompressImage(blobOne, config).then(
       async (resizedImage) => {
-        //upload to storage. Returns a reference and a url to the uploaded image
-
-        return await uploadThumb(resizedImage);
+        return resizedImage;
       }
     );
+
+    //upload to storage. Returns a reference and a url to the uploaded image
+    const imageOneThumbData = await uploadThumb(resizedImageOne);
 
     //convert imageTwo to thumbnail
 
-    const imageTwoThumbData = await readAndCompressImage(blobTwo, config).then(
+    const resizedImageTwo = await readAndCompressImage(blobTwo, config).then(
       async (resizedImage) => {
         //upload to storage. Returns a reference and a url to the uploaded image
-
-        return await uploadThumb(resizedImage);
+        return resizedImage;
       }
     );
+
+    const imageTwoThumbData = await uploadThumb(resizedImageTwo);
 
     if (imageOneThumbData && imageTwoThumbData) {
       var objectRef = projectFirestore.collection('FCEPart2').doc(doc.id);
