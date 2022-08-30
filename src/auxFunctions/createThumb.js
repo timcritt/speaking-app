@@ -1,6 +1,7 @@
-import { readAndCompressImage } from 'browser-image-resizer';
 import { projectStorage, firebaseAuth } from '../firebase/firebaseIndex';
 import { v4 as uuidv4 } from 'uuid';
+
+const readAndCompressImage = require('browser-image-resizer');
 
 const config = {
   quality: 0.5,
