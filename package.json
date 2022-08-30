@@ -11,6 +11,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "browser-image-resizer": "^2.2.1",
     "dotenv": "^8.2.0",
     "firebase": "^7.18.0",
     "firebaseui": "^4.6.1",
