@@ -32,7 +32,7 @@ export default function SimpleModal({ modalButtonText, setImageUrl }) {
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
-  console.log(setImageUrl);
+
   const handleOpen = () => {
     setOpen(true);
   };
