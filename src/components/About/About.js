@@ -1,16 +1,11 @@
 import React from 'react';
 
-import firebase from 'firebase';
+import createThumbsForExistingPartFce from 'auxFunctions/createThumbsForExistingPart2Fce';
 
 export const About = () => {
   const callCloud = async () => {
     try {
-      const addUser = firebase.functions().httpsCallable('createProfileTwo');
-      await addUser({
-        name: 'tim',
-      }).then((response) => {
-        console.log(response);
-      });
+      await createThumbsForExistingPartFce();
     } catch (error) {
       console.log(error);
     }

@@ -10,6 +10,7 @@ import { uploadFCEPart2Images } from 'APIHandlers/uploadImage';
 import { FCEPart2Context } from 'context/FCEPart2Context';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { useHistory } from 'react-router-dom';
+import createThumb from 'auxFunctions/createThumb';
 
 const PublishMessage = ({ uploadComplete }) => {
   return uploadComplete ? <h3>Published!</h3> : <LinearProgress />;
@@ -37,13 +38,12 @@ export default function PublishWarningModal() {
     }
   }, [context.imageOneUrl, context.imageTwoUrl, context.testTags, context.questionOne]);
 
-  const handleOpen = () => {
+  const handleOpen = async () => {
     setOpen(true);
     setUploadComplete(false);
     const createdAt = timestamp();
     if (allInputsCompleted) {
       if (context.docRef) {
-        //var test = getTest(FCEPart2, docRef).then(console.log);
         uploadFCEPart2Images(
           context.imageOneUrl,
           context.imageTwoUrl,
@@ -74,6 +74,10 @@ export default function PublishWarningModal() {
       } else {
         setOpen(true);
         //if local test has no docId, it's because it's new and doesn't exist on the firestore.
+        //create thumbnails here???
+        const thumbData = await createThumb(context.imageOneUrl);
+        console.log(thumbData);
+
         uploadFCEPart2Images(context.imageOneUrl, context.imageTwoUrl).then((data) => {
           addTest(
             data.imageOneData.url,
@@ -83,7 +87,9 @@ export default function PublishWarningModal() {
             context.testTags,
             data.imageOneData.reference,
             data.imageTwoData.reference,
-            userId
+            userId,
+            thumbData.url,
+            thumbData.reference
           ).then((response) => {
             context.setDocRef(response.id);
             setUploadComplete(true);
