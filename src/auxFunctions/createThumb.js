@@ -12,7 +12,9 @@ const config = {
 
 const uploadImage = async (image) => {
   let url;
-  const ref = projectStorage.ref(uuidv4());
+  const thumbName = uuidv4();
+  const ref = projectStorage.ref(`/thumbs/${thumbName}`);
+
   let reference;
   try {
     await ref
@@ -37,7 +39,7 @@ const createThumb = async (imageUrl) => {
 
   return await readAndCompressImage(blob, config).then(async (resizedImage) => {
     //upload to storage. Returns a reference and a url to the uploaded image
-    return uploadImage(resizedImage);
+    return await uploadImage(resizedImage);
   });
 };
 

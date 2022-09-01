@@ -1,6 +1,6 @@
 import { projectFirestore, projectStorage, fieldValue } from 'firebase/firebaseIndex';
 import { v4 as uuidv4 } from 'uuid';
-const readAndCompressImage = require('browser-image-resizer');
+import { readAndCompressImage } from 'browser-image-resizer';
 
 const config = {
   quality: 0.75,
@@ -37,14 +37,11 @@ const createThumbsForExistingPartFce = async () => {
   console.log(results);
   //loop over each record
   results.forEach(async (doc) => {
-    //get reference to part 2
-    //if (doc.id === '4jpn3vhl79JyOApHkhIs') {
-    //get image blob
+    //convert image urls to blobs
     var blobOne = await fetch(doc.data().imageOneUrl).then((r) => r.blob());
     var blobTwo = await fetch(doc.data().imageTwoUrl).then((r) => r.blob());
-    console.log('has fetched blob', blobOne);
 
-    //convert imageOne to thumbnail
+    //convert imageOne blob to thumbnail
     const resizedImageOne = await readAndCompressImage(blobOne, config).then(
       async (resizedImage) => {
         return resizedImage;
@@ -55,7 +52,6 @@ const createThumbsForExistingPartFce = async () => {
     const imageOneThumbData = await uploadThumb(resizedImageOne);
 
     //convert imageTwo to thumbnail
-
     const resizedImageTwo = await readAndCompressImage(blobTwo, config).then(
       async (resizedImage) => {
         //upload to storage. Returns a reference and a url to the uploaded image
@@ -63,6 +59,7 @@ const createThumbsForExistingPartFce = async () => {
       }
     );
 
+    //upload to storage. Returns a reference and a url to the uplaoded image
     const imageTwoThumbData = await uploadThumb(resizedImageTwo);
 
     if (imageOneThumbData && imageTwoThumbData) {
