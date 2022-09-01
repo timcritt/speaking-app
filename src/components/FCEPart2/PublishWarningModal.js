@@ -75,8 +75,10 @@ export default function PublishWarningModal() {
         setOpen(true);
         //if local test has no docId, it's because it's new and doesn't exist on the firestore.
         //create thumbnails here???
-        const thumbData = await createThumb(context.imageOneUrl);
-        console.log(thumbData);
+        const imageOneThumbData = await createThumb(context.imageOneUrl);
+        const imageTwoThumbData = await createThumb(context.imageTwoUrl);
+        console.log(imageOneThumbData);
+        console.log(imageTwoThumbData.reference);
 
         uploadFCEPart2Images(context.imageOneUrl, context.imageTwoUrl).then((data) => {
           addTest(
@@ -88,8 +90,10 @@ export default function PublishWarningModal() {
             data.imageOneData.reference,
             data.imageTwoData.reference,
             userId,
-            thumbData.url,
-            thumbData.reference
+            imageOneThumbData.reference,
+            imageOneThumbData.url,
+            imageTwoThumbData.reference,
+            imageTwoThumbData.url
           ).then((response) => {
             context.setDocRef(response.id);
             setUploadComplete(true);

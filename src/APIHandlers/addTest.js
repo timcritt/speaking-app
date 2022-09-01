@@ -10,8 +10,10 @@ const addTest = async (
   imageOneRef,
   imageTwoRef,
   creatorId,
-  url,
-  reference
+  imageOneThumbRef,
+  imageOneThumbUrl,
+  imageTwoThumbRef,
+  imageTwoThumbUrl
 ) => {
   return await projectFirestore.collection(FCEPart2).add({
     imageOneUrl,
@@ -23,8 +25,10 @@ const addTest = async (
     imageOneRef,
     imageTwoRef,
     creatorId,
-    url,
-    reference,
+    imageOneThumbRef,
+    imageOneThumbUrl,
+    imageTwoThumbRef,
+    imageTwoThumbUrl,
   });
 };
 
