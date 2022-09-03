@@ -12,12 +12,9 @@ const getFolder = async (folderId) => {
       if (doc.exists) {
         folder = doc.data();
       } else {
-        console.log('no such document');
       }
     })
-    .catch((error) => {
-      console.log(error);
-    });
+    .catch((error) => {});
 
   return folder;
 };

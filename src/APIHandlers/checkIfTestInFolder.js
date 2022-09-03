@@ -15,12 +15,9 @@ const checkIfTestInFolder = async (folderId, testId) => {
         testInFolder = true;
       } else {
         testInFolder = false;
-        console.log('no such document');
       }
     })
-    .catch((error) => {
-      console.log(error);
-    });
+    .catch((error) => {});
   return testInFolder;
 };
 

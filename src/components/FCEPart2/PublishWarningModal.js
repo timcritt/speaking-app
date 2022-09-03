@@ -6,7 +6,7 @@ import { timestamp } from 'firebase/firebaseIndex';
 import updateTest from 'APIHandlers/updateTest';
 import addTest from 'APIHandlers/addTest';
 import { firebaseAuth } from 'context/AuthProvider';
-import { uploadFCEPart2Images } from 'APIHandlers/uploadImage';
+import { uploadFCEPart2Images } from 'APIHandlers/uploadFCEPart2Images';
 import { FCEPart2Context } from 'context/FCEPart2Context';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { useHistory } from 'react-router-dom';
@@ -48,7 +48,11 @@ export default function PublishWarningModal() {
           context.imageOneUrl,
           context.imageTwoUrl,
           context.imageOneRef,
-          context.imageTwoRef
+          context.imageTwoRef,
+          context.imageOneThumbUrl,
+          context.imageOneThumbRef,
+          context.imageTwoThumbUrl,
+          context.imageTwoThumbRef
         ).then((data) => {
           updateTest(
             data.imageOneData.url,
@@ -59,7 +63,11 @@ export default function PublishWarningModal() {
             context.docRef,
             createdAt,
             data.imageOneData.reference,
-            data.imageTwoData.reference
+            data.imageTwoData.reference,
+            data.imageOneThumbData.url,
+            data.imageOneThumbData.reference,
+            data.imageTwoThumbData.url,
+            data.imageTwoThumbData.reference
           ).then(
             context.setImageOneUrl(data.imageOneData.url),
             context.setImageTwoUrl(data.imageTwoData.url),
@@ -74,11 +82,7 @@ export default function PublishWarningModal() {
       } else {
         setOpen(true);
         //if local test has no docId, it's because it's new and doesn't exist on the firestore.
-        //create thumbnails here???
-        const imageOneThumbData = await createThumb(context.imageOneUrl);
-        const imageTwoThumbData = await createThumb(context.imageTwoUrl);
-        console.log(imageOneThumbData);
-        console.log(imageTwoThumbData.reference);
+        //create thumbnails
 
         uploadFCEPart2Images(context.imageOneUrl, context.imageTwoUrl).then((data) => {
           addTest(
@@ -90,10 +94,10 @@ export default function PublishWarningModal() {
             data.imageOneData.reference,
             data.imageTwoData.reference,
             userId,
-            imageOneThumbData.reference,
-            imageOneThumbData.url,
-            imageTwoThumbData.reference,
-            imageTwoThumbData.url
+            data.imageOneThumbData.reference,
+            data.imageOneThumbData.url,
+            data.imageTwoThumbData.reference,
+            data.imageTwoThumbData.url
           ).then((response) => {
             context.setDocRef(response.id);
             setUploadComplete(true);

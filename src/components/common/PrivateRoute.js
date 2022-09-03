@@ -5,7 +5,7 @@ import Signin from '../Signin/Signin';
 
 const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
   const { token, emailVerified } = useContext(firebaseAuth);
-  console.log('privateroute value of emailVerified:', emailVerified);
+
   return (
     <Route
       {...rest}

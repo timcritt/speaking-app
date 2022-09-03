@@ -6,7 +6,7 @@ import { timestamp } from 'firebase/firebaseIndex';
 import updateCAEPart2 from 'APIHandlers/updateCAEPart2';
 import addCAEPart2 from 'APIHandlers/addCAEPart2';
 import { firebaseAuth } from 'context/AuthProvider';
-import { uploadCAEPart2Images } from 'APIHandlers/uploadImage';
+import { uploadCAEPart2Images } from 'APIHandlers/uploadFCEPart2Images';
 import { CAEPart2Context } from 'context/CAEPart2Context';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { useHistory } from 'react-router-dom';
@@ -26,7 +26,6 @@ export default function PublishWarningModal() {
   var history = useHistory();
 
   useEffect(() => {
-    console.log('in use context');
     if (
       context.testTags.length > 0 &&
       context.imageOneUrl &&
@@ -56,7 +55,7 @@ export default function PublishWarningModal() {
     const createdAt = timestamp();
     if (allInputsCompleted) {
       if (context.docRef) {
-        //var test = getTest(FCEPart2, docRef).then(console.log);
+        //var test = getTest(FCEPart2, docRef).then(
         uploadCAEPart2Images(
           context.imageOneUrl,
           context.imageTwoUrl,

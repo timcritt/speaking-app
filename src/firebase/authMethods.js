@@ -18,7 +18,6 @@ export const authMethods = {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(async (userCredential) => {
-        console.log('user signed up with email and password in firestore');
         //create a record to store new user information
         return await projectFirestore
           .collection('users')
@@ -28,21 +27,20 @@ export const authMethods = {
             userName,
           })
           .then(async () => {
-            console.log('associated user record created in firestore');
             //upload profile pic and grab url and reference
             //const { url, reference } = await uploadImage(imageLocalUrl);
-            //console.log('image uploaded');
+            //
 
             //update user record with new profile pic
             // await projectFirestore.collection('users').doc(userCredential.user.uid).update({
             //   profilePicture: url,
             //   profilePictureReference: reference,
             // });
-            // console.log('image reference updated on user record');
+            //
 
             const token = await Object.entries(userCredential.user)[5][1].b;
             const userId = userCredential.user.uid;
-            console.log(userCredential.user);
+
             const userDetails = await getUserDetails(userId);
             //set token to localStorage
             await localStorage.setItem('token', token);
@@ -54,13 +52,12 @@ export const authMethods = {
             return userId;
           })
           .catch((message) => {
-            console.log(message, 'error');
             return Promise.reject('something went wrong while signing up user');
           });
       })
       .catch((err) => {
         setErrors([err.message]);
-        console.log(err.message);
+
         return Promise.reject('FAIL');
       });
   },
@@ -86,7 +83,7 @@ export const authMethods = {
         .then(async (userCredential) => {
           const token = await Object.entries(userCredential.user)[5][1].b;
           const userId = userCredential.user.uid;
-          console.log(userCredential.user);
+
           const userDetails = await getUserDetails(userId);
           //set token to localStorage
           await localStorage.setItem('token', token);
@@ -97,13 +94,11 @@ export const authMethods = {
           setUserDetails(userDetails);
           //check if user has verified their account via link in email
           const emailVerified = userCredential.user.emailVerified;
-          console.log('emailVerified in authmethod', emailVerified);
-          console.log('signed in');
+
           return { token, emailVerified, userId };
         })
         .catch((err) => {
           setErrors([err.message]);
-          console.log('could not sign up');
         })
     );
   },

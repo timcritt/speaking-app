@@ -8,11 +8,9 @@ const deleteStorage = (itemUrl) => {
     .delete()
     .then(() => {
       // File deleted successfully
-      console.log('file deleted from storage successfully!');
     })
     .catch(function (error) {
       // Uh-oh, an error occurred!
-      console.log('an error occured while deleting from storage: ' + error.message);
     });
 };
 

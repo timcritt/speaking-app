@@ -22,7 +22,6 @@ const useGetDocsInfiniteScroll = (setDocs, collection, tagFilterTerm, direction,
               setNextPostsLoading(false);
             })
             .catch((err) => {
-              console.log(err);
               setNextPostsLoading(false);
             });
 
@@ -47,9 +46,7 @@ const useGetDocsInfiniteScroll = (setDocs, collection, tagFilterTerm, direction,
 
           setLastKey(res.lastKey);
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch((err) => {});
     }
     return () => {
       mounted = false;
@@ -74,9 +71,7 @@ const useGetDocsInfiniteScroll = (setDocs, collection, tagFilterTerm, direction,
             await fetchMorePosts();
           })();
         }
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     }
 
     return () => {

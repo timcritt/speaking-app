@@ -24,9 +24,7 @@ const uploadImage = async (image) => {
         url = await ref.getDownloadURL();
         reference = ref.fullPath;
       });
-  } catch (error) {
-    console.log(error.message);
-  }
+  } catch (error) {}
   return { url, reference };
 };
 

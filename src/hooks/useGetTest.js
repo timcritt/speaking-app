@@ -14,12 +14,9 @@ const useGetTest = (collection, testId) => {
         if (doc.exists) {
           setDoc({ ...doc.data(), id: doc.id });
         } else {
-          console.log('no such document');
         }
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => {});
   }, [testId]);
 
   return doc;

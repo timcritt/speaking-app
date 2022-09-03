@@ -3,7 +3,7 @@ import getUserDetails from 'APIHandlers/getUserDetails';
 import profilePlaceHolder from 'img/profile-placeholder.png';
 import ProfilePickerModal from 'components/Profile/ProfilePickerModal';
 import ImageContext from 'context/ImageContext';
-import { uploadImage } from 'APIHandlers/uploadImage';
+import { uploadImage } from 'APIHandlers/uploadFCEPart2Images';
 import { updateUserName, updateUserProfilePicture } from 'APIHandlers/updateUser';
 import { firebaseAuth } from 'context/AuthProvider';
 

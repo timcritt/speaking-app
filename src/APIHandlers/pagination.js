@@ -21,9 +21,7 @@ const pagination = {
       });
       lastKey = data.docs[data.docs.length - 1];
       return { results, lastKey };
-    } catch (e) {
-      console.log('ERROR: ', e);
-    }
+    } catch (e) {}
   },
 
   postsNextBatch: async function (key, collection, tagFilterTerm, direction, orderBy) {
@@ -46,9 +44,7 @@ const pagination = {
       });
       lastKey = await data.docs[data.docs.length - 1];
       return { results, lastKey };
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   },
 };
 

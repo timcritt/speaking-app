@@ -23,9 +23,7 @@ const uploadThumb = async (image, userId) => {
         url = await ref.getDownloadURL();
         reference = ref.fullPath;
       });
-  } catch (error) {
-    console.log(error.message);
-  }
+  } catch (error) {}
   return { url, reference };
 };
 
@@ -34,7 +32,7 @@ const createThumbsForExistingPartFce = async () => {
   var collectionRef = projectFirestore.collection('FCEPart2');
   //.where('creatorId', '==', '7BSLbAk9r2g0PyBNxr4WaavrOK62');
   const results = await collectionRef.get();
-  console.log(results);
+
   //loop over each record
   results.forEach(async (doc) => {
     //convert image urls to blobs

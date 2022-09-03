@@ -6,7 +6,7 @@ const useFirestore = (collection, userId) => {
 
   useEffect(() => {
     var results = projectFirestore.collection(collection);
-    console.log('in useFirestore');
+
     if (userId) {
       results = results.where('creatorId', '==', userId);
     }

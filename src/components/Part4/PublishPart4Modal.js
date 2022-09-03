@@ -50,7 +50,7 @@ export default function PublishPart4Modal({
     if (complete) {
       if (docRef) {
         //update fce part 3
-        console.log('updating existing part 3');
+
         updatePart4(
           questionOne,
           questionTwo,

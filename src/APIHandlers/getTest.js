@@ -10,12 +10,9 @@ const getTest = async (collectionName, testId) => {
       if (doc.exists) {
         test = { ...doc.data(), id: doc.id };
       } else {
-        console.log('no such document');
       }
     })
-    .catch((error) => {
-      console.log(error);
-    });
+    .catch((error) => {});
   return test;
 };
 

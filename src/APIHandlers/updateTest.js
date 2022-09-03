@@ -10,10 +10,15 @@ const updateTest = async (
   id,
   createdAt,
   imageOneRef,
-  imageTwoRef
+  imageTwoRef,
+  imageOneThumbUrl,
+  imageOneThumbReference,
+  imageTwoThumbUrl,
+  imageTwoThumbReference
 ) => {
   var objectRef = projectFirestore.collection(FCEPart2).doc(id);
-  await objectRef.update({
+
+  const updateObject = {
     imageOneUrl,
     imageTwoUrl,
     questionOne,
@@ -22,7 +27,19 @@ const updateTest = async (
     tags,
     imageOneRef,
     imageTwoRef,
-  });
+  };
+
+  //only adds thumbs if the corresponding image has been updated and uploded to storage. Valees will be passed to update test as null if not.
+  if (imageOneThumbUrl) {
+    updateObject.imageOneThumbRef = imageOneThumbReference;
+    updateObject.imageOneThumbUrl = imageOneThumbUrl;
+  }
+
+  if (imageTwoThumbUrl) {
+    updateObject.imageTwoThumbRef = imageTwoThumbReference;
+    updateObject.imageTwoThumbUrl = imageTwoThumbUrl;
+  }
+  await objectRef.update(updateObject);
 };
 
 export default updateTest;

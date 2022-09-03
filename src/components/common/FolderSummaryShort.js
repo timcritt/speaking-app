@@ -35,7 +35,6 @@ const FolderSummaryShort = ({ folder, testId, userId }) => {
         await addTestToFolder(folder.id, testId, userId);
         setIsInFolder(() => true);
       } catch (error) {
-        console.log(error);
         setIsInFolder(false);
       }
 
@@ -46,13 +45,11 @@ const FolderSummaryShort = ({ folder, testId, userId }) => {
         await deleteTestFromFolder(folder.id, testId);
         setIsInFolder(false);
       } catch (error) {
-        console.log(error);
         setIsInFolder(true);
       }
 
       tickBoxRef.current.disabled = false;
     }
-    console.log(folder);
   };
 
   return (
