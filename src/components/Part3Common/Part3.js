@@ -56,7 +56,6 @@ const Part3 = (props) => {
       width: window.innerWidth,
     });
     showLines();
-    console.log('lines redrawn');
   }, []);
 
   useEffect(() => {

@@ -1,5 +1,6 @@
 import { projectStorage } from '../firebase/firebaseIndex';
 import firebase from 'firebase';
+import createThumb from 'auxFunctions/createThumb';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -16,9 +17,7 @@ export const uploadImage = async (imageUrl) => {
         url = await ref.getDownloadURL();
         reference = ref.fullPath;
       });
-  } catch (error) {
-    console.log(error.message);
-  }
+  } catch (error) {}
   return { url, reference };
 };
 
@@ -26,7 +25,11 @@ export const uploadFCEPart2Images = async (
   imageOneUrl,
   imageTwoUrl,
   imageOneReference,
-  imageTwoReference
+  imageTwoReference,
+  imageOneThumbUrl,
+  imageOneThumbReference,
+  imageTwoThumbUrl,
+  imageTwoThumbReference
 ) => {
   let imageOneData = {
     url: imageOneUrl,
@@ -38,16 +41,29 @@ export const uploadFCEPart2Images = async (
     reference: imageTwoReference,
   };
 
+  let imageOneThumbData = {
+    url: imageOneThumbUrl,
+    reference: imageOneThumbReference,
+  };
+  let imageTwoThumbData = {
+    url: imageTwoThumbUrl,
+    reference: imageTwoThumbReference,
+  };
+
   //if url does not contain 'firebase', the image is only in local storage, and so needs to be uploaded
   if (!imageOneData.url.includes('firebase')) {
     imageOneData = await uploadImage(imageOneUrl);
+    //create and upload new thumbs
+    imageOneThumbData = await createThumb(imageOneUrl);
   }
 
   if (!imageTwoData.url.includes('firebase')) {
     imageTwoData = await uploadImage(imageTwoUrl);
+    //create and upload new thumbs
+    imageTwoThumbData = await createThumb(imageTwoUrl);
   }
 
-  return { imageOneData, imageTwoData };
+  return { imageOneData, imageTwoData, imageOneThumbData, imageTwoThumbData };
 };
 
 //checks if user has changed the images of the test then uploads new image and returns new references if so. Returns original references if not.

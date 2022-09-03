@@ -11,12 +11,9 @@ const getUserDetails = async (userId) => {
       if (doc.exists) {
         userDetails = doc.data();
       } else {
-        console.log('no such user');
       }
     })
-    .catch((error) => {
-      console.log(error);
-    });
+    .catch((error) => {});
 
   return userDetails;
 };

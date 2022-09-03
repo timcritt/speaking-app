@@ -6,9 +6,7 @@ export const About = () => {
   const callCloud = async () => {
     try {
       await createThumbsForExistingPartFce();
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   return (

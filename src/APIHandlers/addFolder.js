@@ -13,9 +13,7 @@ const addFolder = async (title, description, creatorId) => {
       creatorId,
       testCount,
     });
-  } catch (error) {
-    console.log(error.message);
-  }
+  } catch (error) {}
 };
 
 export default addFolder;

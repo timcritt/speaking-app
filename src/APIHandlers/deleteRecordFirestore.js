@@ -5,9 +5,7 @@ const deleteRecordFirestore = async (documentId, collectionName) => {
     .collection(collectionName)
     .doc(documentId)
     .delete()
-    .then(function () {
-      console.log('Document successfully deleted!');
-    })
+    .then(function () {})
     .catch(function (error) {
       console.error('Error removing document: ', error);
     });

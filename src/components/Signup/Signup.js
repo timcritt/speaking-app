@@ -38,16 +38,15 @@ const Signup = (props) => {
         //     userName: 'inside Signup Module',
         //     uid: newUserId,
         //   }).then((response) => {
-        //     console.log(response);
+        //
         //   });
         // } catch (error) {
-        //   console.log(error);
+        //
         // }
 
         props.history.push(`/userContent/${newUserId}/tests`);
       } catch (err) {
         setIsDisabled(false);
-        console.log(err);
       }
     }
   };

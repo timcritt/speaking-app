@@ -6,7 +6,6 @@ import { projectFirestore, timestamp, increment } from '../firebase/firebaseInde
 
 const addTestToFolder = async (folderId, testId, creatorId) => {
   try {
-    console.log('addTestToFolder is firing');
     let writeBatch = projectFirestore.batch();
 
     const createdAt = timestamp();
@@ -22,9 +21,7 @@ const addTestToFolder = async (folderId, testId, creatorId) => {
     writeBatch.update(folderRef, { testCount: newTestCount });
 
     return await writeBatch.commit();
-  } catch (error) {
-    console.log('error in addTestToFolder', error);
-  }
+  } catch (error) {}
 };
 
 //const throttledAdtestToFolder =

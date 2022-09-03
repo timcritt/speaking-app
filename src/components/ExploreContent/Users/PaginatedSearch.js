@@ -6,8 +6,6 @@ const PaginatedSearch = ({ filterBy, collection, resultsPresentation, orderBy })
   const [searchTerm, setSearchTerm] = useState('');
   const [docs, setDocs] = useState([]);
 
-  console.log(collection);
-
   const { fetchMorePosts, nextDocs_loading, setLastKey, pagination } = useGetDocsInfiniteScroll(
     setDocs,
     filterBy,

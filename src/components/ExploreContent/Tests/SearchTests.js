@@ -50,7 +50,7 @@ const SearchTests = () => {
     e.stopPropagation();
     setSortBy(label);
     setDirection(() => 'asc');
-    console.log('handleSetRecent: ', label, direction);
+
     itemTwo.setIsComponentVisible(false);
   };
 
@@ -58,7 +58,7 @@ const SearchTests = () => {
     e.stopPropagation();
     setSortBy(label);
     setDirection(() => 'desc');
-    console.log('handleSetOld: ', label, direction);
+
     itemTwo.setIsComponentVisible(false);
   };
 

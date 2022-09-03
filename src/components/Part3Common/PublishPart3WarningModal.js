@@ -63,7 +63,7 @@ export default function PublishWarningModal({
     if (complete) {
       if (docRef) {
         //update fce part 3
-        console.log('updating existing part 3');
+
         updatePart3(
           bottomCentre,
           bottomLeft,

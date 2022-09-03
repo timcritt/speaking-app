@@ -41,9 +41,7 @@ const useSignin = () => {
           ]);
         }
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   return { signin, inputs, setInputs, errors, setErrors };

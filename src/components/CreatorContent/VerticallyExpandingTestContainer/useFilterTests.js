@@ -27,7 +27,7 @@ const useFilterTests = (tests, tagFilterTerm, sortBy, questionFilterTerm, setFil
               return b.createdAt.seconds - a.createdAt.seconds;
             });
           }
-          console.log('sorted', userTests);
+
           //filter by question text
           if (userTests.length > 0 && questionFilterTerm && questionFilterTerm.length > 0) {
             userTests = await userTests.filter((test) =>

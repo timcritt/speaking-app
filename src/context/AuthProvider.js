@@ -13,7 +13,6 @@ const AuthProvider = (props) => {
   const [emailVerified, setEmailVerified] = useState(false);
 
   function handleSetUserId(newId) {
-    console.log('new id inside the provider', newId);
     setUserId(newId);
   }
 
@@ -25,7 +24,7 @@ const AuthProvider = (props) => {
         setUserEmail(user.email);
         setUserId(user.uid);
         setEmailVerified(user.emailVerified);
-        console.log('authprovider', user.emailVerified);
+
         const newDetails = await getUserDetails(user.uid);
         setUserDetails(newDetails);
 

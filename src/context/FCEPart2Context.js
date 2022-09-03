@@ -31,7 +31,6 @@ export const FCEPart2ContextProvider = ({ children }) => {
         setTestTags(data.tags);
         setHasFetched(true);
       } else {
-        console.log('could not find test. It may not exist.');
         setDocRef('new');
         setHasFetched(true);
       }

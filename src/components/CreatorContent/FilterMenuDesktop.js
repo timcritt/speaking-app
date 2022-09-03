@@ -56,7 +56,6 @@ const FilterMenuDesktop = ({
           className={`filter-bar-item filter-bar-item-clickable ${sortBy ? 'filter-selected' : ''}`}
           onClick={() => {
             itemTwo.setIsComponentVisible(true);
-            console.log('button clicked');
           }}
         >
           <div>{sortBy ? `sort by: ${sortBy}` : 'sort by'}</div>
