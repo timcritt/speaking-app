@@ -1,7 +1,5 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { firebaseAuth } from '../context/AuthProvider';
-import { Link } from 'react-router-dom';
-import { ThemeConsumer } from 'styled-components';
 
 function ResetPassword({ history }) {
   const { handleResetPassword, inputs, setInputs, errors, setErrors, handleVerifyEmailExists } =

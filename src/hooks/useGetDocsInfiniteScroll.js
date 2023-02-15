@@ -16,12 +16,13 @@ const useGetDocsInfiniteScroll = (setDocs, collection, tagFilterTerm, direction,
           pagination
             .postsNextBatch(lastKey, collection, tagFilterTerm, direction, orderBy)
             .then((res) => {
-              setLastKey(() => res.lastKey);
+              setLastKey(res.lastKey);
               // add new posts to old posts
               setDocs((prevDocs) => prevDocs.concat(res.results));
               setNextPostsLoading(false);
             })
             .catch((err) => {
+              console.log(err);
               setNextPostsLoading(false);
             });
 
@@ -69,6 +70,7 @@ const useGetDocsInfiniteScroll = (setDocs, collection, tagFilterTerm, direction,
           observer.unobserve(entry.target);
           (async () => {
             await fetchMorePosts();
+            console.log('fetching more posts');
           })();
         }
       } catch (error) {}

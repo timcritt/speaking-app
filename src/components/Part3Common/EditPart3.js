@@ -63,6 +63,7 @@ const EditPart3 = ({ context, testType, ...props }) => {
     if (context.hasFetched) {
       handleResize();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handleResize, props.match.params.id]);
 
   useEffect(() => {

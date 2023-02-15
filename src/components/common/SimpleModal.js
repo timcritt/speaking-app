@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 
 import EasyCrop from '../EasyCrop/EasyCrop';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 function getModalStyle() {
   const top = 50;

@@ -43,6 +43,8 @@ const EditPart4 = (props) => {
     history.push(`/Edit${props.testType}/new`);
   };
 
+  console.log(props);
+
   const buttons = (
     <Fragment>
       <PublishPart4Modal

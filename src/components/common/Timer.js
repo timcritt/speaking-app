@@ -24,6 +24,7 @@ const Timer = ({ time }) => {
       unmounted = true;
       clearTimeout(timerId);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [time]);
 
   useEffect(() => {

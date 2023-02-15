@@ -42,13 +42,13 @@ const CAEPart2View = (props) => {
                 />
               </div>
               <div className={styles.left_image_container}>
-                <img src={context.imageOneUrl} />
+                <img src={context.imageOneUrl} alt='could not load' />
               </div>
               <div className={styles.centre_image_container}>
-                <img src={context.imageTwoUrl} />
+                <img src={context.imageTwoUrl} alt='could not load' />
               </div>
               <div className={styles.right_image_container}>
-                <img src={context.imageThreeUrl} />
+                <img src={context.imageThreeUrl} alt='could not load' />
               </div>
               <TestToolBar
                 creatorId={context.creatorId}

@@ -15,9 +15,7 @@
   position: relative;
   transition: transform 0.6s, border-color 0.25s ease-out;
   transform-style: preserve-3d;
-  margin: 10px;
   background-color: #fafafa;
-  border: 1px solid #dbdbdb;
   border-radius: 3px;
 }
 
@@ -89,13 +87,13 @@
 .label {
   position: absolute;
   top: -0.7rem;
-  left: 0.25rem;
   padding: 0.5vmin 1vmin;
   z-index: 999;
-  background-color: white;
+  background-color: #fafafa;
   transition: all 0.3s;
   font-size: 1em;
   color: #c9c9c9;
+  border-radius: 10px;
 }
 
 .flip180 {
