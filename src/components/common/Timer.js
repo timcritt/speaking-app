@@ -33,8 +33,8 @@ const Timer = ({ time }) => {
     if (!unmounted && ticking && currentTime > 0) {
       setTimerId(
         setTimeout(() => {
-          setCurrentTime((currentTime) => currentTime - 1);
-        }, 10)
+          setCurrentTime((currentTime) => currentTime - 100);
+        }, 1000)
       );
     }
 
@@ -81,8 +81,8 @@ const Timer = ({ time }) => {
         <div className={styles.time_display}>
           {currentTime > 0 ? (
             <span>
-              {String(Math.trunc(parseInt(currentTime / 100) / 60)).padStart(2, '0')}:
-              {String(parseInt(currentTime / 100) % 60).padStart(2, '0')}
+              {String(Math.trunc(Number(currentTime / 100) / 60)).padStart(2, '0')}:
+              {String(Math.trunc(Number(currentTime / 100) % 60)).padStart(2, '0')}
             </span>
           ) : (
             'time up'
