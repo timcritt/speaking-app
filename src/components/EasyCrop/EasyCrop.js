@@ -7,7 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { getOrientation } from 'get-orientation/browser';
 import { getCroppedImg, getRotatedImage } from '../../auxFunctions/canvasUtils';
 import { styles } from './styles';
-import ImageSearch from 'components/common/ImageSearch';
+// import ImageSearch from 'components/common/ImageSearch';
 
 const ORIENTATION_TO_ANGLE = {
   3: 180,

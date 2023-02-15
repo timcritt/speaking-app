@@ -10,7 +10,6 @@ import { uploadFCEPart2Images } from 'APIHandlers/uploadFCEPart2Images';
 import { FCEPart2Context } from 'context/FCEPart2Context';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { useHistory } from 'react-router-dom';
-import createThumb from 'auxFunctions/createThumb';
 
 const PublishMessage = ({ uploadComplete }) => {
   return uploadComplete ? <h3>Published!</h3> : <LinearProgress />;

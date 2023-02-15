@@ -1,4 +1,4 @@
-import { projectFirestore, fieldPath } from 'firebase/firebaseIndex';
+import { projectFirestore } from 'firebase/firebaseIndex';
 
 const pagination = {
   postsFirstBatch: async function (collection, tagFilterTerm, direction, orderBy) {

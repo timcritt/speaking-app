@@ -4,7 +4,6 @@ import { firebaseAuth } from 'context/AuthProvider';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Part3Lines from 'components/Part3Common/Part3Lines';
 // import debounce from 'auxFunctions/debounce';
-import throttle from 'lodash/throttle';
 import TestToolBar from 'components/TestCommon/TestToolBar';
 import ToolBarButtonsView from 'components/TestCommon/ToolBarButtonsView';
 import Timer from 'components/common/Timer';
@@ -21,8 +20,6 @@ const Part3 = (props) => {
   const handleFullScreen = useFullScreenHandle();
   const context = useContext(props.part3Context);
   const [lineClass, setLineClass] = useState('');
-  const [questionClass, setQuestionClass] = useState('');
-  const [questionTwoVisible, setQuestionTwoVisible] = useState(false);
   const [windowDimensions, setWindowDimensions] = useState({
     height: null,
     width: null,
@@ -70,6 +67,7 @@ const Part3 = (props) => {
       window.removeEventListener('resize', handleDebounce);
       window.removeEventListener('fullscreenchange', handleResize);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handleResize]);
 
   useEffect(() => {

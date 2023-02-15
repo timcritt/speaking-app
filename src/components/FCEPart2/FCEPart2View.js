@@ -10,6 +10,7 @@ import TestToolBar from 'components/TestCommon/TestToolBar';
 import Part2QuestionRow from 'components/TestCommon/Part2QuestionRow';
 import ToolBarButtonsFCEPart2 from '../TestCommon/ToolBarButtonsView';
 import Timer from 'components/common/Timer';
+import GrabSlider from 'components/common/GrabSlider/GrabSlider';
 //constants
 import { FCEPart2 } from 'APIHandlers/firebaseConsts';
 //custom hooks
@@ -62,12 +63,14 @@ const FCEPart2View = (props) => {
                   shortTime={shortTime}
                 />
               </div>
-
               <div className={styles.left_image_container}>
-                <img src={context.imageOneUrl} />
+                <img src={context.imageOneUrl} alt='could not load' />
               </div>
               <div className={styles.right_image_container}>
-                <img src={context.imageTwoUrl} />
+                <img src={context.imageTwoUrl} alt='could not load' />
+              </div>
+              <div className={styles.test_tag_container}>
+                {context.hasFetched && <GrabSlider testTags={context.testTags} />}
               </div>
               <div className={styles.tool_bar_container}>
                 <TestToolBar

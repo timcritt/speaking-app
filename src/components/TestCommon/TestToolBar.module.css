@@ -6,10 +6,10 @@
   grid-template-columns: 1fr repeat(3, auto) 1fr;
   grid-column-gap: 5px;
   justify-items: center;
-  border: 1px solid #dbdbdb;
+
   border-radius: 3px;
   box-sizing: border-box;
-  margin: 10px;
+
   background-color: #fafafa;
 }
 .creator_info_container {

@@ -29,7 +29,8 @@ const Part2QuestionRow = ({
       setTime(shortTime);
       setQuestionClass(styles.flipped_vertically);
     }
-  }, [setTime, shortTurnVisible]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shortTurnVisible]);
 
   return (
     <div className={styles.container} onClick={handleViewShortTurnClick}>

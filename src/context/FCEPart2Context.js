@@ -1,4 +1,4 @@
-import React, { useState, createContext, useEffect } from 'react';
+import React, { useState, createContext, useEffect, useCallback } from 'react';
 import getTest from 'APIHandlers/getTest';
 
 export const FCEPart2Context = createContext();
@@ -18,7 +18,7 @@ export const FCEPart2ContextProvider = ({ children }) => {
   const [hasFetched, setHasFetched] = useState(false);
   const [unsavedChanges, setUnsavedChanges] = useState(false);
 
-  const fetchTest = () => {
+  const fetchTest = useCallback(() => {
     getTest('FCEPart2', docRef).then((data) => {
       if (data) {
         setImageOneUrl(data.imageOneUrl);
@@ -35,7 +35,7 @@ export const FCEPart2ContextProvider = ({ children }) => {
         setHasFetched(true);
       }
     });
-  };
+  }, [docRef]);
 
   const clearState = () => {
     setQuestionOne('');
@@ -102,7 +102,7 @@ export const FCEPart2ContextProvider = ({ children }) => {
     } else {
       setHasFetched(true);
     }
-  }, [docRef]);
+  }, [docRef, fetchTest]);
 
   return (
     <FCEPart2Context.Provider

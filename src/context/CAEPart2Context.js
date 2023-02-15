@@ -1,4 +1,4 @@
-import React, { useState, createContext, useEffect } from 'react';
+import React, { useState, createContext, useEffect, useCallback } from 'react';
 import getTest from 'APIHandlers/getTest';
 
 export const CAEPart2Context = createContext();
@@ -21,7 +21,7 @@ export const CAEPart2ContextProvider = ({ children }) => {
   const [hasFetched, setHasFetched] = useState(false);
   const [unsavedChanges, setUnsavedChanges] = useState(false);
 
-  const fetchTest = () => {
+  const fetchTest = useCallback(() => {
     getTest('CAEPart2', docRef).then((data) => {
       if (data) {
         setImageOneUrl(data.imageOneUrl);
@@ -40,7 +40,7 @@ export const CAEPart2ContextProvider = ({ children }) => {
         setDocRef('new');
       }
     });
-  };
+  }, [docRef]);
 
   const clearState = () => {
     setQuestionOne('');
@@ -120,7 +120,7 @@ export const CAEPart2ContextProvider = ({ children }) => {
     } else {
       setHasFetched(true);
     }
-  }, [docRef]);
+  }, [docRef, fetchTest]);
 
   return (
     <CAEPart2Context.Provider

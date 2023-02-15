@@ -3,12 +3,11 @@ import React, { useContext, useState, useEffect } from 'react';
 import { firebaseAuth } from '../../context/AuthProvider';
 import { Link, withRouter } from 'react-router-dom';
 import profilePlaceHolder from 'img/profile-placeholder.png';
-import firebase from 'firebase';
 
 const Signup = (props) => {
   const { handleSignup, inputs, setInputs, errors } = useContext(firebaseAuth);
   const [repeatPassword, setRepeatPassword] = useState('');
-  const [imageLocalUrl, setImageLocalUrl] = useState(profilePlaceHolder);
+  const imageLocalUrl = profilePlaceHolder;
   const [userName, setUserName] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
   const [passwordsMatch, setPasswordsMatch] = useState(true);

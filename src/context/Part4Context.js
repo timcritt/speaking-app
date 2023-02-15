@@ -1,4 +1,4 @@
-import React, { useState, createContext, useEffect } from 'react';
+import React, { useState, createContext, useEffect, useCallback } from 'react';
 import getTest from 'APIHandlers/getTest';
 
 export const Part4Context = createContext();
@@ -17,7 +17,7 @@ export const Part4ContextProvider = ({ children }) => {
   const [hasFetched, setHasFetched] = useState(false);
   const [unsavedChanges, setUnsavedChanges] = useState(false);
 
-  const fetchTest = () => {
+  const fetchTest = useCallback(() => {
     getTest('FCEPart4', docRef).then((data) => {
       if (data) {
         setQuestionOne(data.questionOne);
@@ -34,7 +34,7 @@ export const Part4ContextProvider = ({ children }) => {
         setHasFetched(true);
       }
     });
-  };
+  }, [docRef]);
 
   const clearState = () => {
     setQuestionOne('');
@@ -45,6 +45,7 @@ export const Part4ContextProvider = ({ children }) => {
     setQuestionSix('');
     setCreatorId(null);
     setTestTags([]);
+    setDocRef(null);
   };
 
   const handleSetTags = (tag, selected) => {
@@ -99,7 +100,7 @@ export const Part4ContextProvider = ({ children }) => {
     return () => {
       clearState();
     };
-  }, [docRef]);
+  }, [docRef, fetchTest]);
 
   return (
     <Part4Context.Provider

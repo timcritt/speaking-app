@@ -1,10 +1,10 @@
-import React, { Fragment, useState, useRef, useEffect, useCallback } from 'react';
+import React, { Fragment, useState } from 'react';
 
 import useGetDocsInfiniteScroll from 'hooks/useGetDocsInfiniteScroll';
 import Tests from 'components/ExploreContent/Tests/Tests.js';
 import FilterMenuDesktop from 'components/CreatorContent/FilterMenuDesktop';
 import useComponentVisible from 'hooks/useComponentVisible';
-import FilterMenuMobile from 'components/CreatorContent/FilterMenuMobile';
+//import FilterMenuMobile from 'components/CreatorContent/FilterMenuMobile';
 import ExamTypeMenuItems from 'components/ExploreContent/ExamTypeMenuItems';
 
 const SearchTests = () => {
@@ -30,7 +30,7 @@ const SearchTests = () => {
   const itemFour = useComponentVisible(false);
   const itemFive = useComponentVisible(false);
 
-  const { fetchMorePosts, nextDocs_loading, containerRef } = useGetDocsInfiniteScroll(
+  const { nextDocs_loading, containerRef } = useGetDocsInfiniteScroll(
     setDocs,
     exam + testType,
     tagFilterTerm,
@@ -120,9 +120,9 @@ const SearchTests = () => {
       </div>
 
       <Tests testType={exam + testType} results={docs} />
-      {nextDocs_loading && 'loading'}
+      {nextDocs_loading && <div>'loading'</div>}
       {/*the ref in the bottom div is observed by intersectionObsever. When the div is scrolled to and on screen, it triggers more images to load*/}
-      <div ref={containerRef}></div>
+      <div ref={containerRef}>.</div>
     </Fragment>
   );
 };
