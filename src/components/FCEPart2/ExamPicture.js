@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Fragment } from 'react';
-import placeholder from 'img/placeholder-landscape.jpg';
+import placeholder from 'img/placeholder-image.png';
 
 const ExamPicture = ({ image, setImage, children }) => {
   return (

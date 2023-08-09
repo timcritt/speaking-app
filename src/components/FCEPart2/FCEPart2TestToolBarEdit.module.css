@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.view_button {
+  color: white;
+  background-color: #5f9cff;
+  font-size: 14pt;
+  text-decoration: none;
+  padding: 10px 25px;
+  border-radius: 5px;
+  border: solid 1px var(--main-border-color); 
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  cursor: pointer;
+  color: white;
+  transition: 0.125s ease-in-out;
+}
+
+.view_button:hover {
+  background-color: #3c85fa;
+}
+
+a {
+  text-decoration: none;
+}

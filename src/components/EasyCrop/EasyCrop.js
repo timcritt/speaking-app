@@ -15,7 +15,7 @@ const ORIENTATION_TO_ANGLE = {
   8: -90,
 };
 
-const EasyCrop = ({ classes, aspect = 4 / 3, setImageUrl, setOpen }) => {
+const EasyCrop = ({ classes, aspect = 4 / 3, setImageUrl, handleOpen }) => {
   const [imageSrc, setImageSrc] = useState(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
@@ -35,12 +35,12 @@ const EasyCrop = ({ classes, aspect = 4 / 3, setImageUrl, setOpen }) => {
       //setCroppedImage(croppedImage);
 
       setImageUrl(croppedImage);
-      setOpen(false);
+      handleOpen(false);
       //handleSetImage(croppedImage);
     } catch (e) {
       console.error(e);
     }
-  }, [imageSrc, croppedAreaPixels, rotation, setImageUrl, setOpen]);
+  }, [imageSrc, croppedAreaPixels, rotation, setImageUrl, handleOpen]);
 
   const fileTypes = ['image/png', 'image/jpeg'];
 
@@ -123,7 +123,7 @@ const EasyCrop = ({ classes, aspect = 4 / 3, setImageUrl, setOpen }) => {
       ) : (
         <Fragment>
           <input type='file' id='imageUpload' onChange={onFileChange} accept='image/*' />
-          <label for='imageUpload'>upload a file</label>
+          <label htmlFor='imageUpload'>upload a file</label>
           <span className='upload-error-message'>{uploadError}</span>
         </Fragment>
       )}

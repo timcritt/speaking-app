@@ -26,7 +26,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SimpleModal({ modalButtonText, setImageUrl }) {
+
+
+export default function SimpleModal({ modalButtonText, setImageUrl, modalButton }) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
@@ -40,17 +42,33 @@ export default function SimpleModal({ modalButtonText, setImageUrl }) {
     setOpen(false);
   };
 
+  
+
+
+  const ClickToOpenModal = () => {
+    
+    //can overide default button used to open the modal by passing element as props
+    if (modalButton) {
+      return React.cloneElement(modalButton, {onClick: handleOpen});
+    }
+    
+    return (
+      <button className='btn upload-btn' onClick={handleOpen}>
+        upload
+      </button>
+    )
+  
+  };
+
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <EasyCrop setImageUrl={setImageUrl}></EasyCrop>
+      <EasyCrop setImageUrl={setImageUrl} handleOpen={handleOpen}> </EasyCrop>
     </div>
   );
 
   return (
     <Fragment>
-      <button className='btn upload-btn' onClick={handleOpen}>
-        upload
-      </button>
+      <ClickToOpenModal/>
       <Modal
         open={open}
         aria-labelledby='simple-modal-title'

@@ -4,8 +4,8 @@ import { uniqueId } from 'lodash';
 //CSS module
 import styles from './Part2QuestionRow.module.css';
 
-const shortTurnLabel = <span className={'fade-in flip180'}>short turn</span>;
-const longTurnLabel = <span className={'fade-in'}>long turn</span>;
+const shortTurnLabel = <label className={'fade-in flip180'}>short turn</label>;
+const longTurnLabel = <label className={'fade-in'}>long turn</label>;
 
 const Part2QuestionRow = ({
   longTurnQuestions,
@@ -37,7 +37,7 @@ const Part2QuestionRow = ({
       <div className={styles.flip_card_container}>
         <div className={`${styles.flip_card_inner} ${questionClass}`}>
           <div className={`${styles.flip_card_front} ${styles.flip_card_face}`}>
-            <span className={styles.label}>{longTurnLabel}</span>
+            <form className={styles.label}>{longTurnLabel}
             <div className={styles.question_text_container}>
               <ul>
                 {longTurnQuestions.map((question) => {
@@ -49,6 +49,7 @@ const Part2QuestionRow = ({
                 })}
               </ul>
             </div>
+            </form>
           </div>
           <div className={`${styles.flip_card_back_vertical} + ${styles.flip_card_face}`}>
             <span className={styles.label}>{shortTurnLabel}</span>

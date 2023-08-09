@@ -1,6 +1,5 @@
-import React, { useState, useEffect, Fragment, useContext } from 'react';
+import React, { useState, useEffect, Fragment, useContext, useRef } from 'react';
 import Modal from '../common/Modal';
-import PublishIcon from '@material-ui/icons/Publish';
 import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
 import { timestamp } from 'firebase/firebaseIndex';
 import updateTest from 'APIHandlers/updateTest';
@@ -11,38 +10,100 @@ import { FCEPart2Context } from 'context/FCEPart2Context';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { useHistory } from 'react-router-dom';
 
-const PublishMessage = ({ uploadComplete }) => {
-  return uploadComplete ? <h3>Published!</h3> : <LinearProgress />;
-};
+//CSS modules
+import styles from './PublishWarningModal.module.css';
 
-export default function PublishWarningModal() {
+const PublishWarningModal = ({setInputStatus}) => {
   const [open, setOpen] = useState(false);
   const { userId } = useContext(firebaseAuth);
   const context = useContext(FCEPart2Context);
-  const [allInputsCompleted, setAllInputsCompleted] = useState(false);
+  
   const [uploadComplete, setUploadComplete] = useState(false);
+  const [allInputsCompleted, setAllInputsCompleted] = useState(false);
 
   var history = useHistory();
 
-  useEffect(() => {
+  const validateInputs = () => {
+    
+    if (!context.questionOne) {
+      setInputStatus((prevState) => {
+        return {
+          ...prevState,
+          questionOneFailedValidation: true
+        }
+
+      })
+    }
+    if(!context.shortTurnQuestion) {
+      setInputStatus((prevState) => {
+        return {
+          ...prevState,
+          shortTurnQuestionFailedValidation: true
+        }
+
+      })
+    }
+    if(!context.imageOneUrl) {
+      setInputStatus((prevState) => {
+        return {
+          ...prevState,
+          imageOneFailedValidation: true
+        }
+
+      })
+    }
+    if(!context.imageTwoUrl) {
+      setInputStatus((prevState) => {
+        return {
+          ...prevState,
+          imageTwoFailedValidation: true
+        }
+
+      })
+    }
+    if(!context.testTags.length > 0) {
+      setInputStatus((prevState) => {
+        return {
+          ...prevState,
+          topicTagsFailedValidation: true
+        }
+
+      })
+    }
+
     if (
       context.testTags.length > 0 &&
       context.imageOneUrl &&
       context.imageTwoUrl &&
       context.questionOne
+
     ) {
       setAllInputsCompleted(true);
+      return true;
     } else {
       setAllInputsCompleted(false);
+      return false
     }
-  }, [context.imageOneUrl, context.imageTwoUrl, context.testTags, context.questionOne]);
+  }
 
-  const handleOpen = async () => {
+
+  const handleOpen = async (e) => {
+    //prevent default form action
+    e.preventDefault();
+
+    //must rely on value of inputsValid rather than allInputsCompleted due to closure around the state value
+    const inputsValid = validateInputs();
+
     setOpen(true);
-    setUploadComplete(false);
-    const createdAt = timestamp();
-    if (allInputsCompleted) {
+    
+    //must rely on value of inputsValid rather than allInputsCompleted due to closure around the state value
+    if (inputsValid) {
+      setUploadComplete(false);
+      const createdAt = timestamp();
+      
+      //update existing test
       if (context.docRef) {
+        //updates only if images are new
         uploadFCEPart2Images(
           context.imageOneUrl,
           context.imageTwoUrl,
@@ -73,17 +134,19 @@ export default function PublishWarningModal() {
             context.setImageOneRef(data.imageOneData.reference),
             context.setImageTwoRef(data.imageTwoData.reference),
             setUploadComplete(true),
-            context.setUnsavedChanges(false)
-
+            context.setUnsavedChanges(false),
+            setOpen(false)
             //setChangesSaved(true)
           );
         });
       } else {
         setOpen(true);
+        //create new test
         //if local test has no docId, it's because it's new and doesn't exist on the firestore.
-        //create thumbnails
-
+        //also creates thumbnails
+        	
         uploadFCEPart2Images(context.imageOneUrl, context.imageTwoUrl).then((data) => {
+          
           addTest(
             data.imageOneData.url,
             data.imageTwoData.url,
@@ -107,7 +170,6 @@ export default function PublishWarningModal() {
       }
     } else {
       setOpen(true);
-      //setChangesSaved(true);
     }
   };
 
@@ -116,11 +178,24 @@ export default function PublishWarningModal() {
     setUploadComplete(false);
   };
 
-  const body = (
-    <div>
+
+  return (
+    <Fragment>
+      <button className={styles.save_button} onClick={handleOpen}>
+        save <SaveOutlinedIcon />
+      </button>
+      {open && (
+        <Modal
+          modalOpen={open}
+          setModalOpen={handleClose}
+          aria-labelledby='simple-modal-title'
+          aria-describedby='simple-modal-description'
+          heading={'Saving'}
+        >
+          <div>
       <div>
         {allInputsCompleted ? (
-          <PublishMessage uploadComplete={uploadComplete} />
+          uploadComplete ? <h3>Published!</h3> : <LinearProgress />
         ) : (
           <h3>Oops! You forgot to:</h3>
         )}
@@ -134,24 +209,10 @@ export default function PublishWarningModal() {
         <button onClick={handleClose}>ok</button>
       </div>
     </div>
-  );
-
-  return (
-    <Fragment>
-      <button className='' onClick={handleOpen}>
-        {context.docRef ? <SaveOutlinedIcon /> : <PublishIcon />}
-      </button>
-      {open && (
-        <Modal
-          modalOpen={open}
-          setModalOpen={handleClose}
-          aria-labelledby='simple-modal-title'
-          aria-describedby='simple-modal-description'
-          heading={'Saving'}
-        >
-          {body}
         </Modal>
       )}
     </Fragment>
   );
 }
+
+export default PublishWarningModal;

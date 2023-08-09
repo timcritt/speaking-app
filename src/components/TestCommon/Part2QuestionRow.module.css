@@ -85,13 +85,15 @@
 }
 
 .label {
-  position: absolute;
-  top: -0.7rem;
-  padding: 0.5vmin 1vmin;
+  /* position: absolute; */
+  /* top: -0.9rem; */
+  /* padding: 0.5vmin 1vmin; */
+  padding: 0px;
+  margin: 0px;
   z-index: 999;
-  background-color: #fafafa;
-  transition: all 0.3s;
-  font-size: 1em;
+  background-color: #fafafa00;
+  /* transition: all 0.3s; */
+  /* font-size: 1em; */
   color: #c9c9c9;
   border-radius: 10px;
 }

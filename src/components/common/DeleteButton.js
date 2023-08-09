@@ -5,6 +5,9 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 //API handlers
 import deleteRecordFirestore from 'APIHandlers/deleteRecordFirestore';
 
+//CSS Modules
+import styles from './DeleteButton.module.css'
+
 function DeleteButton({
   itemId,
   deleteItemType,
@@ -14,16 +17,20 @@ function DeleteButton({
 }) {
   const [DeleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
 
-  const handleCloseModal = () => {
+  const handleCloseModal = (e) => {
+    //prevent form submission if inside form element
+    e.preventDefault()
     setDeleteModalIsOpen(false);
   };
 
   const handleOpenModal = (e) => {
+    e.preventDefault();
     e.stopPropagation();
     setDeleteModalIsOpen(true);
   };
 
-  const handleDeleteItemConfirm = async () => {
+  const handleDeleteItemConfirm = async (e) => {
+    
     //uses the delete function passed as a prop if present
     if (handleDelete) {
       handleDelete();
@@ -57,8 +64,8 @@ function DeleteButton({
         </Modal>
       )}
 
-      <button className='delete_button' onClick={handleOpenModal}>
-        <HighlightOffIcon style={{ color: `${iconColour}` }} />
+      <button className={styles.delete_button} onClick={handleOpenModal}>
+        delete <HighlightOffIcon style={{ color: `${iconColour}` }} />
       </button>
     </Fragment>
   );

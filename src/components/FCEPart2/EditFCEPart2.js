@@ -1,11 +1,11 @@
-import React, { useContext, Fragment } from 'react';
+import React, { useContext, Fragment, useState, useRef } from 'react';
 import SideBarTags from 'components/common/SideBarTags';
 import ExamPicture from 'components/FCEPart2/ExamPicture';
 import ImageDeleteBtn from 'components/FCEPart2/ImageDeleteBtn';
 import SimpleModal from 'components/common/SimpleModal';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { FCEPart2Context } from 'context/FCEPart2Context';
-import FCEPart2TestToolBarEdit from 'components/TestCommon/FCEPart2TestToolBarEdit';
+import FCEPart2TestToolBarEdit from 'components/FCEPart2/FCEPart2TestToolBarEdit';
 import { Prompt } from 'react-router-dom';
 import useLoadTestIntoComponent from 'hooks/useLoadTestIntoComponent';
 
@@ -14,6 +14,16 @@ import styles from './EditFCEPart2.module.css';
 const EditFCEPart2 = (props) => {
   const context = useContext(FCEPart2Context);
 
+  const [inputStatus, setInputStatus] = useState({
+
+    questionOneFailedValidation: false,
+    shortTurnQuestionFailedValidation: false,
+    imageOneFailedValidation: false,
+    imageTwoFailedValidation: false,
+    topicTagsFailedValidation: false
+
+  });
+ 
   useLoadTestIntoComponent(
     context.setDocRef,
     context.clearState,
@@ -32,86 +42,84 @@ const EditFCEPart2 = (props) => {
         />
 
         <main className='holy-grail-content centre-vertically'>
-          <div className={styles.container}>
-            <h1>FCE Part 2</h1>
+          <form className={styles.container}>
+            <h1 className={styles.h1}>{context.docRef ? "Edit ":"Create "}FCE Part 2</h1>
 
-            <div className={styles.question_row}>
-              <label>long turn question</label>
+            <fieldset className={styles.question_row}>
+            <legend>Questions</legend>
+              <label>long turn</label>
               <input
                 label='long-turn'
-                className='input question-input'
+                className={`input question-input ${inputStatus.questionOneFailedValidation && styles.required_input_incomplete}`}
                 value={context.questionOne}
                 placeholder='enter long turn question'
                 onChange={context.handleEditQuestionOne}
+                
               />
-              <label>short turn question</label>
+              <label>short turn</label>
               <input
                 label='short-turn'
-                className='input question-input '
+                className={`input question-input ${inputStatus.shortTurnQuestionFailedValidation && styles.required_input_incomplete}`}
                 value={context.shortTurnQuestion}
                 placeholder='enter short turn question'
                 onChange={context.handleEditShortTurnQuestion}
+                required
               />
-            </div>
+            </fieldset>
 
-            <div className={styles.image_row}>
-              <div>
-                <div className={styles.image_container}>
-                  <ExamPicture image={context.imageOneUrl} setImage={context.handleEditImageOneUrl}>
-                    {context.imageOneUrl && (
-                      <ImageDeleteBtn
-                        setImageUrl={context.handleEditImageOneUrl}
-                        setImageRef={context.handleEditImageOneRef}
-                      />
-                    )}
-                  </ExamPicture>
-                </div>
-                <div className={styles.btn_container}>
-                  <SimpleModal
-                    modalButtonText={'upload'}
-                    setImageUrl={context.handleEditImageOneUrl}
-                  />
-                  <button className='btn upload-btn'>browse</button>
-                </div>
+            <fieldset className={styles.image_row}>
+            <legend>Images</legend>
+              <div className={`${styles.image_container} ${inputStatus.imageOneFailedValidation && styles.required_input_incomplete}`}>
+                <ExamPicture image={context.imageOneUrl} setImage={context.handleEditImageOneUrl}>
+                  {context.imageOneUrl ? (
+                    <ImageDeleteBtn
+                      setImageUrl={context.handleEditImageOneUrl}
+                      setImageRef={context.handleEditImageOneRef}
+                    />
+                  ): (
+                    
+                      <SimpleModal
+                          modalButtonText={'upload'}
+                          setImageUrl={context.handleEditImageOneUrl}
+                          modalButton={<button className={styles.clickable_image_overlay}></button>}
+                  />)
+                  }
+                </ExamPicture>
               </div>
-              <div>
-                <div className={styles.image_container}>
-                  <ExamPicture image={context.imageTwoUrl} setImage={context.handleEditImageTwoUrl}>
-                    {context.imageTwoUrl && (
-                      <ImageDeleteBtn
-                        setImageUrl={context.handleEditImageTwoUrl}
-                        setImageRef={context.handleEditImageTwoRef}
-                      />
-                    )}
-                  </ExamPicture>
-                </div>
-                <div className={styles.btn_container}>
-                  <SimpleModal
-                    modalButtonText={'upload'}
-                    setImageUrl={context.handleEditImageTwoUrl}
-                  />
-                  <button className='btn upload-btn'>browse</button>
-                </div>
+              <div className={`${styles.image_container} ${inputStatus.imageTwoFailedValidation && styles.required_input_incomplete}`}>
+                <ExamPicture image={context.imageTwoUrl} setImage={context.handleEditImageTwoUrl}>
+                  {context.imageTwoUrl ? (
+                    <ImageDeleteBtn
+                      setImageUrl={context.handleEditImageTwoUrl}
+                      setImageRef={context.handleEditImageTwoRef}
+                    />
+                  ): (
+                    
+                      <SimpleModal
+                          modalButtonText={'upload'}
+                          setImageUrl={context.handleEditImageTwoUrl}
+                          modalButton={<button className={styles.clickable_image_overlay}></button>}
+                  />)
+                  }
+                </ExamPicture>
               </div>
-            </div>
-            <div className={styles.tags_container}>
-              <label>Topic tags</label>
+            </fieldset>
+            <fieldset className={`${styles.tags_container} ${inputStatus.topicTagsFailedValidation && styles.required_input_incomplete}`}>
+              <legend>Topic Tags</legend>
+              
               <SideBarTags
                 tags={context.testTags}
                 handleSetTags={context.handleSetTags}
-                title={'Topic Tags'}
               >
-                <p className='advice-text tag-advice'>
-                  Adding the correct tags will help others find your test
-                </p>
               </SideBarTags>
-            </div>
-
-            <FCEPart2TestToolBarEdit context={context} />
-          </div>
+              
+            </fieldset>
+            
+            <FCEPart2TestToolBarEdit context={context} setInputStatus={setInputStatus}/>
+          </form>
         </main>
       </Fragment>
-    );
+    )
   } else {
     return (
       <div className={'full-width'}>
