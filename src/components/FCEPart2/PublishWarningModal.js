@@ -164,7 +164,7 @@ const PublishWarningModal = ({setInputStatus}) => {
             context.setDocRef(response.id);
             setUploadComplete(true);
             context.setUnsavedChanges(false);
-            history.push(`/EditFCEPart2/${response.id}`);
+            history.push(`/FCEPart2/${response.id}`);
           });
         });
       }

@@ -27,6 +27,8 @@
   align-self: center;
   width: 100%;
   text-align: center;
+  line-height: 0;
+  border: none;
 }
 
 .image_container > img {
@@ -34,7 +36,8 @@
   height: auto;
   width: 100%;
   background-color: white;
-  border-radius: 10px;
+  border-radius: 5px;
+  border: rgb(223, 223, 223) solid;
 }
 
 .tool_bar_container {
@@ -82,7 +85,8 @@
   right: 0;
   margin: auto;
   padding: 0;
-  border: rgb(223, 223, 223) solid;
+  border: none;
+  border-radius: 10px;
   overflow: hidden;
   transition: background-color ease-out 0.25s;
 }
@@ -117,8 +121,13 @@ legend {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  padding: 20px 10px;
+ 
 }
 
 .required_input_incomplete {
   border: 1px solid red;
+  border-radius: 5px;
 }
+
+
