@@ -1,132 +1,176 @@
-import React, { Fragment } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { Fragment, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
+import getTest from "APIHandlers/getTest";
 
 //custom components
-import { FullScreen, useFullScreenHandle } from 'react-full-screen';
-import TestToolBar from 'components/TestCommon/TestToolBar';
-import SideBarTags from 'components/common/SideBarTags';
-import PublishPart4Modal from './PublishPart4Modal';
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import TestToolBar from "components/TestCommon/TestToolBar";
+import SideBarTags from "components/common/SideBarTags";
+import PublishPart4Modal from "./PublishPart4Modal";
 
 //3rd party components
-import { TextareaAutosize } from '@material-ui/core';
+import { TextareaAutosize } from "@material-ui/core";
 
 //API handlers
-import deleteTest from 'APIHandlers/deleteTest';
+import deleteTest from "APIHandlers/deleteTest";
 
 //icons
-import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
-import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
+import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
+import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
 
 //Custom Hooks
-import useLoadTestIntoComponent from 'hooks/useLoadTestIntoComponent';
+//import useLoadTestIntoComponent from "hooks/useLoadTestIntoComponent";
 
 //styles
-import styles from './Part4.module.css';
+import styles from "./Part4.module.css";
 
 const EditPart4 = (props) => {
-  const handleFullScreen = useFullScreenHandle();
+	const handleFullScreen = useFullScreenHandle();
 
-  useLoadTestIntoComponent(
-    props.setDocRef,
-    props.clearState,
-    props.fetchTest,
-    props.unsavedChanges,
-    props.setUnsavedChanges,
-    props.match.params.id
-  );
+	//Get a test from the database according to the params and set state
+	useEffect(() => {
+		const asyncWrapper = async () => {
+			const test = await getTest("FCEPart4", props.match.params.id);
+			test.docRef = test.id;
+			delete test.id;
+			test.testTags = test.tags;
+			delete test.tags;
+			props.dispatch({ type: "updateDocRef", payload: test });
+			console.log(test);
+		};
 
-  var history = useHistory();
+		//Only fetches new test if the one stored in state is not the one navigated to, i.e, referenced in params
+		if (props.match.params.id !== props.docRef) {
+			asyncWrapper();
+			//for if creating a new test rather than editing existing one
+		} else if (props.match.params.id === "new") {
+			props.dispatch({ type: "resetState" });
+		}
+	}, [props.match.params]);
 
-  const handleDeleteTest = async () => {
-    await deleteTest(props.docRef, props.testType);
-    props.clearState();
-    history.push(`/Edit${props.testType}/new`);
-  };
+	var history = useHistory();
 
-  console.log(props);
+	const handleDeleteTest = async () => {
+		//await deleteTest(props.docRef, props.testType);
+		//props.clearState();
+		//history.push(`/Edit${props.testType}/new`);
+	};
 
-  const buttons = (
-    <Fragment>
-      <PublishPart4Modal
-        questionOne={props.questionOne}
-        questionTwo={props.questionTwo}
-        questionThree={props.questionThree}
-        questionFour={props.questionFour}
-        questionFive={props.questionFive}
-        questionSix={props.questionSix}
-        tags={props.testTags}
-        testType={props.testType}
-        changesSaved={props.changesSaved}
-        docRef={props.docRef}
-        setDocRef={props.setDocRef}
-      />
-      {props.docRef && (
-        <Link
-          to={{
-            pathname: `/${props.testType}/${props.docRef}`,
-          }}
-        >
-          <button className='tool-bar-btn'>
-            <VisibilityOutlinedIcon />
-          </button>
-        </Link>
-      )}
-      <button className='tool-bar-btn' onClick={handleDeleteTest}>
-        <DeleteForeverOutlinedIcon />
-      </button>
-    </Fragment>
-  );
+	//console.log(props);
 
-  return (
-    <Fragment>
-      <div className='side-bar-left-tags hg-sidebar '>
-        {props.testTags && (
-          <SideBarTags
-            tags={props.testTags}
-            handleSetTags={props.handleSetTags}
-            title={'Topic Tags'}
-          >
-            <p className='advice-text tag-advice'>
-              Adding the correct tags will help others find your test
-            </p>
-          </SideBarTags>
-        )}
-      </div>
-      <FullScreen handle={handleFullScreen}>
-        <main className='holy-grail-content fade-in'>
-          <div className={styles.part4_container}>
-            <div className={styles.content_container}>
-              <span className={styles.title}>FCE Part 4</span>
+	const buttons = (
+		<Fragment>
+			<PublishPart4Modal
+				questionOne={props.questionOne}
+				questionTwo={props.questionTwo}
+				questionThree={props.questionThree}
+				questionFour={props.questionFour}
+				questionFive={props.questionFive}
+				questionSix={props.questionSix}
+				tags={props.testTags}
+				testType={props.testType}
+				changesSaved={props.changesSaved}
+				docRef={props.docRef}
+				setDocRef={props.setDocRef}
+			/>
+			{props.docRef && (
+				<Link
+					to={{
+						pathname: `/${props.testType}/${props.docRef}`,
+					}}
+				>
+					<button className="tool-bar-btn">
+						<VisibilityOutlinedIcon />
+					</button>
+				</Link>
+			)}
+			<button className="tool-bar-btn" onClick={handleDeleteTest}>
+				<DeleteForeverOutlinedIcon />
+			</button>
+		</Fragment>
+	);
 
-              <TextareaAutosize value={props.questionOne} onChange={props.handleEditQuestionOne} />
+	return (
+		<Fragment>
+			<FullScreen handle={handleFullScreen}>
+				<main className="holy-grail-content fade-in">
+					<div className={styles.part4_container}>
+						<div className={styles.content_container}>
+							<span className={styles.title}>FCE Part 4</span>
 
-              <TextareaAutosize value={props.questionTwo} onChange={props.handleEditQuestionTwo} />
-
-              <TextareaAutosize
-                value={props.questionThree}
-                onChange={props.handleEditQuestionThree}
-              />
-
-              <TextareaAutosize
-                value={props.questionFour}
-                onChange={props.handleEditQuestionFour}
-              />
-
-              <TextareaAutosize
-                value={props.questionFive}
-                onChange={props.handleEditQuestionFive}
-              />
-
-              <TextareaAutosize value={props.questionSix} onChange={props.handleEditQuestionSix} />
-            </div>
-            <div className={styles.tool_bar_container}>
-              <TestToolBar creatorId={props.creatorId ? props.creatorId : '1'} buttons={buttons} />
-            </div>
-          </div>
-        </main>
-      </FullScreen>
-    </Fragment>
-  );
+							<TextareaAutosize
+								value={props.questionOne}
+								onChange={(e) =>
+									props.dispatch({
+										type: "updateQuestionOne",
+										payload: e.target.value,
+									})
+								}
+							/>
+							<TextareaAutosize
+								value={props.questionTwo}
+								onChange={(e) =>
+									props.dispatch({
+										type: "updateQuestionTwo",
+										payload: e.target.value,
+									})
+								}
+							/>
+							<TextareaAutosize
+								value={props.questionThree}
+								onChange={(e) =>
+									props.dispatch({
+										type: "updateQuestionThree",
+										payload: e.target.value,
+									})
+								}
+							/>
+							<TextareaAutosize
+								value={props.questionFour}
+								onChange={(e) =>
+									props.dispatch({
+										type: "updateQuestionFour",
+										payload: e.target.value,
+									})
+								}
+							/>
+							<TextareaAutosize
+								value={props.questionFive}
+								onChange={(e) =>
+									props.dispatch({
+										type: "updateQuestionFive",
+										payload: e.target.value,
+									})
+								}
+							/>
+							<TextareaAutosize
+								value={props.questionSix}
+								onChange={(e) =>
+									props.dispatch({
+										type: "updateQuestionSix",
+										payload: e.target.value,
+									})
+								}
+							/>
+						</div>
+						{props.testTags && (
+							<SideBarTags
+								tags={props.testTags}
+								handleSetTags={props.handleSetTags}
+								title={"Topic Tags"}
+							></SideBarTags>
+						)}
+						<div className={styles.tool_bar_container}>
+							<TestToolBar
+								creatorId={props.creatorId ? props.creatorId : "1"}
+								buttons={buttons}
+							/>
+						</div>
+					</div>
+				</main>
+			</FullScreen>
+		</Fragment>
+	);
 };
 
 export default EditPart4;
