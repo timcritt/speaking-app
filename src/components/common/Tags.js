@@ -3,6 +3,7 @@ import Tag from "./Tag";
 
 const tagList = [
 	"hobbies",
+	"leisure",
 	"fitness",
 	"sport",
 	"health",
@@ -19,6 +20,9 @@ const tagList = [
 	"entertainment",
 	"media",
 	"travel",
+	"places",
+	"history",
+	"fame",
 ];
 
 const Tags = ({ tags, handleSetTags }) => {

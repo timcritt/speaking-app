@@ -1,27 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
-import AuthProvider from './context/AuthProvider';
-import './fonts/digital-7.ttf';
-import Orbs from 'components/Orbs/Orbs';
-import './styles/index.css';
-import App from './components/App';
-import { NavBar } from './components/NavBar/NavBar';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter as Router } from "react-router-dom";
+import AuthProvider from "./context/AuthProvider";
+import "./fonts/digital-7.ttf";
+import Orbs from "components/Orbs/Orbs";
+import "./styles/index.css";
+import App from "./components/App";
+import { NavBar } from "./components/NavBar/NavBar";
 
-ReactDOM.render(
-  <div className='holy-grail'>
-    <Orbs />
-    <Router>
-      <AuthProvider>
-        <header>
-          <NavBar />
-        </header>
-        <div className='holy-grail-body'>
-          <App />
-        </div>
-        {/*<Footer />*/}
-      </AuthProvider>
-    </Router>
-  </div>,
-  document.getElementById('root')
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+root.render(
+	<div className="holy-grail">
+		<Orbs />
+		<Router>
+			<AuthProvider>
+				<header>
+					<NavBar />
+				</header>
+				<div className="holy-grail-body">
+					<App />
+				</div>
+				{/*<Footer />*/}
+			</AuthProvider>
+		</Router>
+	</div>,
+	document.getElementById("root")
 );

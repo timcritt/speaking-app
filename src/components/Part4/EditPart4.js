@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, memo } from "react";
 import { Link, useHistory } from "react-router-dom";
 import getTest from "APIHandlers/getTest";
 
@@ -39,14 +39,14 @@ const EditPart4 = (props) => {
 			console.log(test);
 		};
 
-		//Only fetches new test if the one stored in state is not the one navigated to, i.e, referenced in params
-		if (props.match.params.id !== props.docRef) {
-			asyncWrapper();
-			//for if creating a new test rather than editing existing one
-		} else if (props.match.params.id === "new") {
+		//checks if creating a new test rather than editing existing one
+		if (props.match.params.id === "new") {
 			props.dispatch({ type: "resetState" });
+			//Only fetches new test if the one stored in state is not the one navigated to, i.e, referenced in params
+		} else if (props.match.params.id !== props.docRef) {
+			asyncWrapper();
 		}
-	}, [props.match.params]);
+	}, [props.match.params.id]);
 
 	var history = useHistory();
 
@@ -71,7 +71,7 @@ const EditPart4 = (props) => {
 				testType={props.testType}
 				changesSaved={props.changesSaved}
 				docRef={props.docRef}
-				setDocRef={props.setDocRef}
+				setDocRef={props.dispatch}
 			/>
 			{props.docRef && (
 				<Link
