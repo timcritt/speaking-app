@@ -7,6 +7,7 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import TestToolBar from "components/TestCommon/TestToolBar";
 import SideBarTags from "components/common/SideBarTags";
 import PublishPart4Modal from "./PublishPart4Modal";
+import ControlledFormInput from "components/TestCommon/ControlledFormInput";
 
 //3rd party components
 import { TextareaAutosize } from "@material-ui/core";
@@ -51,9 +52,9 @@ const EditPart4 = (props) => {
 	var history = useHistory();
 
 	const handleDeleteTest = async () => {
-		//await deleteTest(props.docRef, props.testType);
-		//props.clearState();
-		//history.push(`/Edit${props.testType}/new`);
+		await deleteTest(props.docRef, props.testType);
+		props.dispatch({ type: "resetState" });
+		history.push(`/Edit${props.testType}/new`);
 	};
 
 	//console.log(props);
@@ -98,8 +99,8 @@ const EditPart4 = (props) => {
 						<div className={styles.content_container}>
 							<span className={styles.title}>FCE Part 4</span>
 
-							<TextareaAutosize
-								value={props.questionOne}
+							<ControlledFormInput
+								textValue={props.questionOne}
 								onChange={(e) =>
 									props.dispatch({
 										type: "updateQuestionOne",
@@ -107,8 +108,8 @@ const EditPart4 = (props) => {
 									})
 								}
 							/>
-							<TextareaAutosize
-								value={props.questionTwo}
+							<ControlledFormInput
+								textValue={props.questionTwo}
 								onChange={(e) =>
 									props.dispatch({
 										type: "updateQuestionTwo",
@@ -116,8 +117,8 @@ const EditPart4 = (props) => {
 									})
 								}
 							/>
-							<TextareaAutosize
-								value={props.questionThree}
+							<ControlledFormInput
+								textValue={props.questionThree}
 								onChange={(e) =>
 									props.dispatch({
 										type: "updateQuestionThree",
@@ -125,8 +126,8 @@ const EditPart4 = (props) => {
 									})
 								}
 							/>
-							<TextareaAutosize
-								value={props.questionFour}
+							<ControlledFormInput
+								textValue={props.questionFour}
 								onChange={(e) =>
 									props.dispatch({
 										type: "updateQuestionFour",
@@ -134,8 +135,8 @@ const EditPart4 = (props) => {
 									})
 								}
 							/>
-							<TextareaAutosize
-								value={props.questionFive}
+							<ControlledFormInput
+								textValue={props.questionFive}
 								onChange={(e) =>
 									props.dispatch({
 										type: "updateQuestionFive",
@@ -143,8 +144,8 @@ const EditPart4 = (props) => {
 									})
 								}
 							/>
-							<TextareaAutosize
-								value={props.questionSix}
+							<ControlledFormInput
+								textValue={props.questionSix}
 								onChange={(e) =>
 									props.dispatch({
 										type: "updateQuestionSix",
