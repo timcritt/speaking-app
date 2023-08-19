@@ -3,6 +3,16 @@ import React, { createContext, useReducer } from "react";
 export const Part4Context = createContext();
 
 export const Part4ContextProvider = ({ children }) => {
+	const initialState = {
+		questionOne: "",
+		questionTwo: "",
+		questionThree: "",
+		questionFour: "",
+		questionFive: "",
+		questionSix: "",
+		testTags: [],
+		docRef: "new",
+	};
 	const reducer = (state, action) => {
 		switch (action.type) {
 			case "updateQuestionOne":
@@ -48,7 +58,7 @@ export const Part4ContextProvider = ({ children }) => {
 			case "updateDocRef":
 				return {
 					...state,
-					...action.payload,
+					docRef: action.payload,
 				};
 			case "loadNewTest":
 				return {
@@ -56,6 +66,7 @@ export const Part4ContextProvider = ({ children }) => {
 					...action.payload,
 				};
 			case "resetState":
+				console.log("inside reset state reducer");
 				return { ...initialState };
 			case "addTestTag": {
 				return { ...state, testTags: [...state.testTags, action.payload] };
@@ -72,17 +83,6 @@ export const Part4ContextProvider = ({ children }) => {
 				return state;
 			}
 		}
-	};
-
-	const initialState = {
-		questionOne: "",
-		questionTwo: "",
-		questionThree: "",
-		questionFour: "",
-		questionFive: "",
-		questionSix: "",
-		testTags: [],
-		docRef: "new",
 	};
 
 	const [part4State, dispatch] = useReducer(reducer, { ...initialState });

@@ -12,6 +12,7 @@ const ControlledFormInput = ({
 	return (
 		<input
 			label={label}
+			key={textValue}
 			className={`input question-input ${
 				failedValidation && required_input_incomplete
 			}`}

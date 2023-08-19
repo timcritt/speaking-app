@@ -5,12 +5,10 @@ import getTest from "APIHandlers/getTest";
 //custom components
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import TestToolBar from "components/TestCommon/TestToolBar";
-import SideBarTags from "components/common/SideBarTags";
+import FormTags from "components/TestCommon/FormTags";
 import PublishPart4Modal from "./PublishPart4Modal";
 import ControlledFormInput from "components/TestCommon/ControlledFormInput";
-
-//3rd party components
-import { TextareaAutosize } from "@material-ui/core";
+import ToolTip from "components/common/ToolTip";
 
 //API handlers
 import deleteTest from "APIHandlers/deleteTest";
@@ -36,12 +34,12 @@ const EditPart4 = (props) => {
 			delete test.id;
 			test.testTags = test.tags;
 			delete test.tags;
-			props.dispatch({ type: "updateDocRef", payload: test });
-			console.log(test);
+			props.dispatch({ type: "loadNewTest", payload: test });
 		};
 
 		//checks if creating a new test rather than editing existing one
 		if (props.match.params.id === "new") {
+			console.log("reset set");
 			props.dispatch({ type: "resetState" });
 			//Only fetches new test if the one stored in state is not the one navigated to, i.e, referenced in params
 		} else if (props.match.params.id !== props.docRef) {
@@ -51,9 +49,10 @@ const EditPart4 = (props) => {
 
 	var history = useHistory();
 
-	const handleDeleteTest = async () => {
+	const handleDeleteTest = async (e) => {
+		console.log("handle delete test");
+		e.preventDefault(e);
 		await deleteTest(props.docRef, props.testType);
-		props.dispatch({ type: "resetState" });
 		history.push(`/Edit${props.testType}/new`);
 	};
 
@@ -95,10 +94,19 @@ const EditPart4 = (props) => {
 		<Fragment>
 			<FullScreen handle={handleFullScreen}>
 				<main className="holy-grail-content fade-in">
-					<div className={styles.part4_container}>
-						<div className={styles.content_container}>
-							<span className={styles.title}>FCE Part 4</span>
-
+					<form className={styles.part4_container}>
+						<h1 className={styles.title}>
+							{props.docRef ? "Edit " : "Create "}FCE Part 4
+						</h1>
+						<fieldset className={styles.content_container}>
+							<legend>
+								Questions
+								<ToolTip
+									text={
+										"Images for this part of the test are related by topic, with notable similarities but also differences. They must show people engaged in an activity or interaction"
+									}
+								/>
+							</legend>
 							<ControlledFormInput
 								textValue={props.questionOne}
 								onChange={(e) =>
@@ -153,13 +161,13 @@ const EditPart4 = (props) => {
 									})
 								}
 							/>
-						</div>
+						</fieldset>
 						{props.testTags && (
-							<SideBarTags
+							<FormTags
 								tags={props.testTags}
 								handleSetTags={props.handleSetTags}
 								title={"Topic Tags"}
-							></SideBarTags>
+							></FormTags>
 						)}
 						<div className={styles.tool_bar_container}>
 							<TestToolBar
@@ -167,7 +175,7 @@ const EditPart4 = (props) => {
 								buttons={buttons}
 							/>
 						</div>
-					</div>
+					</form>
 				</main>
 			</FullScreen>
 		</Fragment>

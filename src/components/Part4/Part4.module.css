@@ -1,57 +1,61 @@
 .part4_container {
-  background-color: white;
-  border: solid #dbdbdb 1px;
-  width: 60vw;
-  margin: auto;
+	background-color: white;
+	margin: 0 auto;
+	padding: 5vh 5vw;
+	width: 95%;
+	max-width: 65rem;
+	border-radius: 10px;
+	border: 0.1em solid #ebebeb;
 }
 
 .part4_container textarea {
-  background-color: white;
-  margin-top: 15px;
-  padding: 5px;
-  font-size: 1.5rem;
-  width: 100%;
+	background-color: white;
+	margin-top: 15px;
+	padding: 5px;
+	font-size: 1.5rem;
+	width: 100%;
 }
 
 .content_container {
-  background-color: #fafafa;
-  margin: 10px;
-  padding: 10px;
-  border: solid #dbdbdb 1px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+
+	margin: 10px;
+	padding: 10px;
 }
 
 .question_container {
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  padding: 10px;
+	display: flex;
+	flex-direction: column;
+	background-color: white;
 }
 
 .question_container span {
-  background-color: white;
-  margin-bottom: 15px;
-  padding: 5px;
-  font-size: 1.5rem;
-  width: 100%;
+	background-color: white;
+	margin-bottom: 15px;
+	padding: 5px;
+	font-size: 1.5rem;
+	width: 100%;
 }
 
 .title {
-  background: white;
-  width: 100%;
-  display: flex;
-  padding: 10px;
-  font-size: x-large;
+	background: white;
+	width: 100%;
+	display: flex;
+	padding: 10px;
+	font-size: x-large;
 }
 
 .fullscreen .part4_container {
-  background-color: red;
-  width: 100vw;
+	background-color: red;
+	width: 100vw;
 }
 
 .part4_container textarea {
-  border: 1px #d5d5d5 solid;
+	border: 1px #d5d5d5 solid;
 }
 
 .part4_container textarea:focus {
-  border: 1px #438db6 solid;
+	border: 1px #438db6 solid;
 }

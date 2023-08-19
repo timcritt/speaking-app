@@ -51,7 +51,8 @@ export default function PublishPart4Modal({
 		userId,
 	]);
 
-	const handleOpen = async () => {
+	const handleOpen = async (e) => {
+		e.preventDefault();
 		setOpen(true);
 		//const createdAt = timestamp();
 		if (complete) {

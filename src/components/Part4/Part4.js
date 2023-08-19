@@ -23,7 +23,7 @@ const Part4 = (props) => {
 			delete test.id;
 			test.testTags = test.tags;
 			delete test.tags;
-			props.dispatch({ type: "updateDocRef", payload: test });
+			props.dispatch({ type: "loadNewTest", payload: test });
 			console.log(test);
 		};
 
@@ -32,7 +32,7 @@ const Part4 = (props) => {
 		if (props.match.params.id !== props.docRef) {
 			asyncWrapper();
 		}
-	}, [props.match.params]);
+	}, [props.match.params.id]);
 
 	const handleFullScreen = useFullScreenHandle();
 
