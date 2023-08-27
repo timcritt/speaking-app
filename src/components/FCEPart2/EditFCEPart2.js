@@ -1,4 +1,4 @@
-import React, { useContext, Fragment, useState, useRef } from "react";
+import React, { useContext, Fragment, useState } from "react";
 import SideBarTags from "components/common/SideBarTags";
 import ExamPicture from "components/FCEPart2/ExamPicture";
 import ImageDeleteBtn from "components/FCEPart2/ImageDeleteBtn";

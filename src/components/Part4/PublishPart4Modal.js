@@ -1,96 +1,112 @@
-import React, { useState, useEffect, Fragment, useContext } from "react";
-import Modal from "components/common/Modal";
-import PublishIcon from "@material-ui/icons/Publish";
-import SaveOutlinedIcon from "@material-ui/icons/SaveOutlined";
-import updatePart4 from "APIHandlers/updatePart4";
-import { firebaseAuth } from "context/AuthProvider";
+import React, { useState, Fragment, useContext } from "react";
 import { useHistory } from "react-router-dom";
+
+//custom components
+import Modal from "components/common/Modal";
+import SaveButton from "components/TestCommon/SaveButton";
+
+//API
+import updatePart4 from "APIHandlers/updatePart4";
 import addPart4 from "APIHandlers/addPart4";
 
+//Context
+import { firebaseAuth } from "context/AuthProvider";
+import { Part4Context } from "context/Part4Context";
+import { LinearProgress } from "@mui/material";
+
 export default function PublishPart4Modal({
-	questionOne,
-	questionTwo,
-	questionThree,
-	questionFour,
-	questionFive,
-	questionSix,
-	tags,
+	setInputStatus,
 	testType,
 	changesSaved,
-	docRef,
-	setDocRef,
 }) {
 	const [open, setOpen] = useState(false);
-	const [complete, setComplete] = useState(false);
 	const { userId } = useContext(firebaseAuth);
+	const context = useContext(Part4Context);
+	const [allInputsCompleted, setAllInputsCompleted] = useState(false);
 	const history = useHistory();
+	const [uploadComplete, setUploadComplete] = useState(false);
 
-	// var history = useHistory();
+	const validateInputs = () => {
+		//create the new state based on current inputs
+		var newValidationState = {
+			questionOneFailedValidation: !context.questionOne.length > 0,
+			questionTwoFailedValidation: !context.questionTwo.length > 0,
+			questionThreeFailedValidation: !context.questionThree.length > 0,
+			questionFourFailedValidation: !context.questionFour.length > 0,
+			questionFiveFailedValidation: !context.questionFive.length > 0,
+			topicTagsFailedValidation: !context.testTags.length > 0,
+		};
 
-	useEffect(() => {
-		if (
-			tags.length > 0 &&
-			questionOne &&
-			questionTwo &&
-			questionThree &&
-			questionFour &&
-			userId
-		) {
-			setComplete(true);
+		setInputStatus((prevState) => {
+			return {
+				...prevState,
+				...newValidationState,
+			};
+		});
+
+		const allValidated = Object.values(newValidationState).every((item) => {
+			if (item === false) {
+				return true;
+			}
+		});
+
+		//check if all input validation checks have passed
+		if (allValidated) {
+			setAllInputsCompleted(true);
+			return true;
 		} else {
-			setComplete(false);
+			setAllInputsCompleted(false);
+			return false;
 		}
-	}, [
-		tags.length,
-		questionOne,
-		questionTwo,
-		questionThree,
-		questionFour,
-		questionFive,
-		questionSix,
-		userId,
-	]);
+	};
 
 	const handleOpen = async (e) => {
 		e.preventDefault();
+
+		//checks all required inputs have been completed by user
+		//returns value rather than save as state value because the next if statement depends on this state,
+		//and the calling function would have a state state value due to closure
+		const inputsValid = validateInputs();
+
 		setOpen(true);
-		//const createdAt = timestamp();
-		if (complete) {
-			if (docRef !== "new") {
+
+		if (inputsValid) {
+			console.log("inputs are valid");
+			if (context.docRef !== "new") {
 				//update fce part 4
 
 				updatePart4(
-					questionOne,
-					questionTwo,
-					questionThree,
-					questionFour,
-					questionFive,
-					questionSix,
-					docRef,
-					tags,
+					context.questionOne,
+					context.questionTwo,
+					context.questionThree,
+					context.questionFour,
+					context.questionFive,
+					context.questionSix,
+					context.docRef,
+					context.testTags,
 					testType
-				);
+				).then(() => {
+					setUploadComplete(true);
+				});
 			} else {
 				//upload new Part 4 - only reached if all fields are complete and docRef doesn't exist - i.e., the test has just been created
-
+				console.log("about to addPart4");
 				addPart4(
-					questionOne,
-					questionTwo,
-					questionThree,
-					questionFour,
-					questionFive,
-					questionSix,
-					tags,
+					context.questionOne,
+					context.questionTwo,
+					context.questionThree,
+					context.questionFour,
+					context.questionFive,
+					context.questionSix,
+					context.testTags,
 					testType,
 					userId
 				).then((response) => {
-					console.log(response);
-					setDocRef({ type: "updateDocRef", payload: response.id });
-					history.push(`/Edit${testType}/${response.id}`);
+					setUploadComplete(true);
+					context.dispatch({ type: "updateDocRef", payload: response.id });
+					history.push(`/${testType}/${response.id}`);
 				});
 			}
-		} else {
-			setOpen(true);
 		}
 	};
 
@@ -101,16 +117,19 @@ export default function PublishPart4Modal({
 	const body = (
 		<div>
 			<div>
-				{complete ? (
-					<h3>Published!</h3>
+				{allInputsCompleted ? (
+					uploadComplete ? (
+						<h3>Published!</h3>
+					) : (
+						<LinearProgress />
+					)
 				) : (
 					<h3>
-						Oops! You forgot to enter at least 4 questions and add at least one
-						tag!
+						Oops! You forgot to enter at least 5 questions and select at least
+						one tag!
 					</h3>
 				)}
 			</div>
-			<ul></ul>
 			<div className="center">
 				<button onClick={handleClose}>ok</button>
 			</div>
@@ -119,13 +138,8 @@ export default function PublishPart4Modal({
 
 	return (
 		<Fragment>
-			<button
-				className="tool-bar-btn"
-				onClick={handleOpen}
-				disabled={changesSaved}
-			>
-				{docRef ? <SaveOutlinedIcon /> : <PublishIcon />}
-			</button>
+			<SaveButton handleOpen={handleOpen} changesSaved={changesSaved} />
+
 			{open && (
 				<Modal
 					modalOpen={open}

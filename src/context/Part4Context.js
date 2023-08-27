@@ -66,7 +66,6 @@ export const Part4ContextProvider = ({ children }) => {
 					...action.payload,
 				};
 			case "resetState":
-				console.log("inside reset state reducer");
 				return { ...initialState };
 			case "addTestTag": {
 				return { ...state, testTags: [...state.testTags, action.payload] };

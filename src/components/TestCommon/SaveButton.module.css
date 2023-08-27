@@ -1,0 +1,17 @@
+.save_button {
+	background-color: #66b365;
+	font-size: 14pt;
+	padding: 10px 25px;
+	border-radius: 5px;
+	border: solid 1px var(--main-border-color);
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	cursor: pointer;
+	color: white;
+	transition: 0.125s ease-in-out;
+}
+
+.save_button:hover {
+	background-color: #58c156;
+}

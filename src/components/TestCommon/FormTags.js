@@ -7,12 +7,7 @@ import ToolTip from "components/common/ToolTip";
 //styles
 import styles from "./FormTags.module.css";
 
-const FormTags = ({
-	tags,
-	handleSetTags,
-	failedValidation,
-	required_input_incomplete_class,
-}) => {
+const FormTags = ({ tags, handleSetTags, failedValidation }) => {
 	return (
 		<fieldset>
 			<legend>
@@ -25,7 +20,7 @@ const FormTags = ({
 			</legend>
 			<div
 				className={` ${styles.container} ${
-					failedValidation && required_input_incomplete_class
+					failedValidation && styles.required_input_incomplete_class
 				}`}
 			>
 				<Tags tags={tags ? tags : ""} handleSetTags={handleSetTags} />

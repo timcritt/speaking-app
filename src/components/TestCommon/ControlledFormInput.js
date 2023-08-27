@@ -1,9 +1,11 @@
 import React from "react";
 
+//styles
+import styles from "./ControlledFormInput.module.css";
+
 const ControlledFormInput = ({
 	label,
 	failedValidation,
-	required_input_incomplete,
 	placeholder,
 	onChange,
 	required,
@@ -12,11 +14,10 @@ const ControlledFormInput = ({
 	return (
 		<input
 			label={label}
-			key={textValue}
 			className={`input question-input ${
-				failedValidation && required_input_incomplete
+				failedValidation && styles.failed_validation
 			}`}
-			defaultValue={textValue}
+			value={textValue}
 			placeholder={placeholder}
 			onChange={onChange}
 			required={required}

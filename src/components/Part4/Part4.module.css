@@ -20,8 +20,6 @@
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
-
-	margin: 10px;
 	padding: 10px;
 }
 
@@ -58,4 +56,9 @@
 
 .part4_container textarea:focus {
 	border: 1px #438db6 solid;
+}
+
+.button_container {
+	display: flex;
+	justify-content: center;
 }
