@@ -13,26 +13,39 @@ import getTest from "APIHandlers/getTest";
 //styles
 import styles from "./Part4.module.css";
 
-const Part4 = (props) => {
+const Part4 = ({
+	setEditMode,
+	docRef,
+	questionOne,
+	questionTwo,
+	questionThree,
+	questionFour,
+	questionFive,
+	questionSix,
+	creatorId,
+	time,
+	testTags,
+	dispatch,
+}) => {
 	//load test into state
 	useEffect(() => {
 		const asyncWrapper = async () => {
-			const test = await getTest("FCEPart4", props.match.params.id);
+			const test = await getTest("FCEPart4", docRef);
 			//change object shape to match state shape before dispatching
 			test.docRef = test.id;
 			delete test.id;
 			test.testTags = test.tags;
 			delete test.tags;
-			props.dispatch({ type: "loadNewTest", payload: test });
+			dispatch({ type: "loadNewTest", payload: test });
 			console.log(test);
 		};
 
 		//Only fetches new test if the one stored in state is not the one navigated to, i.e, referenced in params
 		//Reduces redundant API calls and rerenders when navigating between view test and edit test
-		if (props.match.params.id !== props.docRef) {
+		if (docRef) {
 			asyncWrapper();
 		}
-	}, [props.match.params.id]);
+	}, [docRef]);
 
 	const handleFullScreen = useFullScreenHandle();
 
@@ -45,27 +58,27 @@ const Part4 = (props) => {
 							<span className={styles.title}>FCE Part 4</span>
 
 							<div className={styles.question_container}>
-								<span>{props.questionOne}</span>
-								<span>{props.questionTwo}</span>
-								<span>{props.questionThree}</span>
-								<span>{props.questionFour}</span>
-								{props.questionFive && <span>{props.questionFive}</span>}
-								{props.questionSix && <span>{props.questionSix}</span>}
+								<span>{questionOne}</span>
+								<span>{questionTwo}</span>
+								<span>{questionThree}</span>
+								<span>{questionFour}</span>
+								{questionFive && <span>{questionFive}</span>}
+								{questionSix && <span>{questionSix}</span>}
 							</div>
-
-							{props.docRef && <GrabSlider testTags={props.testTags} />}
 						</div>
+						{docRef && <GrabSlider testTags={testTags} />}
 						<div className={styles.tool_bar_container}>
 							<TestToolBar
-								creatorId={props.creatorId ? props.creatorId : "1"}
-								timer={<Timer time={props.time} />}
+								creatorId={creatorId ? creatorId : "1"}
+								timer={<Timer time={time} />}
 								buttons={
 									<ToolBarButtonsView
-										userId={props.creatorId}
-										creatorId={props.creatorId}
+										userId={creatorId}
+										creatorId={creatorId}
 										testType={"FCEPart4"}
-										docRef={props.match.params.id}
+										docRef={docRef}
 										handleFullScreen={handleFullScreen}
+										handleClickEditButton={setEditMode}
 									/>
 								}
 							/>

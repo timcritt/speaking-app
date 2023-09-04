@@ -1,24 +1,49 @@
-.modal {
+@keyframes moveIn {
+	0% {
+		transform: translateY(100vh) scale(10%, 10%);
+		opacity: 0;
+	}
+	95% {
+		opacity: 100%;
+	}
+}
+
+.modal_overlay {
 	position: fixed;
-	inset: 0; /* inset sets all 4 values (top right bottom left) much like how we set padding, margin etc., */
+	inset: 0;
 	background-color: rgba(0, 0, 0, 0.6);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	transition: all 0.3s ease-in-out;
+	transition: all 0.3s linear;
 	overflow: hidden;
-	z-index: 999;
-	padding: 40px 20px 20px;
+	z-index: 996;
+}
+
+.container {
+	animation: moveIn 0.4s;
+	animation-timing-function: linear;
+}
+
+.modal_header {
+	display: flex;
+	width: 100%;
+	justify-content: center;
 }
 
 .modal_content {
-	width: 70%;
-	height: 70%;
 	background-color: #282c34;
 	color: #fff;
 	display: flex;
 	align-items: center;
+	flex-direction: column;
 	justify-content: center;
-	font-size: 2rem;
+}
+.close_button {
+	background-color: red;
+	background-color: white;
+	border: none;
+	display: flex;
+	cursor: pointer;
 }

@@ -34,7 +34,7 @@ const EditPart4 = (props) => {
 	//Get a test from the database according to the params and set state
 	useEffect(() => {
 		const asyncWrapper = async () => {
-			let test = await getTest("FCEPart4", props.match.params.id);
+			let test = await getTest("FCEPart4", props.docRef);
 			test.docRef = test.id;
 			delete test.id;
 			test.testTags = test.tags;
@@ -43,13 +43,17 @@ const EditPart4 = (props) => {
 		};
 
 		//checks if creating a new test rather than editing existing one
-		if (props.match.params.id === "new") {
+		if (props.docRef === "new") {
 			props.dispatch({ type: "resetState" });
 			//Only fetches new test if the one stored in state is not the one navigated to, i.e, referenced in params
-		} else if (props.match.params.id !== props.docRef) {
+		} else {
 			asyncWrapper();
 		}
-	}, [props.match.params.id]);
+
+		return () => {
+			props.setEditMode(false);
+		};
+	}, [props.docRef]);
 
 	var history = useHistory();
 
@@ -193,7 +197,11 @@ const EditPart4 = (props) => {
 							{/* only displays if the test has been saved */}
 							{props.docRef !== "new" && (
 								<>
-									<ViewButton testType={"FCEPart4"} docRef={props.docRef} />
+									<ViewButton
+										testType={"FCEPart4"}
+										docRef={props.docRef}
+										handleClickViewButton={props.setEditMode}
+									/>
 									<DeleteButton handleDelete={(e) => handleDeleteTest(e)} />
 								</>
 							)}

@@ -1,56 +1,52 @@
 .fullscreen {
-  align-self: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  padding: 20px; 
-  width:100%;
-  height: 100%;
+	align-self: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	width: 100%;
+	height: 100%;
 }
 
 .fullscreen-enabled .holy-grail-content {
-  box-sizing: border-box;
-  min-width: 100%;
+	box-sizing: border-box;
+	min-width: 100%;
 }
 
 .fullscreen-enabled .part2-main-row {
-  background-color: white;
-  box-sizing: border-box;
-  min-width: 100%;
-  height: 100%;
+	background-color: white;
+	box-sizing: border-box;
+	min-width: 100%;
+	height: 100%;
 }
 
-
 .fullscreen-enabled .question-input {
-  width: 100%;
-  font-size: 30pt;
+	width: 100%;
+	font-size: 30pt;
 }
 
 .fullscreen-enabled .timer-container {
-  font-size: 36pt;
+	font-size: 36pt;
 }
 .close-fullscreen-btn {
-  display: none;
-  margin-right: 20px;
-  align-self: flex-end;
+	display: none;
+	margin-right: 20px;
+	align-self: flex-end;
 }
 
 .close-fullscreen-btn:hover {
-  color: red;
+	color: red;
 }
 
 .fullscreen-enabled .show-on-fullscreen {
-  display: block;
+	display: block;
 }
 .fullscreen-enabled .close-fullscreen-btn {
-  display: inline-flex;
-  margin: auto 15px auto 0px;
-  size: 100pt;
-  
-  
+	display: inline-flex;
+	margin: auto 15px auto 0px;
+	size: 100pt;
 }
 
 .fullscreen-enabled .hide-on-fullscreen {
-  display: none;
+	display: none;
 }

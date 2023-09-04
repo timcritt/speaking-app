@@ -1,75 +1,81 @@
 .container {
-  color: #9d9c9c;
-  text-align: center;
-  font-size: 1.6em;
-  font-family: digital-7;
-  grid-column-start: 3;
+	color: #9d9c9c;
+	text-align: center;
+	font-size: 1.6em;
+	font-family: digital-7;
+	grid-column-start: 3;
+	display: flex;
+	align-items: center;
 }
 
 .button_container {
-  display: flex;
-  align-content: center;
-  align-items: center;
+	display: flex;
+	align-content: center;
+	align-items: center;
 }
 
 .time_display {
-  padding: 0 15px;
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: center;
+	padding: 0 15px;
+	display: inline-flex;
+	flex-direction: column;
+	justify-content: center;
 }
 
 .btn {
-  padding: 0.2em 0.2em 0em 0.2em;
-  width: 4em;
-  margin: 2px;
-  color: #dbdbdb;
-  cursor: pointer;
-  border: solid #dbdbdb 2px;
-  background-color: transparent;
-  transition: all 0.25s ease-out;
+	padding: 0.2em 0.2em 0em 0.2em;
+	width: 4em;
+	margin: 2px;
+	color: #dbdbdb;
+	cursor: pointer;
+	border: solid #dbdbdb 2px;
+	background-color: transparent;
+	transition: all 0.25s ease-out;
 }
 
 .btn:hover {
-  color: grey;
-  border-color: grey;
+	color: grey;
+	border-color: grey;
 }
 
 .start:hover {
-  color: green;
+	color: green;
 }
 
 .start:focus {
-  outline: none;
+	outline: none;
 }
 
 .stop:hover {
-  color: #c82333;
+	color: #c82333;
 }
 
 .stop:focus {
-  outline: none;
+	outline: none;
 }
 
 .stop:disabled {
-  color: #dbdbdb;
-  cursor: default;
+	color: #dbdbdb;
+	cursor: default;
 }
 
 .stop:disabled:hover {
-  color: #dbdbdb;
-  border-color: #dbdbdb;
-  cursor: default;
+	color: #dbdbdb;
+	border-color: #dbdbdb;
+	cursor: default;
 }
 
 .reset {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .reset:hover {
-  color: blue;
+	color: blue;
 }
 
 .reset:focus {
-  outline: none;
+	outline: none;
+}
+
+:fullscreen .time_display {
+	font-size: 3rem;
 }

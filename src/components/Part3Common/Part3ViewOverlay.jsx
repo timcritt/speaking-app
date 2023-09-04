@@ -14,6 +14,7 @@ import Part3Lines from "components/Part3Common/Part3Lines";
 import TestToolBar from "components/TestCommon/TestToolBar";
 import ToolBarButtonsView from "components/TestCommon/ToolBarButtonsView";
 import Timer from "components/common/Timer";
+import GrabSlider from "components/common/GrabSlider/GrabSlider";
 
 import Part2QuestionRow from "components/TestCommon/Part2QuestionRow";
 
@@ -22,11 +23,11 @@ import styles from "./Part3.module.css";
 //hooks
 // import useToggleShortTurn from 'hooks/useToggleShortTurn';
 
-const Part3 = (props) => {
+const Part3ViewOverlay = ({ part3Context, testId, testType, setEditMode }) => {
 	const { userId } = useContext(firebaseAuth);
 	const handleFullScreen = useFullScreenHandle();
-	const context = useContext(props.part3Context);
-	const [lineClass, setLineClass] = useState("");
+	const context = useContext(part3Context);
+	const [lineClass, setLineClass] = useState("line-hidden");
 	const [windowDimensions, setWindowDimensions] = useState({
 		height: null,
 		width: null,
@@ -51,7 +52,7 @@ const Part3 = (props) => {
 		clearTimeout(timeout.current);
 		timeout.current = setTimeout(() => {
 			handleResize();
-		}, 200);
+		}, 300);
 	};
 
 	const handleResize = useCallback(() => {
@@ -62,12 +63,39 @@ const Part3 = (props) => {
 		showLines();
 	}, []);
 
+	const handleEndAnimation = (e) => {
+		if (e.target !== e.currentTarget) {
+			return;
+		}
+		console.log("animation ended");
+		handleResize();
+	};
+
+	useEffect(() => {
+		const animated = document.getElementsByClassName("animated");
+
+		if (animated.length > 0) {
+			animated[0].addEventListener("animationend", (e) =>
+				handleEndAnimation(e)
+			);
+		}
+
+		return () => {
+			if (animated.length > 0) {
+				animated[0].removeEventListener("animationend", function (e) {
+					handleEndAnimation(e);
+				});
+			}
+		};
+	});
+
 	useEffect(() => {
 		//instantly hides the lines on window resize to prevent ugly jumping of lines between positions.
 		window.addEventListener("resize", hideLines);
 		//listens for window resize and redraws the lines between text areas after a set time. Sets lines to visible when done.
 		window.addEventListener("resize", handleDebounce);
 		window.addEventListener("fullscreenchange", handleResize);
+
 		//cleanup function - removes listeners on unmount
 		return () => {
 			window.removeEventListener("resize", hideLines);
@@ -79,8 +107,8 @@ const Part3 = (props) => {
 
 	useEffect(() => {
 		//sends the id of the current test to be displayed to the FCEPart2 context
-		if (props.match.params.id !== "new") {
-			context.setDocRef(props.match.params.id);
+		if (testId !== "new") {
+			context.setDocRef(testId);
 		} else {
 			//clears context state of previously viewed Test. displays blank test to be created by user.
 			// context.clearState();
@@ -89,13 +117,13 @@ const Part3 = (props) => {
 		if (context.hasFetched) {
 			handleResize();
 		}
-	}, [context, context.hasFetched, handleResize, props.match.params.id]);
+	}, [context, context.hasFetched, handleResize, testId]);
 
 	if (context.hasFetched) {
 		return (
 			<Fragment>
 				<FullScreen handle={handleFullScreen}>
-					<main className="holy-grail-content fade-in">
+					<main className="holy-grail-content fade-in animated">
 						<div className={styles.container}>
 							<div className={`${styles.grid_container} part3-grid-container`}>
 								<div className={`${styles.top_left}`}>
@@ -146,6 +174,11 @@ const Part3 = (props) => {
 									centre={styles.centre}
 								/>
 							</div>
+							<div className={styles.test_tag_container}>
+								{context.hasFetched && (
+									<GrabSlider testTags={context.testTags} />
+								)}
+							</div>
 							<div className={styles.tool_bar_container}>
 								<TestToolBar
 									creatorId={context.creatorId}
@@ -154,9 +187,10 @@ const Part3 = (props) => {
 										<ToolBarButtonsView
 											userId={userId}
 											creatorId={context.creatorId}
-											testType={props.testType}
+											testType={testType}
 											docRef={context.docRef}
 											handleFullScreen={handleFullScreen}
+											handleClickEditButton={() => setEditMode(true)}
 										/>
 									}
 								/>
@@ -175,4 +209,4 @@ const Part3 = (props) => {
 	}
 };
 
-export default Part3;
+export default Part3ViewOverlay;

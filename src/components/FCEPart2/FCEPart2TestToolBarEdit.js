@@ -1,21 +1,28 @@
 import React, { Fragment } from "react";
 import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
 import PublishWarningModal from "components/FCEPart2/PublishWarningModal";
-import { Link } from "react-router-dom";
 import DeleteButton from "components/common/DeleteButton";
 import deleteTest from "APIHandlers/deleteTest";
 import { useHistory } from "react-router-dom";
 import { FCEPart2 } from "APIHandlers/firebaseConsts";
 
+import ViewButton from "components/TestCommon/ViewButton";
+
 import styles from "./FCEPart2TestToolBarEdit.module.css";
 
-const TestToolBarEdit = ({ context, validateInputs, setInputStatus }) => {
-	var history = useHistory();
-
+const TestToolBarEdit = ({
+	testType,
+	docRef,
+	validateInputs,
+	setInputStatus,
+	handleClickViewButton,
+	closeModal,
+	clearState,
+}) => {
 	const handleDeleteTest = async (e) => {
-		await deleteTest(context.docRef, FCEPart2);
-		context.clearState();
-		history.push("/EditFCEPart2/new");
+		await deleteTest(docRef, testType);
+		clearState();
+		closeModal();
 	};
 
 	return (
@@ -24,22 +31,13 @@ const TestToolBarEdit = ({ context, validateInputs, setInputStatus }) => {
 				validateInputs={validateInputs}
 				setInputStatus={setInputStatus}
 			/>
-			{context.docRef && (
+			{docRef && (
 				<Fragment>
-					<Link
-						to={{
-							pathname: `/FCEPart2/${context.docRef}`,
-						}}
-					>
-						<button className={styles.view_button}>
-							view
-							<VisibilityOutlinedIcon />
-						</button>
-					</Link>
+					<ViewButton handleClickViewButton={handleClickViewButton} />
 					<DeleteButton
-						itemId={context.docRef}
+						itemId={docRef}
 						deleteItemType={"test"}
-						firestoreCollection={FCEPart2}
+						firestoreCollection={testType}
 						iconColour={"white"}
 						handleDelete={handleDeleteTest}
 					/>

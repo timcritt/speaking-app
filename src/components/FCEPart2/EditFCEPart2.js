@@ -1,18 +1,26 @@
-import React, { useContext, Fragment, useState } from "react";
-import SideBarTags from "components/common/SideBarTags";
+import React, { useContext, Fragment, useState, useEffect } from "react";
+import { Prompt } from "react-router-dom";
+
+//custom components
+import FormTags from "components/TestCommon/FormTags";
+import ToolTip from "components/common/ToolTip";
 import ExamPicture from "components/FCEPart2/ExamPicture";
 import ImageDeleteBtn from "components/FCEPart2/ImageDeleteBtn";
 import SimpleModal from "components/common/SimpleModal";
-import LinearProgress from "@material-ui/core/LinearProgress";
-import { FCEPart2Context } from "context/FCEPart2Context";
 import FCEPart2TestToolBarEdit from "components/FCEPart2/FCEPart2TestToolBarEdit";
-import { Prompt } from "react-router-dom";
+
+//3rd party components
+import LinearProgress from "@material-ui/core/LinearProgress";
+
+//context
+import { FCEPart2Context } from "context/FCEPart2Context";
+
+//custom hooks
 import useLoadTestIntoComponent from "hooks/useLoadTestIntoComponent";
-import ToolTip from "components/common/ToolTip";
 
-import FormTags from "components/TestCommon/FormTags";
-
+//styles
 import styles from "./EditFCEPart2.module.css";
+import { FCEPart2 } from "APIHandlers/firebaseConsts";
 
 const EditFCEPart2 = (props) => {
 	const context = useContext(FCEPart2Context);
@@ -31,8 +39,14 @@ const EditFCEPart2 = (props) => {
 		context.fetchTest,
 		context.unsavedChanges,
 		context.setUnsavedChanges,
-		props.match.params.id
+		props.docRef
 	);
+
+	useEffect(() => {
+		return () => {
+			props.setEditMode(false);
+		};
+	}, []);
 
 	if (context.hasFetched) {
 		return (
@@ -163,8 +177,12 @@ const EditFCEPart2 = (props) => {
 						/>
 
 						<FCEPart2TestToolBarEdit
-							context={context}
+							docRef={context.docRef}
+							clearState={context.clearState}
 							setInputStatus={setInputStatus}
+							handleClickViewButton={() => props.setEditMode(false)}
+							testType={FCEPart2}
+							handleShowModal={() => props.handleShowModal(false)}
 						/>
 					</form>
 				</main>

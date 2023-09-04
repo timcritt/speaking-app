@@ -8,7 +8,7 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 //custom components
 import TestToolBar from "components/TestCommon/TestToolBar";
 import Part2QuestionRow from "components/TestCommon/Part2QuestionRow";
-import ToolBarButtonsFCEPart2 from "../TestCommon/ToolBarButtonsView";
+import ToolBarButtonsView from "../TestCommon/ToolBarButtonsView";
 import Timer from "components/common/Timer";
 import GrabSlider from "components/common/GrabSlider/GrabSlider";
 //constants
@@ -19,7 +19,7 @@ import useLoadTestIntoComponent from "hooks/useLoadTestIntoComponent";
 //CSS Modules
 import styles from "./FCEPart2View.module.css";
 
-const FCEPart2View = (props) => {
+const FCEPart2ViewOverlay = ({ docRef, setEditMode }) => {
 	//max time for short and long terms. Passed down to question row so that flipping it results in time change
 	const shortTime = "2000";
 	const longTime = "6000";
@@ -35,16 +35,17 @@ const FCEPart2View = (props) => {
 		context.fetchTest,
 		context.unsavedChanges,
 		context.setUnsavedChanges,
-		props.match.params.id
+		docRef
 	);
 
 	const buttons = (
-		<ToolBarButtonsFCEPart2
+		<ToolBarButtonsView
 			userId={userId}
 			creatorId={context.creatorId}
 			testType={FCEPart2}
 			docRef={context.docRef}
 			handleFullScreen={handleFullScreen}
+			handleClickEditButton={() => setEditMode(true)}
 		/>
 	);
 
@@ -52,37 +53,33 @@ const FCEPart2View = (props) => {
 		return (
 			<Fragment>
 				<FullScreen handle={handleFullScreen}>
-					<main className="holy-grail-content fade-in">
-						<div className={styles.container}>
-							<div className={styles.question_row}>
-								<Part2QuestionRow
-									longTurnQuestions={[context.questionOne]}
-									shortTurnQuestion={context.shortTurnQuestion}
-									setTime={setTime}
-									longTime={longTime}
-									shortTime={shortTime}
-								/>
-							</div>
-							<div className={styles.left_image_container}>
-								<img src={context.imageOneUrl} alt="could not load" />
-							</div>
-							<div className={styles.right_image_container}>
-								<img src={context.imageTwoUrl} alt="could not load" />
-							</div>
-							<div className={styles.test_tag_container}>
-								{context.hasFetched && (
-									<GrabSlider testTags={context.testTags} />
-								)}
-							</div>
-							<div className={styles.tool_bar_container}>
-								<TestToolBar
-									creatorId={context.creatorId}
-									timer={<Timer time={time} />}
-									buttons={buttons}
-								/>
-							</div>
+					<div className={styles.container}>
+						<div className={styles.question_row}>
+							<Part2QuestionRow
+								longTurnQuestions={[context.questionOne]}
+								shortTurnQuestion={context.shortTurnQuestion}
+								setTime={setTime}
+								longTime={longTime}
+								shortTime={shortTime}
+							/>
 						</div>
-					</main>
+						<div className={styles.left_image_container}>
+							<img src={context.imageOneUrl} alt="could not load" />
+						</div>
+						<div className={styles.right_image_container}>
+							<img src={context.imageTwoUrl} alt="could not load" />
+						</div>
+						<div className={styles.test_tag_container}>
+							{context.hasFetched && <GrabSlider testTags={context.testTags} />}
+						</div>
+						<div className={styles.tool_bar_container}>
+							<TestToolBar
+								creatorId={context.creatorId}
+								timer={<Timer time={time} />}
+								buttons={buttons}
+							/>
+						</div>
+					</div>
 				</FullScreen>
 			</Fragment>
 		);
@@ -95,4 +92,4 @@ const FCEPart2View = (props) => {
 	}
 };
 
-export default FCEPart2View;
+export default FCEPart2ViewOverlay;

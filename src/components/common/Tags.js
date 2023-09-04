@@ -23,6 +23,11 @@ const tagList = [
 	"places",
 	"history",
 	"fame",
+	"the_past",
+	"the_future",
+	"music",
+	"film",
+	"art",
 ];
 
 const Tags = ({ tags, handleSetTags }) => {

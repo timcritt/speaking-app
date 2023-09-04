@@ -5,14 +5,11 @@ import DashBoardButton from "components/common/DashBoardButton";
 import getUserDetails from "APIHandlers/getUserDetails";
 import profilePlaceHolder from "img/profile-placeholder.png";
 import { firebaseAuth } from "context/AuthProvider";
-import TestModal from "components/common/TestModal";
 
 const CreatorContent = () => {
 	const creatorId = useParams().userId;
 	const [creatorDetails, setCreatorDetails] = useState(null);
 	const { userId } = useContext(firebaseAuth);
-
-	const [isOpen, setIsOpen] = useState(true);
 
 	useEffect(() => {
 		let isLoaded = true;
@@ -76,7 +73,6 @@ const CreatorContent = () => {
 					)}
 				</div>
 			</div>
-			<TestModal isOpen={isOpen} handleClose={() => setIsOpen(false)} />
 		</main>
 	);
 };

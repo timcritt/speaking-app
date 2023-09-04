@@ -1,108 +1,109 @@
 .container {
-  grid-template-areas:
-    'content'
-    'tool-bar';
-  grid-template-rows: auto auto auto;
-  grid-template-columns: 1fr;
-  border: 1px solid #e4e4e4;
-  max-width: 95vw;
-  margin: 0 auto;
-  background-color: white;
+	grid-template-areas:
+		"content"
+		"tool-bar";
+	grid-template-rows: auto auto auto;
+	grid-template-columns: 1fr;
+	border: 1px solid #e4e4e4;
+	max-width: 95vw;
+	margin: 0 auto;
+	background-color: white;
 }
 
 .grid_container {
-  grid-area: content;
-  display: grid;
-  grid-template-areas:
-    'top-left centre top-right'
-    '   .     centre     .    '
-    'bottom-left centre bottom-right'
-    '   .   bottom-centre   .  ';
+	grid-area: content;
+	display: grid;
+	grid-template-areas:
+		"top-left centre top-right"
+		"   .     centre     .    "
+		"bottom-left centre bottom-right"
+		"   .   bottom-centre   .  ";
 
-  grid-template-rows: 1fr 1fr 1fr 1fr;
-  grid-template-columns: 1fr 1fr 1fr;
-  min-height: 50vh;
-  max-height: 75vh;
-  position: relative;
+	grid-template-rows: 1fr 1fr 1fr 1fr;
+	grid-template-columns: 1fr 1fr 1fr;
+	min-height: 50vh;
+	max-height: 75vh;
+	position: relative;
 }
 
 .top_left {
-  grid-area: top-left;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	grid-area: top-left;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 .top_right {
-  grid-area: top-right;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	grid-area: top-right;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .centre {
-  grid-area: centre;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  align-self: center;
-  margin: 0 auto;
-  font-size: 3.25vmin;
+	grid-area: centre;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	align-self: center;
+	margin: 0 auto;
+	font-size: 3.25vmin;
 }
 
 .centre * {
-  text-align: center;
+	text-align: center;
 }
 
 .bottom_left {
-  grid-area: bottom-left;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	grid-area: bottom-left;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .bottom_right {
-  grid-area: bottom-right;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	grid-area: bottom-right;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 .bottom_centre {
-  grid-area: bottom-centre;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	grid-area: bottom-centre;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .tool_bar_container {
-  grid-area: tool-bar;
+	grid-area: tool-bar;
 }
 
 .option_container {
-  padding: 3.5vmin;
-  width: 75%;
-  height: 75%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #fafafa;
-  border: 1px solid #dbdbdb;
-  border-radius: 5px;
-  text-align: center;
-  z-index: 2;
-  font-size: 3vmin;
+	padding: 3.5vmin;
+	width: 75%;
+	height: 75%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #fafafa;
+	border: 1px solid #dbdbdb;
+	border-radius: 5px;
+	text-align: center;
+	z-index: 2;
+	font-size: 3vmin;
+	color: black;
 }
 
 textarea {
-  resize: none;
-  border: none;
-  background-color: transparent;
+	resize: none;
+	border: none;
+	background-color: transparent;
 }
 
 textarea:focus {
-  background-color: rgb(153, 193, 245);
+	background-color: rgb(153, 193, 245);
 }
 
 :fullscreen .grid_container {
-  height: 100vh;
+	height: 100vh;
 }
