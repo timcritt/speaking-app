@@ -14,7 +14,6 @@ import styles from "./ToolBarButtons.module.css";
 const ToolBarButtonsView = ({
 	userId,
 	creatorId,
-	testType,
 	docRef,
 	handleFullScreen,
 	handleClickEditButton,
@@ -22,7 +21,7 @@ const ToolBarButtonsView = ({
 	const handleClickButton = (e) => {
 		console.log("clicked edit");
 		e.preventDefault();
-		handleClickEditButton();
+		handleClickEditButton(true);
 	};
 
 	return (

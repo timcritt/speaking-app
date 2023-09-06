@@ -7,7 +7,8 @@ import ToolTip from "components/common/ToolTip";
 import ExamPicture from "components/FCEPart2/ExamPicture";
 import ImageDeleteBtn from "components/FCEPart2/ImageDeleteBtn";
 import SimpleModal from "components/common/SimpleModal";
-import FCEPart2TestToolBarEdit from "components/FCEPart2/FCEPart2TestToolBarEdit";
+import TestToolBarEdit from "components/FCEPart2/TestToolBarEdit";
+import PublishWarningModal from "components/FCEPart2/FCEPart2PublishModalWithButton ";
 
 //3rd party components
 import LinearProgress from "@material-ui/core/LinearProgress";
@@ -176,13 +177,16 @@ const EditFCEPart2 = (props) => {
 							failedValidation={inputStatus.topicTagsFailedValidation}
 						/>
 
-						<FCEPart2TestToolBarEdit
+						<TestToolBarEdit
 							docRef={context.docRef}
 							clearState={context.clearState}
 							setInputStatus={setInputStatus}
 							handleClickViewButton={() => props.setEditMode(false)}
 							testType={FCEPart2}
 							handleShowModal={() => props.handleShowModal(false)}
+							publishButtonRenderProp={() => (
+								<PublishWarningModal setInputStatus={setInputStatus} />
+							)}
 						/>
 					</form>
 				</main>

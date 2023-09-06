@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 
+//context
 import { firebaseAuth } from "../../context/AuthProvider";
 
 //3rd party components

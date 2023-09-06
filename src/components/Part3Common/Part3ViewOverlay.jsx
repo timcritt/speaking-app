@@ -11,7 +11,7 @@ import { firebaseAuth } from "context/AuthProvider";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Part3Lines from "components/Part3Common/Part3Lines";
 // import debounce from 'auxFunctions/debounce';
-import TestToolBar from "components/TestCommon/TestToolBar";
+import TestToolBarView from "components/TestCommon/TestToolBarView";
 import ToolBarButtonsView from "components/TestCommon/ToolBarButtonsView";
 import Timer from "components/common/Timer";
 import GrabSlider from "components/common/GrabSlider/GrabSlider";
@@ -20,13 +20,19 @@ import Part2QuestionRow from "components/TestCommon/Part2QuestionRow";
 
 import styles from "./Part3.module.css";
 
+//API
+import getTest from "APIHandlers/getTest";
+import TestToolBarEdit from "components/FCEPart2/TestToolBarEdit";
+
 //hooks
 // import useToggleShortTurn from 'hooks/useToggleShortTurn';
 
 const Part3ViewOverlay = ({ part3Context, testId, testType, setEditMode }) => {
 	const { userId } = useContext(firebaseAuth);
-	const handleFullScreen = useFullScreenHandle();
 	const context = useContext(part3Context);
+
+	const handleFullScreen = useFullScreenHandle();
+
 	const [lineClass, setLineClass] = useState("line-hidden");
 	const [windowDimensions, setWindowDimensions] = useState({
 		height: null,
@@ -106,20 +112,26 @@ const Part3ViewOverlay = ({ part3Context, testId, testType, setEditMode }) => {
 	}, [handleResize]);
 
 	useEffect(() => {
-		//sends the id of the current test to be displayed to the FCEPart2 context
-		if (testId !== "new") {
-			context.setDocRef(testId);
-		} else {
-			//clears context state of previously viewed Test. displays blank test to be created by user.
-			// context.clearState();
-			handleResize();
-		}
-		if (context.hasFetched) {
-			handleResize();
-		}
-	}, [context, context.hasFetched, handleResize, testId]);
+		const asyncWrapper = async () => {
+			const test = await getTest("FCEPart3", testId);
+			//change object shape to match state shape before dispatching
+			test.docRef = test.id;
+			delete test.id;
+			test.testTags = test.tags;
+			delete test.tags;
+			context.updateTest(test);
+			console.log(test);
+		};
 
-	if (context.hasFetched) {
+		//Only fetches new test if the one stored in state is not the one navigated to, i.e, referenced in params
+		//Reduces redundant API calls and rerenders when navigating between view test and edit test
+		if (TestToolBarEdit) {
+			asyncWrapper();
+		}
+	}, [testId]);
+
+	if (true) {
+		//context.hasFetched
 		return (
 			<Fragment>
 				<FullScreen handle={handleFullScreen}>
@@ -180,14 +192,13 @@ const Part3ViewOverlay = ({ part3Context, testId, testType, setEditMode }) => {
 								)}
 							</div>
 							<div className={styles.tool_bar_container}>
-								<TestToolBar
+								<TestToolBarView
 									creatorId={context.creatorId}
 									timer={<Timer time={time} />}
-									buttons={
+									toolBarButtons={
 										<ToolBarButtonsView
 											userId={userId}
 											creatorId={context.creatorId}
-											testType={testType}
 											docRef={context.docRef}
 											handleFullScreen={handleFullScreen}
 											handleClickEditButton={() => setEditMode(true)}

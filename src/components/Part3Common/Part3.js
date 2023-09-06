@@ -11,7 +11,7 @@ import { firebaseAuth } from "context/AuthProvider";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Part3Lines from "components/Part3Common/Part3Lines";
 // import debounce from 'auxFunctions/debounce';
-import TestToolBar from "components/TestCommon/TestToolBar";
+import TestToolBar from "components/TestCommon/TestToolBarView";
 import ToolBarButtonsView from "components/TestCommon/ToolBarButtonsView";
 import Timer from "components/common/Timer";
 

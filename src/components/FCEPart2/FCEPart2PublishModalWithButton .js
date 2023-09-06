@@ -6,6 +6,7 @@ import Modal from "../common/Modal";
 import SaveOutlinedIcon from "@material-ui/icons/SaveOutlined";
 import { timestamp } from "firebase/firebaseIndex";
 import updateTest from "APIHandlers/updateTest";
+import SaveButton from "components/TestCommon/SaveButton";
 
 //API
 import addTest from "APIHandlers/addTest";
@@ -21,7 +22,7 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 //CSS modules
 import styles from "./PublishWarningModal.module.css";
 
-const PublishWarningModal = ({ setInputStatus }) => {
+const FCEPart2PublishModalWithButton = ({ setInputStatus }) => {
 	const [open, setOpen] = useState(false);
 	const { userId } = useContext(firebaseAuth);
 	const context = useContext(FCEPart2Context);
@@ -181,9 +182,7 @@ const PublishWarningModal = ({ setInputStatus }) => {
 
 	return (
 		<Fragment>
-			<button className={styles.save_button} onClick={handleOpen}>
-				save <SaveOutlinedIcon />
-			</button>
+			<SaveButton handleOpen={handleOpen} />
 			{open && (
 				<Modal
 					modalOpen={open}
@@ -223,4 +222,4 @@ const PublishWarningModal = ({ setInputStatus }) => {
 	);
 };
 
-export default PublishWarningModal;
+export default FCEPart2PublishModalWithButton;

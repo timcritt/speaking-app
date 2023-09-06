@@ -7,7 +7,7 @@ import FormTags from "components/TestCommon/FormTags";
 import PublishPart4Modal from "./PublishPart4Modal";
 import ControlledFormInput from "components/TestCommon/ControlledFormInput";
 import ToolTip from "components/common/ToolTip";
-import DeleteButton from "components/common/DeleteButton";
+import TestToolBarEdit from "components/FCEPart2/TestToolBarEdit";
 
 //3rd party Components
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
@@ -17,7 +17,6 @@ import deleteTest from "APIHandlers/deleteTest";
 
 //styles
 import styles from "./Part4.module.css";
-import ViewButton from "components/TestCommon/ViewButton";
 
 const EditPart4 = (props) => {
 	const handleFullScreen = useFullScreenHandle();
@@ -54,15 +53,6 @@ const EditPart4 = (props) => {
 			props.setEditMode(false);
 		};
 	}, [props.docRef]);
-
-	var history = useHistory();
-
-	const handleDeleteTest = async (e) => {
-		console.log("handle delete test");
-		e.preventDefault();
-		await deleteTest(props.docRef, props.testType);
-		history.push(`/Edit${props.testType}/new`);
-	};
 
 	return (
 		<Fragment>
@@ -189,22 +179,20 @@ const EditPart4 = (props) => {
 							/>
 						)}
 						<div className={styles.button_container}>
-							<PublishPart4Modal
-								changesSaved={props.changesSaved}
-								setInputStatus={setInputStatus}
+							<TestToolBarEdit
 								testType={"FCEPart4"}
-							/>
-							{/* only displays if the test has been saved */}
-							{props.docRef !== "new" && (
-								<>
-									<ViewButton
+								docRef={props.docRef}
+								handleClickViewButton={props.setEditMode}
+								closeModal={() => console.log("close modal")}
+								clearState={() => props.dispatch({ type: "resetState" })}
+								publishButtonRenderProp={() => (
+									<PublishPart4Modal
+										changesSaved={props.changesSaved}
 										testType={"FCEPart4"}
-										docRef={props.docRef}
-										handleClickViewButton={props.setEditMode}
+										setInputStatus={setInputStatus}
 									/>
-									<DeleteButton handleDelete={(e) => handleDeleteTest(e)} />
-								</>
-							)}
+								)}
+							/>
 						</div>
 					</form>
 				</main>

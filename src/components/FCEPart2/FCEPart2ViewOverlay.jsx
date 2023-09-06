@@ -6,9 +6,10 @@ import { FCEPart2Context } from "context/FCEPart2Context";
 //3rd party components
 import LinearProgress from "@material-ui/core/LinearProgress";
 //custom components
-import TestToolBar from "components/TestCommon/TestToolBar";
+import TestToolBarView from "components/TestCommon/TestToolBarView";
+import ToolBarButtonsView from "components/TestCommon/ToolBarButtonsView";
 import Part2QuestionRow from "components/TestCommon/Part2QuestionRow";
-import ToolBarButtonsView from "../TestCommon/ToolBarButtonsView";
+
 import Timer from "components/common/Timer";
 import GrabSlider from "components/common/GrabSlider/GrabSlider";
 //constants
@@ -20,7 +21,7 @@ import useLoadTestIntoComponent from "hooks/useLoadTestIntoComponent";
 import styles from "./FCEPart2View.module.css";
 
 const FCEPart2ViewOverlay = ({ docRef, setEditMode }) => {
-	//max time for short and long terms. Passed down to question row so that flipping it results in time change
+	//max time for short and long terms. Passed down to question row.
 	const shortTime = "2000";
 	const longTime = "6000";
 
@@ -73,10 +74,19 @@ const FCEPart2ViewOverlay = ({ docRef, setEditMode }) => {
 							{context.hasFetched && <GrabSlider testTags={context.testTags} />}
 						</div>
 						<div className={styles.tool_bar_container}>
-							<TestToolBar
-								creatorId={context.creatorId}
+							<TestToolBarView
+								creatorId={context.creatorId ? context.creatorId : "1"}
 								timer={<Timer time={time} />}
-								buttons={buttons}
+								toolBarButtons={
+									<ToolBarButtonsView
+										userId={userId}
+										creatorId={context.creatorId}
+										testType={FCEPart2}
+										docRef={context.docRef}
+										handleFullScreen={handleFullScreen}
+										handleClickEditButton={setEditMode}
+									/>
+								}
 							/>
 						</div>
 					</div>

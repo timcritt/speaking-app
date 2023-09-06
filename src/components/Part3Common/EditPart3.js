@@ -1,13 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Link } from "react-router-dom";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import CreatorInfo from "components/common/CreatorInfo";
 import { Fragment } from "react";
 import deleteTest from "APIHandlers/deleteTest";
 import { TextareaAutosize } from "@material-ui/core";
 import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
 import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
-import SideBarTags from "components/common/SideBarTags";
 import PublishPart3WarningModal from "components/Part3Common/PublishPart3WarningModal";
 import Part3Lines from "components/Part3Common/Part3Lines";
 import LinearProgress from "@material-ui/core/LinearProgress";
@@ -15,11 +12,19 @@ import debounce from "auxFunctions/debounce";
 import { useHistory } from "react-router-dom";
 import FormTags from "components/TestCommon/FormTags";
 
-import TestToolBar from "components/TestCommon/TestToolBar";
+import getTest from "APIHandlers/getTest";
 
 import styles from "./Part3.module.css";
+import TestToolBarEdit from "components/FCEPart2/TestToolBarEdit";
+import { FCEPart3 } from "APIHandlers/firebaseConsts";
 
-const EditPart3 = ({ context, testType, testId, setEditMode }) => {
+const EditPart3 = ({
+	context,
+	testType,
+	docRef,
+	setEditMode,
+	handleOpenModal,
+}) => {
 	const handleFullScreen = useFullScreenHandle();
 	const optionPlaceholder = "option";
 
@@ -63,18 +68,30 @@ const EditPart3 = ({ context, testType, testId, setEditMode }) => {
 	};
 
 	useEffect(() => {
-		//sends the id of the current test to be displayed to the FCEPart3 context
-		if (testId !== "new") {
-			context.setDocRef(testId);
+		const asyncWrapper = async () => {
+			let test = await getTest("FCEPart3", docRef);
+
+			console.log(test);
+			test.docRef = test.id;
+			delete test.id;
+			test.testTags = test.tags;
+			delete test.tags;
+			context.updateTest(test);
+		};
+
+		//checks if creating a new test rather than editing existing one
+		if (docRef === "new") {
+			context.resetState();
+			//Only fetches new test if the one stored in state is not the one navigated to, i.e, referenced in params
 		} else {
-			context.clearState();
-			//handleResize();
+			asyncWrapper();
 		}
-		if (context.hasFetched) {
-			handleResize();
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [handleResize, testId]);
+
+		return () => {
+			//makes sure the modal displays the test in view mode, not edit mode on next open
+			setEditMode(false);
+		};
+	}, [context.docRef]);
 
 	useEffect(() => {
 		//instantly hides the lines on window resize to prevent jumping lines.
@@ -96,38 +113,38 @@ const EditPart3 = ({ context, testType, testId, setEditMode }) => {
 	}
 
 	const handleQuestionChange = (e) => {
-		context.setQuestionOne(e.currentTarget.value);
+		context.updateQuestionOne(e.currentTarget.value);
 		setTimeout(function () {
 			handleResize();
 		}, 100);
 	};
 
 	const handleTopLeftChange = (e) => {
-		context.setTopLeft(e.currentTarget.value);
+		context.updateTopLeft(e.currentTarget.value);
 		setTimeout(function () {
 			handleResize();
 		}, 100);
 	};
 	const handleTopRightChange = (e) => {
-		context.setTopRight(e.currentTarget.value);
+		context.updateTopRight(e.currentTarget.value);
 		setTimeout(function () {
 			handleResize();
 		}, 100);
 	};
 	const handleBottomLeftChange = (e) => {
-		context.setBottomLeft(e.currentTarget.value);
+		context.updateBottomLeft(e.currentTarget.value);
 		setTimeout(function () {
 			handleResize();
 		}, 100);
 	};
 	const handleBottomCentreChange = (e) => {
-		context.setBottomCentre(e.currentTarget.value);
+		context.updateBottomCentre(e.currentTarget.value);
 		setTimeout(function () {
 			handleResize();
 		}, 100);
 	};
 	const handleBottomRightChange = (e) => {
-		context.setBottomRight(e.currentTarget.value);
+		context.updateBottomRight(e.currentTarget.value);
 		setTimeout(function () {
 			handleResize();
 		}, 100);
@@ -162,7 +179,7 @@ const EditPart3 = ({ context, testType, testId, setEditMode }) => {
 		</Fragment>
 	);
 
-	if (context.hasFetched) {
+	if (context.docRef) {
 		return (
 			<Fragment>
 				<FullScreen handle={handleFullScreen}>
@@ -263,11 +280,16 @@ const EditPart3 = ({ context, testType, testId, setEditMode }) => {
 									failedValidation={inputStatus.topicTagsFailedValidation}
 								/>
 							)}
-							<TestToolBar buttons={buttons}>
-								{context.creatorId && (
-									<CreatorInfo creatorId={context.creatorId} />
+							<TestToolBarEdit
+								testType={"FCEPart3"}
+								docRef={context.docRef}
+								handleClickViewButton={() => setEditMode(false)}
+								closeModal={() => console.log("closing modal")}
+								clearState={() => context.clearState()}
+								publishButtonRenderProp={() => (
+									<PublishPart3WarningModal {...context} testType={FCEPart3} />
 								)}
-							</TestToolBar>
+							/>
 						</div>
 					</main>
 				</FullScreen>

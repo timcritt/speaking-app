@@ -6,9 +6,10 @@ import { FCEPart2Context } from "context/FCEPart2Context";
 //3rd party components
 import LinearProgress from "@material-ui/core/LinearProgress";
 //custom components
-import TestToolBar from "components/TestCommon/TestToolBar";
+import TestToolBarView from "components/TestCommon/TestToolBarView";
 import Part2QuestionRow from "components/TestCommon/Part2QuestionRow";
 import ToolBarButtonsFCEPart2 from "../TestCommon/ToolBarButtonsView";
+import ToolBarButtonsView from "components/TestCommon/ToolBarButtonsView";
 import Timer from "components/common/Timer";
 import GrabSlider from "components/common/GrabSlider/GrabSlider";
 //constants
@@ -75,10 +76,19 @@ const FCEPart2View = (props) => {
 								)}
 							</div>
 							<div className={styles.tool_bar_container}>
-								<TestToolBar
-									creatorId={context.creatorId}
+								<TestToolBarView
+									creatorId={context.creatorId ? context.creatorId : "1"}
 									timer={<Timer time={time} />}
-									buttons={buttons}
+									toolBarButtons={
+										<ToolBarButtonsView
+											userId={userId}
+											creatorId={context.creatorId}
+											testType={"FCEPart2"}
+											docRef={context.docRef}
+											handleFullScreen={handleFullScreen}
+											handleClickEditButton={props.setEditMode}
+										/>
+									}
 								/>
 							</div>
 						</div>

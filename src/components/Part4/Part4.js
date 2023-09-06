@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from "react";
 
 //custom components
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import TestToolBar from "components/TestCommon/TestToolBar";
+import TestToolBarView from "components/TestCommon/TestToolBarView";
 import ToolBarButtonsView from "components/TestCommon/ToolBarButtonsView";
 import Timer from "components/common/Timer";
 import GrabSlider from "components/common/GrabSlider/GrabSlider";
@@ -68,10 +68,10 @@ const Part4 = ({
 						</div>
 						{docRef && <GrabSlider testTags={testTags} />}
 						<div className={styles.tool_bar_container}>
-							<TestToolBar
+							<TestToolBarView
 								creatorId={creatorId ? creatorId : "1"}
 								timer={<Timer time={time} />}
-								buttons={
+								toolBarButtons={
 									<ToolBarButtonsView
 										userId={creatorId}
 										creatorId={creatorId}
