@@ -74,7 +74,7 @@ const Part3ViewOverlay = ({ part3Context, testId, testType, setEditMode }) => {
 			return;
 		}
 		console.log("animation ended");
-		handleResize();
+		handleDebounce();
 	};
 
 	useEffect(() => {
@@ -187,9 +187,7 @@ const Part3ViewOverlay = ({ part3Context, testId, testType, setEditMode }) => {
 								/>
 							</div>
 							<div className={styles.test_tag_container}>
-								{context.hasFetched && (
-									<GrabSlider testTags={context.testTags} />
-								)}
+								{context.docRef && <GrabSlider testTags={context.testTags} />}
 							</div>
 							<div className={styles.tool_bar_container}>
 								<TestToolBarView

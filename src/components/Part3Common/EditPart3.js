@@ -91,7 +91,7 @@ const EditPart3 = ({
 			//makes sure the modal displays the test in view mode, not edit mode on next open
 			setEditMode(false);
 		};
-	}, [context.docRef]);
+	}, [docRef]);
 
 	useEffect(() => {
 		//instantly hides the lines on window resize to prevent jumping lines.
@@ -179,7 +179,7 @@ const EditPart3 = ({
 		</Fragment>
 	);
 
-	if (context.docRef) {
+	if (true) {
 		return (
 			<Fragment>
 				<FullScreen handle={handleFullScreen}>
@@ -255,7 +255,6 @@ const EditPart3 = ({
 									centre={styles.centre}
 								/>
 							</div>
-
 							<div className="part2-edit-question-container part3-questionTwo-container">
 								<label
 									className="part2-question-input-label"
@@ -269,7 +268,7 @@ const EditPart3 = ({
 									defaultValue={context.shortTurnQuestion}
 									placeholder="enter second question"
 									onChange={(e) =>
-										context.setShortTurnQuestion(e.currentTarget.value)
+										context.updateShortTurnQuestion(e.currentTarget.value)
 									}
 								/>
 							</div>
@@ -280,16 +279,23 @@ const EditPart3 = ({
 									failedValidation={inputStatus.topicTagsFailedValidation}
 								/>
 							)}
-							<TestToolBarEdit
-								testType={"FCEPart3"}
-								docRef={context.docRef}
-								handleClickViewButton={() => setEditMode(false)}
-								closeModal={() => console.log("closing modal")}
-								clearState={() => context.clearState()}
-								publishButtonRenderProp={() => (
-									<PublishPart3WarningModal {...context} testType={FCEPart3} />
-								)}
-							/>
+							<div className={styles.button_container}>
+								<TestToolBarEdit
+									testType={"FCEPart3"}
+									docRef={docRef}
+									handleClickViewButton={setEditMode}
+									closeModal={() => console.log("close modal")}
+									clearState={() => context.resetState()}
+									publishButtonRenderProp={() => (
+										<PublishPart3WarningModal
+											changesSaved={context.changesSaved}
+											{...context}
+											testType={"FCEPart3"}
+											setInputStatus={setInputStatus}
+										/>
+									)}
+								/>
+							</div>
 						</div>
 					</main>
 				</FullScreen>

@@ -12,13 +12,29 @@ import TestToolBarEdit from "components/FCEPart2/TestToolBarEdit";
 //3rd party Components
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
-//API handlers
-import deleteTest from "APIHandlers/deleteTest";
-
 //styles
 import styles from "./Part4.module.css";
 
-const EditPart4 = (props) => {
+const EditPart4 = ({
+	docRef,
+	updateTest,
+	resetState,
+	questionOne,
+	updateQuestionOne,
+	questionTwo,
+	updateQuestionTwo,
+	questionThree,
+	updateQuestionThree,
+	questionFour,
+	updateQuestionFour,
+	questionFive,
+	updateQuestionFive,
+	questionSix,
+	updateQuestionSix,
+	setEditMode,
+	testTags,
+	handleSetTags,
+}) => {
 	const handleFullScreen = useFullScreenHandle();
 
 	const [inputStatus, setInputStatus] = useState({
@@ -33,26 +49,27 @@ const EditPart4 = (props) => {
 	//Get a test from the database according to the params and set state
 	useEffect(() => {
 		const asyncWrapper = async () => {
-			let test = await getTest("FCEPart4", props.docRef);
+			console.log(docRef);
+			let test = await getTest("FCEPart4", docRef);
 			test.docRef = test.id;
 			delete test.id;
 			test.testTags = test.tags;
 			delete test.tags;
-			props.dispatch({ type: "loadNewTest", payload: test });
+			updateTest();
 		};
 
 		//checks if creating a new test rather than editing existing one
-		if (props.docRef === "new") {
-			props.dispatch({ type: "resetState" });
+		if (docRef === "new") {
+			resetState();
 			//Only fetches new test if the one stored in state is not the one navigated to, i.e, referenced in params
 		} else {
 			asyncWrapper();
 		}
 
 		return () => {
-			props.setEditMode(false);
+			setEditMode(false);
 		};
-	}, [props.docRef]);
+	}, [docRef]);
 
 	return (
 		<Fragment>
@@ -60,7 +77,7 @@ const EditPart4 = (props) => {
 				<main className="holy-grail-content fade-in">
 					<form className={styles.part4_container}>
 						<h1 className={styles.title}>
-							{props.docRef === "new" ? "Create " : "Edit "}FCE Part 4
+							{docRef === "new" ? "Create " : "Edit "}FCE Part 4
 						</h1>
 						<fieldset className={styles.content_container}>
 							<legend>
@@ -73,12 +90,9 @@ const EditPart4 = (props) => {
 							</legend>
 							<ControlledFormInput
 								failedValidation={inputStatus.questionOneFailedValidation}
-								textValue={props.questionOne}
+								textValue={questionOne}
 								onChange={(e) => {
-									props.dispatch({
-										type: "updateQuestionOne",
-										payload: e.target.value,
-									});
+									updateQuestionOne(e.target.value);
 									if (e.target.value.length > 0) {
 										setInputStatus((prevState) => {
 											return {
@@ -91,12 +105,10 @@ const EditPart4 = (props) => {
 							/>
 							<ControlledFormInput
 								failedValidation={inputStatus.questionTwoFailedValidation}
-								textValue={props.questionTwo}
+								textValue={questionTwo}
 								onChange={(e) => {
-									props.dispatch({
-										type: "updateQuestionTwo",
-										payload: e.target.value,
-									});
+									updateQuestionTwo(e.target.value);
+
 									if (e.target.value.length > 0) {
 										setInputStatus((prevState) => {
 											return {
@@ -109,12 +121,9 @@ const EditPart4 = (props) => {
 							/>
 							<ControlledFormInput
 								failedValidation={inputStatus.questionThreeFailedValidation}
-								textValue={props.questionThree}
+								textValue={questionThree}
 								onChange={(e) => {
-									props.dispatch({
-										type: "updateQuestionThree",
-										payload: e.target.value,
-									});
+									updateQuestionThree(e.target.value);
 									if (e.target.value.length > 0) {
 										setInputStatus((prevState) => {
 											return {
@@ -127,12 +136,9 @@ const EditPart4 = (props) => {
 							/>
 							<ControlledFormInput
 								failedValidation={inputStatus.questionFourFailedValidation}
-								textValue={props.questionFour}
+								textValue={questionFour}
 								onChange={(e) => {
-									props.dispatch({
-										type: "updateQuestionFour",
-										payload: e.target.value,
-									});
+									updateQuestionFour(e.target.value);
 									if (e.target.value.length > 0) {
 										setInputStatus((prevState) => {
 											return {
@@ -145,12 +151,10 @@ const EditPart4 = (props) => {
 							/>
 							<ControlledFormInput
 								failedValidation={inputStatus.questionFiveFailedValidation}
-								textValue={props.questionFive}
+								textValue={questionFive}
 								onChange={(e) => {
-									props.dispatch({
-										type: "updateQuestionFive",
-										payload: e.target.value,
-									});
+									updateQuestionFive(e.target.value);
+
 									if (e.target.value.length > 0) {
 										setInputStatus((prevState) => {
 											return {
@@ -162,32 +166,27 @@ const EditPart4 = (props) => {
 								}}
 							/>
 							<ControlledFormInput
-								textValue={props.questionSix}
-								onChange={(e) =>
-									props.dispatch({
-										type: "updateQuestionSix",
-										payload: e.target.value,
-									})
-								}
+								textValue={questionSix}
+								onChange={(e) => updateQuestionSix(e.target.value)}
 							/>
 						</fieldset>
-						{props.testTags && (
+						{testTags && (
 							<FormTags
-								tags={props.testTags}
-								handleSetTags={props.handleSetTags}
+								tags={testTags}
+								handleSetTags={handleSetTags}
 								failedValidation={inputStatus.topicTagsFailedValidation}
 							/>
 						)}
 						<div className={styles.button_container}>
 							<TestToolBarEdit
 								testType={"FCEPart4"}
-								docRef={props.docRef}
-								handleClickViewButton={props.setEditMode}
+								docRef={docRef}
+								handleClickViewButton={setEditMode}
 								closeModal={() => console.log("close modal")}
-								clearState={() => props.dispatch({ type: "resetState" })}
+								clearState={() => resetState()}
 								publishButtonRenderProp={() => (
 									<PublishPart4Modal
-										changesSaved={props.changesSaved}
+										// changesSaved={changesSaved}
 										testType={"FCEPart4"}
 										setInputStatus={setInputStatus}
 									/>

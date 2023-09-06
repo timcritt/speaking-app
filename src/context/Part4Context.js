@@ -60,7 +60,7 @@ export const Part4ContextProvider = ({ children }) => {
 					...state,
 					docRef: action.payload,
 				};
-			case "loadNewTest":
+			case "updateTest":
 				return {
 					...state,
 					...action.payload,
@@ -86,6 +86,31 @@ export const Part4ContextProvider = ({ children }) => {
 
 	const [part4State, dispatch] = useReducer(reducer, { ...initialState });
 
+	//dispatch handlers
+	const updateQuestionOne = (payload) => {
+		dispatch({ type: "updateQuestionOne", payload: payload });
+	};
+
+	const updateQuestionTwo = (payload) => {
+		dispatch({ type: "updateQuestionTwo", payload: payload });
+	};
+
+	const updateQuestionThree = (payload) => {
+		dispatch({ type: "updateQuestionThree", payload: payload });
+	};
+
+	const updateQuestionFour = (payload) => {
+		dispatch({ type: "updateQuestionFour", payload: payload });
+	};
+
+	const updateQuestionFive = (payload) => {
+		dispatch({ type: "updateQuestionFive", payload: payload });
+	};
+
+	const updateQuestionSix = (payload) => {
+		dispatch({ type: "updateQuestionSix", payload: payload });
+	};
+
 	const handleSetTags = (tag, selected) => {
 		if (!selected) {
 			//adds tag to the state
@@ -96,12 +121,28 @@ export const Part4ContextProvider = ({ children }) => {
 		}
 	};
 
+	const updateTest = (payload) => {
+		dispatch({ type: "updateTest", payload: payload });
+	};
+
+	//resets state to initial value
+	const resetState = () => {
+		dispatch({ type: "resetState" });
+	};
+
 	return (
 		<Part4Context.Provider
 			value={{
 				...part4State,
-				dispatch,
+				updateQuestionOne,
+				updateQuestionTwo,
+				updateQuestionThree,
+				updateQuestionFour,
+				updateQuestionFive,
+				updateQuestionSix,
 				handleSetTags,
+				updateTest,
+				resetState,
 			}}
 		>
 			{children}

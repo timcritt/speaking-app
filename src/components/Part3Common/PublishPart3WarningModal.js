@@ -6,6 +6,7 @@ import updatePart3 from "APIHandlers/updatePart3";
 import addPart3 from "APIHandlers/addPart3";
 import { firebaseAuth } from "context/AuthProvider";
 import { useHistory } from "react-router-dom";
+import SaveButton from "components/TestCommon/SaveButton";
 
 export default function PublishWarningModal({
 	bottomCentre,
@@ -116,7 +117,7 @@ export default function PublishWarningModal({
 					</h3>
 				)}
 			</div>
-			<ul></ul>
+
 			<div className="center">
 				<button onClick={handleClose}>ok</button>
 			</div>
@@ -125,13 +126,8 @@ export default function PublishWarningModal({
 
 	return (
 		<Fragment>
-			<button
-				className="tool-bar-btn"
-				onClick={handleOpen}
-				disabled={changesSaved}
-			>
-				{docRef ? <SaveOutlinedIcon /> : <PublishIcon />}
-			</button>
+			<SaveButton handleOpen={handleOpen} />
+
 			{open && (
 				<Modal
 					modalOpen={open}

@@ -25,23 +25,22 @@ const Part4 = ({
 	creatorId,
 	time,
 	testTags,
-	dispatch,
+	updateTest,
 }) => {
 	//load test into state
 	useEffect(() => {
 		const asyncWrapper = async () => {
+			console.log(docRef);
 			const test = await getTest("FCEPart4", docRef);
 			//change object shape to match state shape before dispatching
 			test.docRef = test.id;
 			delete test.id;
 			test.testTags = test.tags;
 			delete test.tags;
-			dispatch({ type: "loadNewTest", payload: test });
+			updateTest(test);
 			console.log(test);
 		};
 
-		//Only fetches new test if the one stored in state is not the one navigated to, i.e, referenced in params
-		//Reduces redundant API calls and rerenders when navigating between view test and edit test
 		if (docRef) {
 			asyncWrapper();
 		}
