@@ -1,12 +1,11 @@
 import React, { useState, useEffect, Fragment, useContext } from "react";
 import Modal from "components/common/Modal";
-import PublishIcon from "@material-ui/icons/Publish";
-import SaveOutlinedIcon from "@material-ui/icons/SaveOutlined";
 import updatePart3 from "APIHandlers/updatePart3";
 import addPart3 from "APIHandlers/addPart3";
 import { firebaseAuth } from "context/AuthProvider";
 import { useHistory } from "react-router-dom";
 import SaveButton from "components/TestCommon/SaveButton";
+import { LinearProgress } from "@mui/material";
 
 export default function PublishWarningModal({
 	bottomCentre,
@@ -22,49 +21,60 @@ export default function PublishWarningModal({
 	docRef,
 	setDocRef,
 	testType,
+	setInputStatus,
 }) {
 	const [open, setOpen] = useState(false);
-	const [complete, setComplete] = useState(false);
 	const { userId } = useContext(firebaseAuth);
 	const history = useHistory();
+	const [allInputsCompleted, setAllInputsCompleted] = useState(false);
+	const [uploadComplete, setUploadComplete] = useState(false);
 
-	// var history = useHistory();
+	const validateInputs = () => {
+		let newValidationState = {
+			bottomCentreFailedValidation: !bottomCentre.length > 0,
+			bottomLeftFailedValidation: !bottomLeft.length > 0,
+			bottomRightFailedValidation: !bottomRight.length > 0,
+			topLeftFailedValidation: !topLeft.length > 0,
+			topRightFailedValidation: !topRight.length > 0,
+			testTagsFailedValidation: !testTags.length > 0,
+			questionOneFailedValidation: !questionOne.length > 0,
+			// shortTurnQuestion: shortTurnQuestion.length > 0,
+		};
 
-	useEffect(() => {
-		if (
-			testTags.length > 0 &&
-			bottomCentre &&
-			bottomLeft &&
-			bottomRight &&
-			questionOne &&
-			shortTurnQuestion &&
-			topLeft &&
-			topRight &&
-			userId
-		) {
-			setComplete(true);
+		setInputStatus((prevState) => {
+			return {
+				...prevState,
+				...newValidationState,
+			};
+		});
+
+		const allValidated = Object.values(newValidationState).every((item) => {
+			if (item === false) {
+				return true;
+			}
+		});
+
+		//check if all input validation checks have passed
+		if (allValidated) {
+			setAllInputsCompleted(true);
+			return true;
 		} else {
-			setComplete(false);
+			setAllInputsCompleted(false);
+			return false;
 		}
-	}, [
-		testTags.length,
-		bottomCentre,
-		bottomLeft,
-		bottomRight,
-		questionOne,
-		topLeft,
-		topRight,
-		userId,
-		shortTurnQuestion,
-	]);
+	};
 
-	const handleOpen = async () => {
+	const handleOpen = async (e) => {
+		e.preventDefault();
+		//checks all required inputs have been completed by user
+		//returns value rather than save as state value because the next if statement depends on this state,
+		//and the calling function would have a state state value due to closure
+		const inputsValid = validateInputs();
 		setOpen(true);
 		//const createdAt = timestamp();
-		if (complete) {
-			if (docRef) {
+		if (inputsValid) {
+			if (docRef !== "new") {
 				//update fce part 3
-
 				updatePart3(
 					bottomCentre,
 					bottomLeft,
@@ -76,10 +86,11 @@ export default function PublishWarningModal({
 					docRef,
 					testTags,
 					testType
-				);
+				).then(() => {
+					setUploadComplete(true);
+				});
 			} else {
-				//upload new Part 3 - only reached if all fields are complete and docRef doesn't exist - i.e., the test has just been created
-
+				//upload new Part 3 - only reached if all fields are complete and docRef is not "new" i.e., the test has just been created
 				addPart3(
 					bottomCentre,
 					bottomLeft,
@@ -93,6 +104,7 @@ export default function PublishWarningModal({
 					testType
 				).then((response) => {
 					setDocRef(response.id);
+					setUploadComplete(true);
 					history.push(`/Edit${testType}/${response.id}`);
 				});
 			}
@@ -108,12 +120,16 @@ export default function PublishWarningModal({
 	const body = (
 		<div>
 			<div>
-				{complete ? (
-					<h3>Published!</h3>
+				{allInputsCompleted ? (
+					uploadComplete ? (
+						<h3>Published!</h3>
+					) : (
+						<LinearProgress />
+					)
 				) : (
 					<h3>
-						Oops! You forgot to complete all the fields and add at least one
-						tag!
+						Oops! You forgot to enter at least 5 questions and select at least
+						one tag!
 					</h3>
 				)}
 			</div>
@@ -126,7 +142,7 @@ export default function PublishWarningModal({
 
 	return (
 		<Fragment>
-			<SaveButton handleOpen={handleOpen} />
+			<SaveButton handleOpen={(e) => handleOpen(e)} />
 
 			{open && (
 				<Modal

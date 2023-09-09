@@ -1,9 +1,9 @@
-import { useState, useEffect, createRef } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function useComponentVisible(initialIsVisible) {
 	const [isComponentVisible, setIsComponentVisible] =
 		useState(initialIsVisible);
-	var ref = createRef(null);
+	var ref = useRef(null);
 
 	const handleClickOutside = (event) => {
 		console.log("has been clicked", event.target);

@@ -50,11 +50,7 @@ export const Part4ContextProvider = ({ children }) => {
 					...state,
 					testTags: action.payload,
 				};
-			case "docRef":
-				return {
-					...state,
-					docRef: action.payload,
-				};
+
 			case "updateDocRef":
 				return {
 					...state,

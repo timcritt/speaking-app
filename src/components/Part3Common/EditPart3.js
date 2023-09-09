@@ -1,82 +1,78 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { Fragment } from "react";
-import deleteTest from "APIHandlers/deleteTest";
-import { TextareaAutosize } from "@material-ui/core";
-import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
-import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
+
+//custom components
+import ControlledFormInput from "components/TestCommon/ControlledFormInput";
+import TestToolBarEdit from "components/FCEPart2/TestToolBarEdit";
 import PublishPart3WarningModal from "components/Part3Common/PublishPart3WarningModal";
-import Part3Lines from "components/Part3Common/Part3Lines";
+
+//3rd party components
 import LinearProgress from "@material-ui/core/LinearProgress";
-import debounce from "auxFunctions/debounce";
-import { useHistory } from "react-router-dom";
 import FormTags from "components/TestCommon/FormTags";
 
+//3rd party hooks
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
+
+//API handlers
 import getTest from "APIHandlers/getTest";
 
+//CSS modules
 import styles from "./Part3.module.css";
-import TestToolBarEdit from "components/FCEPart2/TestToolBarEdit";
-import { FCEPart3 } from "APIHandlers/firebaseConsts";
 
 const EditPart3 = ({
 	context,
-	testType,
+	clearState,
 	docRef,
+	questionOne,
+	shortTurnQuestion,
+	topLeft,
+	topRight,
+	bottomLeft,
+	bottomCentre,
+	bottomRight,
+	testTags,
+	creatorId,
+	changesSaved,
+	hasFetched,
+	testType,
 	setEditMode,
 	handleOpenModal,
+	updateQuestionOne,
+	updateShortTurnQuestion,
+	updateTopLeft,
+	updateTopRight,
+	updateBottomLeft,
+	updateBottomCentre,
+	updateBottomRight,
+	updateTest,
+	resetState,
+	setHasFetched,
+	handleSetTags,
 }) => {
 	const handleFullScreen = useFullScreenHandle();
 	const optionPlaceholder = "option";
 
 	const [inputStatus, setInputStatus] = useState({
+		shortTurnQuestionFailedValidation: false,
 		questionOneFailedValidation: false,
-		questionTwoFailedValidation: false,
-		questionThreeFailedValidation: false,
-		questionFourFailedValidation: false,
-		questionFiveFailedValidation: false,
+		questionToFailedValidation: false,
+		topLeftFailedValidation: false,
+		topRightFailedValidation: false,
+		bottomLeftFailedValidation: false,
+		bottomCentreFailedValidation: false,
+		bottomRightFailedValidation: false,
 		topicTagsFailedValidation: false,
 	});
-
-	const [lineClass, setLineClass] = useState("");
-	const [windowDimensions, setWindowDimensions] = useState({
-		height: null,
-		width: null,
-	});
-	var history = useHistory();
-
-	const hideLines = () => {
-		setLineClass("line-hidden");
-	};
-	const showLines = () => {
-		setLineClass("");
-	};
-
-	const handleResize = useCallback(() => {
-		setWindowDimensions({
-			height: window.innerHeight,
-			width: window.innerWidth,
-		});
-		showLines();
-	}, []);
-
-	const debouncedHandleResize = debounce(handleResize, 200);
-
-	const handleDeleteTest = async () => {
-		await deleteTest(context.docRef, testType);
-		context.clearState();
-		history.push(`/Edit${testType}/new`);
-	};
 
 	useEffect(() => {
 		const asyncWrapper = async () => {
 			let test = await getTest("FCEPart3", docRef);
-
 			console.log(test);
 			test.docRef = test.id;
 			delete test.id;
 			test.testTags = test.tags;
 			delete test.tags;
-			context.updateTest(test);
+			updateTest(test);
 		};
 
 		//checks if creating a new test rather than editing existing one
@@ -93,189 +89,113 @@ const EditPart3 = ({
 		};
 	}, [docRef]);
 
-	useEffect(() => {
-		//instantly hides the lines on window resize to prevent jumping lines.
-		window.addEventListener("resize", hideLines);
-		//listens for window resize and redraws the lines between text areas after a set time. Sets lines to visible when done.
-		window.addEventListener("resize", debouncedHandleResize);
-		window.addEventListener("fullscreenchange", handleResize);
-
-		//cleanup function - removes listeners on unmount
-		return () => {
-			window.removeEventListener("resize", hideLines);
-			window.removeEventListener("resize", debouncedHandleResize);
-			window.removeEventListener("fullscreenchange", handleResize);
-		};
-	}, [debouncedHandleResize, handleResize]);
-
-	function handleSetDocRef(docRef) {
-		context.setDocRef(docRef);
-	}
-
-	const handleQuestionChange = (e) => {
-		context.updateQuestionOne(e.currentTarget.value);
-		setTimeout(function () {
-			handleResize();
-		}, 100);
-	};
-
-	const handleTopLeftChange = (e) => {
-		context.updateTopLeft(e.currentTarget.value);
-		setTimeout(function () {
-			handleResize();
-		}, 100);
-	};
-	const handleTopRightChange = (e) => {
-		context.updateTopRight(e.currentTarget.value);
-		setTimeout(function () {
-			handleResize();
-		}, 100);
-	};
-	const handleBottomLeftChange = (e) => {
-		context.updateBottomLeft(e.currentTarget.value);
-		setTimeout(function () {
-			handleResize();
-		}, 100);
-	};
-	const handleBottomCentreChange = (e) => {
-		context.updateBottomCentre(e.currentTarget.value);
-		setTimeout(function () {
-			handleResize();
-		}, 100);
-	};
-	const handleBottomRightChange = (e) => {
-		context.updateBottomRight(e.currentTarget.value);
-		setTimeout(function () {
-			handleResize();
-		}, 100);
-	};
-
-	const buttons = (
-		<Fragment>
-			<PublishPart3WarningModal
-				bottomCentre={context.bottomCentre}
-				bottomLeft={context.bottomLeft}
-				bottomRight={context.bottomRight}
-				creatorId={context.creatorId}
-				questionOne={context.questionOne}
-				shortTurnQuestion={context.shortTurnQuestion}
-				topLeft={context.topLeft}
-				topRight={context.topRight}
-				tags={context.testTags}
-				changesSaved={context.changesSaved}
-				setChangesSaved={context.setChangesSaved}
-				docRef={context.docRef}
-				setDocRef={handleSetDocRef}
-				testType={testType}
-			/>
-
-			<button className="tool-bar-btn" onClick={() => setEditMode(false)}>
-				<VisibilityOutlinedIcon />
-			</button>
-
-			<button className="tool-bar-btn" onClick={handleDeleteTest}>
-				<DeleteForeverOutlinedIcon />
-			</button>
-		</Fragment>
-	);
-
 	if (true) {
 		return (
 			<Fragment>
 				<FullScreen handle={handleFullScreen}>
 					<main className="holy-grail-content fade-in">
-						<div className={styles.container}>
-							<div className={`${styles.grid_container} part3-grid-container`}>
-								<div
-									className={`${styles.centre} part3-question-container part3-question-centre`}
-								>
-									<TextareaAutosize
-										className={styles.option_container}
-										placeholder="enter question"
-										value={context.questionOne}
-										onChange={handleQuestionChange}
-										rowsMin="1"
-									/>
-								</div>
-								<div className={styles.top_right}>
-									<TextareaAutosize
-										className={styles.option_container}
-										placeholder={optionPlaceholder}
-										value={context.topRight}
-										onChange={handleTopRightChange}
-										rowsMin="1"
-									/>
-								</div>
-								<div className={styles.top_left}>
-									<TextareaAutosize
-										className={styles.option_container}
-										placeholder={optionPlaceholder}
-										value={context.topLeft}
-										onChange={handleTopLeftChange}
-										rowsMin="1"
-									/>
-								</div>
-
-								<div className={styles.bottom_left}>
-									<TextareaAutosize
-										className={styles.option_container}
-										placeholder={optionPlaceholder}
-										value={context.bottomLeft}
-										onChange={handleBottomLeftChange}
-										rowsMin="1"
-									/>
-								</div>
-								<div className={styles.bottom_centre}>
-									<TextareaAutosize
-										className={styles.option_container}
-										placeholder={optionPlaceholder}
-										value={context.bottomCentre}
-										onChange={handleBottomCentreChange}
-										rowsMin="1"
-									/>
-								</div>
-								<div className={styles.bottom_right}>
-									<TextareaAutosize
-										className={styles.option_container}
-										placeholder={optionPlaceholder}
-										value={context.bottomRight}
-										onChange={handleBottomRightChange}
-										rowsMin="1"
-									/>
-								</div>
-
-								<Part3Lines
-									windowDimensions={windowDimensions}
-									lineClass={lineClass}
-									top_left={styles.top_left}
-									top_right={styles.top_right}
-									bottom_left={styles.bottom_left}
-									bottom_right={styles.bottom_right}
-									bottom_centre={styles.bottom_centre}
-									centre={styles.centre}
+						<form className={styles.container}>
+							<fieldset>
+								<legend>Options to discuss</legend>
+								<ControlledFormInput
+									failedValidation={inputStatus.topLeftFailedValidation}
+									textValue={topLeft}
+									onChange={(e) => {
+										updateTopLeft(e.target.value);
+										if (e.target.value.length > 0) {
+											setInputStatus((prevState) => {
+												return {
+													...prevState,
+													topLeftFailedValidation: false,
+												};
+											});
+										}
+									}}
 								/>
-							</div>
-							<div className="part2-edit-question-container part3-questionTwo-container">
-								<label
-									className="part2-question-input-label"
-									htmlFor="question-2"
-								>
-									Question 2
-								</label>
-								<input
-									label="question-2"
-									className="input question-input"
-									defaultValue={context.shortTurnQuestion}
-									placeholder="enter second question"
-									onChange={(e) =>
-										context.updateShortTurnQuestion(e.currentTarget.value)
-									}
+								<ControlledFormInput
+									failedValidation={inputStatus.topRightFailedValidation}
+									textValue={topRight}
+									onChange={(e) => {
+										updateTopRight(e.target.value);
+										if (e.target.value.length > 0) {
+											setInputStatus((prevState) => {
+												return {
+													...prevState,
+													topRightFailedValidation: false,
+												};
+											});
+										}
+									}}
 								/>
-							</div>
-							{context.testTags && (
+								<ControlledFormInput
+									failedValidation={inputStatus.bottomLeftFailedValidation}
+									textValue={bottomLeft}
+									onChange={(e) => {
+										updateBottomLeft(e.target.value);
+										// if (e.target.value.length > 0) {
+										// 	setInputStatus((prevState) => {
+										// 		return {
+										// 			...prevState,
+										// 			questionFourFailedValidation: false,
+										// 		};
+										// 	});
+										// }
+									}}
+								/>
+								<ControlledFormInput
+									failedValidation={inputStatus.bottomCentreFailedValidation}
+									textValue={bottomCentre}
+									onChange={(e) => {
+										updateBottomCentre(e.target.value);
+										// if (e.target.value.length > 0) {
+										// 	setInputStatus((prevState) => {
+										// 		return {
+										// 			...prevState,
+										// 			questionFourFailedValidation: false,
+										// 		};
+										// 	});
+										// }
+									}}
+								/>
+								<ControlledFormInput
+									failedValidation={inputStatus.bottomRightFailedValidation}
+									textValue={bottomRight}
+									onChange={(e) => {
+										updateBottomRight(e.target.value);
+										// if (e.target.value.length > 0) {
+										// 	setInputStatus((prevState) => {
+										// 		return {
+										// 			...prevState,
+										// 			questionFourFailedValidation: false,
+										// 		};
+										// 	});
+										// }
+									}}
+								/>
+							</fieldset>
+
+							<fieldset className="part2-edit-question-container part3-questionTwo-container">
+								<legend>Short turn question</legend>
+								<ControlledFormInput
+									//failedValidation={inputStatus.questionFourFailedValidation}
+									textValue={shortTurnQuestion}
+									onChange={(e) => {
+										updateShortTurnQuestion(e.target.value);
+										// if (e.target.value.length > 0) {
+										// 	setInputStatus((prevState) => {
+										// 		return {
+										// 			...prevState,
+										// 			questionFourFailedValidation: false,
+										// 		};
+										// 	});
+										// }
+									}}
+								/>
+							</fieldset>
+							{testTags && (
 								<FormTags
-									tags={context.testTags}
-									handleSetTags={context.handleSetTags}
+									tags={testTags}
+									handleSetTags={handleSetTags}
 									failedValidation={inputStatus.topicTagsFailedValidation}
 								/>
 							)}
@@ -283,20 +203,28 @@ const EditPart3 = ({
 								<TestToolBarEdit
 									testType={"FCEPart3"}
 									docRef={docRef}
-									handleClickViewButton={setEditMode}
+									handleClickViewButton={() => setEditMode(false)}
 									closeModal={() => console.log("close modal")}
-									clearState={() => context.resetState()}
+									clearState={() => resetState()}
 									publishButtonRenderProp={() => (
 										<PublishPart3WarningModal
-											changesSaved={context.changesSaved}
-											{...context}
-											testType={"FCEPart3"}
+											questionOne={questionOne}
+											shortTurnQuestion={shortTurnQuestion}
+											topLeft={topLeft}
+											topRight={topRight}
+											bottomLeft={bottomLeft}
+											bottomCentre={bottomCentre}
+											bottomRight={bottomRight}
+											testTags={testTags}
+											creatorId={creatorId}
+											docRef={docRef}
+											testType={testType}
 											setInputStatus={setInputStatus}
 										/>
 									)}
 								/>
 							</div>
-						</div>
+						</form>
 					</main>
 				</FullScreen>
 			</Fragment>

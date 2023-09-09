@@ -10,7 +10,7 @@ import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
 import ShareButton from "components/common/ShareButton";
 import AddToMyFolders from "components/common/AddToMyFolders";
 import TestModal from "components/common/TestModal";
-import FCEPart2ViewOverlay from "components/FCEPart2/FCEPart2ViewOverlay";
+import FCEPart2View from "components/FCEPart2/FCEPart2View";
 import FCEPart3View from "components/FCEPart3/FCEPart3View";
 import FCEPart4View from "components/Part4/FCEPart4View";
 import EditFCEPart2 from "components/FCEPart2/EditFCEPart2";
@@ -23,7 +23,7 @@ import useToggleClassOnClick from "hooks/useToggleClassOnClick";
 //styles
 import styles from "./TestPreviewOverlay.module.css";
 
-const TestPreviewOverlay = ({ testType, testId, testComponent }) => {
+const TestPreviewOverlay = ({ testType, testId }) => {
 	//stores the url of the test. is passed down to ShareButton, which appears in the hover overlay.
 	const { token } = useContext(firebaseAuth);
 	const { ref, classApplied, setClassApplied } = useToggleClassOnClick();
@@ -58,7 +58,7 @@ const TestPreviewOverlay = ({ testType, testId, testComponent }) => {
 								handleShowModal={setIsOpen}
 							/>
 						) : (
-							<FCEPart2ViewOverlay docRef={testId} setEditMode={setEditMode} />
+							<FCEPart2View docRef={testId} setEditMode={setEditMode} />
 						)}
 					</>
 				);

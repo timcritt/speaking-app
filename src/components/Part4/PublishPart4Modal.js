@@ -28,7 +28,7 @@ export default function PublishPart4Modal({
 
 	const validateInputs = () => {
 		//create the new state based on current inputs
-		var newValidationState = {
+		let newValidationState = {
 			questionOneFailedValidation: !context.questionOne.length > 0,
 			questionTwoFailedValidation: !context.questionTwo.length > 0,
 			questionThreeFailedValidation: !context.questionThree.length > 0,
@@ -103,7 +103,7 @@ export default function PublishPart4Modal({
 					userId
 				).then((response) => {
 					setUploadComplete(true);
-					context.dispatch({ type: "updateDocRef", payload: response.id });
+					context.updateDocRef(response.id);
 					history.push(`/${testType}/${response.id}`);
 				});
 			}

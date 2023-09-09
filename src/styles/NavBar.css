@@ -1,145 +1,141 @@
 .nav-container {
-  background-color: var(--header-color);
-  display: flex;
-  align-items: center;
-  margin: 0 auto;
-  max-width: 85rem;
+	background-color: var(--header-color);
+	display: flex;
+	align-items: center;
+	margin: 0 auto;
+	max-width: 85rem;
 }
 
 .nav-container .isVisible {
-  background-color: #459ab5;
+	background-color: #459ab5;
 }
 
 .nav-logo {
-  display: none;
+	display: none;
 }
 
 .nav-buttons .nav-link {
-  margin: 0 20px;
+	margin: 0 20px;
 }
 .nav-link {
-  color: white;
-  text-decoration: none;
-  white-space: nowrap;
-  align-items: center;
-  transition: border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
-    color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  padding: 10px;
-  float: left;
-  clear: both;
+	color: white;
+	text-decoration: none;
+	white-space: nowrap;
+	align-items: center;
+	transition: border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+		color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+	padding: 10px;
+	float: left;
+	clear: both;
 }
 
 .nav-link:hover {
-  color: #a7a8ed;
+	color: #a7a8ed;
 }
 
 .nav-container .nav-link {
-  padding: 10px;
+	padding: 10px;
 }
 
 .profile-picture {
-  border-radius: 50%;
-  border: 3px solid #f5d88b;
-  width: 42px;
-  height: 42px;
-  margin: 0 0 0 10px;
-  box-sizing: border-box;
+	border-radius: 50%;
+	border: 3px solid #f5d88b;
+	width: 42px;
+	height: 42px;
+	margin: 0 0 0 10px;
+	box-sizing: border-box;
 }
 
 .dropdown-m {
-  margin-right: 20px;
-  margin-left: auto;
-}
-
-.create-link {
+	margin-right: 20px;
+	margin-left: auto;
 }
 
 .nav-content-container {
-  display: none;
-  overflow: auto;
-  padding: 15px 15px;
-  position: fixed;
-  top: 0px;
-  z-index: 1;
-  width: 100%;
-  background-color: var(--header-color);
+	display: none;
+
+	padding: 15px 15px;
+	position: fixed;
+	top: 0px;
+	z-index: 1;
+	width: 100%;
+	background-color: var(--header-color);
 }
 
 .nav-content-container :nth-child(2) {
-  margin-right: auto;
+	margin-right: auto;
 }
 .nav-content-container :last-child {
-  margin-right: auto;
+	margin-right: auto;
 }
 
 .burger-btn {
-  display: flex;
-  align-items: center;
-  padding: 20px 20px;
-  cursor: pointer;
+	display: flex;
+	align-items: center;
+	padding: 20px 20px;
+	cursor: pointer;
 }
 
 .close-nav-mobile-btn {
-  display: flex;
-  padding: 5px 5px;
-  cursor: pointer;
+	display: flex;
+	padding: 5px 5px;
+	cursor: pointer;
 }
 
 .isHidden {
-  display: none;
+	display: none;
 }
 
 .isVisible {
-  display: revert;
+	display: revert;
 }
 
 @media screen and (min-width: 1000px) {
-  .nav-content-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    position: relative;
-  }
+	.nav-content-container {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		position: relative;
+	}
 
-  .close-nav-mobile-btn {
-    display: none;
-  }
+	.close-nav-mobile-btn {
+		display: none;
+	}
 
-  .nav-logo {
-    display: block;
-  }
+	.nav-logo {
+		display: block;
+	}
 
-  .nav-container .nav-link {
-    padding: 0 10px;
-    float: none;
-    clear: none;
-  }
+	.nav-container .nav-link {
+		padding: 0 10px;
+		float: none;
+		clear: none;
+	}
 
-  .dropdown-m {
-    position: relative;
-    display: inline-block;
-    margin-left: auto;
-  }
+	.dropdown-m {
+		position: relative;
+		display: inline-block;
+		margin-left: auto;
+	}
 
-  .profile-picture {
-    display: inline-block;
-  }
+	.profile-picture {
+		display: inline-block;
+	}
 
-  .burger-btn {
-    display: none;
-    color: green;
-  }
+	.burger-btn {
+		display: none;
+		color: green;
+	}
 
-  /* without isHidden set to something other than display:none here, the menu bar doesn't appear as a horizontal bar when the screen size is larger than the breakpoint */
-  .isHidden {
-    display: flex;
-  }
+	/* without isHidden set to something other than display:none here, the menu bar doesn't appear as a horizontal bar when the screen size is larger than the breakpoint */
+	.isHidden {
+		display: flex;
+	}
 }
 
 @media (min-width: 1000px) {
-  .nav-container {
-    display: flex;
-
-    align-self: center;
-  }
+	.nav-container {
+		display: flex;
+		align-self: center;
+	}
 }

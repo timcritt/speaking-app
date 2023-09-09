@@ -1,149 +1,196 @@
-import React, { useState, createContext, useEffect, useCallback } from 'react';
-import getTest from 'APIHandlers/getTest';
+import React, { createContext, useReducer } from "react";
 
 export const FCEPart2Context = createContext();
 
 export const FCEPart2ContextProvider = ({ children }) => {
-  const [questionOne, setQuestionOne] = useState('');
-  const [shortTurnQuestion, setShortTurnQuestion] = useState('');
-  const [imageOneUrl, setImageOneUrl] = useState(null);
-  const [imageTwoUrl, setImageTwoUrl] = useState(null);
-  const [imageOneRef, setImageOneRef] = useState(null);
-  const [imageTwoRef, setImageTwoRef] = useState(null);
-  const [testTags, setTestTags] = useState([]);
-  const [docRef, setDocRef] = useState(null);
-  const [creatorId, setCreatorId] = useState(null);
-  const [shortTurnVisible, setShortTurnVisible] = useState(false);
-  const [time, setTime] = useState(6000);
-  const [hasFetched, setHasFetched] = useState(false);
-  const [unsavedChanges, setUnsavedChanges] = useState(false);
+	const initialState = {
+		questionOne: "",
+		shortTurnQuestion: "",
+		imageOneUrl: null,
+		imageTwoUrl: null,
+		imageOneRef: null,
+		imageTwoRef: null,
+		testTags: [],
+		docRef: "",
+		creatorId: null,
+		shortTurnVisible: null,
+		time: 6000,
+		hasFetched: false,
+		unsavedChanges: false,
+	};
 
-  const fetchTest = useCallback(() => {
-    getTest('FCEPart2', docRef).then((data) => {
-      if (data) {
-        setImageOneUrl(data.imageOneUrl);
-        setImageTwoUrl(data.imageTwoUrl);
-        setImageOneRef(data.imageOneRef);
-        setImageTwoRef(data.imageTwoRef);
-        setQuestionOne(data.questionOne);
-        setShortTurnQuestion(data.shortTurnQuestion);
-        setCreatorId(data.creatorId);
-        setTestTags(data.tags);
-        setHasFetched(true);
-      } else {
-        setDocRef('new');
-        setHasFetched(true);
-      }
-    });
-  }, [docRef]);
+	const reducer = (state, action) => {
+		switch (action.type) {
+			case "updateQuestionOne":
+				return {
+					...state,
+					questionOne: action.payload,
+				};
+			case "updateShortTurnQuestion":
+				return {
+					...state,
+					shortTurnQuestion: action.payload,
+				};
+			case "updateImageOneUrl":
+				return {
+					...state,
+					imageOneUrl: action.payload,
+				};
+			case "updateImageTwoUrl":
+				return {
+					...state,
+					imageTwoUrl: action.payload,
+				};
+			case "updateImageOneRef":
+				return {
+					...state,
+					imageOneRef: action.payload,
+				};
+			case "updateImageTwoRef":
+				return {
+					...state,
+					imageTwoRef: action.payload,
+				};
+			case "updateTestTags":
+				return {
+					...state,
+					testTags: action.payload,
+				};
+			case "addTestTag":
+				return { ...state, testTags: [...state.testTags, action.payload] };
 
-  const clearState = () => {
-    setQuestionOne('');
-    setShortTurnQuestion('');
-    setImageOneUrl(null);
-    setImageTwoUrl(null);
-    setImageOneRef(null);
-    setImageTwoRef(null);
-    setTestTags([]);
-    setDocRef(null);
-    setCreatorId(null);
-    setShortTurnVisible(false);
-    setUnsavedChanges(false);
-  };
+			case "removeTestTag":
+				return {
+					...state,
+					testTags: [
+						...state.testTags.filter((testTag) => testTag !== action.payload),
+					],
+				};
+			case "updateDocRef":
+				return {
+					...state,
+					docRef: action.payload,
+				};
+			case "updateCreatorId":
+				return {
+					...state,
+					creatorId: action.payload,
+				};
+			case "updateShortTurnVisible":
+				return {
+					...state,
+					shortTurnVisible: action.payload,
+				};
+			case "updateTime":
+				return {
+					...state,
+					updateTime: action.payload,
+				};
+			case "updateHasFetched":
+				return {
+					...state,
+					hasFetched: action.payload,
+				};
+			case "updateUnsavedChanges":
+				return {
+					...state,
+					unsavedChanges: action.payload,
+				};
+			case "updateTest":
+				return {
+					...state,
+					...action.payload,
+				};
+			case "resetState":
+				return { ...initialState };
+			default: {
+				return state;
+			}
+		}
+	};
 
-  const handleSetTags = (tag, selected) => {
-    if (!selected) {
-      //adds tag to the state
-      setTestTags((prevTags) => {
-        return [...prevTags, tag];
-      });
-      setUnsavedChanges(true);
-    } else {
-      //removes the tag from the state
-      setTestTags((prevTags) => {
-        return [...prevTags.filter((currentTag) => currentTag !== tag)];
-      });
-    }
-  };
+	const [part2State, dispatch] = useReducer(reducer, { ...initialState });
 
-  //these functions are called when user makes changes to the test
-  const handleEditQuestionOne = (e) => {
-    setQuestionOne(e.currentTarget.value);
-    setUnsavedChanges(true);
-  };
-  const handleEditShortTurnQuestion = (e) => {
-    setShortTurnQuestion(e.currentTarget.value);
-    setUnsavedChanges(true);
-  };
-  const handleEditImageOneUrl = (imageOneUrl) => {
-    setImageOneUrl(imageOneUrl);
-    setUnsavedChanges(true);
-  };
-  const handleEditImageOneRef = (imageOneRef) => {
-    setImageOneRef(imageOneRef);
-    setUnsavedChanges(true);
-  };
-  const handleEditImageTwoUrl = (imageTwoUrl) => {
-    setImageTwoUrl(imageTwoUrl);
-    setUnsavedChanges(true);
-  };
-  const handleEditImageTwoRef = (imageTwoRef) => {
-    setImageTwoRef(imageTwoRef);
-    setUnsavedChanges(true);
-  };
+	const dispatchHandlers = {
+		updateQuestionOne: (payload) => {
+			dispatch({ type: "updateQuestionOne", payload: payload });
+		},
 
-  // docRef is updated from the params from within the component displaying the context.
-  // UseEffect only runs if the consuming component requests a different test to the previous one displayed.
-  useEffect(() => {
-    setHasFetched(false);
+		updateShortTurnQuestion: (payload) => {
+			dispatch({ type: "updateShortTurnQuestion", payload: payload });
+		},
 
-    if (docRef) {
-      fetchTest();
-    } else {
-      setHasFetched(true);
-    }
-  }, [docRef, fetchTest]);
+		updateImageOneUrl: (payload) => {
+			dispatch({ type: "updateImageOneUrl", payload: payload });
+		},
 
-  return (
-    <FCEPart2Context.Provider
-      value={{
-        questionOne,
-        setQuestionOne,
-        shortTurnQuestion,
-        setShortTurnQuestion,
-        imageOneUrl,
-        setImageOneUrl,
-        imageTwoUrl,
-        setImageTwoUrl,
-        imageOneRef,
-        setImageOneRef,
-        imageTwoRef,
-        setImageTwoRef,
-        testTags,
-        docRef,
-        setDocRef,
-        creatorId,
-        setCreatorId,
-        shortTurnVisible,
-        setShortTurnVisible,
-        time,
-        setTime,
-        hasFetched,
-        setHasFetched,
-        clearState,
-        unsavedChanges,
-        setUnsavedChanges,
-        fetchTest,
-        handleSetTags,
-        handleEditQuestionOne,
-        handleEditShortTurnQuestion,
-        handleEditImageOneUrl,
-        handleEditImageOneRef,
-        handleEditImageTwoUrl,
-        handleEditImageTwoRef,
-      }}
-    >
-      {children}
-    </FCEPart2Context.Provider>
-  );
+		updateImageTwoUrl: (payload) => {
+			dispatch({ type: "updateImageTwoUrl", payload: payload });
+		},
+
+		updateImageOneRef: (payload) => {
+			dispatch({ type: "updateImageOneRef", payload: payload });
+		},
+
+		updateImageTwoRef: (payload) => {
+			dispatch({ type: "updateImageTwoRef", payload: payload });
+		},
+
+		updateTestTags: (payload) => {
+			dispatch({ type: "updateTestTags", payload: payload });
+		},
+
+		updateDocRef: (payload) => {
+			dispatch({ type: "updateDocRef", payload: payload });
+		},
+
+		updateCreatorId: (payload) => {
+			dispatch({ type: "updateCreatorId", payload: payload });
+		},
+
+		updateShortTurnVisible: (payload) => {
+			dispatch({ type: "updateShortTurnVisible", payload: payload });
+		},
+
+		updateTime: (payload) => {
+			dispatch({ type: "updateTime", payload: payload });
+		},
+
+		updateHasFetched: (payload) => {
+			dispatch({ type: "updateHasFetched", payload: payload });
+		},
+
+		updateUnsavedChanges: (payload) => {
+			dispatch({ type: "updateUnsavedChanges", payload: payload });
+		},
+
+		updateTest: (payload) => {
+			dispatch({ type: "updateTest", payload: payload });
+		},
+
+		resetState: (payload) => {
+			dispatch({ type: "resetState", payload: payload });
+		},
+
+		handleSetTags: (tag, selected) => {
+			if (!selected) {
+				//adds tag to the state
+				dispatch({ type: "addTestTag", payload: tag });
+				//setUnsavedChanges(true);
+			} else {
+				dispatch({ type: "removeTestTag", payload: tag });
+			}
+		},
+	};
+
+	return (
+		<FCEPart2Context.Provider
+			value={{
+				...part2State,
+				...dispatchHandlers,
+			}}
+		>
+			{children}
+		</FCEPart2Context.Provider>
+	);
 };

@@ -22,7 +22,6 @@ import styles from "./Part3.module.css";
 
 //API
 import getTest from "APIHandlers/getTest";
-import TestToolBarEdit from "components/FCEPart2/TestToolBarEdit";
 
 //hooks
 // import useToggleShortTurn from 'hooks/useToggleShortTurn';
@@ -119,13 +118,13 @@ const Part3ViewOverlay = ({ part3Context, testId, testType, setEditMode }) => {
 			delete test.id;
 			test.testTags = test.tags;
 			delete test.tags;
-			context.updateTest(test);
+			await context.updateTest(test);
 			console.log(test);
 		};
 
 		//Only fetches new test if the one stored in state is not the one navigated to, i.e, referenced in params
 		//Reduces redundant API calls and rerenders when navigating between view test and edit test
-		if (TestToolBarEdit) {
+		if (testId) {
 			asyncWrapper();
 		}
 	}, [testId]);

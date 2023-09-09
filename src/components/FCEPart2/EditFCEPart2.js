@@ -16,14 +16,14 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 //context
 import { FCEPart2Context } from "context/FCEPart2Context";
 
-//custom hooks
-import useLoadTestIntoComponent from "hooks/useLoadTestIntoComponent";
+//API handlers
+import getTest from "APIHandlers/getTest";
 
 //styles
 import styles from "./EditFCEPart2.module.css";
 import { FCEPart2 } from "APIHandlers/firebaseConsts";
 
-const EditFCEPart2 = (props) => {
+const EditFCEPart2 = ({ docRef, testType, setEditMode, handleShowModal }) => {
 	const context = useContext(FCEPart2Context);
 
 	const [inputStatus, setInputStatus] = useState({
@@ -34,18 +34,34 @@ const EditFCEPart2 = (props) => {
 		topicTagsFailedValidation: false,
 	});
 
-	useLoadTestIntoComponent(
-		context.setDocRef,
-		context.clearState,
-		context.fetchTest,
-		context.unsavedChanges,
-		context.setUnsavedChanges,
-		props.docRef
-	);
+	useEffect(() => {
+		const asyncWrapper = async () => {
+			context.updateHasFetched(false);
+			const test = await getTest("FCEPart2", docRef);
+			console.log(test);
+			//change object shape to match state shape before dispatching
+			test.docRef = test.id;
+			delete test.id;
+			test.testTags = test.tags;
+			delete test.tags;
+			await context.updateTest(test);
+			context.updateHasFetched(true);
+			console.log(test);
+		};
+		//THESE COMMENTS NEED UPDATING
+		//Only fetches new test if the one stored in state is not the one navigated to, i.e, referenced in params
+		//Reduces redundant API calls and rerenders when navigating between view test and edit test
+		if (docRef !== "new") {
+			asyncWrapper();
+		} else {
+			context.resetState();
+		}
+		context.updateHasFetched(true);
+	}, [docRef]);
 
 	useEffect(() => {
 		return () => {
-			props.setEditMode(false);
+			setEditMode(false);
 		};
 	}, []);
 
@@ -79,17 +95,17 @@ const EditFCEPart2 = (props) => {
 							>
 								<ExamPicture
 									image={context.imageOneUrl}
-									setImage={context.handleEditImageOneUrl}
+									setImage={context.updateImageOneUrl}
 								>
 									{context.imageOneUrl ? (
 										<ImageDeleteBtn
-											setImageUrl={context.handleEditImageOneUrl}
-											setImageRef={context.handleEditImageOneRef}
+											setImageUrl={context.updateImageOneUrl}
+											setImageRef={context.updateImageOneRef}
 										/>
 									) : (
 										<SimpleModal
 											modalButtonText={"upload"}
-											setImageUrl={context.handleEditImageOneUrl}
+											setImageUrl={context.updateImageOneUrl}
 											modalButton={
 												<button
 													className={styles.clickable_image_overlay}
@@ -102,17 +118,17 @@ const EditFCEPart2 = (props) => {
 							<div className={`${styles.image_container}`}>
 								<ExamPicture
 									image={context.imageTwoUrl}
-									setImage={context.handleEditImageTwoUrl}
+									setImage={context.updateImageTwoUrl}
 								>
 									{context.imageTwoUrl ? (
 										<ImageDeleteBtn
-											setImageUrl={context.handleEditImageTwoUrl}
-											setImageRef={context.handleEditImageTwoRef}
+											setImageUrl={context.updateImageTwoUrl}
+											setImageRef={context.updateImageTwoRef}
 										/>
 									) : (
 										<SimpleModal
 											modalButtonText={"upload"}
-											setImageUrl={context.handleEditImageTwoUrl}
+											setImageUrl={context.updateImageTwoUrl}
 											modalButton={
 												<button
 													className={`${styles.clickable_image_overlay} ${
@@ -146,7 +162,9 @@ const EditFCEPart2 = (props) => {
 								}`}
 								value={context.questionOne}
 								placeholder="enter long turn question"
-								onChange={context.handleEditQuestionOne}
+								onChange={(e) =>
+									context.updateQuestionOne(e.currentTarget.value)
+								}
 								required
 							/>
 							<label>
@@ -165,7 +183,9 @@ const EditFCEPart2 = (props) => {
 								}`}
 								value={context.shortTurnQuestion}
 								placeholder="enter short turn question"
-								onChange={context.handleEditShortTurnQuestion}
+								onChange={(e) =>
+									context.updateShortTurnQuestion(e.currentTarget.value)
+								}
 								required
 							/>
 						</fieldset>
@@ -179,11 +199,11 @@ const EditFCEPart2 = (props) => {
 
 						<TestToolBarEdit
 							docRef={context.docRef}
-							clearState={context.clearState}
+							clearState={context.resetState}
 							setInputStatus={setInputStatus}
-							handleClickViewButton={() => props.setEditMode(false)}
+							handleClickViewButton={() => setEditMode(false)}
 							testType={FCEPart2}
-							handleShowModal={() => props.handleShowModal(false)}
+							closeModal={() => handleShowModal(false)}
 							publishButtonRenderProp={() => (
 								<PublishWarningModal setInputStatus={setInputStatus} />
 							)}

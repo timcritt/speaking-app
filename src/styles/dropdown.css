@@ -1,50 +1,48 @@
 .dropdown {
-  position: relative;
-  display: inline-block;
+	position: relative;
+	display: inline-block;
 }
 
 .dropdown a {
-  text-decoration: none;
+	text-decoration: none;
 }
 
 .dropdown a:visited {
-  color: black;
+	color: black;
 }
 
-
 .dropdown-content {
-  display: none;
-  color: black;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  padding: 12px 16px;
-  background-color: white;
-  z-index: 1;
-  right: 0px;
-  text-align: left;
-  border-radius: 5px;
+	display: none;
+	color: black;
+	position: absolute;
+	background-color: #f9f9f9;
+	min-width: 160px;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+	padding: 12px 16px;
+	background-color: white;
+	z-index: 999;
+	right: 0px;
+	text-align: left;
+	border-radius: 5px;
 }
 
 .dropdown-m:hover .dropdown-content {
-  display: block;
+	display: block;
 }
 
 .nav-dropdown-link {
-  padding: 10px 20px 10px 20px;
-  border-radius: 3px;
-  margin: 0;
-  border: 1px solid white;
-  box-sizing: border-box;
-  transition: background-color 0.25s, color 0.25s;
+	padding: 10px 20px 10px 20px;
+	border-radius: 3px;
+	margin: 0;
+	border: 1px solid white;
+	box-sizing: border-box;
+	transition: background-color 0.25s, color 0.25s;
 }
 
 .nav-dropdown-link:hover {
-  background-color: #FAFAFA;
-  cursor: default;
-  color: darkgoldenrod;
-  border: 1px solid #dbdbdb;
-  box-sizing: inherit;
+	background-color: #fafafa;
+	cursor: default;
+	color: darkgoldenrod;
+	border: 1px solid #dbdbdb;
+	box-sizing: inherit;
 }
-

@@ -1,4 +1,4 @@
-import React, { useState, createContext, useEffect, useReducer } from "react";
+import React, { useState, createContext, useReducer } from "react";
 
 export const FCEPart3Context = createContext();
 
@@ -11,7 +11,7 @@ export const FCEPart3ContextProvider = ({ children }) => {
 		bottomLeft: "",
 		bottomCentre: "",
 		bottomRight: "",
-		testTags: "",
+		testTags: [],
 		docRef: "",
 		creatorId: "",
 		changesSaved: "",

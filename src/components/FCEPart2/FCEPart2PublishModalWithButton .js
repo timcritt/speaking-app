@@ -130,12 +130,12 @@ const FCEPart2PublishModalWithButton = ({ setInputStatus }) => {
 						data.imageTwoThumbData.url,
 						data.imageTwoThumbData.reference
 					).then(
-						context.setImageOneUrl(data.imageOneData.url),
-						context.setImageTwoUrl(data.imageTwoData.url),
-						context.setImageOneRef(data.imageOneData.reference),
-						context.setImageTwoRef(data.imageTwoData.reference),
+						context.updateImageOneUrl(data.imageOneData.url),
+						context.updateImageTwoUrl(data.imageTwoData.url),
+						context.updateImageOneRef(data.imageOneData.reference),
+						context.updateImageTwoRef(data.imageTwoData.reference),
 						setUploadComplete(true),
-						context.setUnsavedChanges(false),
+						context.updateUnsavedChanges(false),
 						setOpen(false)
 						//setChangesSaved(true)
 					);
@@ -162,10 +162,9 @@ const FCEPart2PublishModalWithButton = ({ setInputStatus }) => {
 							data.imageTwoThumbData.reference,
 							data.imageTwoThumbData.url
 						).then((response) => {
-							context.setDocRef(response.id);
+							context.updateDocRef(response.id);
 							setUploadComplete(true);
-							context.setUnsavedChanges(false);
-							history.push(`/FCEPart2/${response.id}`);
+							context.updateUnsavedChanges(false);
 						});
 					}
 				);

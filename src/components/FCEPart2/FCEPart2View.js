@@ -1,53 +1,65 @@
-import React, { Fragment, useState, useContext } from "react";
+import React, { Fragment, useState, useContext, useEffect } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+
 //context
 import { firebaseAuth } from "context/AuthProvider";
 import { FCEPart2Context } from "context/FCEPart2Context";
+
 //3rd party components
-import LinearProgress from "@material-ui/core/LinearProgress";
+import CircularProgress from "@mui/material/CircularProgress";
+
 //custom components
 import TestToolBarView from "components/TestCommon/TestToolBarView";
 import Part2QuestionRow from "components/TestCommon/Part2QuestionRow";
-import ToolBarButtonsFCEPart2 from "../TestCommon/ToolBarButtonsView";
 import ToolBarButtonsView from "components/TestCommon/ToolBarButtonsView";
 import Timer from "components/common/Timer";
 import GrabSlider from "components/common/GrabSlider/GrabSlider";
+
 //constants
 import { FCEPart2 } from "APIHandlers/firebaseConsts";
-//custom hooks
-import useLoadTestIntoComponent from "hooks/useLoadTestIntoComponent";
+
+//API Handlers
+import getTest from "APIHandlers/getTest";
 
 //CSS Modules
 import styles from "./FCEPart2View.module.css";
 
-const FCEPart2View = (props) => {
+const FCEPart2View = ({ docRef, testType, setEditMode }) => {
 	//max time for short and long terms. Passed down to question row so that flipping it results in time change
 	const shortTime = "2000";
 	const longTime = "6000";
 
 	const context = useContext(FCEPart2Context);
+	console.log(context);
 	const { userId } = useContext(firebaseAuth);
 	const handleFullScreen = useFullScreenHandle();
 	const [time, setTime] = useState(6000);
 
-	useLoadTestIntoComponent(
-		context.setDocRef,
-		context.clearState,
-		context.fetchTest,
-		context.unsavedChanges,
-		context.setUnsavedChanges,
-		props.match.params.id
-	);
-
-	const buttons = (
-		<ToolBarButtonsFCEPart2
-			userId={userId}
-			creatorId={context.creatorId}
-			testType={FCEPart2}
-			docRef={context.docRef}
-			handleFullScreen={handleFullScreen}
-		/>
-	);
+	useEffect(() => {
+		context.updateHasFetched(false);
+		const asyncWrapper = async () => {
+			const test = await getTest("FCEPart2", docRef);
+			console.log(test);
+			//change object shape to match state shape before dispatching
+			test.docRef = test.id;
+			delete test.id;
+			test.testTags = test.tags;
+			delete test.tags;
+			await context.updateTest(test);
+			context.updateHasFetched(true);
+			console.log(test);
+		};
+		//THESE COMMENTS NEED UPDATING
+		//Only fetches new test if the one stored in state is not the one navigated to, i.e, referenced in params
+		//Reduces redundant API calls and rerenders when navigating between view test and edit test
+		if (docRef !== "new") {
+			asyncWrapper();
+			context.updateHasFetched(true);
+		} else {
+			context.resetState();
+			context.updateHasFetched(true);
+		}
+	}, [docRef]);
 
 	if (context.hasFetched) {
 		return (
@@ -86,7 +98,7 @@ const FCEPart2View = (props) => {
 											testType={"FCEPart2"}
 											docRef={context.docRef}
 											handleFullScreen={handleFullScreen}
-											handleClickEditButton={props.setEditMode}
+											handleClickEditButton={setEditMode}
 										/>
 									}
 								/>
@@ -99,7 +111,7 @@ const FCEPart2View = (props) => {
 	} else {
 		return (
 			<div className={"full-width"}>
-				<LinearProgress />
+				<CircularProgress />
 			</div>
 		);
 	}

@@ -19,101 +19,51 @@ import EditCAEPart3 from "components/CAEPart3/EditCAEPart3";
 import EditFCEPart4 from "components/Part4/EditFCEPart4";
 import FCEPart4 from "components/Part4/FCEPart4View";
 import CreateView from "components/Create/CreateView";
-import { FCEPart2ContextProvider } from "context/FCEPart2Context";
-import { FCEPart3ContextProvider } from "context/FCEPart3Context";
-import { CAEPart2ContextProvider } from "context/CAEPart2Context";
-import { CAEPart3ContextProvider } from "context/CAEPart3Context";
 import CAEPart2View from "components/CAEPart2/CAEPart2View";
 import EditCAEPart2 from "components/CAEPart2/EditCAEPart2";
 import ImageSearch from "components/common/ImageSearch";
 import ResetPassword from "components/ResetPassword";
 import ResetPasswordConfirmation from "components/ResetPasswordConfirmation";
-import { Part4ContextProvider } from "context/Part4Context";
 
 const Routes = () => {
 	return (
 		<Fragment>
-			<FCEPart2ContextProvider>
-				<FCEPart3ContextProvider>
-					<CAEPart2ContextProvider>
-						<CAEPart3ContextProvider>
-							<Part4ContextProvider>
-								<Switch>
-									<Route exact path="/home" component={Home} />
-									<PrivateRoute exact path="/create" component={CreateView} />
-									<Route exact path="/" component={Home} />
-									<Route exact path="/signin" component={Signin} />
-									<Route exact path="/signup" component={Signup} />
-									<Route
-										exact
-										path="/resetPassword"
-										component={ResetPassword}
-									/>
-									<Route
-										exact
-										path="/resetPasswordConfirmation"
-										component={ResetPasswordConfirmation}
-									/>
+			<Switch>
+				<Route exact path="/home" component={Home} />
+				<PrivateRoute exact path="/create" component={CreateView} />
+				<Route exact path="/" component={Home} />
+				<Route exact path="/signin" component={Signin} />
+				<Route exact path="/signup" component={Signup} />
+				<Route exact path="/resetPassword" component={ResetPassword} />
+				<Route
+					exact
+					path="/resetPasswordConfirmation"
+					component={ResetPasswordConfirmation}
+				/>
 
-									{/*FCE*/}
-									<PrivateRoute
-										exact
-										path="/EditFCEPart2/:id"
-										component={EditFCEPart2}
-									/>
-									<Route exact path="/FCEPart2/:id" component={FCEPart2View} />
-									<Route exact path="/FCEPart3/:id" component={FCEPart3View} />
-									<Route
-										exact
-										path="/EditFCEPart3/:id"
-										component={EditFCEPart3}
-									/>
-									<Route exact path="/FCEPart4/:id" component={FCEPart4} />
-									<Route
-										exact
-										path="/EditFCEPart4/:id"
-										component={EditFCEPart4}
-									/>
+				{/*FCE*/}
+				<PrivateRoute exact path="/EditFCEPart2/:id" component={EditFCEPart2} />
+				<Route exact path="/FCEPart2/:id" component={FCEPart2View} />
+				<Route exact path="/FCEPart3/:id" component={FCEPart3View} />
+				<Route exact path="/EditFCEPart3/:id" component={EditFCEPart3} />
+				<Route exact path="/FCEPart4/:id" component={FCEPart4} />
+				<Route exact path="/EditFCEPart4/:id" component={EditFCEPart4} />
 
-									{/*CAE*/}
-									<Route exact path="/CAEPart2/:id" component={CAEPart2View} />
-									<Route
-										exact
-										path="/EditCAEPart2/:id"
-										component={EditCAEPart2}
-									/>
-									<Route exact path="/CAEPart3/:id" component={CAEPart3View} />
-									<PrivateRoute
-										exact
-										path="/EditCAEPart3/:id"
-										component={EditCAEPart3}
-									/>
+				{/*CAE*/}
+				<Route exact path="/CAEPart2/:id" component={CAEPart2View} />
+				<Route exact path="/EditCAEPart2/:id" component={EditCAEPart2} />
+				<Route exact path="/CAEPart3/:id" component={CAEPart3View} />
+				<PrivateRoute exact path="/EditCAEPart3/:id" component={EditCAEPart3} />
 
-									{/*test components*/}
-									<Route exact path="/ImageSearch/" component={ImageSearch} />
+				{/*test components*/}
+				<Route exact path="/ImageSearch/" component={ImageSearch} />
 
-									<Route
-										path="/userContent/:userId"
-										component={CreatorContent}
-									/>
-									<Route exact path="/about" component={About} />
-									<Route path="/exploreContent/" component={ExploreContent} />
-									<Route
-										exact
-										path="/folder/:folderId"
-										component={ViewFolder}
-									/>
-									<PrivateRoute
-										exact
-										path="/profile/:userId"
-										component={Profile}
-									/>
-								</Switch>
-							</Part4ContextProvider>
-						</CAEPart3ContextProvider>
-					</CAEPart2ContextProvider>
-				</FCEPart3ContextProvider>
-			</FCEPart2ContextProvider>
+				<Route path="/userContent/:userId" component={CreatorContent} />
+				<Route exact path="/about" component={About} />
+				<Route path="/exploreContent/" component={ExploreContent} />
+				<Route exact path="/folder/:folderId" component={ViewFolder} />
+				<PrivateRoute exact path="/profile/:userId" component={Profile} />
+			</Switch>
 		</Fragment>
 	);
 };
