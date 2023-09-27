@@ -14,6 +14,7 @@ import Part2QuestionRow from "components/TestCommon/Part2QuestionRow";
 import ToolBarButtonsView from "components/TestCommon/ToolBarButtonsView";
 import Timer from "components/common/Timer";
 import GrabSlider from "components/common/GrabSlider/GrabSlider";
+import ImageWithPlaceHolder from "components/TestCommon/ImageWithPlaceHolder";
 
 //constants
 import { FCEPart2 } from "APIHandlers/firebaseConsts";
@@ -24,21 +25,21 @@ import getTest from "APIHandlers/getTest";
 //CSS Modules
 import styles from "./FCEPart2View.module.css";
 
-const FCEPart2View = ({ docRef, testType, setEditMode }) => {
+const FCEPart2View = ({ context, docToFetchRef, setEditMode }) => {
 	//max time for short and long terms. Passed down to question row so that flipping it results in time change
 	const shortTime = "2000";
 	const longTime = "6000";
 
-	const context = useContext(FCEPart2Context);
-	console.log(context);
 	const { userId } = useContext(firebaseAuth);
 	const handleFullScreen = useFullScreenHandle();
 	const [time, setTime] = useState(6000);
 
 	useEffect(() => {
-		context.updateHasFetched(false);
+		//clear state before attempting to fetch a new test to prevent previous test being displayed while new one is loading (for slower connections)
+
 		const asyncWrapper = async () => {
-			const test = await getTest("FCEPart2", docRef);
+			context.updateHasFetched(true);
+			const test = await getTest(FCEPart2, docToFetchRef);
 			console.log(test);
 			//change object shape to match state shape before dispatching
 			test.docRef = test.id;
@@ -52,14 +53,15 @@ const FCEPart2View = ({ docRef, testType, setEditMode }) => {
 		//THESE COMMENTS NEED UPDATING
 		//Only fetches new test if the one stored in state is not the one navigated to, i.e, referenced in params
 		//Reduces redundant API calls and rerenders when navigating between view test and edit test
-		if (docRef !== "new") {
-			asyncWrapper();
-			context.updateHasFetched(true);
-		} else {
+		if (docToFetchRef !== context.docRef) {
 			context.resetState();
+			if (docToFetchRef !== "new") {
+				asyncWrapper();
+			}
+
 			context.updateHasFetched(true);
 		}
-	}, [docRef]);
+	}, [docToFetchRef]);
 
 	if (context.hasFetched) {
 		return (
@@ -77,10 +79,10 @@ const FCEPart2View = ({ docRef, testType, setEditMode }) => {
 								/>
 							</div>
 							<div className={styles.left_image_container}>
-								<img src={context.imageOneUrl} alt="could not load" />
+								<ImageWithPlaceHolder imageSrc={context.imageOneUrl} />
 							</div>
 							<div className={styles.right_image_container}>
-								<img src={context.imageTwoUrl} alt="could not load" />
+								<ImageWithPlaceHolder imageSrc={context.imageTwoUrl} />
 							</div>
 							<div className={styles.test_tag_container}>
 								{context.hasFetched && (

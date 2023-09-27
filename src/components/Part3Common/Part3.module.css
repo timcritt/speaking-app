@@ -107,3 +107,14 @@ textarea:focus {
 :fullscreen .grid_container {
 	height: 100vh;
 }
+
+.question_field_set {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.edit_option_container {
+	display: flex;
+	flex-flow: column;
+}

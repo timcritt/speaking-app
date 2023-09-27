@@ -6,7 +6,7 @@ export const FCEPart3ContextProvider = ({ children }) => {
 	const initialState = {
 		questionOne: "",
 		shortTurnQuestion: "",
-		topleft: "",
+		topLeft: "",
 		topRight: "",
 		bottomLeft: "",
 		bottomCentre: "",
@@ -71,6 +71,11 @@ export const FCEPart3ContextProvider = ({ children }) => {
 					...state,
 					...action.payload,
 				};
+			case "updateDocRef":
+				return {
+					...state,
+					docRef: action.payload,
+				};
 			case "resetState":
 				return { ...initialState };
 
@@ -132,6 +137,10 @@ export const FCEPart3ContextProvider = ({ children }) => {
 		dispatch({ type: "updateTest", payload: payload });
 	};
 
+	const updateDocRef = (payload) => {
+		dispatch({ type: "updateDocRef", payload: payload });
+	};
+
 	//resets state to initial value
 	const resetState = () => {
 		dispatch({ type: "resetState" });
@@ -155,6 +164,7 @@ export const FCEPart3ContextProvider = ({ children }) => {
 				hasFetched,
 				setHasFetched,
 				handleSetTags,
+				updateDocRef,
 			}}
 		>
 			{children}

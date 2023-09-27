@@ -8,22 +8,15 @@ import { useHistory } from "react-router";
 import MenuIcon from "@material-ui/icons/Menu";
 import CloseIcon from "@material-ui/icons/Close";
 
-import TestModal from "components/common/TestModal";
-import FCEPart2View from "components/FCEPart2/FCEPart2View";
-import FCEPart3View from "components/FCEPart3/FCEPart3View";
-import FCEPart4View from "components/Part4/FCEPart4View";
-import EditFCEPart2 from "components/FCEPart2/EditFCEPart2";
-import EditFCEPart3 from "components/FCEPart3/EditFCEPart3";
-import EditFCEPart4 from "components/Part4/EditFCEPart4";
+import { TestModalContext } from "context/TestModalContext";
 
 export const NavBar = () => {
 	const { token, handleSignout, userId, userDetails } =
 		useContext(firebaseAuth);
 	const [mobileNavVisible, setMobileNavVisible] = useState(false);
 
-	const [isOpen, setIsOpen] = useState(false);
-	const [editMode, setEditMode] = useState(true);
-	const [testType, setTestType] = useState("FCEPart2");
+	const { setIsOpen, setEditMode, setDocToFetch, setTestType } =
+		useContext(TestModalContext);
 
 	let history = useHistory();
 
@@ -32,47 +25,11 @@ export const NavBar = () => {
 		history.push("/");
 	};
 
-	const renderTest = (test) => {
-		switch (test) {
-			case "FCEPart2":
-				return (
-					<>
-						{editMode ? (
-							<EditFCEPart2
-								docRef={"new"}
-								setEditMode={setEditMode}
-								handleShowModal={setIsOpen}
-							/>
-						) : (
-							<FCEPart2View docRef={"new"} setEditMode={setEditMode} />
-						)}
-					</>
-				);
-			case "FCEPart3":
-				return (
-					<>
-						{editMode ? (
-							<EditFCEPart3 docRef={null} setEditMode={setEditMode} />
-						) : (
-							<FCEPart3View testId={null} setEditMode={setEditMode} />
-						)}
-					</>
-				);
-
-			case "FCEPart4":
-				return (
-					<>
-						{editMode ? (
-							<EditFCEPart4 docRef={null} setEditMode={setEditMode} />
-						) : (
-							<FCEPart4View docRef={null} setEditMode={setEditMode} />
-						)}
-					</>
-				);
-
-			default:
-				return "default";
-		}
+	const handleCreateTestClick = (testType) => {
+		setDocToFetch("new");
+		setTestType(testType);
+		setEditMode(true);
+		setIsOpen(true);
 	};
 
 	return (
@@ -101,15 +58,12 @@ export const NavBar = () => {
 							<div className="dropdown-m">
 								<span className={"dropdown nav-link navItem"}>Create</span>
 								<div className={"dropdown-content"}>
-									<li
-										onClick={() => {
-											setEditMode(true);
-											setIsOpen(true);
-										}}
-									>
+									<li onClick={() => handleCreateTestClick("FCEPart2")}>
 										FCE Part 2
 									</li>
-									<li>FCE Part 3</li>
+									<li onClick={() => handleCreateTestClick("FCEPart3")}>
+										FCE Part 3
+									</li>
 									<li>FCE Part 4</li>
 								</div>
 							</div>
@@ -160,9 +114,6 @@ export const NavBar = () => {
 					</Link>
 				</Fragment>
 			)}
-			<TestModal isOpen={isOpen} handleClose={() => setIsOpen(false)}>
-				{renderTest(testType)}
-			</TestModal>
 		</div>
 	);
 };

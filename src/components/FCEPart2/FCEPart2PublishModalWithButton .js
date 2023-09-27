@@ -30,8 +30,6 @@ const FCEPart2PublishModalWithButton = ({ setInputStatus }) => {
 	const [uploadComplete, setUploadComplete] = useState(false);
 	const [allInputsCompleted, setAllInputsCompleted] = useState(false);
 
-	var history = useHistory();
-
 	const validateInputs = () => {
 		if (!context.questionOne) {
 			setInputStatus((prevState) => {

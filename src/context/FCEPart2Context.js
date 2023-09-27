@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useReducer, useEffect } from "react";
 
 export const FCEPart2Context = createContext();
 
@@ -12,6 +12,7 @@ export const FCEPart2ContextProvider = ({ children }) => {
 		imageTwoRef: null,
 		testTags: [],
 		docRef: "",
+		docToFetchRef: "",
 		creatorId: null,
 		shortTurnVisible: null,
 		time: 6000,
@@ -70,6 +71,11 @@ export const FCEPart2ContextProvider = ({ children }) => {
 				return {
 					...state,
 					docRef: action.payload,
+				};
+			case "updateDocToFetchRef":
+				return {
+					...state,
+					docToFetchRef: action.payload,
 				};
 			case "updateCreatorId":
 				return {
@@ -142,6 +148,9 @@ export const FCEPart2ContextProvider = ({ children }) => {
 
 		updateDocRef: (payload) => {
 			dispatch({ type: "updateDocRef", payload: payload });
+		},
+		updateDocToFetchRef: (payload) => {
+			dispatch({ type: "updateDocToFetchRef", payload: payload });
 		},
 
 		updateCreatorId: (payload) => {

@@ -1,0 +1,12 @@
+.container {
+	background-color: white;
+	margin: 0 auto;
+	padding: 5vh 5vw;
+	width: 95%;
+	max-width: 65rem;
+	border-radius: 10px;
+	border: 0.1em solid #ebebeb;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	max-height: 96vh;
+}

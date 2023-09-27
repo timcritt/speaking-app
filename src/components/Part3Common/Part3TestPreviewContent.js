@@ -28,7 +28,7 @@ const Part3TestPreviewContent = React.memo(({ test, testId, testType }) => {
 					colorOptions={colorOptions}
 					tags={testOptions}
 					style={{ textAlign: "center" }}
-					shuffle={true}
+					shuffle={false}
 				/>
 			</div>
 			<TestPreviewOverlay testId={testId} testType={testType} />

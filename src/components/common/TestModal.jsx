@@ -8,7 +8,7 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import styles from "./TestModal.module.css";
 
 const TestModal = ({ isOpen, handleClose, children }) => {
-	if (!isOpen) return null;
+	if (!isOpen) return;
 
 	return (
 		<ReactPortal wrapperId={"react-portal-modal-container"}>

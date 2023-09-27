@@ -14,6 +14,7 @@ export default function PublishWarningModal({
 	creatorId,
 	questionOne,
 	shortTurnQuestion,
+
 	topLeft,
 	topRight,
 	testTags,
@@ -36,14 +37,13 @@ export default function PublishWarningModal({
 			bottomRightFailedValidation: !bottomRight.length > 0,
 			topLeftFailedValidation: !topLeft.length > 0,
 			topRightFailedValidation: !topRight.length > 0,
-			testTagsFailedValidation: !testTags.length > 0,
+			topicTagsFailedValidation: !testTags.length > 0,
 			questionOneFailedValidation: !questionOne.length > 0,
-			// shortTurnQuestion: shortTurnQuestion.length > 0,
+			shortTurnQuestionFailedValidation: !shortTurnQuestion.length > 0,
 		};
 
 		setInputStatus((prevState) => {
 			return {
-				...prevState,
 				...newValidationState,
 			};
 		});

@@ -1,0 +1,30 @@
+.container {
+	background-color: red;
+}
+
+.fade_in {
+	animation: imageFadeInOnLoad 500ms;
+}
+
+.shimmer {
+	color: grey;
+	display: inline-block;
+	mask: linear-gradient(-60deg, #000 30%, #0005, #000 70%) right/300% 100%;
+	background-repeat: no-repeat;
+	animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+	100% {
+		mask-position: left;
+	}
+}
+
+@keyframes imageFadeInOnLoad {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}

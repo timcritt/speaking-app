@@ -26,9 +26,8 @@ import getTest from "APIHandlers/getTest";
 //hooks
 // import useToggleShortTurn from 'hooks/useToggleShortTurn';
 
-const Part3ViewOverlay = ({ part3Context, testId, testType, setEditMode }) => {
+const Part3ViewOverlay = ({ context, docToFetchRef, setEditMode }) => {
 	const { userId } = useContext(firebaseAuth);
-	const context = useContext(part3Context);
 
 	const handleFullScreen = useFullScreenHandle();
 
@@ -111,23 +110,33 @@ const Part3ViewOverlay = ({ part3Context, testId, testType, setEditMode }) => {
 	}, [handleResize]);
 
 	useEffect(() => {
+		//clear state before attempting to fetch a new test to prevent previous test being displayed while new one is loading (for slower connections)
+
 		const asyncWrapper = async () => {
-			const test = await getTest("FCEPart3", testId);
+			//context.updateHasFetched(true);
+			const test = await getTest("FCEPart3", docToFetchRef);
+			console.log(test);
 			//change object shape to match state shape before dispatching
 			test.docRef = test.id;
 			delete test.id;
 			test.testTags = test.tags;
 			delete test.tags;
 			await context.updateTest(test);
+			//context.updateHasFetched(true);
 			console.log(test);
 		};
-
+		//THESE COMMENTS NEED UPDATING
 		//Only fetches new test if the one stored in state is not the one navigated to, i.e, referenced in params
 		//Reduces redundant API calls and rerenders when navigating between view test and edit test
-		if (testId) {
-			asyncWrapper();
+		if (docToFetchRef !== context.docRef) {
+			context.resetState();
+			if (docToFetchRef !== "new") {
+				asyncWrapper();
+			}
+
+			//context.updateHasFetched(true);
 		}
-	}, [testId]);
+	}, [docToFetchRef]);
 
 	if (true) {
 		//context.hasFetched

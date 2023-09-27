@@ -14,6 +14,7 @@ import getTest from "APIHandlers/getTest";
 import styles from "./Part4.module.css";
 
 const Part4 = ({
+	docToFetchRef,
 	setEditMode,
 	docRef,
 	questionOne,
@@ -26,25 +27,37 @@ const Part4 = ({
 	time,
 	testTags,
 	updateTest,
+	resetState,
 }) => {
 	//load test into state
 	useEffect(() => {
+		//clear state before attempting to fetch a new test to prevent previous test being displayed while new one is loading (for slower connections)
+
 		const asyncWrapper = async () => {
-			console.log(docRef);
-			const test = await getTest("FCEPart4", docRef);
+			//context.updateHasFetched(true);
+			const test = await getTest("FCEPart4", docToFetchRef);
+			console.log(test);
 			//change object shape to match state shape before dispatching
 			test.docRef = test.id;
 			delete test.id;
 			test.testTags = test.tags;
 			delete test.tags;
-			updateTest(test);
+			await updateTest(test);
+			//context.updateHasFetched(true);
 			console.log(test);
 		};
+		//THESE COMMENTS NEED UPDATING
+		//Only fetches new test if the one stored in state is not the one navigated to, i.e, referenced in params
+		//Reduces redundant API calls and rerenders when navigating between view test and edit test
+		if (docToFetchRef !== docRef) {
+			resetState();
+			if (docToFetchRef !== "new") {
+				asyncWrapper();
+			}
 
-		if (docRef) {
-			asyncWrapper();
+			//context.updateHasFetched(true);
 		}
-	}, [docRef]);
+	}, [docToFetchRef]);
 
 	const handleFullScreen = useFullScreenHandle();
 
