@@ -57,6 +57,7 @@ const EditPart3 = ({
 	});
 
 	useLoadTestInEditMode(
+		"FCEPart3",
 		docToFetchRef,
 		docRef,
 		resetState,
@@ -75,7 +76,7 @@ const EditPart3 = ({
 							Options to discuss
 							<ToolTip
 								text={
-									"Images for this part of the test are related by topic, with notable similarities but also differences. They must show people engaged in an activity or interaction"
+									"Candidates are asked to discuss the merits/drawbacks of 5 options in relation to the long and short turn questions."
 								}
 							/>
 						</legend>
@@ -163,7 +164,7 @@ const EditPart3 = ({
 							Long turn{" "}
 							<ToolTip
 								text={
-									"The long turn question asks one candidate to speculate for 1 minute about the photos, e.g, the intentions of the people pictured, the challenges involved, etc."
+									"The long turn question asks both candidates to discuss together the merits/drawbacks of 5 options."
 								}
 							/>
 						</label>
@@ -187,7 +188,7 @@ const EditPart3 = ({
 							Short turn
 							<ToolTip
 								text={
-									"The long turn question asks one candidate to speculate for 1 minute about the photos, e.g, the intentions of the people pictured, the challenges involved, etc."
+									"The short turn question is always phrased as a superlative and asks candidates to choose 1 or 2 of the options as the best/worst, most/least beneficial,"
 								}
 							/>
 						</label>

@@ -37,6 +37,7 @@ const EditFCEPart2 = ({
 	});
 
 	useLoadTestInEditMode(
+		"FCEPart2",
 		docToFetchRef,
 		context.docRef,
 		context.resetState,

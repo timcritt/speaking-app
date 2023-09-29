@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import getTest from "APIHandlers/getTest";
 
 const useLoadTestInEditMode = (
+	testType,
 	docToFetchRef,
 	docRef,
 	resetState,
@@ -15,7 +16,7 @@ const useLoadTestInEditMode = (
 
 		const asyncWrapper = async () => {
 			//context.updateHasFetched(true);
-			const test = await getTest("FCEPart3", docToFetchRef);
+			const test = await getTest(testType, docToFetchRef);
 			console.log(test);
 			//change object shape to match state shape before dispatching
 			test.docRef = test.id;

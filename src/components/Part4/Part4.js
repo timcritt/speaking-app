@@ -50,10 +50,7 @@ const Part4 = ({
 		//Only fetches new test if the one stored in state is not the one navigated to, i.e, referenced in params
 		//Reduces redundant API calls and rerenders when navigating between view test and edit test
 		if (docToFetchRef !== docRef) {
-			resetState();
-			if (docToFetchRef !== "new") {
-				asyncWrapper();
-			}
+			asyncWrapper();
 
 			//context.updateHasFetched(true);
 		}

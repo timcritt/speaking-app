@@ -21,7 +21,7 @@ const Tests = React.memo(({ results = [], testType }) => {
 			<div className="explore-content-main">
 				<div className="all-tests-container">
 					{results && results.length > 0 ? (
-						results.map((doc, index) => {
+						results.map((doc) => {
 							switch (testType) {
 								case FCEPart2:
 									return (
