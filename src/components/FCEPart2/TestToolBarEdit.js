@@ -35,6 +35,7 @@ const TestToolBarEdit = ({
 						firestoreCollection={testType}
 						iconColour={"white"}
 						handleDelete={handleDeleteTest}
+						buttonText={"delete"}
 					/>
 				</Fragment>
 			)}

@@ -49,6 +49,7 @@ const EditPart4 = ({
 
 	//Get a test from the database according to the docToFetchRef
 	useLoadTestInEditMode(
+		"FCEPart4",
 		docToFetchRef,
 		docRef,
 		resetState,

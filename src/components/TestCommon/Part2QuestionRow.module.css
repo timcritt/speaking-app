@@ -58,8 +58,9 @@
 }
 
 .question_text_container {
-	display: flex;
 	align-items: center;
+	border: 1px solid #dbdbdb;
+	background-color: #fafafa;
 }
 
 .question_text_container ul {
@@ -68,13 +69,13 @@
 
 .question_text {
 	font-size: 1em;
-	text-align: left;
+	text-align: center;
 	list-style-type: none;
 }
 
 @media (min-width: 720px) {
 	.question_text {
-		font-size: 1.3em;
+		/* font-size: 1.3em; */
 	}
 }
 
@@ -83,7 +84,10 @@
 }
 
 label {
-	padding-left: 10px;
+	font-size: 12pt;
+	padding-left: 4px;
+	width: max-content;
+	position: absolute;
 }
 
 .flip180 {

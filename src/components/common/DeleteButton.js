@@ -13,6 +13,7 @@ function DeleteButton({
 	deleteItemType,
 	iconColour,
 	firestoreCollection,
+	buttonText,
 	handleDelete = null,
 }) {
 	const [DeleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
@@ -67,7 +68,8 @@ function DeleteButton({
 			)}
 
 			<button className={styles.delete_button} onClick={handleOpenModal}>
-				delete <HighlightOffIcon style={{ color: `${iconColour}` }} />
+				{buttonText}
+				<HighlightOffIcon style={{ color: `${iconColour}` }} />
 			</button>
 		</Fragment>
 	);

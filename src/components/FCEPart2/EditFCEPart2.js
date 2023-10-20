@@ -37,7 +37,7 @@ const EditFCEPart2 = ({
 	});
 
 	useLoadTestInEditMode(
-		"FCEPart2",
+		FCEPart2,
 		docToFetchRef,
 		context.docRef,
 		context.resetState,
@@ -46,7 +46,7 @@ const EditFCEPart2 = ({
 		setEditMode
 	);
 
-	if (context.hasFetched) {
+	if (true) {
 		return (
 			<Fragment>
 				<Prompt

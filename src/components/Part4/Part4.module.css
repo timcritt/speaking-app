@@ -63,17 +63,16 @@
 	background-color: black;
 	border: none;
 	width: 100vw;
-	height: 100vh;
+
 	padding: 10vw;
 }
 
 :fullscreen .question_container > span {
 	color: black;
-	font-size: 3rem;
+
 	padding: 20px;
 }
 
 :fullscreen .question_container {
 	color: black;
-	font-size: 3rem;
 }

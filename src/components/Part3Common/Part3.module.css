@@ -50,10 +50,6 @@
 	font-size: 3.25vmin;
 }
 
-.centre * {
-	text-align: center;
-}
-
 .bottom_left {
 	grid-area: bottom-left;
 	display: flex;

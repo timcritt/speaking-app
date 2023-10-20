@@ -54,7 +54,7 @@ const Part2QuestionRow = ({
 						className={`${styles.flip_card_back_vertical} + ${styles.flip_card_face}`}
 					>
 						<div className={styles.question_text_container}>
-							<label>{shortTurnLabel}</label>
+							{shortTurnLabel}
 							<ul className={styles.question_text}>
 								{shortTurnQuestion
 									? shortTurnQuestion

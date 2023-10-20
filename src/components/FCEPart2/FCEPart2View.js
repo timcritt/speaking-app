@@ -3,7 +3,6 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 //context
 import { firebaseAuth } from "context/AuthProvider";
-import { FCEPart2Context } from "context/FCEPart2Context";
 
 //3rd party components
 import CircularProgress from "@mui/material/CircularProgress";
@@ -21,6 +20,7 @@ import { FCEPart2 } from "APIHandlers/firebaseConsts";
 
 //API Handlers
 import getTest from "APIHandlers/getTest";
+import { removeTagsFromAllEntries } from "APIHandlers/removeTagsFromAllEntries";
 
 //CSS Modules
 import styles from "./FCEPart2View.module.css";

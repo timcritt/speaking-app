@@ -1,13 +1,12 @@
-import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Fragment } from "react";
 
-import ShareButton from "components/common/ShareButton";
 import AddToMyFolders from "components/common/AddToMyFolders";
+import ShareButton from "components/common/ShareButton";
 
 //icons
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
-import FullscreenOutlinedIcon from "@material-ui/icons/FullscreenOutlined";
 import FullscreenExitOutlinedIcon from "@material-ui/icons/FullscreenExitOutlined";
+import FullscreenOutlinedIcon from "@material-ui/icons/FullscreenOutlined";
 
 import styles from "./ToolBarButtons.module.css";
 
