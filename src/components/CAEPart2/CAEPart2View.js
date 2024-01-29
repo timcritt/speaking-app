@@ -4,7 +4,7 @@ import { CAEPart2Context } from "context/CAEPart2Context";
 //3rd party modules
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 //custom modules
-import LinearProgress from "@material-ui/core/LinearProgress";
+import LinearProgress from "@mui/material/LinearProgress";
 import Part2QuestionRow from "components/TestCommon/Part2QuestionRow";
 import TestToolBar from "components/TestCommon/TestToolBarView";
 import useLoadTestIntoComponent from "hooks/useLoadTestIntoComponent";

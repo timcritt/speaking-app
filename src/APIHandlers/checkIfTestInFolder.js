@@ -1,24 +1,26 @@
-import { projectFirestore } from '../firebase/firebaseIndex';
-import { junctionFolderTest } from './firebaseConsts';
+import { projectFirestore } from "../firebaseStuff/firebaseIndex";
+import { junctionFolderTest } from "./firebaseConsts";
 
 //checks if there exists a junction_folder_test document for a pair of folder and test document ids
 //i.e. checks if the test has been placed in the folder by a user
 
 const checkIfTestInFolder = async (folderId, testId) => {
-  var testInFolder = false;
-  var results = projectFirestore.collection(junctionFolderTest).doc(`${folderId}_${testId}`);
+	var testInFolder = false;
+	var results = projectFirestore
+		.collection(junctionFolderTest)
+		.doc(`${folderId}_${testId}`);
 
-  await results
-    .get()
-    .then((doc) => {
-      if (doc.exists) {
-        testInFolder = true;
-      } else {
-        testInFolder = false;
-      }
-    })
-    .catch((error) => {});
-  return testInFolder;
+	await results
+		.get()
+		.then((doc) => {
+			if (doc.exists) {
+				testInFolder = true;
+			} else {
+				testInFolder = false;
+			}
+		})
+		.catch((error) => {});
+	return testInFolder;
 };
 
 export default checkIfTestInFolder;

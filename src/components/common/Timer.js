@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import PlayArrowOutlinedIcon from "@material-ui/icons/PlayArrowOutlined";
-import StopOutlinedIcon from "@material-ui/icons/StopOutlined";
-import RotateLeftOutlinedIcon from "@material-ui/icons/RotateLeftOutlined";
+import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
+import StopOutlinedIcon from "@mui/icons-material/StopOutlined";
+import RotateLeftOutlinedIcon from "@mui/icons-material/RotateLeftOutlined";
 
 //CSS Modules
 import styles from "./Timer.module.css";

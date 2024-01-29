@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 import Modal from "./Modal";
-import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 //API handlers
 import deleteRecordFirestore from "APIHandlers/deleteRecordFirestore";

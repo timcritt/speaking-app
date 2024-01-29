@@ -5,12 +5,15 @@ import TestModal from "components/common/TestModal";
 import { TestModalContext } from "context/TestModalContext";
 import TestTypeSelector from "./TestModalWithContext/TestTypeSelector";
 
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+const theme = createTheme();
+
 //context
 
 function App() {
 	const context = useContext(TestModalContext);
 	return (
-		<>
+		<ThemeProvider theme={theme}>
 			<TestModal
 				isOpen={context.isOpen}
 				handleClose={() => context.setIsOpen(false)}
@@ -24,7 +27,7 @@ function App() {
 			</TestModal>
 
 			<Routes />
-		</>
+		</ThemeProvider>
 	);
 }
 

@@ -3,10 +3,10 @@ import { Fragment } from "react";
 import AddToMyFolders from "components/common/AddToMyFolders";
 import ShareButton from "components/common/ShareButton";
 
-//icons
-import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
-import FullscreenExitOutlinedIcon from "@material-ui/icons/FullscreenExitOutlined";
-import FullscreenOutlinedIcon from "@material-ui/icons/FullscreenOutlined";
+//icons-material
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import FullscreenExitOutlinedIcon from "@mui/icons-material/FullscreenExitOutlined";
+import FullscreenOutlinedIcon from "@mui/icons-material/FullscreenOutlined";
 
 import styles from "./ToolBarButtons.module.css";
 

@@ -1,21 +1,21 @@
-import { projectFirestore } from '../firebase/firebaseIndex';
+import { projectFirestore } from "../firebaseStuff/firebaseIndex";
 
 const getUserDetails = async (userId) => {
-  var userDetails;
+	var userDetails;
 
-  await projectFirestore
-    .collection('users')
-    .doc(userId)
-    .get()
-    .then((doc) => {
-      if (doc.exists) {
-        userDetails = doc.data();
-      } else {
-      }
-    })
-    .catch((error) => {});
+	await projectFirestore
+		.collection("users")
+		.doc(userId)
+		.get()
+		.then((doc) => {
+			if (doc.exists) {
+				userDetails = doc.data();
+			} else {
+			}
+		})
+		.catch((error) => {});
 
-  return userDetails;
+	return userDetails;
 };
 
 export default getUserDetails;

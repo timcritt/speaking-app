@@ -1,4 +1,4 @@
-import { projectFirestore, timestamp } from "../firebase/firebaseIndex";
+import { projectFirestore, timestamp } from "../firebaseStuff/firebaseIndex";
 
 const addPart4 = async (
 	questionOne,

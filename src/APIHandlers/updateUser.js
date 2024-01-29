@@ -1,27 +1,27 @@
-import { projectFirestore } from '../firebase/firebaseIndex';
-import { users } from './firebaseConsts';
+import { projectFirestore } from "../firebaseStuff/firebaseIndex";
+import { users } from "./firebaseConsts";
 
 export const updateUserProfilePicture = async (
-  profilePictureUrl,
-  profilePictureReference,
-  userId
+	profilePictureUrl,
+	profilePictureReference,
+	userId
 ) => {
-  var objectRef = projectFirestore.collection(users).doc(userId);
+	var objectRef = projectFirestore.collection(users).doc(userId);
 
-  await objectRef.update({
-    profilePicture: profilePictureUrl,
-    profilePictureReference,
-  });
+	await objectRef.update({
+		profilePicture: profilePictureUrl,
+		profilePictureReference,
+	});
 
-  return Promise.resolve();
+	return Promise.resolve();
 };
 
 export const updateUserName = async (userId, userName) => {
-  var objectRef = projectFirestore.collection(users).doc(userId);
+	var objectRef = projectFirestore.collection(users).doc(userId);
 
-  await objectRef.update({
-    userName: userName,
-  });
+	await objectRef.update({
+		userName: userName,
+	});
 
-  return Promise.resolve();
+	return Promise.resolve();
 };

@@ -2,7 +2,7 @@ import React from "react";
 
 //
 import ReactPortal from "components/common/ReactPortal";
-import CancelIcon from "@material-ui/icons/Cancel";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 //CSS
 import styles from "./TestModal.module.css";

@@ -1,7 +1,7 @@
 import React from "react";
 
-//icons
-import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
+//icons-material
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 
 //css modules
 import styles from "./ViewButton.module.css";

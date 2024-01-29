@@ -1,17 +1,17 @@
-import { folders } from './firebaseConsts';
-import { projectFirestore } from '../firebase/firebaseIndex';
-import { timestamp } from '../firebase/firebaseIndex';
+import { folders } from "./firebaseConsts";
+import { projectFirestore } from "../firebaseStuff/firebaseIndex";
+import { timestamp } from "../firebaseStuff/firebaseIndex";
 
 const updateFolderTests = async (folderId, tests) => {
-  const updatedAt = timestamp();
+	const updatedAt = timestamp();
 
-  var objectRef = projectFirestore.collection(folders).doc(folderId);
-  await objectRef.update({
-    tests,
-    updatedAt,
-  });
+	var objectRef = projectFirestore.collection(folders).doc(folderId);
+	await objectRef.update({
+		tests,
+		updatedAt,
+	});
 
-  return;
+	return;
 };
 
 export default updateFolderTests;

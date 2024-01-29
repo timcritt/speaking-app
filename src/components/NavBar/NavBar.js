@@ -5,8 +5,8 @@ import defaultProfilePicture from "img/profile-placeholder.png";
 import { firebaseAuth } from "context/AuthProvider";
 import { useHistory } from "react-router";
 
-import MenuIcon from "@material-ui/icons/Menu";
-import CloseIcon from "@material-ui/icons/Close";
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
 
 import { TestModalContext } from "context/TestModalContext";
 

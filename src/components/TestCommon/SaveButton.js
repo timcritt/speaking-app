@@ -4,7 +4,7 @@ import React from "react";
 import styles from "./SaveButton.module.css";
 
 //3rd party components
-import SaveOutlinedIcon from "@material-ui/icons/SaveOutlined";
+import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 
 const SaveButton = ({ handleOpen, changesSaved }) => {
 	return (

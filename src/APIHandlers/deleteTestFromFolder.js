@@ -1,25 +1,27 @@
-import { projectFirestore, increment } from '../firebase/firebaseIndex';
+import { projectFirestore, increment } from "../firebaseStuff/firebaseIndex";
 
 // 1. creates a new junction_folder_test document in firestore.
 //2. increments testCount field of the folder document
 //Transactions are batched to ensure atomicity
 
 const deleteTestFromFolder = async (folderId, testId) => {
-  let writeBatch = projectFirestore.batch();
+	let writeBatch = projectFirestore.batch();
 
-  const junctionRef = projectFirestore.doc(`junction_folder_test/${folderId}_${testId}`);
+	const junctionRef = projectFirestore.doc(
+		`junction_folder_test/${folderId}_${testId}`
+	);
 
-  writeBatch.delete(junctionRef);
+	writeBatch.delete(junctionRef);
 
-  const newTestCount = increment(-1);
+	const newTestCount = increment(-1);
 
-  const folderRef = projectFirestore.collection('folders').doc(folderId);
+	const folderRef = projectFirestore.collection("folders").doc(folderId);
 
-  writeBatch.update(folderRef, { testCount: newTestCount });
+	writeBatch.update(folderRef, { testCount: newTestCount });
 
-  await writeBatch.commit();
+	await writeBatch.commit();
 
-  return;
+	return;
 };
 
 export default deleteTestFromFolder;

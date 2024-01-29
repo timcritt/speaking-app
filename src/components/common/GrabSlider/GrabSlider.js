@@ -11,7 +11,7 @@ import styles from "./GrabSlider.module.css";
 
 import useGrabAndSlide from "./useGrabAndSlide";
 
-//3rd party icons
+//3rd party icons-material
 const GrabSlider = (props) => {
 	const [leftButtonVisible, setLeftButtonVisibible] = useState(false);
 	const [rightButtonVisible, setRightButtonVisible] = useState(true);

@@ -5,7 +5,7 @@ import { firebaseAuth } from "../../context/AuthProvider";
 import { TestModalContext } from "context/TestModalContext";
 
 //3rd party components
-import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 
 //custom components
 import ShareButton from "components/common/ShareButton";

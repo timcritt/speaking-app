@@ -1,4 +1,4 @@
-import { projectFirestore } from "../firebase/firebaseIndex";
+import { projectFirestore } from "../firebaseStuff/firebaseIndex";
 
 export const removeTagsFromAllEntries = (collection) =>
 	projectFirestore

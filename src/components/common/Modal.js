@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
 
-import CancelIcon from "@material-ui/icons/Cancel";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 const Modal = ({ modalOpen, setModalOpen, children, heading }) => {
 	const handleSetOpen = (e) => {

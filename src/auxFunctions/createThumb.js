@@ -1,4 +1,4 @@
-import { projectStorage, firebaseAuth } from "../firebase/firebaseIndex";
+import { projectStorage, firebaseAuth } from "../firebaseStuff/firebaseIndex";
 import { v4 as uuidv4 } from "uuid";
 import { readAndCompressImage } from "browser-image-resizer";
 

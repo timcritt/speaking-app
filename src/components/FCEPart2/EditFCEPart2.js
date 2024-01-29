@@ -16,7 +16,7 @@ import EditTestFormHeading from "components/common/EditTestFormHeading";
 import useLoadTestInEditMode from "hooks/useLoadTestInEditMode";
 
 //3rd party components
-import LinearProgress from "@material-ui/core/LinearProgress";
+import LinearProgress from "@mui/material/LinearProgress";
 
 //styles
 import styles from "./EditFCEPart2.module.css";

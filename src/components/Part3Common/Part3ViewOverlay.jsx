@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { firebaseAuth } from "context/AuthProvider";
-import LinearProgress from "@material-ui/core/LinearProgress";
+import LinearProgress from "@mui/material/LinearProgress";
 import Part3Lines from "components/Part3Common/Part3Lines";
 // import debounce from 'auxFunctions/debounce';
 import TestToolBarView from "components/TestCommon/TestToolBarView";

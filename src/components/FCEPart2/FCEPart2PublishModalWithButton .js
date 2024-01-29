@@ -3,8 +3,8 @@ import { useHistory } from "react-router-dom";
 
 //Custom components
 import Modal from "../common/Modal";
-import SaveOutlinedIcon from "@material-ui/icons/SaveOutlined";
-import { timestamp } from "firebase/firebaseIndex";
+import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
+import { timestamp } from "firebaseStuff/firebaseIndex";
 import updateTest from "APIHandlers/updateTest";
 import SaveButton from "components/TestCommon/SaveButton";
 
@@ -17,7 +17,7 @@ import { firebaseAuth } from "context/AuthProvider";
 import { FCEPart2Context } from "context/FCEPart2Context";
 
 //3rd party components
-import LinearProgress from "@material-ui/core/LinearProgress";
+import LinearProgress from "@mui/material/LinearProgress";
 
 //CSS modules
 import styles from "./PublishWarningModal.module.css";

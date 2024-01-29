@@ -10,7 +10,7 @@ import EditTestFormHeading from "components/common/EditTestFormHeading";
 import ToolTip from "components/common/ToolTip";
 
 //3rd party components
-import LinearProgress from "@material-ui/core/LinearProgress";
+import LinearProgress from "@mui/material/LinearProgress";
 import FormTags from "components/TestCommon/FormTags";
 
 //Custom hooks
