@@ -16,8 +16,8 @@
 	margin: 10% auto;
 	background-color: white;
 	border-radius: 0.25rem;
-	width: 30vw;
-	max-height: 60vh;
+	width: fit-content;
+
 	cursor: default;
 	padding: 2px;
 	box-sizing: border-box;

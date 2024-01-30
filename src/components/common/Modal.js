@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 
 import CancelIcon from "@mui/icons-material/Cancel";
 
-const Modal = ({ modalOpen, setModalOpen, children, heading }) => {
+const Modal = ({ setModalOpen, children, heading }) => {
 	const handleSetOpen = (e) => {
 		e.stopPropagation();
 		setModalOpen(false);

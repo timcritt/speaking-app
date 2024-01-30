@@ -68,16 +68,16 @@
 }
 
 .question_text {
-	font-size: 1em;
+	font-size: 1.3em;
 	text-align: center;
 	list-style-type: none;
 }
 
-@media (min-width: 720px) {
+/* @media (min-width: 720px) {
 	.question_text {
-		/* font-size: 1.3em; */
+		font-size: 1.3em;
 	}
-}
+} */
 
 .flipped_vertically {
 	transform: rotateX(180deg);

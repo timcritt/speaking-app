@@ -1,7 +1,27 @@
+h1 {
+	color: var(--header-text-color);
+}
+
+label {
+	color: #dcd8d8;
+}
+
+fieldset {
+	border: 0 none;
+	outline: 0 none;
+	padding: 20px 10px 40px 10px;
+}
+
+legend {
+	color: var(--header-text-color);
+	font-size: 1.2rem;
+	padding: 0;
+}
+
 .container {
 	background-color: white;
 	margin: 0 auto;
-	padding: 5vh 5vw;
+	padding: 4% 4%;
 	width: 95%;
 	max-width: 65rem;
 	border-radius: 10px;
@@ -13,6 +33,10 @@
 	width: 100%;
 	display: flex;
 	flex-direction: column;
+}
+
+.question_row label {
+	position: relative;
 }
 
 .image_row {
@@ -91,26 +115,6 @@
 
 .clickable_image_overlay:hover {
 	background-color: #438cb628;
-}
-
-h1 {
-	color: var(--header-text-color);
-}
-
-label {
-	color: #dcd8d8;
-}
-
-fieldset {
-	border: 0 none;
-	outline: 0 none;
-	padding: 20px 10px 40px 10px;
-}
-
-legend {
-	color: var(--header-text-color);
-	font-size: 1.2rem;
-	padding: 0;
 }
 
 .tags_container {

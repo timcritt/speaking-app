@@ -126,7 +126,7 @@ const EditFCEPart2 = ({
 					</fieldset>
 					<fieldset className={styles.question_row}>
 						<legend>Questions</legend>
-						<label>
+						<label className={styles.label}>
 							long turn{" "}
 							<ToolTip
 								text={
