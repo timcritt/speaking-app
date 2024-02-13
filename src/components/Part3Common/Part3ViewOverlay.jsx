@@ -118,7 +118,7 @@ const Part3ViewOverlay = ({ context, docToFetchRef, setEditMode }) => {
 			console.log(test);
 			//change object shape to match state shape before dispatching
 			test.docRef = test.id;
-			delete test.id;
+			//delete test.id;
 			test.testTags = test.tags;
 			delete test.tags;
 			await context.updateTest(test);
@@ -128,13 +128,13 @@ const Part3ViewOverlay = ({ context, docToFetchRef, setEditMode }) => {
 		//THESE COMMENTS NEED UPDATING
 		//Only fetches new test if the one stored in state is not the one navigated to, i.e, referenced in params
 		//Reduces redundant API calls and rerenders when navigating between view test and edit test
-		if (docToFetchRef !== context.docRef) {
-			context.resetState();
-			if (docToFetchRef !== "new") {
+		if (docToFetchRef !== "new") {
+			if (docToFetchRef !== context.docRef) {
+				context.resetState();
 				asyncWrapper();
 			}
 
-			//context.updateHasFetched(true);
+			context.updateHasFetched(true);
 		}
 	}, [docToFetchRef]);
 

@@ -1,0 +1,16 @@
+.tags_dropdown_visible {
+	display: flex;
+	justify-content: start;
+	flex-wrap: wrap;
+	position: absolute;
+	background-color: white;
+	width: 100%;
+	border: 1px solid #e6eaea;
+	padding-right: 10px;
+	box-sizing: border-box;
+	top: 100%;
+	left: 0;
+	z-index: 99;
+	margin-top: 5px;
+	border-radius: 5px;
+}

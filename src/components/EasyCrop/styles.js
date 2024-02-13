@@ -1,12 +1,9 @@
 export const styles = (theme) => ({
 	cropContainer: {
 		position: "relative",
-		width: "500px",
-		height: "100%",
+		width: "100%",
+		height: "400px",
 		background: "#333",
-		[theme.breakpoints.up("sm")]: {
-			height: 400,
-		},
 	},
 	cropButton: {
 		flexShrink: 0,

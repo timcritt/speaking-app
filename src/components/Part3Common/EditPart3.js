@@ -44,6 +44,7 @@ const EditPart3 = ({
 	updateTest,
 	resetState,
 	handleSetTags,
+	updateCreatorId,
 }) => {
 	const [inputStatus, setInputStatus] = useState({
 		bottomCentreFailedValidation: false,
@@ -235,9 +236,10 @@ const EditPart3 = ({
 									testTags={testTags}
 									changesSaved={changesSaved}
 									docRef={docRef}
-									setDocRef={updateDocRef}
+									updateDocRef={updateDocRef}
 									testType={"FCEPart3"}
 									setInputStatus={setInputStatus}
+									updateCreatorId={updateCreatorId}
 								/>
 							)}
 						/>

@@ -1,0 +1,20 @@
+.test_creator_info {
+	display: flex;
+	align-items: center;
+	margin-right: auto;
+
+	cursor: pointer;
+}
+
+.profile_picture_small {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+}
+
+.created_by_text {
+	color: black;
+	padding: 0;
+	padding-left: 15px;
+	float: right;
+}

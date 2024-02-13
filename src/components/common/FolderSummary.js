@@ -5,7 +5,7 @@ import deleteRecordFirestore from "../../APIHandlers/deleteRecordFirestore";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import { useHistory } from "react-router-dom";
 
-import CreatorInfo from "./CreatorInfo";
+import CreatorInfo from "./CreatorInfo/CreatorInfo";
 
 const FolderSummary = ({ folder }) => {
 	const history = useHistory();

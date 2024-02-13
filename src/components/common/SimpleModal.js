@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import Modal from "./Modal";
-import { styled } from "@mui/system";
 import EasyCrop from "../EasyCrop/EasyCrop";
 
 const SimpleModal = ({ modalButtonText, setImageUrl, modalButton }) => {

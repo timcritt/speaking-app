@@ -21,11 +21,13 @@ import LinearProgress from "@mui/material/LinearProgress";
 
 //CSS modules
 import styles from "./PublishWarningModal.module.css";
+import { TestModalContext } from "context/TestModalContext";
 
 const FCEPart2PublishModalWithButton = ({ setInputStatus }) => {
 	const [open, setOpen] = useState(false);
 	const { userId } = useContext(firebaseAuth);
 	const context = useContext(FCEPart2Context);
+	const modalContext = useContext(TestModalContext);
 
 	const [uploadComplete, setUploadComplete] = useState(false);
 	const [allInputsCompleted, setAllInputsCompleted] = useState(false);
@@ -95,13 +97,12 @@ const FCEPart2PublishModalWithButton = ({ setInputStatus }) => {
 
 		setOpen(true);
 
-		//must rely on value of inputsValid rather than allInputsCompleted due to closure around the state value
 		if (inputsValid) {
 			setUploadComplete(false);
 			const createdAt = timestamp();
 
 			//update existing test
-			if (context.docRef) {
+			if (context.docRef !== "new") {
 				//updates only if images are new
 				uploadFCEPart2Images(
 					context.imageOneUrl,
@@ -141,7 +142,7 @@ const FCEPart2PublishModalWithButton = ({ setInputStatus }) => {
 			} else {
 				setOpen(true);
 				//create new test
-				//if local test has no docId, it's because it's new. i.e, it doesn't exist in the databse.
+				//if local test has id "new", it's because it's new. i.e, it doesn't exist in the databse.
 				//also creates thumbnails
 
 				uploadFCEPart2Images(context.imageOneUrl, context.imageTwoUrl).then(
@@ -161,8 +162,11 @@ const FCEPart2PublishModalWithButton = ({ setInputStatus }) => {
 							data.imageTwoThumbData.url
 						).then((response) => {
 							context.updateDocRef(response.id);
+							modalContext.setDocToFetchRef(response.id);
 							setUploadComplete(true);
+							context.updateCreatorId(userId);
 							context.updateUnsavedChanges(false);
+							context.updateHasFetched(true);
 						});
 					}
 				);

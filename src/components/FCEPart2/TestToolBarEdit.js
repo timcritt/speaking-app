@@ -26,7 +26,7 @@ const TestToolBarEdit = ({
 	return (
 		<div className={styles.container}>
 			{publishButtonRenderProp()}
-			{docRef && (
+			{docRef !== "new" && (
 				<Fragment>
 					<ViewButton handleClickViewButton={handleClickViewButton} />
 					<DeleteButton

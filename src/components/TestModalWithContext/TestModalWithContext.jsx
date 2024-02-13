@@ -5,6 +5,7 @@ import TestTypeSelector from "./TestTypeSelector";
 
 const TestModalWithContext = () => {
 	const context = useContext(TestModalContext);
+	console.log("testModalContext", context);
 	return (
 		<TestModal
 			isOpen={context.isOpen}

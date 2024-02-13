@@ -4,7 +4,7 @@ import getFolder from "../../APIHandlers/getFolder";
 import getTestsById from "../../APIHandlers/getTestsById";
 import TestPreview from "components/TestPreview/TestPreview";
 import FolderOutlinedIcon from "@mui/icons-material/FolderOutlined";
-import CreatorInfo from "../common/CreatorInfo";
+import CreatorInfo from "../common/CreatorInfo/CreatorInfo";
 import CloseIcon from "@mui/icons-material/Close";
 import { Link } from "react-router-dom";
 import ShareButton from "../common/ShareButton";

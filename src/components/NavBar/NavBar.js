@@ -15,7 +15,7 @@ export const NavBar = () => {
 		useContext(firebaseAuth);
 	const [mobileNavVisible, setMobileNavVisible] = useState(false);
 
-	const { setIsOpen, setEditMode, setDocToFetch, setTestType } =
+	const { setIsOpen, setEditMode, setDocToFetchRef, setTestType } =
 		useContext(TestModalContext);
 
 	let history = useHistory();
@@ -26,7 +26,7 @@ export const NavBar = () => {
 	};
 
 	const handleCreateTestClick = (testType) => {
-		setDocToFetch("new");
+		setDocToFetchRef("new");
 		setTestType(testType);
 		setEditMode(true);
 		setIsOpen(true);

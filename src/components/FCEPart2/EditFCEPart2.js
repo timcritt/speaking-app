@@ -46,7 +46,7 @@ const EditFCEPart2 = ({
 		setEditMode
 	);
 
-	if (true) {
+	if (context.hasFetched || context.docRef == "new") {
 		return (
 			<Fragment>
 				<Prompt

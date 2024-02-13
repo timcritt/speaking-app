@@ -34,7 +34,7 @@ const CreatorContent = () => {
 						<div className="dashboard-user-info-container">
 							<div className="dashboard-profile-pic-container">
 								<img
-									className="dashboard-image"
+									className="dashboard-image "
 									alt="could not load"
 									src={
 										creatorDetails && creatorDetails.profilePicture

@@ -20,7 +20,7 @@ import styles from "./TestPreviewOverlay.module.css";
 const TestPreviewOverlay = ({ testType, testId, setOpen }) => {
 	//stores the url of the test. is passed down to ShareButton, which appears in the hover overlay.
 	const { token } = useContext(firebaseAuth);
-	const { setDocToFetch, setTestType, setIsOpen } =
+	const { setDocToFetchRef, setTestType, setIsOpen } =
 		useContext(TestModalContext);
 
 	const { ref, classApplied, setClassApplied } = useToggleClassOnClick();
@@ -56,7 +56,7 @@ const TestPreviewOverlay = ({ testType, testId, setOpen }) => {
 				<div
 					className={styles.icon_container}
 					onClick={() => {
-						setDocToFetch(testId);
+						setDocToFetchRef(testId);
 						setTestType(testType);
 						setIsOpen(true);
 					}}

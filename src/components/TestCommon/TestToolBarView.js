@@ -1,7 +1,7 @@
 import React from "react";
 
 //custom component
-import CreatorInfo from "components/common/CreatorInfo";
+import CreatorInfo from "components/common/CreatorInfo/CreatorInfo";
 
 import styles from "./TestToolBar.module.css";
 

@@ -3,9 +3,9 @@ import Modal from "components/common/Modal";
 import updatePart3 from "APIHandlers/updatePart3";
 import addPart3 from "APIHandlers/addPart3";
 import { firebaseAuth } from "context/AuthProvider";
-import { useHistory } from "react-router-dom";
 import SaveButton from "components/TestCommon/SaveButton";
 import { LinearProgress } from "@mui/material";
+import { TestModalContext } from "context/TestModalContext";
 
 export default function PublishWarningModal({
 	bottomCentre,
@@ -14,21 +14,21 @@ export default function PublishWarningModal({
 	creatorId,
 	questionOne,
 	shortTurnQuestion,
-
 	topLeft,
 	topRight,
 	testTags,
 	changesSaved,
 	docRef,
-	setDocRef,
+	updateDocRef,
 	testType,
 	setInputStatus,
+	updateCreatorId,
 }) {
 	const [open, setOpen] = useState(false);
 	const { userId } = useContext(firebaseAuth);
-	const history = useHistory();
 	const [allInputsCompleted, setAllInputsCompleted] = useState(false);
 	const [uploadComplete, setUploadComplete] = useState(false);
+	const modalContext = useContext(TestModalContext);
 
 	const validateInputs = () => {
 		let newValidationState = {
@@ -103,9 +103,13 @@ export default function PublishWarningModal({
 					testTags,
 					testType
 				).then((response) => {
-					setDocRef(response.id);
+					console.log(response.id);
+					updateDocRef(response.id);
+					modalContext.setDocToFetchRef(response.id);
+					console.log(docRef);
+
+					updateCreatorId(userId);
 					setUploadComplete(true);
-					history.push(`/Edit${testType}/${response.id}`);
 				});
 			}
 		} else {

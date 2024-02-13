@@ -30,7 +30,6 @@ const Tests = React.memo(({ results = [], testType }) => {
 											questionOne={doc.questionOne}
 											testType={testType}
 											key={doc.id}
-											testLabel={"test"}
 											testTags={doc.tags}
 										>
 											<FCEPart2TestPreviewContent test={doc} />

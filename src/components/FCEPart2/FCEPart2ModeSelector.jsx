@@ -10,7 +10,7 @@ import { TestModalContext } from "context/TestModalContext";
 
 const FCEPart2ModeSelector = ({ docToFetchRef }) => {
 	const context = useContext(FCEPart2Context);
-	const { setEditMode, editMode } = useContext(TestModalContext);
+	const { setEditMode, editMode, setIsOpen } = useContext(TestModalContext);
 
 	if (editMode) {
 		return (
@@ -18,6 +18,7 @@ const FCEPart2ModeSelector = ({ docToFetchRef }) => {
 				docToFetchRef={docToFetchRef}
 				setEditMode={setEditMode}
 				context={context}
+				handleShowModal={setIsOpen}
 			/>
 		);
 	}

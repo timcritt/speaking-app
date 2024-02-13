@@ -5,7 +5,7 @@ export const TestModalContext = createContext();
 export const TestModalContextProvider = ({ children }) => {
 	const initialState = {
 		isOpen: false,
-		docToFetchRef: "new",
+		docToFetchRef: "poop",
 		testType: null,
 		editMode: false,
 	};
@@ -16,7 +16,7 @@ export const TestModalContextProvider = ({ children }) => {
 				console.log("inside reducer");
 				return { ...state, isOpen: action.payload };
 
-			case "setDocToFetch":
+			case "setDocToFetchRef":
 				return { ...state, docToFetchRef: action.payload };
 
 			case "setTestType":
@@ -38,8 +38,8 @@ export const TestModalContextProvider = ({ children }) => {
 			console.log("setting open as", payload);
 			dispatch({ type: "setIsOpen", payload: payload });
 		},
-		setDocToFetch: (payload) => {
-			dispatch({ type: "setDocToFetch", payload: payload });
+		setDocToFetchRef: (payload) => {
+			dispatch({ type: "setDocToFetchRef", payload: payload });
 		},
 		setTestType: (payload) => {
 			dispatch({ type: "setTestType", payload: payload });

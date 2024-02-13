@@ -12,6 +12,9 @@ import RotateLeftIcon from "@mui/icons-material/RotateLeft";
 //import SearchIcon from '@mui/icons-material/Search';
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
+//CSS modules
+import styles from "./FilterMenuDesktop.module.css";
+
 const FilterMenuDesktop = ({
 	children,
 	toggleFilterMenuVisible,
@@ -111,7 +114,7 @@ const FilterMenuDesktop = ({
 
 			{/*filter by tag drop down container*/}
 			{itemOne.isComponentVisible && (
-				<div ref={itemOne.ref} className="tags-drop-down-visible">
+				<div ref={itemOne.ref} className={styles.tags_dropdown_visible}>
 					<SideBarTags
 						tags={tagFilterTerm}
 						handleSetTags={handleSetTags}
