@@ -104,7 +104,6 @@ export default function PublishPart4Modal({
 				).then((response) => {
 					setUploadComplete(true);
 					context.updateDocRef(response.id);
-					history.push(`/${testType}/${response.id}`);
 				});
 			}
 		}

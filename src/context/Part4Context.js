@@ -12,6 +12,7 @@ export const Part4ContextProvider = ({ children }) => {
 		questionSix: "",
 		testTags: [],
 		docRef: "new",
+		hasFetched: false,
 	};
 	const reducer = (state, action) => {
 		switch (action.type) {
@@ -74,6 +75,12 @@ export const Part4ContextProvider = ({ children }) => {
 					],
 				};
 			}
+			case "updateHasFetched": {
+				return {
+					...state,
+					hasFetched: true,
+				};
+			}
 			default: {
 				return state;
 			}
@@ -121,9 +128,16 @@ export const Part4ContextProvider = ({ children }) => {
 		dispatch({ type: "updateTest", payload: payload });
 	};
 
+	const updateDocRef = (payload) => {
+		dispatch({ type: "updateDocRef", payload: payload });
+	};
+
 	//resets state to initial value
 	const resetState = () => {
 		dispatch({ type: "resetState" });
+	};
+	const updateHasFetched = (payload) => {
+		dispatch({ type: "updateHasFetched", payload: payload });
 	};
 
 	return (
@@ -139,6 +153,8 @@ export const Part4ContextProvider = ({ children }) => {
 				handleSetTags,
 				updateTest,
 				resetState,
+				updateDocRef,
+				updateHasFetched,
 			}}
 		>
 			{children}

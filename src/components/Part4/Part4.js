@@ -28,13 +28,14 @@ const Part4 = ({
 	testTags,
 	updateTest,
 	resetState,
+	updateHasFetched,
 }) => {
 	//load test into state
 	useEffect(() => {
 		//clear state before attempting to fetch a new test to prevent previous test being displayed while new one is loading (for slower connections)
 
 		const asyncWrapper = async () => {
-			//context.updateHasFetched(true);
+			updateHasFetched(false);
 			const test = await getTest("FCEPart4", docToFetchRef);
 			console.log(test);
 			//change object shape to match state shape before dispatching
@@ -42,20 +43,21 @@ const Part4 = ({
 			delete test.id;
 			test.testTags = test.tags;
 			delete test.tags;
-			await updateTest(test);
-			//context.updateHasFetched(true);
+			updateTest(test);
+			updateHasFetched(true);
 			console.log(test);
 		};
-		//THESE COMMENTS NEED UPDATING
-		//Only fetches new test if the one stored in state is not the one navigated to, i.e, referenced in params
-		//Reduces redundant API calls and rerenders when navigating between view test and edit test
-		if (docToFetchRef !== docRef) {
-			asyncWrapper();
 
-			//context.updateHasFetched(true);
+		//If
+		if (docToFetchRef !== "new") {
+			if (docToFetchRef !== docRef) {
+				resetState();
+				asyncWrapper();
+			}
+
+			updateHasFetched(true);
 		}
 	}, [docToFetchRef]);
-
 	const handleFullScreen = useFullScreenHandle();
 
 	return (
