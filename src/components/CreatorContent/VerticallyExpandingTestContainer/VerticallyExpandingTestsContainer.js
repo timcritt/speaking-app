@@ -31,21 +31,24 @@ const VerticallyExpandingTestsContainer = ({
 
 	const toggleExpandContainer = async () => {
 		//Only makes API call on first time container is expanded
-		if (!testQuery.isFetched) {
+		if (!hasFetched) {
 			const newTests = await getFilteredTests(creatorId, null, testType);
 
 			//Enbales react-query after fetching
-			setHasFetched(true);
+
+			setTestContainerExpanded((prevState) => !prevState);
+
 			return newTests;
 		}
-
 		setTestContainerExpanded((prevState) => !prevState);
+		return filteredTests;
 	};
 
 	const testQuery = useQuery({
 		queryKey: [testType],
 		queryFn: toggleExpandContainer,
 		enabled: hasFetched,
+		refetchOnWindowFocus: false,
 	});
 
 	useFilterTests(
@@ -65,7 +68,10 @@ const VerticallyExpandingTestsContainer = ({
 			<LoadingBar fetching={testQuery.isLoading}>
 				<div
 					className="tests-container-heading"
-					onClick={(e) => testQuery.refetch()}
+					onClick={(e) => {
+						testQuery.refetch();
+						setHasFetched(true);
+					}}
 				>
 					<h2>{buttonLabel}</h2>
 					<div className="tests-container-button">
