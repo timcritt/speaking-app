@@ -15,13 +15,13 @@ import { uploadFCEPart2Images } from "APIHandlers/uploadFCEPart2Images";
 //Context
 import { firebaseAuth } from "context/AuthProvider";
 import { FCEPart2Context } from "context/FCEPart2Context";
+import { TestModalContext } from "context/TestModalContext";
 
 //3rd party components
 import LinearProgress from "@mui/material/LinearProgress";
 
 //CSS modules
 import styles from "./PublishWarningModal.module.css";
-import { TestModalContext } from "context/TestModalContext";
 
 const FCEPart2PublishModalWithButton = ({ setInputStatus }) => {
 	const [open, setOpen] = useState(false);

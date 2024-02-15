@@ -34,13 +34,9 @@ const VerticallyExpandingTestsContainer = ({
 		if (!hasFetched) {
 			const newTests = await getFilteredTests(creatorId, null, testType);
 
-			//Enbales react-query after fetching
-
-			setTestContainerExpanded((prevState) => !prevState);
-
 			return newTests;
 		}
-		setTestContainerExpanded((prevState) => !prevState);
+
 		return filteredTests;
 	};
 
@@ -69,8 +65,10 @@ const VerticallyExpandingTestsContainer = ({
 				<div
 					className="tests-container-heading"
 					onClick={(e) => {
-						testQuery.refetch();
 						setHasFetched(true);
+						testQuery.refetch().then(() => {
+							setTestContainerExpanded((prevState) => !prevState);
+						});
 					}}
 				>
 					<h2>{buttonLabel}</h2>
