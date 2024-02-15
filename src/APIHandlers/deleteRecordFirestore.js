@@ -1,11 +1,11 @@
 import { projectFirestore } from "../firebaseStuff/firebaseIndex";
 
 const deleteRecordFirestore = async (documentId, collectionName) => {
+	console.log("inisde deleteRecordFirestore");
 	await projectFirestore
 		.collection(collectionName)
 		.doc(documentId)
 		.delete()
-		.then(function () {})
 		.catch(function (error) {
 			console.error("Error removing document: ", error);
 		});

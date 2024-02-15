@@ -5,6 +5,9 @@ import { useHistory } from "react-router-dom";
 import Modal from "components/common/Modal";
 import SaveButton from "components/TestCommon/SaveButton";
 
+//3rd party Components
+import { LinearProgress } from "@mui/material";
+
 //API
 import updatePart4 from "APIHandlers/updatePart4";
 import addPart4 from "APIHandlers/addPart4";
@@ -12,7 +15,7 @@ import addPart4 from "APIHandlers/addPart4";
 //Context
 import { firebaseAuth } from "context/AuthProvider";
 import { Part4Context } from "context/Part4Context";
-import { LinearProgress } from "@mui/material";
+import { TestModalContext } from "context/TestModalContext";
 
 export default function PublishPart4Modal({
 	setInputStatus,
@@ -25,6 +28,7 @@ export default function PublishPart4Modal({
 	const [allInputsCompleted, setAllInputsCompleted] = useState(false);
 	const history = useHistory();
 	const [uploadComplete, setUploadComplete] = useState(false);
+	const modalContext = useContext(TestModalContext);
 
 	const validateInputs = () => {
 		//create the new state based on current inputs
@@ -102,8 +106,8 @@ export default function PublishPart4Modal({
 					testType,
 					userId
 				).then((response) => {
-					setUploadComplete(true);
 					context.updateDocRef(response.id);
+					modalContext.setDocToFetchRef(response.id);
 				});
 			}
 		}

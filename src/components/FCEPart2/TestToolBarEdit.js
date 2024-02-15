@@ -17,6 +17,7 @@ const TestToolBarEdit = ({
 	publishButtonRenderProp,
 }) => {
 	const handleDeleteTest = async (e) => {
+		console.log("deleting part 4");
 		e.preventDefault();
 		await deleteTest(docRef, testType);
 		clearState();

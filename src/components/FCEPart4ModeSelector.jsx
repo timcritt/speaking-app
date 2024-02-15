@@ -8,9 +8,9 @@ import FCEPart4View from "./Part4/FCEPart4View";
 import { Part4Context } from "context/Part4Context";
 import { TestModalContext } from "context/TestModalContext";
 
-const FCEPart2ModeSelector = ({ docToFetchRef }) => {
+const FCEPart4ModeSelector = ({ docToFetchRef }) => {
 	const context = useContext(Part4Context);
-	const { setEditMode, editMode } = useContext(TestModalContext);
+	const { setEditMode, editMode, setIsOpen } = useContext(TestModalContext);
 
 	if (editMode) {
 		return (
@@ -18,6 +18,7 @@ const FCEPart2ModeSelector = ({ docToFetchRef }) => {
 				docToFetchRef={docToFetchRef}
 				setEditMode={setEditMode}
 				context={context}
+				handleCloseModal={setIsOpen}
 			/>
 		);
 	}
@@ -31,4 +32,4 @@ const FCEPart2ModeSelector = ({ docToFetchRef }) => {
 	);
 };
 
-export default FCEPart2ModeSelector;
+export default FCEPart4ModeSelector;

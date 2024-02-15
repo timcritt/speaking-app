@@ -9,6 +9,7 @@ import ControlledFormInput from "components/TestCommon/ControlledFormInput";
 import ToolTip from "components/common/ToolTip";
 import TestToolBarEdit from "components/FCEPart2/TestToolBarEdit";
 import EditTestContainer from "components/EditTestContainer";
+import EditTestFormHeading from "components/common/EditTestFormHeading";
 
 //Custom hooks
 import useLoadTestInEditMode from "hooks/useLoadTestInEditMode";
@@ -37,6 +38,7 @@ const EditPart4 = ({
 	handleSetTags,
 	docToFetchRef,
 	updateDocRef,
+	handleCloseModal,
 }) => {
 	const [inputStatus, setInputStatus] = useState({
 		questionOneFailedValidation: false,
@@ -61,9 +63,7 @@ const EditPart4 = ({
 	return (
 		<Fragment>
 			<EditTestContainer>
-				<h1 className={styles.title}>
-					{docRef === "new" ? "Create " : "Edit "}FCE Part 4
-				</h1>
+				<EditTestFormHeading docRef={docRef} testTypeLabel={"FCE Part 4"} />
 				<fieldset className={styles.content_container}>
 					<legend>
 						Questions
@@ -167,7 +167,7 @@ const EditPart4 = ({
 						testType={"FCEPart4"}
 						docRef={docRef}
 						handleClickViewButton={setEditMode}
-						closeModal={() => console.log("close modal")}
+						closeModal={() => handleCloseModal(false)}
 						clearState={() => resetState()}
 						publishButtonRenderProp={() => (
 							<PublishPart4Modal

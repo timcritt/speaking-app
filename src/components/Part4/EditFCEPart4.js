@@ -6,15 +6,16 @@ import EditPart4 from "components/Part4/EditPart4";
 //context
 import { Part4Context } from "context/Part4Context";
 
-const EditFCEPart4 = ({ docRef, setEditMode }) => {
+const EditFCEPart4 = ({ setEditMode, docToFetchRef, handleCloseModal }) => {
 	const context = useContext(Part4Context);
-	//console.log(context);
+	console.log(context);
 	return (
 		<EditPart4
 			{...context}
-			docRef={docRef}
 			setEditMode={setEditMode}
+			docToFetchRef={docToFetchRef}
 			testType={"FCEPart4"}
+			handleCloseModal={handleCloseModal}
 		/>
 	);
 };

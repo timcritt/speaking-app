@@ -103,10 +103,8 @@ export default function PublishWarningModal({
 					testTags,
 					testType
 				).then((response) => {
-					console.log(response.id);
 					updateDocRef(response.id);
 					modalContext.setDocToFetchRef(response.id);
-					console.log(docRef);
 
 					updateCreatorId(userId);
 					setUploadComplete(true);

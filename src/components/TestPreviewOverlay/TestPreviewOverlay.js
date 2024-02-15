@@ -61,7 +61,9 @@ const TestPreviewOverlay = ({ testType, testId, setOpen }) => {
 						setIsOpen(true);
 					}}
 				>
-					<VisibilityOutlinedIcon />
+					<button className={"tool-bar-btn"}>
+						<VisibilityOutlinedIcon iconColor={"white"} className={""} />
+					</button>
 				</div>
 				{/* </Link> */}
 				{token && (
