@@ -3,10 +3,10 @@ import Cropper from "react-easy-crop";
 import Slider from "@mui/material/Slider";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { withStyles } from "@mui/styles";
+
 import { getOrientation } from "get-orientation/browser";
 import { getCroppedImg, getRotatedImage } from "../../auxFunctions/canvasUtils";
-import { styles } from "./styles";
+import styles from "./EasyCrop.module.css";
 // import ImageSearch from 'components/common/ImageSearch';
 
 const ORIENTATION_TO_ANGLE = {
@@ -73,7 +73,7 @@ const EasyCrop = ({ classes, aspect = 4 / 3, setImageUrl, handleOpen }) => {
 		<div>
 			{imageSrc ? (
 				<React.Fragment>
-					<div className={classes.cropContainer}>
+					<div className={styles.cropContainer}>
 						<Cropper
 							image={imageSrc}
 							crop={crop}
@@ -87,11 +87,11 @@ const EasyCrop = ({ classes, aspect = 4 / 3, setImageUrl, handleOpen }) => {
 						/>
 					</div>
 
-					<div className={classes.controls}>
-						<div className={classes.sliderContainer}>
+					<div className={styles.controls}>
+						<div className={styles.sliderContainer}>
 							<Typography
 								variant="overline"
-								classes={{ root: classes.sliderLabel }}
+								classes={{ root: styles.sliderLabel }}
 							>
 								zoom
 							</Typography>
@@ -104,10 +104,10 @@ const EasyCrop = ({ classes, aspect = 4 / 3, setImageUrl, handleOpen }) => {
 								onChange={(e, zoom) => setZoom(zoom)}
 							/>
 						</div>
-						<div className={classes.sliderContainer}>
+						<div className={styles.sliderContainer}>
 							<Typography
 								variant="overline"
-								classes={{ root: classes.sliderLabel }}
+								classes={{ root: styles.sliderLabel }}
 							>
 								Rotation
 							</Typography>
@@ -124,7 +124,7 @@ const EasyCrop = ({ classes, aspect = 4 / 3, setImageUrl, handleOpen }) => {
 							onClick={showCroppedImage}
 							variant="contained"
 							color="primary"
-							classes={{ root: classes.cropButton }}
+							classes={{ root: styles.cropButton }}
 						>
 							select
 						</Button>
@@ -154,4 +154,4 @@ function readFile(file) {
 	});
 }
 
-export default withStyles(styles)(EasyCrop);
+export default EasyCrop;

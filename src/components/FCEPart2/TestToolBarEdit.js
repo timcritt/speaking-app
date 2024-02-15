@@ -8,6 +8,8 @@ import ViewButton from "components/TestCommon/ViewButton";
 //styles
 import styles from "./FCEPart2TestToolBarEdit.module.css";
 
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 const TestToolBarEdit = ({
 	testType,
 	docRef,
@@ -16,6 +18,8 @@ const TestToolBarEdit = ({
 	clearState,
 	publishButtonRenderProp,
 }) => {
+	const queryClient = useQueryClient();
+
 	const handleDeleteTest = async (e) => {
 		console.log("deleting part 4");
 		e.preventDefault();
@@ -23,6 +27,13 @@ const TestToolBarEdit = ({
 		clearState();
 		closeModal();
 	};
+
+	const mutation = useMutation({
+		mutationFn: (e) => handleDeleteTest(e),
+		onMutate: () => {
+			queryClient.invalidateQueries([testType]);
+		},
+	});
 
 	return (
 		<div className={styles.container}>
@@ -35,7 +46,7 @@ const TestToolBarEdit = ({
 						deleteItemType={"test"}
 						firestoreCollection={testType}
 						iconColour={"white"}
-						handleDelete={handleDeleteTest}
+						handleDelete={(e) => mutation.mutate(e)}
 						buttonText={"delete"}
 					/>
 				</Fragment>

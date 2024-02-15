@@ -6,23 +6,18 @@ import getUserDetails from "APIHandlers/getUserDetails";
 import profilePlaceHolder from "img/profile-placeholder.png";
 import { firebaseAuth } from "context/AuthProvider";
 
+//React Query
+import { useQuery } from "@tanstack/react-query";
+
 const CreatorContent = () => {
 	const creatorId = useParams().userId;
-	const [creatorDetails, setCreatorDetails] = useState(null);
+
 	const { userId } = useContext(firebaseAuth);
 
-	useEffect(() => {
-		let isLoaded = true;
-		if (isLoaded) {
-			if (creatorId) {
-				(async () => {
-					const details = await getUserDetails(creatorId);
-					setCreatorDetails(details);
-				})();
-			}
-		}
-		return () => (isLoaded = false);
-	}, [creatorId]);
+	const creatorDetailsQuery = useQuery({
+		queryKey: ["user_details"],
+		queryFn: async () => await getUserDetails(creatorId),
+	});
 
 	let { url } = useRouteMatch();
 
@@ -37,17 +32,17 @@ const CreatorContent = () => {
 									className="dashboard-image "
 									alt="could not load"
 									src={
-										creatorDetails && creatorDetails.profilePicture
-											? creatorDetails.profilePicture
+										creatorDetailsQuery.isFetched
+											? creatorDetailsQuery.data.profilePicture
 											: profilePlaceHolder
 									}
 								/>
 								<span className="content-title dashboard-user-name">
 									{/*shows user name if viewing other users content.  */}
-									{creatorDetails &&
-										(creatorDetails.userId === userId
+									{creatorDetailsQuery.isFetched &&
+										(creatorDetailsQuery.data.userId === userId
 											? "My Content"
-											: creatorDetails.userName)}
+											: creatorDetailsQuery.data.userName)}
 								</span>
 							</div>
 						</div>
@@ -68,8 +63,11 @@ const CreatorContent = () => {
 
 				{/* router goes here */}
 				<div className="my-content-main">
-					{creatorDetails && (
-						<ContentRoutes url={url} creatorId={creatorDetails.userId} />
+					{creatorDetailsQuery.isFetched && (
+						<ContentRoutes
+							url={url}
+							creatorId={creatorDetailsQuery.data.userId}
+						/>
 					)}
 				</div>
 			</div>
