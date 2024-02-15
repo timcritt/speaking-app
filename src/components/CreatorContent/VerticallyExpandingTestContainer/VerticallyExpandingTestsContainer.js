@@ -8,6 +8,9 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 //custom hooks
 import useFilterTests from "./useFilterTests";
 
+//3rd party hooks
+import { useQuery } from "@tanstack/react-query";
+
 //custom components
 import LoadingBar from "components/LoadingBar/LoadingBar";
 
@@ -21,32 +24,32 @@ const VerticallyExpandingTestsContainer = ({
 	children,
 }) => {
 	const [testContainerExpanded, setTestContainerExpanded] = useState(false);
-	const [tests, setTests] = useState(null);
 	const [filteredTests, setFilteredTests] = useState(null);
-	const [fetching, setFetching] = useState(false);
 
-	const toggleExpandContainer = () => {
-		//only makes API call on first time container is expanded
-		if (!tests) {
-			const fetchTests = async () => {
-				setFetching(true);
-				let userTests = await getFilteredTests(creatorId, null, testType);
-				//stores a copy of ALL tests to allow for all tests to be displayed after removing filters without another API call
-				setTests(userTests);
-				//stores the tests to be displayed
-				setFilteredTests(userTests);
-				setFetching(false);
-				setTestContainerExpanded(true);
-			};
+	//react-query is disabled upon mount with this variable to prevent initial API call on mount
+	const [hasFetched, setHasFetched] = useState(false);
 
-			fetchTests();
-		} else {
-			setTestContainerExpanded((prevState) => !prevState);
+	const toggleExpandContainer = async () => {
+		//Only makes API call on first time container is expanded
+		if (!testQuery.isFetched) {
+			const newTests = await getFilteredTests(creatorId, null, testType);
+
+			//Enbales react-query after fetching
+			setHasFetched(true);
+			return newTests;
 		}
+
+		setTestContainerExpanded((prevState) => !prevState);
 	};
 
+	const testQuery = useQuery({
+		queryKey: [testType],
+		queryFn: toggleExpandContainer,
+		enabled: hasFetched,
+	});
+
 	useFilterTests(
-		tests,
+		testQuery.data,
 		tagFilterTerm,
 		sortBy,
 		questionFilterTerm,
@@ -59,10 +62,10 @@ const VerticallyExpandingTestsContainer = ({
 				testContainerExpanded ? "test-container-header-expanded" : ""
 			} `}
 		>
-			<LoadingBar fetching={fetching}>
+			<LoadingBar fetching={testQuery.isLoading}>
 				<div
 					className="tests-container-heading"
-					onClick={(e) => toggleExpandContainer(e)}
+					onClick={(e) => testQuery.refetch()}
 				>
 					<h2>{buttonLabel}</h2>
 					<div className="tests-container-button">
@@ -80,7 +83,7 @@ const VerticallyExpandingTestsContainer = ({
 					}
 				>
 					{cloneElement(children, { tests: filteredTests })}
-				</div>{" "}
+				</div>
 			</LoadingBar>
 		</div>
 	);
