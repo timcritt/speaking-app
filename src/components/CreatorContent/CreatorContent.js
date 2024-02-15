@@ -6,6 +6,10 @@ import getUserDetails from "APIHandlers/getUserDetails";
 import profilePlaceHolder from "img/profile-placeholder.png";
 import { firebaseAuth } from "context/AuthProvider";
 
+//React Query
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
 const CreatorContent = () => {
 	const creatorId = useParams().userId;
 	const [creatorDetails, setCreatorDetails] = useState(null);
