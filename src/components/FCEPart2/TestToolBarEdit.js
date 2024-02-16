@@ -8,6 +8,8 @@ import ViewButton from "components/TestCommon/ViewButton";
 //styles
 import styles from "./FCEPart2TestToolBarEdit.module.css";
 
+import getFilteredTests from "APIHandlers/getFilteredTests";
+
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const TestToolBarEdit = ({
@@ -17,21 +19,39 @@ const TestToolBarEdit = ({
 	closeModal,
 	clearState,
 	publishButtonRenderProp,
+	creatorId,
 }) => {
 	const queryClient = useQueryClient();
 
-	const handleDeleteTest = async (e) => {
+	const handleDeleteTest = (e) => {
 		console.log("deleting part 4");
-		e.preventDefault();
-		await deleteTest(docRef, testType);
-		clearState();
-		closeModal();
+
+		// Wrap everything in a Promise
+		return new Promise((resolve, reject) => {
+			e.preventDefault();
+
+			// Assuming deleteTest returns a promise
+			deleteTest(docRef, testType)
+				.then(() => {
+					// Assuming clearState and closeModal are synchronous functions
+					clearState();
+					closeModal();
+					resolve(); // Resolve the promise if deletion is successful
+				})
+				.catch((error) => {
+					reject(error); // Reject the promise if an error occurs during deletion
+				});
+		});
 	};
+
+	const queryFn = () => getFilteredTests(creatorId, null, testType);
+	const queryKey = [testType];
 
 	const mutation = useMutation({
 		mutationFn: (e) => handleDeleteTest(e),
 		onSuccess: () => {
-			queryClient.invalidateQueries([testType]);
+			console.log("onMutate in TestToolBarEdit modal firing on delete");
+			queryClient.fetchQuery({ queryKey, queryFn });
 		},
 	});
 

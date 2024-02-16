@@ -68,10 +68,10 @@ export default function PublishWarningModal({
 		e.preventDefault();
 		//checks all required inputs have been completed by user
 		//returns value rather than save as state value because the next if statement depends on this state,
-		//and the calling function would have a state state value due to closure
+		//and the calling function would have a stale state value due to closure
 		const inputsValid = validateInputs();
 		setOpen(true);
-		//const createdAt = timestamp();
+
 		if (inputsValid) {
 			if (docRef !== "new") {
 				//update fce part 3

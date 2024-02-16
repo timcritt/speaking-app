@@ -176,6 +176,7 @@ const EditFCEPart2 = ({
 					/>
 
 					<TestToolBarEdit
+						creatorId={context.creatorId}
 						docRef={context.docRef}
 						clearState={context.resetState}
 						setInputStatus={setInputStatus}

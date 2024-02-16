@@ -11,6 +11,7 @@ import { FCEPart2 } from "APIHandlers/firebaseConsts";
 //API
 import addTest from "APIHandlers/addTest";
 import { uploadFCEPart2Images } from "APIHandlers/uploadFCEPart2Images";
+import getFilteredTests from "APIHandlers/getFilteredTests";
 
 //Context
 import { firebaseAuth } from "context/AuthProvider";
@@ -35,13 +36,15 @@ const FCEPart2PublishModalWithButton = ({ setInputStatus }) => {
 	//React query used to trigger UI updated after change to database
 	const queryClient = useQueryClient();
 
-	const mutation = useMutation({
-		mutationFn: (e) => handleOpen(e),
+	const queryKey = [FCEPart2];
+	const queryFn = () => getFilteredTests(context.userId, null, FCEPart2);
 
-		onSuccess: (data) => {
-			console.log("onMutate in publish modal firing", data);
-			queryClient.invalidateQueries([FCEPart2]);
-			//queryClient.refetch();
+	const mutation = useMutation({
+		mutationFn: async (e) => handleOpen(e),
+
+		onSuccess: () => {
+			console.log("onMutate in publish modal firing");
+			queryClient.fetchQuery({ queryKey, queryFn });
 		},
 	});
 
@@ -196,7 +199,6 @@ const FCEPart2PublishModalWithButton = ({ setInputStatus }) => {
 				}
 			} else {
 				setOpen(true);
-				reject(new Error("Inputs are not valid")); // Reject the promise if inputs are not valid
 			}
 		});
 	};
