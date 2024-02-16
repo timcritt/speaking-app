@@ -30,7 +30,7 @@ const TestToolBarEdit = ({
 
 	const mutation = useMutation({
 		mutationFn: (e) => handleDeleteTest(e),
-		onMutate: () => {
+		onSuccess: () => {
 			queryClient.invalidateQueries([testType]);
 		},
 	});
