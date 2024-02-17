@@ -17,6 +17,11 @@ import { firebaseAuth } from "context/AuthProvider";
 import { Part4Context } from "context/Part4Context";
 import { TestModalContext } from "context/TestModalContext";
 
+//3rd party Hooks
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import getFilteredTests from "APIHandlers/getFilteredTests";
+
 export default function PublishPart4Modal({
 	setInputStatus,
 	testType,
@@ -29,6 +34,21 @@ export default function PublishPart4Modal({
 	const history = useHistory();
 	const [uploadComplete, setUploadComplete] = useState(false);
 	const modalContext = useContext(TestModalContext);
+
+	//React query used to trigger UI updated after change to database
+	const queryClient = useQueryClient();
+
+	const queryKey = ["FCEPart4"];
+	const queryFn = () => getFilteredTests(context.creatorId, null, "FCEPart4");
+
+	const mutation = useMutation({
+		mutationFn: async (e) => handleOpen(e),
+
+		onSuccess: () => {
+			console.log("onSuccess in publish Part 4 modal firing");
+			queryClient.fetchQuery({ queryKey, queryFn });
+		},
+	});
 
 	const validateInputs = () => {
 		//create the new state based on current inputs
@@ -65,52 +85,61 @@ export default function PublishPart4Modal({
 	};
 
 	const handleOpen = async (e) => {
-		e.preventDefault();
+		return new Promise((resolve, reject) => {
+			e.preventDefault();
 
-		//checks all required inputs have been completed by user
-		//returns value rather than save as state value because the next if statement depends on this state,
-		//and the calling function would have a state state value due to closure
-		const inputsValid = validateInputs();
+			//checks all required inputs have been completed by user
+			//returns value rather than save as state value because the next if statement depends on this state,
+			//and the calling function would have a state state value due to closure
+			const inputsValid = validateInputs();
 
-		setOpen(true);
+			setOpen(true);
 
-		if (inputsValid) {
-			console.log("inputs are valid");
-			if (context.docRef !== "new") {
-				//update fce part 4
-
-				updatePart4(
-					context.questionOne,
-					context.questionTwo,
-					context.questionThree,
-					context.questionFour,
-					context.questionFive,
-					context.questionSix,
-					context.docRef,
-					context.testTags,
-					testType
-				).then(() => {
-					setUploadComplete(true);
-				});
+			if (inputsValid) {
+				console.log("inputs are valid");
+				if (context.docRef !== "new") {
+					//update fce part 4
+					updatePart4(
+						context.questionOne,
+						context.questionTwo,
+						context.questionThree,
+						context.questionFour,
+						context.questionFive,
+						context.questionSix,
+						context.docRef,
+						context.testTags,
+						testType
+					)
+						.then(() => {
+							setUploadComplete(true);
+							resolve(); // Resolve the promise when the update is complete
+						})
+						.catch(reject); // Reject the promise if there's an error
+				} else {
+					//upload new Part 4 - only reached if all fields are complete and docRef doesn't exist - i.e., the test has just been created
+					console.log("about to addPart4");
+					addPart4(
+						context.questionOne,
+						context.questionTwo,
+						context.questionThree,
+						context.questionFour,
+						context.questionFive,
+						context.questionSix,
+						context.testTags,
+						testType,
+						userId
+					)
+						.then((response) => {
+							context.updateDocRef(response.id);
+							modalContext.setDocToFetchRef(response.id);
+							resolve(); // Resolve the promise when the addition is complete
+						})
+						.catch(reject); // Reject the promise if there's an error
+				}
 			} else {
-				//upload new Part 4 - only reached if all fields are complete and docRef doesn't exist - i.e., the test has just been created
-				console.log("about to addPart4");
-				addPart4(
-					context.questionOne,
-					context.questionTwo,
-					context.questionThree,
-					context.questionFour,
-					context.questionFive,
-					context.questionSix,
-					context.testTags,
-					testType,
-					userId
-				).then((response) => {
-					context.updateDocRef(response.id);
-					modalContext.setDocToFetchRef(response.id);
-				});
+				reject("Inputs are not valid"); // Reject the promise if inputs are not valid
 			}
-		}
+		});
 	};
 
 	const handleClose = () => {
@@ -141,7 +170,7 @@ export default function PublishPart4Modal({
 
 	return (
 		<Fragment>
-			<SaveButton handleOpen={handleOpen} changesSaved={changesSaved} />
+			<SaveButton handleOpen={mutation.mutate} changesSaved={changesSaved} />
 
 			{open && (
 				<Modal
