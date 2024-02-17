@@ -50,7 +50,7 @@ const TestToolBarEdit = ({
 	const mutation = useMutation({
 		mutationFn: (e) => handleDeleteTest(e),
 		onSuccess: () => {
-			console.log("onMutate in TestToolBarEdit modal firing on delete");
+			console.log("onSuccess in TestToolBarEdit modal firing on delete");
 			queryClient.fetchQuery({ queryKey, queryFn });
 		},
 	});

@@ -14,7 +14,7 @@ const addPart3 = async (
 ) => {
 	const collection = projectFirestore.collection(testType);
 
-	const result = await collection.add({
+	return await collection.add({
 		bottomCentre,
 		bottomLeft,
 		bottomRight,
@@ -26,8 +26,6 @@ const addPart3 = async (
 		tags,
 		createdAt: timestamp(),
 	});
-
-	return result;
 };
 
 export default addPart3;
