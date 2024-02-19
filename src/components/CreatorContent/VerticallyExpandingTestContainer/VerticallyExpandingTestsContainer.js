@@ -26,21 +26,15 @@ const VerticallyExpandingTestsContainer = ({
 	const [testContainerExpanded, setTestContainerExpanded] = useState(false);
 	const [filteredTests, setFilteredTests] = useState(null);
 
-	//react-query is disabled upon mount with this variable to prevent initial API call on mount
+	//react-query is set to disabled with this variable to prevent initial API call on mount
 	const [hasFetched, setHasFetched] = useState(false);
 
 	const toggleExpandContainer = async () => {
 		//Only makes API call on first time container is expanded
 		if (!hasFetched) {
 			const newTests = await getFilteredTests(creatorId, null, testType);
-
-			//Enbales react-query after fetching
-
-			setTestContainerExpanded((prevState) => !prevState);
-
 			return newTests;
 		}
-		setTestContainerExpanded((prevState) => !prevState);
 		return filteredTests;
 	};
 
@@ -69,8 +63,10 @@ const VerticallyExpandingTestsContainer = ({
 				<div
 					className="tests-container-heading"
 					onClick={(e) => {
-						testQuery.refetch();
 						setHasFetched(true);
+						testQuery.refetch().then(() => {
+							setTestContainerExpanded((prevState) => !prevState);
+						});
 					}}
 				>
 					<h2>{buttonLabel}</h2>

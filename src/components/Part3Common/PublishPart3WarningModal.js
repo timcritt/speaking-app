@@ -6,6 +6,12 @@ import { firebaseAuth } from "context/AuthProvider";
 import SaveButton from "components/TestCommon/SaveButton";
 import { LinearProgress } from "@mui/material";
 import { TestModalContext } from "context/TestModalContext";
+import { FCEPart3 } from "APIHandlers/firebaseConsts";
+
+//3rd party Hooks
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import getFilteredTests from "APIHandlers/getFilteredTests";
 
 export default function PublishWarningModal({
 	bottomCentre,
@@ -29,6 +35,21 @@ export default function PublishWarningModal({
 	const [allInputsCompleted, setAllInputsCompleted] = useState(false);
 	const [uploadComplete, setUploadComplete] = useState(false);
 	const modalContext = useContext(TestModalContext);
+
+	//React query used to trigger UI updated after change to database
+	const queryClient = useQueryClient();
+
+	const queryKey = [FCEPart3];
+	const queryFn = () => getFilteredTests(creatorId, null, FCEPart3);
+
+	const mutation = useMutation({
+		mutationFn: async (e) => handleOpen(e),
+
+		onSuccess: () => {
+			console.log("onSuccess in publish Part 3 modal firing");
+			queryClient.fetchQuery({ queryKey, queryFn });
+		},
+	});
 
 	const validateInputs = () => {
 		let newValidationState = {
@@ -66,53 +87,62 @@ export default function PublishWarningModal({
 
 	const handleOpen = async (e) => {
 		e.preventDefault();
-		//checks all required inputs have been completed by user
-		//returns value rather than save as state value because the next if statement depends on this state,
-		//and the calling function would have a state state value due to closure
-		const inputsValid = validateInputs();
-		setOpen(true);
-		//const createdAt = timestamp();
-		if (inputsValid) {
-			if (docRef !== "new") {
-				//update fce part 3
-				updatePart3(
-					bottomCentre,
-					bottomLeft,
-					bottomRight,
-					questionOne,
-					shortTurnQuestion,
-					topLeft,
-					topRight,
-					docRef,
-					testTags,
-					testType
-				).then(() => {
-					setUploadComplete(true);
-				});
-			} else {
-				//upload new Part 3 - only reached if all fields are complete and docRef is not "new" i.e., the test has just been created
-				addPart3(
-					bottomCentre,
-					bottomLeft,
-					bottomRight,
-					userId,
-					questionOne,
-					shortTurnQuestion,
-					topLeft,
-					topRight,
-					testTags,
-					testType
-				).then((response) => {
-					updateDocRef(response.id);
-					modalContext.setDocToFetchRef(response.id);
 
-					updateCreatorId(userId);
-					setUploadComplete(true);
-				});
-			}
-		} else {
+		return new Promise((resolve, reject) => {
+			//checks all required inputs have been completed by user
+			//returns value rather than save as state value because the next if statement depends on this state,
+			//and the calling function would have a stale state value due to closure
+			const inputsValid = validateInputs();
 			setOpen(true);
-		}
+
+			if (inputsValid) {
+				if (docRef !== "new") {
+					//update fce part 3
+					updatePart3(
+						bottomCentre,
+						bottomLeft,
+						bottomRight,
+						questionOne,
+						shortTurnQuestion,
+						topLeft,
+						topRight,
+						docRef,
+						testTags,
+						testType
+					)
+						.then(() => {
+							setUploadComplete(true);
+							resolve(); // resolve the promise when updatePart3 is complete
+						})
+						.catch(reject); // reject the promise if updatePart3 fails
+				} else {
+					//upload new Part 3 - only reached if all fields are complete and docRef is not "new" i.e., the test has just been created
+					addPart3(
+						bottomCentre,
+						bottomLeft,
+						bottomRight,
+						userId,
+						questionOne,
+						shortTurnQuestion,
+						topLeft,
+						topRight,
+						testTags,
+						testType
+					)
+						.then((response) => {
+							updateDocRef(response.id);
+							modalContext.setDocToFetchRef(response.id);
+							updateCreatorId(userId);
+							setUploadComplete(true);
+							resolve(); // resolve the promise when addPart3 is complete
+						})
+						.catch(reject); // reject the promise if addPart3 fails
+				}
+			} else {
+				setOpen(true);
+				resolve(); // resolve the promise when inputs are not valid
+			}
+		});
 	};
 
 	const handleClose = () => {
@@ -144,7 +174,7 @@ export default function PublishWarningModal({
 
 	return (
 		<Fragment>
-			<SaveButton handleOpen={(e) => handleOpen(e)} />
+			<SaveButton handleOpen={mutation.mutate} />
 
 			{open && (
 				<Modal
