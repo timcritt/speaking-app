@@ -3,6 +3,7 @@ import React from "react";
 import FCEPart2ModeSelector from "components/FCEPart2/FCEPart2ModeSelector";
 import FCEPart3ModeSelector from "components/FCEPart3/FCEPart3ModeSelector";
 import FCEPart4ModeSelector from "components/FCEPart4ModeSelector";
+import CAEPart2ModeSelector from "components/CAEPart2/CAEPart2ModeSelector";
 
 const TestTypeSelector = ({
 	testType,
@@ -30,6 +31,14 @@ const TestTypeSelector = ({
 		case "FCEPart4":
 			return (
 				<FCEPart4ModeSelector
+					docToFetchRef={docToFetchRef}
+					editMode={editMode}
+					setEditMode={setEditMode}
+				/>
+			);
+		case "CAEPart2":
+			return (
+				<CAEPart2ModeSelector
 					docToFetchRef={docToFetchRef}
 					editMode={editMode}
 					setEditMode={setEditMode}

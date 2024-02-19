@@ -1,9 +1,12 @@
-import React, { Fragment, useState, useContext } from "react";
+import React, { Fragment, useState, useContext, useEffect } from "react";
+
 //Context
 import { CAEPart2Context } from "context/CAEPart2Context";
+import { firebaseAuth } from "context/AuthProvider";
+
 //3rd party modules
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-//custom modules
+//custom components
 import LinearProgress from "@mui/material/LinearProgress";
 import Part2QuestionRow from "components/TestCommon/Part2QuestionRow";
 import TestToolBar from "components/TestCommon/TestToolBarView";
@@ -14,19 +17,49 @@ import ToolBarButtonsView from "components/TestCommon/ToolBarButtonsView";
 //CSS Modules
 import styles from "./CAEPart2View.module.css";
 
-const CAEPart2View = (props) => {
-	const context = useContext(CAEPart2Context);
+//constants
+import { CAEPart2 } from "APIHandlers/firebaseConsts";
+
+//API Handlers
+import getTest from "APIHandlers/getTest";
+
+const CAEPart2View = ({ docToFetchRef, setEditMode }) => {
+	//max time for short and long terms. Passed down to question row so that flipping it results in time change
+	const shortTime = "2000";
+	const longTime = "6000";
+
+	const { userId } = useContext(firebaseAuth);
 	const handleFullScreen = useFullScreenHandle();
 	const [time, setTime] = useState(6000);
 
-	useLoadTestIntoComponent(
-		context.setDocRef,
-		context.clearState,
-		context.fetchTest,
-		context.unsavedChanges,
-		context.setUnsavedChanges,
-		props.match.params.id
-	);
+	const context = useContext(CAEPart2Context);
+
+	useEffect(() => {
+		//clear state before attempting to fetch a new test to prevent previous test being displayed while new one is loading (for slower connections)
+
+		const asyncWrapper = async () => {
+			context.updateHasFetched(false);
+			const test = await getTest(CAEPart2, docToFetchRef);
+			console.log(test);
+			//change object shape to match state shape before dispatching
+			test.docRef = test.id;
+			delete test.id;
+			test.testTags = test.tags;
+			delete test.tags;
+			context.updateTest(test);
+			context.updateHasFetched(true);
+			console.log(test);
+		};
+
+		if (docToFetchRef !== "new") {
+			if (docToFetchRef !== context.docRef) {
+				context.resetState();
+				asyncWrapper();
+			}
+
+			context.updateHasFetched(true);
+		}
+	}, [docToFetchRef]);
 
 	if (context.hasFetched) {
 		return (
@@ -39,6 +72,8 @@ const CAEPart2View = (props) => {
 									longTurnQuestions={[context.questionOne, context.questionTwo]}
 									shortTurnQuestion={context.shortTurnQuestion}
 									setTime={setTime}
+									longTime={longTime}
+									shortTime={shortTime}
 								/>
 							</div>
 							<div className={styles.left_image_container}>
@@ -53,11 +88,14 @@ const CAEPart2View = (props) => {
 							<TestToolBar
 								creatorId={context.creatorId}
 								timer={<Timer time={time} />}
-								buttons={
+								toolBarButtons={
 									<ToolBarButtonsView
+										userId={userId}
+										creatorId={context.creatorId}
 										testType={"CAEPart2"}
-										handleFullScreen={handleFullScreen}
 										docRef={context.docRef}
+										handleFullScreen={handleFullScreen}
+										handleClickEditButton={setEditMode}
 									/>
 								}
 							/>
