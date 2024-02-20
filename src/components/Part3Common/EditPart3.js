@@ -18,6 +18,7 @@ import useLoadTestInEditMode from "hooks/useLoadTestInEditMode";
 
 //CSS modules
 import styles from "./Part3.module.css";
+import { FCEPart3, CAEPart3 } from "APIHandlers/firebaseConsts";
 
 const EditPart3 = ({
 	docToFetchRef,
@@ -45,6 +46,8 @@ const EditPart3 = ({
 	resetState,
 	handleSetTags,
 	updateCreatorId,
+	testType,
+	handleShowModal,
 }) => {
 	const [inputStatus, setInputStatus] = useState({
 		bottomCentreFailedValidation: false,
@@ -58,7 +61,7 @@ const EditPart3 = ({
 	});
 
 	useLoadTestInEditMode(
-		"FCEPart3",
+		testType,
 		docToFetchRef,
 		docRef,
 		resetState,
@@ -71,7 +74,16 @@ const EditPart3 = ({
 		return (
 			<Fragment>
 				<EditTestContainer>
-					<EditTestFormHeading docRef={docRef} testTypeLabel={"FCE Part 3"} />
+					<EditTestFormHeading
+						docRef={docRef}
+						testTypeLabel={
+							testType === FCEPart3
+								? "FCE Part 3"
+								: testType === CAEPart3
+								? "CAE Part 3"
+								: ""
+						}
+					/>
 					<fieldset className={styles.edit_option_container}>
 						<legend>
 							Options to discuss
@@ -218,10 +230,10 @@ const EditPart3 = ({
 					)}
 					<div className={styles.button_container}>
 						<TestToolBarEdit
-							testType={"FCEPart3"}
+							testType={testType}
 							docRef={docRef}
 							handleClickViewButton={() => setEditMode(false)}
-							closeModal={() => console.log("close modal")}
+							closeModal={() => handleShowModal(false)}
 							clearState={() => resetState()}
 							publishButtonRenderProp={() => (
 								<PublishPart3WarningModal
@@ -237,7 +249,7 @@ const EditPart3 = ({
 									changesSaved={changesSaved}
 									docRef={docRef}
 									updateDocRef={updateDocRef}
-									testType={"FCEPart3"}
+									testType={testType}
 									setInputStatus={setInputStatus}
 									updateCreatorId={updateCreatorId}
 								/>

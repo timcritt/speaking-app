@@ -70,6 +70,9 @@ export const NavBar = () => {
 									<li onClick={() => handleCreateTestClick("CAEPart2")}>
 										CAE Part 2
 									</li>
+									<li onClick={() => handleCreateTestClick("CAEPart3")}>
+										CAE Part 3
+									</li>
 								</div>
 							</div>
 							<Link className="nav-link" to={`/userContent/${userId}/tests`}>

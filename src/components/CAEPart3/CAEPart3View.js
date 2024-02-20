@@ -1,10 +1,17 @@
-import React from 'react';
-import { CAEPart3Context } from 'context/CAEPart3Context';
-import Part3 from 'components/Part3Common/Part3';
-import { CAEPart3 } from 'APIHandlers/firebaseConsts';
+import React from "react";
 
-const CAEPart3View = (props) => {
-  return <Part3 part3Context={CAEPart3Context} {...props} testType={CAEPart3} />;
+import Part3ViewOverlay from "components/Part3Common/Part3ViewOverlay";
+import { CAEPart3 } from "APIHandlers/firebaseConsts";
+
+const CAEPart3View = ({ setEditMode, docToFetchRef, context }) => {
+	return (
+		<Part3ViewOverlay
+			context={context}
+			testType={CAEPart3}
+			docToFetchRef={docToFetchRef}
+			setEditMode={setEditMode}
+		/>
+	);
 };
 
 export default CAEPart3View;

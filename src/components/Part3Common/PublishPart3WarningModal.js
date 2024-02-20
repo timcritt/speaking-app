@@ -39,8 +39,8 @@ export default function PublishWarningModal({
 	//React query used to trigger UI updated after change to database
 	const queryClient = useQueryClient();
 
-	const queryKey = [FCEPart3];
-	const queryFn = () => getFilteredTests(creatorId, null, FCEPart3);
+	const queryKey = [testType];
+	const queryFn = () => getFilteredTests(creatorId, null, testType);
 
 	const mutation = useMutation({
 		mutationFn: async (e) => handleOpen(e),
