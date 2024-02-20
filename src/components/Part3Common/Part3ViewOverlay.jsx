@@ -26,7 +26,12 @@ import getTest from "APIHandlers/getTest";
 //hooks
 // import useToggleShortTurn from 'hooks/useToggleShortTurn';
 
-const Part3ViewOverlay = ({ context, docToFetchRef, setEditMode }) => {
+const Part3ViewOverlay = ({
+	context,
+	docToFetchRef,
+	setEditMode,
+	testType,
+}) => {
 	const { userId } = useContext(firebaseAuth);
 
 	const handleFullScreen = useFullScreenHandle();
@@ -114,7 +119,7 @@ const Part3ViewOverlay = ({ context, docToFetchRef, setEditMode }) => {
 
 		const asyncWrapper = async () => {
 			//context.updateHasFetched(true);
-			const test = await getTest("FCEPart3", docToFetchRef);
+			const test = await getTest(testType, docToFetchRef);
 			console.log(test);
 			//change object shape to match state shape before dispatching
 			test.docRef = test.id;

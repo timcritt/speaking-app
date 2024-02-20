@@ -1,128 +1,225 @@
 import React, { useState, useEffect, Fragment, useContext } from "react";
+
+//Custom components
 import Modal from "../common/Modal";
-import PublishIcon from "@mui/icons-material/Publish";
-import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import { timestamp } from "firebaseStuff/firebaseIndex";
+import SaveButton from "components/TestCommon/SaveButton";
+
+//API
 import updateCAEPart2 from "APIHandlers/updateCAEPart2";
-import addCAEPart2 from "APIHandlers/addCAEPart2";
-import { firebaseAuth } from "context/AuthProvider";
 import { uploadCAEPart2Images } from "APIHandlers/uploadFCEPart2Images";
+import addCAEPart2 from "APIHandlers/addCAEPart2";
+import { CAEPart2 } from "APIHandlers/firebaseConsts";
+import getFilteredTests from "APIHandlers/getFilteredTests";
+
+//Context
+import { firebaseAuth } from "context/AuthProvider";
 import { CAEPart2Context } from "context/CAEPart2Context";
+import { TestModalContext } from "context/TestModalContext";
+
+//3rd party components
 import LinearProgress from "@mui/material/LinearProgress";
-import { useHistory } from "react-router-dom";
+
+//3rd party hooks
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const PublishMessage = ({ uploadComplete }) => {
 	return uploadComplete ? <h3>Published!</h3> : <LinearProgress />;
 };
 
-export default function PublishWarningModal() {
+export default function PublishWarningModal({ setInputStatus }) {
 	const [open, setOpen] = useState(false);
 	const { userId } = useContext(firebaseAuth);
 	const context = useContext(CAEPart2Context);
+	const modalContext = useContext(TestModalContext);
 
 	const [allInputsCompleted, setAllInputsCompleted] = useState(false);
 	const [uploadComplete, setUploadComplete] = useState(false);
 
-	var history = useHistory();
+	//React query used to trigger UI updated after change to database
+	const queryClient = useQueryClient();
 
-	useEffect(() => {
+	const queryKey = [CAEPart2];
+	const queryFn = () => getFilteredTests(context.userId, null, CAEPart2);
+
+	const mutation = useMutation({
+		mutationFn: async (e) => handleOpen(e),
+
+		onSuccess: () => {
+			console.log("onMutate in publish modal firing");
+			queryClient.fetchQuery({ queryKey, queryFn });
+		},
+	});
+
+	const validateInputs = () => {
+		if (!context.questionOne) {
+			setInputStatus((prevState) => {
+				return {
+					...prevState,
+					questionOneFailedValidation: true,
+				};
+			});
+		}
+		if (!context.questionTwo) {
+			setInputStatus((prevState) => {
+				return {
+					...prevState,
+					questionTwoFailedValidation: true,
+				};
+			});
+		}
+		if (!context.shortTurnQuestion) {
+			setInputStatus((prevState) => {
+				return {
+					...prevState,
+					shortTurnQuestionFailedValidation: true,
+				};
+			});
+		}
+		if (!context.imageOneUrl) {
+			setInputStatus((prevState) => {
+				return {
+					...prevState,
+					imageOneFailedValidation: true,
+				};
+			});
+		}
+		if (!context.imageTwoUrl) {
+			setInputStatus((prevState) => {
+				return {
+					...prevState,
+					imageTwoFailedValidation: true,
+				};
+			});
+		}
+		if (!context.imageThreeUrl) {
+			setInputStatus((prevState) => {
+				return {
+					...prevState,
+					imageThreeFailedValidation: true,
+				};
+			});
+		}
+		if (!context.testTags.length > 0) {
+			setInputStatus((prevState) => {
+				return {
+					...prevState,
+					topicTagsFailedValidation: true,
+				};
+			});
+		}
+
 		if (
 			context.testTags.length > 0 &&
 			context.imageOneUrl &&
 			context.imageTwoUrl &&
-			context.imageThreeUrl &&
-			context.questionOne &&
-			context.questionTwo &&
-			context.shortTurnQuestion
+			context.questionOne
 		) {
 			setAllInputsCompleted(true);
+			return true;
 		} else {
 			setAllInputsCompleted(false);
+			return false;
 		}
-	}, [
-		context.imageOneUrl,
-		context.imageTwoUrl,
-		context.imageThreeUrl,
-		context.questionOne,
-		context.questionTwo,
-		context.testTags,
-		context.shortTurnQuestion,
-	]);
+	};
 
-	const handleOpen = () => {
-		setOpen(true);
-		setUploadComplete(false);
-		const createdAt = timestamp();
-		if (allInputsCompleted) {
-			if (context.docRef) {
-				//var test = getTest(FCEPart2, docRef).then(
-				uploadCAEPart2Images(
-					context.imageOneUrl,
-					context.imageTwoUrl,
-					context.imageThreeUrl,
-					context.imageOneRef,
-					context.imageTwoRef,
-					context.imageThreeRef
-				).then((data) => {
-					updateCAEPart2(
-						data.imageOneData.url,
-						data.imageTwoData.url,
-						data.imageThreeData.url,
-						context.questionOne,
-						context.questionTwo,
-						context.shortTurnQuestion,
-						context.testTags,
-						context.docRef,
-						createdAt,
-						data.imageOneData.reference,
-						data.imageTwoData.reference,
-						data.imageThreeData.reference
-					).then(
-						context.setImageOneUrl(data.imageOneData.url),
-						context.setImageTwoUrl(data.imageTwoData.url),
-						context.setImageThreeUrl(data.imageThreeData.url),
-						context.setImageOneRef(data.imageOneData.reference),
-						context.setImageTwoRef(data.imageTwoData.reference),
-						context.setImageThreeRef(data.imageThreeData.reference),
-						setUploadComplete(true),
-						context.setUnsavedChanges(false)
+	const handleOpen = (e) => {
+		return new Promise((resolve, reject) => {
+			e.preventDefault();
 
-						//setChangesSaved(true)
-					);
-				});
+			//must rely on value returned by validateInputs rather than allInputsCompleted due to closure around the top level state value
+			const inputsValid = validateInputs();
+
+			//Open the modal
+			setOpen(true);
+
+			if (inputsValid) {
+				setUploadComplete(false);
+				const createdAt = timestamp();
+
+				//Update existing test
+				if (context.docRef !== "new") {
+					uploadCAEPart2Images(
+						context.imageOneUrl,
+						context.imageTwoUrl,
+						context.imageThreeUrl,
+						context.imageOneRef,
+						context.imageTwoRef,
+						context.imageThreeRef
+					)
+						.then((data) => {
+							updateCAEPart2(
+								data.imageOneData.url,
+								data.imageTwoData.url,
+								data.imageThreeData.url,
+								context.questionOne,
+								context.questionTwo,
+								context.shortTurnQuestion,
+								context.testTags,
+								context.docRef,
+								createdAt,
+								data.imageOneData.reference,
+								data.imageTwoData.reference,
+								data.imageThreeData.reference
+							)
+								.then(() => {
+									context.updateImageOneUrl(data.imageOneData.url);
+									context.updateImageTwoUrl(data.imageTwoData.url);
+									context.updateImageThreeUrl(data.imageThreeData.url);
+									context.updateImageOneRef(data.imageOneData.reference);
+									context.updateImageTwoRef(data.imageTwoData.reference);
+									context.updateImageThreeRef(data.imageThreeData.reference);
+									setUploadComplete(true);
+									context.updateUnsavedChanges(false);
+									setOpen(false);
+									resolve(); // Resolve the promise
+								})
+								.catch(reject); // Reject the promise if there's an error
+						})
+						.catch(reject); // Reject the promise if there's an error
+				} else {
+					setOpen(true);
+					//create new test
+					//if local test has id "new", it's because it's new. i.e, it doesn't exist in the database.
+					//also creates thumbnails
+					uploadCAEPart2Images(
+						context.imageOneUrl,
+						context.imageTwoUrl,
+						context.imageThreeUrl
+					)
+						.then((data) => {
+							addCAEPart2(
+								data.imageOneData.url,
+								data.imageTwoData.url,
+								data.imageThreeData.url,
+								context.questionOne,
+								context.questionTwo,
+								context.shortTurnQuestion,
+								createdAt,
+								context.testTags,
+								data.imageOneData.reference,
+								data.imageTwoData.reference,
+								data.imageThreeData.reference,
+								userId
+							)
+								.then((response) => {
+									context.updateDocRef(response.id);
+									modalContext.setDocToFetchRef(response.id);
+									setUploadComplete(true);
+									context.updateCreatorId(userId);
+									context.updateUnsavedChanges(false);
+									context.updateHasFetched(true);
+									resolve(); // Resolve the promise
+								})
+								.catch(reject); // Reject the promise if there's an error
+						})
+						.catch(reject); // Reject the promise if there's an error
+				}
 			} else {
 				setOpen(true);
-				//if local test has no docId, it's because it's new and doesn't exist on the firestore.
-				uploadCAEPart2Images(
-					context.imageOneUrl,
-					context.imageTwoUrl,
-					context.imageThreeUrl
-				).then((data) => {
-					addCAEPart2(
-						data.imageOneData.url,
-						data.imageTwoData.url,
-						data.imageThreeData.url,
-						context.questionOne,
-						context.questionTwo,
-						context.shortTurnQuestion,
-						createdAt,
-						context.testTags,
-						data.imageOneData.reference,
-						data.imageTwoData.reference,
-						data.imageThreeData.reference,
-						userId
-					).then((response) => {
-						context.setDocRef(response.id);
-						setUploadComplete(true);
-						context.setUnsavedChanges(false);
-						history.push(`/EditCAEPart2/${response.id}`);
-					});
-				});
+				reject(new Error("Inputs are not valid")); // Reject the promise if inputs are not valid
 			}
-		} else {
-			setOpen(true);
-			//setChangesSaved(true);
-		}
+		});
 	};
 
 	const handleClose = () => {
@@ -156,9 +253,7 @@ export default function PublishWarningModal() {
 
 	return (
 		<Fragment>
-			<button className="tool-bar-btn" onClick={handleOpen}>
-				{context.docRef ? <SaveOutlinedIcon /> : <PublishIcon />}
-			</button>
+			<SaveButton handleOpen={mutation.mutate} />
 			{open && (
 				<Modal
 					modalOpen={open}

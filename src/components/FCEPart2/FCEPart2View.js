@@ -20,7 +20,6 @@ import { FCEPart2 } from "APIHandlers/firebaseConsts";
 
 //API Handlers
 import getTest from "APIHandlers/getTest";
-import { removeTagsFromAllEntries } from "APIHandlers/removeTagsFromAllEntries";
 
 //CSS Modules
 import styles from "./FCEPart2View.module.css";
@@ -51,7 +50,6 @@ const FCEPart2View = ({ context, docToFetchRef, setEditMode }) => {
 			console.log(test);
 		};
 
-		//If
 		if (docToFetchRef !== "new") {
 			if (docToFetchRef !== context.docRef) {
 				context.resetState();

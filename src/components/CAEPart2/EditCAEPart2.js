@@ -1,186 +1,237 @@
-import React, { useContext, Fragment } from "react";
-import SideBarTags from "components/common/SideBarTags";
+import React, { useContext, Fragment, useState } from "react";
+
+//Custom components
 import PublishCAEPart2WarningModal from "components/CAEPart2/PublishCAEPart2WarningModal";
-import { Link } from "react-router-dom";
-import deleteTest from "APIHandlers/deleteTest";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import ExamPicture from "components/FCEPart2/ExamPicture";
 import ImageDeleteBtn from "components/FCEPart2/ImageDeleteBtn";
 import SimpleModal from "components/common/SimpleModal";
+import EditTestContainer from "components/EditTestContainer";
+import EditTestFormHeading from "components/common/EditTestFormHeading";
+import ToolTip from "components/common/ToolTip";
+import FormTags from "components/TestCommon/FormTags";
+import TestToolBarEdit from "components/FCEPart2/TestToolBarEdit";
+
+//API
+import { CAEPart2 } from "APIHandlers/firebaseConsts";
+
+//3rd party components
 import LinearProgress from "@mui/material/LinearProgress";
-import { useHistory } from "react-router-dom";
-import { CAEPart2Context } from "context/CAEPart2Context";
-import useLoadTestIntoComponent from "hooks/useLoadTestIntoComponent";
 import { Prompt } from "react-router-dom";
 
-const EditCAEPart2 = (props) => {
+//Context
+import { CAEPart2Context } from "context/CAEPart2Context";
+
+//styles
+//TODO Change this!
+import styles from "components/FCEPart2/EditFCEPart2.module.css";
+
+//custom hooks
+import useLoadTestInEditMode from "hooks/useLoadTestInEditMode";
+
+const EditCAEPart2 = ({ docToFetchRef, setEditMode, handleShowModal }) => {
 	const context = useContext(CAEPart2Context);
-	var history = useHistory();
 
-	const handleDeleteTest = async () => {
-		await deleteTest(context.docRef, "CAEPart2");
-		context.clearState();
-		history.push("/EditCAEPart2/new");
-	};
+	const [inputStatus, setInputStatus] = useState({
+		questionOneFailedValidation: false,
+		questionTwoFailedValidation: false,
+		shortTurnQuestionFailedValidation: false,
+		imageOneFailedValidation: false,
+		imageTwoFailedValidation: false,
+		imageThreeFailedValidation: false,
+		topicTagsFailedValidation: false,
+	});
 
-	useLoadTestIntoComponent(
-		context.setDocRef,
-		context.clearState,
-		context.fetchTest,
-		context.unsavedChanges,
-		context.setUnsavedChanges,
-		props.match.params.id
+	useLoadTestInEditMode(
+		CAEPart2,
+		docToFetchRef,
+		context.docRef,
+		context.resetState,
+		context.updateDocRef,
+		context.updateTest,
+		setEditMode
 	);
 
-	if (context.hasFetched) {
+	if (context.hasFetched || context.docRef === "new") {
 		return (
 			<Fragment>
 				<Prompt
 					when={context.unsavedChanges}
 					message="You have unsaved changes. Are you sure you want to leave? All changes will be lost. "
 				/>
-				<div className="side-bar-left-tags hg-sidebar ">
-					<SideBarTags
+				<EditTestContainer>
+					<EditTestFormHeading
+						docRef={context.docRef}
+						testTypeLabel={"CAE Part 2"}
+					/>
+					<fieldset className={styles.image_row}>
+						<legend>
+							Images{" "}
+							<ToolTip
+								text={
+									"Images for this part of the test are related by topic, with notable similarities but also differences. They must show people engaged in an activity or interaction"
+								}
+							/>
+						</legend>
+						<div
+							className={`${styles.image_container} ${
+								inputStatus.imageOneFailedValidation &&
+								styles.required_input_incomplete
+							}`}
+						>
+							<ExamPicture
+								image={context.imageOneUrl}
+								setImage={context.updateImageOneUrl}
+							>
+								{context.imageOneUrl ? (
+									<ImageDeleteBtn
+										setImageUrl={context.updateImageOneUrl}
+										setImageRef={context.updateImageOneRef}
+									/>
+								) : (
+									<SimpleModal
+										modalButtonText={"upload"}
+										setImageUrl={context.updateImageOneUrl}
+										modalButton={
+											<button
+												className={styles.clickable_image_overlay}
+											></button>
+										}
+									/>
+								)}
+							</ExamPicture>
+						</div>
+						<div className={`${styles.image_container}`}>
+							<ExamPicture
+								image={context.imageTwoUrl}
+								setImage={context.updateImageTwoUrl}
+							>
+								{context.imageTwoUrl ? (
+									<ImageDeleteBtn
+										setImageUrl={context.updateImageTwoUrl}
+										setImageRef={context.updateImageTwoRef}
+									/>
+								) : (
+									<SimpleModal
+										modalButtonText={"upload"}
+										setImageUrl={context.updateImageTwoUrl}
+										modalButton={
+											<button
+												className={`${styles.clickable_image_overlay} ${
+													styles.image_container
+												} ${
+													inputStatus.imageTwoFailedValidation &&
+													styles.required_input_incomplete
+												} `}
+											></button>
+										}
+									/>
+								)}
+							</ExamPicture>
+						</div>
+
+						<div className={`${styles.image_container}`}>
+							<ExamPicture
+								image={context.imageThreeUrl}
+								setImage={context.updateImageThreeUrl}
+							>
+								{context.imageThreeUrl ? (
+									<ImageDeleteBtn
+										setImageUrl={context.updateImageThreeUrl}
+										setImageRef={context.updateImageThreeRef}
+									/>
+								) : (
+									<SimpleModal
+										modalButtonText={"upload"}
+										setImageUrl={context.updateImageThreeUrl}
+										modalButton={
+											<button
+												className={`${styles.clickable_image_overlay} ${
+													styles.image_container
+												} ${
+													inputStatus.imageThreeFailedValidation &&
+													styles.required_input_incomplete
+												} `}
+											></button>
+										}
+									/>
+								)}
+							</ExamPicture>
+						</div>
+					</fieldset>
+					<fieldset className={styles.question_row}>
+						<legend>Questions</legend>
+						<label className={styles.label}>
+							long turn questions
+							<ToolTip
+								text={
+									"The long turn questions asks one candidate to speculate for 1 minute about the photos, e.g, the intentions of the people pictured, the challenges involved, etc."
+								}
+							/>
+						</label>
+						<input
+							label="long-turn"
+							className={`input question-input ${
+								inputStatus.questionOneFailedValidation &&
+								styles.required_input_incomplete
+							}`}
+							value={context.questionOne}
+							placeholder="enter long turn question"
+							onChange={(e) => context.updateQuestionOne(e.currentTarget.value)}
+							required
+						/>
+
+						<input
+							label="long-turn"
+							className={`input question-input ${
+								inputStatus.questionTwoFailedValidation &&
+								styles.required_input_incomplete
+							}`}
+							value={context.questionTwo}
+							placeholder="enter long turn question"
+							onChange={(e) => context.updateQuestionTwo(e.currentTarget.value)}
+							required
+						/>
+						<label>
+							short turn question
+							<ToolTip
+								text={
+									"The short turn question asks the other candidate to answer a question related to the topic of the pictures"
+								}
+							/>
+						</label>
+						<input
+							label="short-turn"
+							className={`input question-input ${
+								inputStatus.shortTurnQuestionFailedValidation &&
+								styles.required_input_incomplete
+							}`}
+							value={context.shortTurnQuestion}
+							placeholder="enter short turn question"
+							onChange={(e) =>
+								context.updateShortTurnQuestion(e.currentTarget.value)
+							}
+							required
+						/>
+					</fieldset>
+					<FormTags
 						tags={context.testTags}
 						handleSetTags={context.handleSetTags}
-						title={"Topic Tags"}
-					>
-						<p className="advice-text tag-advice">
-							Adding the correct tags will help others find your test
-						</p>
-					</SideBarTags>
-				</div>
-				<main className="holy-grail-content centre-vertically">
-					<div className="part2-main-row fade-in">
-						<div className="part2-edit-question-row">
-							<div className="part2-edit-question-container">
-								<label
-									className="part2-question-input-label"
-									htmlFor="question-one"
-								>
-									Question 1
-								</label>
-								<input
-									label="question-one"
-									className="input question-input"
-									value={context.questionOne}
-									placeholder="enter question 1"
-									onChange={context.handleEditQuestionOne}
-								/>
-							</div>
-							<div className="part2-edit-question-container">
-								<label
-									className="part2-question-input-label"
-									htmlFor="question-two"
-								>
-									Question 2
-								</label>
-								<input
-									label="question-two"
-									className="input question-input"
-									value={context.questionTwo}
-									placeholder="enter question 2"
-									onChange={context.handleEditQuestionTwo}
-								/>
-							</div>
-
-							<div className="part2-edit-question-container">
-								<label
-									className="part2-question-input-label"
-									htmlFor="short-turn"
-								>
-									Short turn
-								</label>
-								<input
-									label="short-turn"
-									className="input question-input "
-									value={context.shortTurnQuestion}
-									placeholder="enter short turn question"
-									onChange={context.handleEditShortTurnQuestion}
-								/>
-							</div>
-						</div>
-						<div className="CAE-part2-image-row">
-							<div className="part2-image-container-left">
-								<ExamPicture
-									image={context.imageOneUrl}
-									setImage={context.handleEditImageOneUrl}
-								>
-									{context.imageOneUrl ? (
-										<ImageDeleteBtn
-											setImageUrl={context.handleEditImageOneUrl}
-											setImageRef={context.handleEditImageOneRef}
-										/>
-									) : (
-										<SimpleModal
-											modalButtonText={"upload"}
-											setImageUrl={context.handleEditImageOneUrl}
-										/>
-									)}
-								</ExamPicture>
-							</div>
-
-							<div className="part2-image-container-centre">
-								<ExamPicture
-									image={context.imageTwoUrl}
-									setImage={context.handleEditImageTwoUrl}
-								>
-									{context.imageTwoUrl ? (
-										<ImageDeleteBtn
-											setImageUrl={context.handleEditImageTwoUrl}
-											setImageRef={context.handleEditImageTwoRef}
-										/>
-									) : (
-										<SimpleModal
-											modalButtonText={"upload"}
-											setImageUrl={context.handleEditImageTwoUrl}
-										/>
-									)}
-								</ExamPicture>
-							</div>
-
-							<div className="part2-image-container-right">
-								<ExamPicture
-									image={context.imageThreeUrl}
-									setImage={context.handleEditImageThreeUrl}
-								>
-									{context.imageThreeUrl ? (
-										<ImageDeleteBtn
-											setImageUrl={context.handleEditImageThreeUrl}
-											setImageRef={context.handleEditImageThreeRef}
-										/>
-									) : (
-										<SimpleModal
-											modalButtonText={"upload"}
-											setImageUrl={context.handleEditImageThreeUrl}
-										/>
-									)}
-								</ExamPicture>
-							</div>
-						</div>
-						<div className="tool-bar-row">
-							<div className="tool-btn-container">
-								<PublishCAEPart2WarningModal />
-								{context.docRef && (
-									<Link
-										to={{
-											pathname: `/CAEPart2/${context.docRef}`,
-										}}
-									>
-										<button className="tool-bar-btn">
-											<VisibilityOutlinedIcon />
-										</button>
-									</Link>
-								)}
-
-								<button className="tool-bar-btn" onClick={handleDeleteTest}>
-									<DeleteForeverOutlinedIcon />
-								</button>
-							</div>
-						</div>
-					</div>
-				</main>
+						required_input_incomplete_class={styles.required_input_incomplete}
+						failedValidation={inputStatus.topicTagsFailedValidation}
+					/>
+					<TestToolBarEdit
+						creatorId={context.creatorId}
+						docRef={context.docRef}
+						clearState={context.resetState}
+						setInputStatus={setInputStatus}
+						handleClickViewButton={() => setEditMode(false)}
+						testType={CAEPart2}
+						closeModal={() => handleShowModal(false)}
+						publishButtonRenderProp={() => (
+							<PublishCAEPart2WarningModal setInputStatus={setInputStatus} />
+						)}
+					/>
+				</EditTestContainer>
 			</Fragment>
 		);
 	} else {

@@ -1,12 +1,23 @@
-import React, { useContext } from 'react';
+import React, { useContext } from "react";
 
-import EditPart3 from 'components/Part3Common/EditPart3';
-import { CAEPart3 } from 'APIHandlers/firebaseConsts';
-import { CAEPart3Context } from 'context/CAEPart3Context';
+import EditPart3 from "components/Part3Common/EditPart3";
+import { CAEPart3 } from "APIHandlers/firebaseConsts";
 
-const EditCAEPart3 = (props) => {
-  const context = useContext(CAEPart3Context);
-  return <EditPart3 context={context} {...props} testType={CAEPart3} />;
+const EditCAEPart3 = ({
+	setEditMode,
+	docToFetchRef,
+	context,
+	handleShowModal,
+}) => {
+	return (
+		<EditPart3
+			{...context}
+			setEditMode={setEditMode}
+			docToFetchRef={docToFetchRef}
+			testType={CAEPart3}
+			handleShowModal={handleShowModal}
+		/>
+	);
 };
 
 export default EditCAEPart3;

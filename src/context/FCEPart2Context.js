@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect } from "react";
+import React, { createContext, useReducer } from "react";
 
 export const FCEPart2Context = createContext();
 
@@ -12,8 +12,7 @@ export const FCEPart2ContextProvider = ({ children }) => {
 		imageTwoRef: null,
 		testTags: [],
 		docRef: "",
-		docToFetchRef: "",
-		creatorId: null,
+		creatorId: "",
 		shortTurnVisible: null,
 		time: 6000,
 		hasFetched: false,

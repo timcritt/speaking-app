@@ -1,177 +1,232 @@
-import React, { useState, createContext, useEffect, useCallback } from 'react';
-import getTest from 'APIHandlers/getTest';
+import React, { createContext, useReducer } from "react";
 
 export const CAEPart2Context = createContext();
 
 export const CAEPart2ContextProvider = ({ children }) => {
-  const [questionOne, setQuestionOne] = useState('');
-  const [questionTwo, setQuestionTwo] = useState('');
-  const [shortTurnQuestion, setShortTurnQuestion] = useState('');
-  const [imageOneUrl, setImageOneUrl] = useState(null);
-  const [imageTwoUrl, setImageTwoUrl] = useState(null);
-  const [imageThreeUrl, setImageThreeUrl] = useState(null);
-  const [imageOneRef, setImageOneRef] = useState(null);
-  const [imageTwoRef, setImageTwoRef] = useState(null);
-  const [imageThreeRef, setImageThreeRef] = useState(null);
-  const [testTags, setTestTags] = useState([]);
-  const [docRef, setDocRef] = useState(null);
-  const [creatorId, setCreatorId] = useState(null);
-  const [shortTurnVisible, setShortTurnVisible] = useState(false);
-  const [time, setTime] = useState(6000);
-  const [hasFetched, setHasFetched] = useState(false);
-  const [unsavedChanges, setUnsavedChanges] = useState(false);
+	const initialState = {
+		questionOne: "",
+		questionTwo: "",
+		shortTurnQuestion: "",
+		imageOneUrl: null,
+		imageTwoUrl: null,
+		imgaeThreeUrl: null,
+		imageOneRef: null,
+		imageTwoRef: null,
+		imageThreeRef: null,
+		testTags: [],
+		docRef: "",
+		creatorId: null,
+		shortTurnVisible: false,
+		time: 6000,
+		hasFetched: false,
+		unsavedChanges: false,
+	};
 
-  const fetchTest = useCallback(() => {
-    getTest('CAEPart2', docRef).then((data) => {
-      if (data) {
-        setImageOneUrl(data.imageOneUrl);
-        setImageTwoUrl(data.imageTwoUrl);
-        setImageThreeUrl(data.imageThreeUrl);
-        setImageOneRef(data.imageOneRef);
-        setImageTwoRef(data.imageTwoRef);
-        setImageThreeRef(data.imageThreeRef);
-        setQuestionOne(data.questionOne);
-        setQuestionTwo(data.questionTwo);
-        setShortTurnQuestion(data.shortTurnQuestion);
-        setCreatorId(data.creatorId);
-        setTestTags(data.tags);
-        setHasFetched(true);
-      } else {
-        setDocRef('new');
-      }
-    });
-  }, [docRef]);
+	const reducer = (state, action) => {
+		switch (action.type) {
+			case "updateQuestionOne":
+				return {
+					...state,
+					questionOne: action.payload,
+				};
+			case "updateQuestionTwo":
+				return {
+					...state,
+					questionTwo: action.payload,
+				};
+			case "updateShortTurnQuestion":
+				return {
+					...state,
+					shortTurnQuestion: action.payload,
+				};
+			case "updateImageOneUrl":
+				return {
+					...state,
+					imageOneUrl: action.payload,
+				};
+			case "updateImageTwoUrl":
+				return {
+					...state,
+					imageTwoUrl: action.payload,
+				};
+			case "updateImageThreeUrl":
+				return {
+					...state,
+					imageThreeUrl: action.payload,
+				};
+			case "updateImageOneRef":
+				return {
+					...state,
+					imageOneRef: action.payload,
+				};
+			case "updateImageTwoRef":
+				return {
+					...state,
+					imageTwoRef: action.payload,
+				};
+			case "updateImageThreeRef":
+				return {
+					...state,
+					imageThreeRef: action.payload,
+				};
+			case "updateTestTags":
+				return {
+					...state,
+					testTags: action.payload,
+				};
+			case "addTestTag":
+				return { ...state, testTags: [...state.testTags, action.payload] };
 
-  const clearState = () => {
-    setQuestionOne('');
-    setQuestionTwo('');
-    setShortTurnQuestion('');
-    setImageOneUrl(null);
-    setImageTwoUrl(null);
-    setImageThreeUrl(null);
-    setImageOneRef(null);
-    setImageTwoRef(null);
-    setImageThreeRef(null);
-    setTestTags([]);
-    setDocRef(null);
-    setCreatorId(null);
-    setShortTurnVisible(false);
-    setUnsavedChanges(false);
-  };
+			case "removeTestTag":
+				return {
+					...state,
+					testTags: [
+						...state.testTags.filter((testTag) => testTag !== action.payload),
+					],
+				};
+			case "updateDocRef":
+				return {
+					...state,
+					docRef: action.payload,
+				};
+			case "updateDocToFetchRef":
+				return {
+					...state,
+					docToFetchRef: action.payload,
+				};
+			case "updateCreatorId":
+				return {
+					...state,
+					creatorId: action.payload,
+				};
+			case "updateShortTurnVisible":
+				return {
+					...state,
+					shortTurnVisible: action.payload,
+				};
+			case "updateTime":
+				return {
+					...state,
+					updateTime: action.payload,
+				};
+			case "updateHasFetched":
+				return {
+					...state,
+					hasFetched: action.payload,
+				};
+			case "updateUnsavedChanges":
+				return {
+					...state,
+					unsavedChanges: action.payload,
+				};
+			case "updateTest":
+				return {
+					...state,
+					...action.payload,
+				};
+			case "resetState":
+				return { ...initialState };
+			default: {
+				return state;
+			}
+		}
+	};
 
-  const handleEditQuestionOne = (e) => {
-    setQuestionOne(e.currentTarget.value);
-    setUnsavedChanges(true);
-  };
-  const handleEditQuestionTwo = (e) => {
-    setQuestionTwo(e.currentTarget.value);
-    setUnsavedChanges(true);
-  };
-  const handleEditShortTurnQuestion = (e) => {
-    setShortTurnQuestion(e.currentTarget.value);
-    setUnsavedChanges(true);
-  };
-  const handleEditImageOneUrl = (imageOneUrl) => {
-    setImageOneUrl(imageOneUrl);
-    setUnsavedChanges(true);
-  };
-  const handleEditImageOneRef = (imageOneRef) => {
-    setImageOneRef(imageOneRef);
-    setUnsavedChanges(true);
-  };
-  const handleEditImageTwoUrl = (imageTwoUrl) => {
-    setImageTwoUrl(imageTwoUrl);
-    setUnsavedChanges(true);
-  };
-  const handleEditImageTwoRef = (imageTwoRef) => {
-    setImageTwoRef(imageTwoRef);
-    setUnsavedChanges(true);
-  };
-  const handleEditImageThreeUrl = (imageThreeUrl) => {
-    setImageThreeUrl(imageThreeUrl);
-    setUnsavedChanges(true);
-  };
-  const handleEditImageThreeRef = (imageThreeRef) => {
-    setImageThreeRef(imageThreeRef);
-    setUnsavedChanges(true);
-  };
+	const [CAEPart2State, dispatch] = useReducer(reducer, { ...initialState });
 
-  const handleSetTags = (tag, selected) => {
-    if (!selected) {
-      //adds tag to the state
-      setTestTags((prevTags) => {
-        return [...prevTags, tag];
-      });
-    } else {
-      //removes the tag from the state
-      setTestTags((prevTags) => {
-        return [...prevTags.filter((currentTag) => currentTag !== tag)];
-      });
-    }
-    setUnsavedChanges(true);
-  };
+	const dispatchHandlers = {
+		updateQuestionOne: (payload) => {
+			dispatch({ type: "updateQuestionOne", payload: payload });
+		},
 
-  // docRef is updated from the params from within the component displaying the context.
-  // UseEffect only runs if the component requires a different test to the previous one displayed.
-  useEffect(() => {
-    setHasFetched(false);
-    if (docRef) {
-      fetchTest();
-    } else {
-      setHasFetched(true);
-    }
-  }, [docRef, fetchTest]);
+		updateQuestionTwo: (payload) => {
+			dispatch({ type: "updateQuestionTwo", payload: payload });
+		},
 
-  return (
-    <CAEPart2Context.Provider
-      value={{
-        questionOne,
-        setQuestionOne,
-        questionTwo,
-        setQuestionTwo,
-        shortTurnQuestion,
-        setShortTurnQuestion,
-        imageOneUrl,
-        setImageOneUrl,
-        imageTwoUrl,
-        setImageTwoUrl,
-        imageThreeUrl,
-        setImageThreeUrl,
-        imageOneRef,
-        setImageOneRef,
-        imageTwoRef,
-        setImageTwoRef,
-        imageThreeRef,
-        setImageThreeRef,
-        testTags,
-        setTestTags,
-        docRef,
-        setDocRef,
-        creatorId,
-        setCreatorId,
-        shortTurnVisible,
-        setShortTurnVisible,
-        time,
-        setTime,
-        hasFetched,
-        setHasFetched,
-        clearState,
-        unsavedChanges,
-        setUnsavedChanges,
-        fetchTest,
-        handleSetTags,
-        handleEditQuestionOne,
-        handleEditQuestionTwo,
-        handleEditShortTurnQuestion,
-        handleEditImageOneUrl,
-        handleEditImageOneRef,
-        handleEditImageTwoUrl,
-        handleEditImageTwoRef,
-        handleEditImageThreeUrl,
-        handleEditImageThreeRef,
-      }}
-    >
-      {children}
-    </CAEPart2Context.Provider>
-  );
+		updateShortTurnQuestion: (payload) => {
+			dispatch({ type: "updateShortTurnQuestion", payload: payload });
+		},
+
+		updateImageOneUrl: (payload) => {
+			dispatch({ type: "updateImageOneUrl", payload: payload });
+		},
+
+		updateImageTwoUrl: (payload) => {
+			dispatch({ type: "updateImageTwoUrl", payload: payload });
+		},
+
+		updateImageThreeUrl: (payload) => {
+			dispatch({ type: "updateImageThreeUrl", payload: payload });
+		},
+
+		updateImageOneRef: (payload) => {
+			dispatch({ type: "updateImageOneRef", payload: payload });
+		},
+
+		updateImageTwoRef: (payload) => {
+			dispatch({ type: "updateImageTwoRef", payload: payload });
+		},
+		updateImageThreeRef: (payload) => {
+			dispatch({ type: "updateImageThreeRef", payload: payload });
+		},
+
+		updateTestTags: (payload) => {
+			dispatch({ type: "updateTestTags", payload: payload });
+		},
+
+		updateDocRef: (payload) => {
+			dispatch({ type: "updateDocRef", payload: payload });
+		},
+		updateDocToFetchRef: (payload) => {
+			dispatch({ type: "updateDocToFetchRef", payload: payload });
+		},
+
+		updateCreatorId: (payload) => {
+			dispatch({ type: "updateCreatorId", payload: payload });
+		},
+
+		updateShortTurnVisible: (payload) => {
+			dispatch({ type: "updateShortTurnVisible", payload: payload });
+		},
+
+		updateTime: (payload) => {
+			dispatch({ type: "updateTime", payload: payload });
+		},
+
+		updateHasFetched: (payload) => {
+			dispatch({ type: "updateHasFetched", payload: payload });
+		},
+
+		updateUnsavedChanges: (payload) => {
+			dispatch({ type: "updateUnsavedChanges", payload: payload });
+		},
+
+		updateTest: (payload) => {
+			dispatch({ type: "updateTest", payload: payload });
+		},
+
+		resetState: (payload) => {
+			dispatch({ type: "resetState", payload: payload });
+		},
+
+		handleSetTags: (tag, selected) => {
+			if (!selected) {
+				//adds tag to the state
+				dispatch({ type: "addTestTag", payload: tag });
+			} else {
+				dispatch({ type: "removeTestTag", payload: tag });
+			}
+		},
+	};
+
+	return (
+		<CAEPart2Context.Provider
+			value={{
+				...CAEPart2State,
+				...dispatchHandlers,
+			}}
+		>
+			{children}
+		</CAEPart2Context.Provider>
+	);
 };

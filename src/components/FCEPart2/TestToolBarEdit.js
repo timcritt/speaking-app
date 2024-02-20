@@ -24,8 +24,6 @@ const TestToolBarEdit = ({
 	const queryClient = useQueryClient();
 
 	const handleDeleteTest = (e) => {
-		console.log("deleting part 4");
-
 		// Wrap everything in a Promise
 		return new Promise((resolve, reject) => {
 			e.preventDefault();

@@ -40,8 +40,8 @@
 	justify-content: center;
 }
 .close_button {
-	background-color: red;
-	background-color: white;
+	color: white;
+	background-color: transparent;
 	border: none;
 	display: flex;
 	cursor: pointer;
