@@ -1,14 +1,11 @@
 import React, { useContext, Fragment, useState } from "react";
 import PublishCAEPart2WarningModal from "components/CAEPart2/PublishCAEPart2WarningModal";
-import { Link } from "react-router-dom";
-import deleteTest from "APIHandlers/deleteTest";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
+
 import ExamPicture from "components/FCEPart2/ExamPicture";
 import ImageDeleteBtn from "components/FCEPart2/ImageDeleteBtn";
 import SimpleModal from "components/common/SimpleModal";
 import LinearProgress from "@mui/material/LinearProgress";
-import { useHistory } from "react-router-dom";
+
 import { CAEPart2Context } from "context/CAEPart2Context";
 
 import TestToolBarEdit from "components/FCEPart2/TestToolBarEdit";
@@ -31,7 +28,6 @@ import useLoadTestInEditMode from "hooks/useLoadTestInEditMode";
 
 const EditCAEPart2 = ({ docToFetchRef, setEditMode, handleShowModal }) => {
 	const context = useContext(CAEPart2Context);
-	var history = useHistory();
 
 	const [inputStatus, setInputStatus] = useState({
 		questionOneFailedValidation: false,
@@ -42,12 +38,6 @@ const EditCAEPart2 = ({ docToFetchRef, setEditMode, handleShowModal }) => {
 		imageThreeFailedValidation: false,
 		topicTagsFailedValidation: false,
 	});
-
-	const handleDeleteTest = async () => {
-		await deleteTest(context.docRef, "CAEPart2");
-		context.clearState();
-		history.push("/EditCAEPart2/new");
-	};
 
 	useLoadTestInEditMode(
 		CAEPart2,
@@ -169,10 +159,10 @@ const EditCAEPart2 = ({ docToFetchRef, setEditMode, handleShowModal }) => {
 					<fieldset className={styles.question_row}>
 						<legend>Questions</legend>
 						<label className={styles.label}>
-							long turn question 1
+							long turn questions
 							<ToolTip
 								text={
-									"The long turn question asks one candidate to speculate for 1 minute about the photos, e.g, the intentions of the people pictured, the challenges involved, etc."
+									"The long turn questions asks one candidate to speculate for 1 minute about the photos, e.g, the intentions of the people pictured, the challenges involved, etc."
 								}
 							/>
 						</label>
@@ -187,14 +177,7 @@ const EditCAEPart2 = ({ docToFetchRef, setEditMode, handleShowModal }) => {
 							onChange={(e) => context.updateQuestionOne(e.currentTarget.value)}
 							required
 						/>
-						<label>
-							Long turn question 2
-							<ToolTip
-								text={
-									"The short turn question asks the other candidate to answer a personal question related to the topic of the pictures"
-								}
-							/>
-						</label>
+
 						<input
 							label="long-turn"
 							className={`input question-input ${
@@ -203,14 +186,14 @@ const EditCAEPart2 = ({ docToFetchRef, setEditMode, handleShowModal }) => {
 							}`}
 							value={context.questionTwo}
 							placeholder="enter long turn question"
-							onChange={(e) => context.updateQuestionOne(e.currentTarget.value)}
+							onChange={(e) => context.updateQuestionTwo(e.currentTarget.value)}
 							required
 						/>
 						<label>
 							short turn question
 							<ToolTip
 								text={
-									"The short turn question asks the other candidate to answer a personal question related to the topic of the pictures"
+									"The short turn question asks the other candidate to answer a question related to the topic of the pictures"
 								}
 							/>
 						</label>

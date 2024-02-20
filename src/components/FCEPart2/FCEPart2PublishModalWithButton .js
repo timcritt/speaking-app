@@ -21,7 +21,7 @@ import { TestModalContext } from "context/TestModalContext";
 //3rd party components
 import LinearProgress from "@mui/material/LinearProgress";
 
-//3rd party Hooks
+//3rd party hooks
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const FCEPart2PublishModalWithButton = ({ setInputStatus }) => {
@@ -105,10 +105,10 @@ const FCEPart2PublishModalWithButton = ({ setInputStatus }) => {
 	};
 
 	const handleOpen = (e) => {
+		e.preventDefault();
 		// Wrap everything in a Promise
 		return new Promise((resolve, reject) => {
 			//prevent default form action
-			e.preventDefault();
 
 			//must rely on value returned by validateInputs rather than allInputsCompleted due to closure around the top level state value
 			const inputsValid = validateInputs();
