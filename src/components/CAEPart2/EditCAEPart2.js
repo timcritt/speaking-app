@@ -1,23 +1,25 @@
 import React, { useContext, Fragment, useState } from "react";
-import PublishCAEPart2WarningModal from "components/CAEPart2/PublishCAEPart2WarningModal";
 
+//Custom components
+import PublishCAEPart2WarningModal from "components/CAEPart2/PublishCAEPart2WarningModal";
 import ExamPicture from "components/FCEPart2/ExamPicture";
 import ImageDeleteBtn from "components/FCEPart2/ImageDeleteBtn";
 import SimpleModal from "components/common/SimpleModal";
-import LinearProgress from "@mui/material/LinearProgress";
-
-import { CAEPart2Context } from "context/CAEPart2Context";
-
-import TestToolBarEdit from "components/FCEPart2/TestToolBarEdit";
-
 import EditTestContainer from "components/EditTestContainer";
 import EditTestFormHeading from "components/common/EditTestFormHeading";
 import ToolTip from "components/common/ToolTip";
 import FormTags from "components/TestCommon/FormTags";
+import TestToolBarEdit from "components/FCEPart2/TestToolBarEdit";
 
+//API
+import { CAEPart2 } from "APIHandlers/firebaseConsts";
+
+//3rd party components
+import LinearProgress from "@mui/material/LinearProgress";
 import { Prompt } from "react-router-dom";
 
-import { CAEPart2 } from "APIHandlers/firebaseConsts";
+//Context
+import { CAEPart2Context } from "context/CAEPart2Context";
 
 //styles
 //TODO Change this!

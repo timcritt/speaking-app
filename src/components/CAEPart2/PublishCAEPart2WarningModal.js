@@ -60,6 +60,14 @@ export default function PublishWarningModal({ setInputStatus }) {
 				};
 			});
 		}
+		if (!context.questionTwo) {
+			setInputStatus((prevState) => {
+				return {
+					...prevState,
+					questionTwoFailedValidation: true,
+				};
+			});
+		}
 		if (!context.shortTurnQuestion) {
 			setInputStatus((prevState) => {
 				return {
@@ -81,6 +89,14 @@ export default function PublishWarningModal({ setInputStatus }) {
 				return {
 					...prevState,
 					imageTwoFailedValidation: true,
+				};
+			});
+		}
+		if (!context.imageThreeUrl) {
+			setInputStatus((prevState) => {
+				return {
+					...prevState,
+					imageThreeFailedValidation: true,
 				};
 			});
 		}

@@ -18,7 +18,7 @@ const CAEPart2ModeSelector = ({ docToFetchRef }) => {
 				docToFetchRef={docToFetchRef}
 				setEditMode={setEditMode}
 				context={context}
-				handleCloseModal={setIsOpen}
+				handleShowModal={setIsOpen}
 			/>
 		);
 	}
