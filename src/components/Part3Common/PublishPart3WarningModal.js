@@ -1,12 +1,19 @@
 import React, { useState, useEffect, Fragment, useContext } from "react";
-import Modal from "components/common/Modal";
+
+//API
 import updatePart3 from "APIHandlers/updatePart3";
 import addPart3 from "APIHandlers/addPart3";
-import { firebaseAuth } from "context/AuthProvider";
+
+//Custom components
+import Modal from "components/common/Modal";
 import SaveButton from "components/TestCommon/SaveButton";
-import { LinearProgress } from "@mui/material";
+
+//Context
+import { firebaseAuth } from "context/AuthProvider";
 import { TestModalContext } from "context/TestModalContext";
-import { FCEPart3 } from "APIHandlers/firebaseConsts";
+
+//3rd party components
+import { LinearProgress } from "@mui/material";
 
 //3rd party Hooks
 import { useMutation, useQueryClient } from "@tanstack/react-query";

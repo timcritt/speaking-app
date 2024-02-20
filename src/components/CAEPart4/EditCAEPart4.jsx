@@ -4,22 +4,22 @@ import React, { useContext } from "react";
 import EditPart4 from "components/Part4/EditPart4";
 
 //API Constants
-import { FCEPart4 } from "APIHandlers/firebaseConsts";
+import { CAEPart4 } from "APIHandlers/firebaseConsts";
 
 //context
 import { Part4Context } from "context/Part4Context";
 
-const EditFCEPart4 = ({ setEditMode, docToFetchRef, handleCloseModal }) => {
+const EditCAEPart4 = ({ setEditMode, docToFetchRef, handleCloseModal }) => {
 	const context = useContext(Part4Context);
 	return (
 		<EditPart4
 			{...context}
 			setEditMode={setEditMode}
 			docToFetchRef={docToFetchRef}
-			testType={FCEPart4}
+			testType={CAEPart4}
 			handleCloseModal={handleCloseModal}
 		/>
 	);
 };
 
-export default EditFCEPart4;
+export default EditCAEPart4;

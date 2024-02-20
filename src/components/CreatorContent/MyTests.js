@@ -5,6 +5,7 @@ import {
 	FCEPart3,
 	CAEPart2,
 	CAEPart3,
+	CAEPart4,
 } from "APIHandlers/firebaseConsts";
 //custom components
 import FilterMenuMobile from "components/CreatorContent/FilterMenuMobile";
@@ -169,6 +170,19 @@ const MyTests = React.memo(({ creatorId }) => {
 			>
 				<TestSearchResults testType={CAEPart3} creatorId={creatorId}>
 					<Part3TestPreviewContent bottomLabel={"CAE Part 3"} />
+				</TestSearchResults>
+			</VerticallyExpandingTestsContainer>
+
+			<VerticallyExpandingTestsContainer
+				buttonLabel={"CAE Part 4"}
+				testType={CAEPart4}
+				creatorId={creatorId}
+				tagFilterTerm={tagFilterTerm}
+				sortBy={sortBy}
+				questionFilterTerm={questionFilterTerm}
+			>
+				<TestSearchResults testType={CAEPart4} creatorId={creatorId}>
+					<Part4TestPreviewContent bottomLabel={"CAE Part 4"} />
 				</TestSearchResults>
 			</VerticallyExpandingTestsContainer>
 		</Fragment>
