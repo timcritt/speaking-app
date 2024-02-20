@@ -38,8 +38,8 @@ export default function PublishPart4Modal({
 	//React query used to trigger UI updated after change to database
 	const queryClient = useQueryClient();
 
-	const queryKey = ["FCEPart4"];
-	const queryFn = () => getFilteredTests(context.creatorId, null, "FCEPart4");
+	const queryKey = [testType];
+	const queryFn = () => getFilteredTests(context.creatorId, null, testType);
 
 	const mutation = useMutation({
 		mutationFn: async (e) => handleOpen(e),

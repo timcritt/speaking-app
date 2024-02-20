@@ -10,6 +10,9 @@ import GrabSlider from "components/common/GrabSlider/GrabSlider";
 //API
 import getTest from "APIHandlers/getTest";
 
+//API Constants
+import { FCEPart4, CAEPart4 } from "APIHandlers/firebaseConsts";
+
 //styles
 import styles from "./Part4.module.css";
 
@@ -29,6 +32,7 @@ const Part4 = ({
 	updateTest,
 	resetState,
 	updateHasFetched,
+	testType,
 }) => {
 	//load test into state
 	useEffect(() => {
@@ -36,7 +40,7 @@ const Part4 = ({
 
 		const asyncWrapper = async () => {
 			updateHasFetched(false);
-			const test = await getTest("FCEPart4", docToFetchRef);
+			const test = await getTest(testType, docToFetchRef);
 			console.log(test);
 			//change object shape to match state shape before dispatching
 			test.docRef = test.id;
@@ -66,7 +70,13 @@ const Part4 = ({
 				<main className="holy-grail-content fade-in">
 					<div className={styles.part4_container}>
 						<div className={styles.content_container}>
-							<span className={styles.title}>FCE Part 4</span>
+							<span className={styles.title}>
+								{testType === FCEPart4
+									? "FCE Part 4"
+									: testType === CAEPart4
+									? "CAE Part 4"
+									: ""}
+							</span>
 
 							<div className={styles.question_container}>
 								<span>{questionOne}</span>
@@ -86,7 +96,7 @@ const Part4 = ({
 									<ToolBarButtonsView
 										userId={creatorId}
 										creatorId={creatorId}
-										testType={"FCEPart4"}
+										testType={testType}
 										docRef={docRef}
 										handleFullScreen={handleFullScreen}
 										handleClickEditButton={setEditMode}

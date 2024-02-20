@@ -1,6 +1,4 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import getTest from "APIHandlers/getTest";
 
 //custom components
 import FormTags from "components/TestCommon/FormTags";
@@ -13,6 +11,9 @@ import EditTestFormHeading from "components/common/EditTestFormHeading";
 
 //Custom hooks
 import useLoadTestInEditMode from "hooks/useLoadTestInEditMode";
+
+//API Constants
+import { FCEPart4, CAEPart4 } from "APIHandlers/firebaseConsts";
 
 //styles
 import styles from "./Part4.module.css";
@@ -39,6 +40,7 @@ const EditPart4 = ({
 	docToFetchRef,
 	updateDocRef,
 	handleCloseModal,
+	testType,
 }) => {
 	const [inputStatus, setInputStatus] = useState({
 		questionOneFailedValidation: false,
@@ -51,7 +53,7 @@ const EditPart4 = ({
 
 	//Get a test from the database according to the docToFetchRef
 	useLoadTestInEditMode(
-		"FCEPart4",
+		testType,
 		docToFetchRef,
 		docRef,
 		resetState,
@@ -63,7 +65,16 @@ const EditPart4 = ({
 	return (
 		<Fragment>
 			<EditTestContainer>
-				<EditTestFormHeading docRef={docRef} testTypeLabel={"FCE Part 4"} />
+				<EditTestFormHeading
+					docRef={docRef}
+					testTypeLabel={
+						testType === FCEPart4
+							? "FCE Part 4"
+							: testType === CAEPart4
+							? "CAE Part 4"
+							: ""
+					}
+				/>
 				<fieldset className={styles.content_container}>
 					<legend>
 						Questions
@@ -164,7 +175,7 @@ const EditPart4 = ({
 				)}
 				<div className={styles.button_container}>
 					<TestToolBarEdit
-						testType={"FCEPart4"}
+						testType={testType}
 						docRef={docRef}
 						handleClickViewButton={setEditMode}
 						closeModal={() => handleCloseModal(false)}
@@ -172,7 +183,7 @@ const EditPart4 = ({
 						publishButtonRenderProp={() => (
 							<PublishPart4Modal
 								// changesSaved={changesSaved}
-								testType={"FCEPart4"}
+								testType={testType}
 								setInputStatus={setInputStatus}
 							/>
 						)}
