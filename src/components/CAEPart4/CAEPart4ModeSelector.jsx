@@ -10,6 +10,7 @@ import { TestModalContext } from "context/TestModalContext";
 
 const CAEPart4ModeSelector = ({ docToFetchRef }) => {
 	const context = useContext(Part4Context);
+
 	const { setEditMode, editMode, setIsOpen } = useContext(TestModalContext);
 
 	if (editMode) {

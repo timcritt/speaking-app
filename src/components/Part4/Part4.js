@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 
 //custom components
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
@@ -7,9 +7,6 @@ import ToolBarButtonsView from "components/TestCommon/ToolBarButtonsView";
 import Timer from "components/common/Timer";
 import GrabSlider from "components/common/GrabSlider/GrabSlider";
 
-//API
-import getTest from "APIHandlers/getTest";
-
 //API Constants
 import { FCEPart4, CAEPart4 } from "APIHandlers/firebaseConsts";
 
@@ -17,7 +14,6 @@ import { FCEPart4, CAEPart4 } from "APIHandlers/firebaseConsts";
 import styles from "./Part4.module.css";
 
 const Part4 = ({
-	docToFetchRef,
 	setEditMode,
 	docRef,
 	questionOne,
@@ -29,39 +25,10 @@ const Part4 = ({
 	creatorId,
 	time,
 	testTags,
-	updateTest,
-	resetState,
-	updateHasFetched,
 	testType,
 }) => {
 	//load test into state
-	useEffect(() => {
-		//clear state before attempting to fetch a new test to prevent previous test being displayed while new one is loading (for slower connections)
 
-		const asyncWrapper = async () => {
-			updateHasFetched(false);
-			const test = await getTest(testType, docToFetchRef);
-			console.log(test);
-			//change object shape to match state shape before dispatching
-			test.docRef = test.id;
-			delete test.id;
-			test.testTags = test.tags;
-			delete test.tags;
-			updateTest(test);
-			updateHasFetched(true);
-			console.log(test);
-		};
-
-		//If
-		if (docToFetchRef !== "new") {
-			if (docToFetchRef !== docRef) {
-				resetState();
-				asyncWrapper();
-			}
-
-			updateHasFetched(true);
-		}
-	}, [docToFetchRef]);
 	const handleFullScreen = useFullScreenHandle();
 
 	return (

@@ -1,38 +1,43 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
+
+//API
+import getTest from "APIHandlers/getTest";
 
 const useLoadTestIntoComponent = (
-  setDocRef,
-  clearState,
-  fetchTest,
-  unsavedChanges,
-  setUnsavedChanges,
-  testId
+	testType,
+	docToFetchRef,
+	resetState,
+	updateTest,
+	updateHasFetched,
+	docRef
 ) => {
-  useEffect(() => {
-    let isMounted = true;
+	useEffect(() => {
+		//clear state before attempting to fetch a new test to prevent previous test being displayed while new one is loading (for slower connections)
 
-    if (isMounted) {
-      if (testId !== 'new') {
-        //sends the id of the current test to be displayed to the FCEPart2 context
-        setDocRef(testId);
+		const asyncWrapper = async () => {
+			updateHasFetched(false);
+			const test = await getTest(testType, docToFetchRef);
+			console.log(test);
+			//change object shape to match state shape before dispatching
+			test.docRef = test.id;
+			delete test.id;
+			test.testTags = test.tags;
+			delete test.tags;
+			updateTest(test);
+			updateHasFetched(true);
+			console.log(test);
+		};
 
-        //checks if the user previously made changes to this test and did not save the changes. Reverts to DB version if so.
-        if (unsavedChanges) {
-          clearState();
-          setDocRef(testId);
-          fetchTest();
-        }
-        setUnsavedChanges(false);
-      } else {
-        //clears context state of previously viewed Test. displays blank test to be created by user.
-        clearState();
-        setUnsavedChanges(false);
-      }
-    }
-    return () => {
-      isMounted = false;
-    };
-  }, [testId]);
+		//If
+		if (docToFetchRef !== "new") {
+			if (docToFetchRef !== docRef) {
+				resetState();
+				asyncWrapper();
+			}
+
+			updateHasFetched(true);
+		}
+	}, [docToFetchRef]);
 };
 
 export default useLoadTestIntoComponent;

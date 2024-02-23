@@ -6,8 +6,10 @@ import FolderOutlinedIcon from "@mui/icons-material/FolderOutlined";
 import {
 	FCEPart2,
 	FCEPart3,
+	FCEPart4,
 	CAEPart2,
 	CAEPart3,
+	CAEPart4,
 } from "APIHandlers/firebaseConsts";
 import Part3TestPreviewContent from "components/Part3Common/Part3TestPreviewContent";
 import FCEPart2TestPreviewContent from "components/FCEPart2/FCEPart2TestPreviewContent/FCEPart2TestPreviewContent";
@@ -26,6 +28,7 @@ const VerticallyExpandingFolder = ({ folder }) => {
 	const [FCEPart4Tests, setFCEPart4Tests] = useState(null);
 	const [CAEPart2Tests, setCAEPart2Tests] = useState(null);
 	const [CAEPart3Tests, setCAEPart3Tests] = useState(null);
+	const [CAEPart4Tests, setCAEPart4Tests] = useState(null);
 
 	const [fetching, setFetching] = useState(false);
 	const [fetched, setFetched] = useState(false);
@@ -41,23 +44,36 @@ const VerticallyExpandingFolder = ({ folder }) => {
 					setFetching(true);
 					//returns an array of the testIds in the folder
 					const folderContent = await getFolderTestsJunctions(folder.id);
-					const newFCEPart2Tests = await getTestsById(folderContent, FCEPart2);
-					const newFCEPart3Tests = await getTestsById(folderContent, FCEPart3);
-					const newFCEPart4Tests = await getTestsById(
-						folderContent,
-						"FCEPart4"
-					);
-					const newCAEPart2Tests = await getTestsById(folderContent, CAEPart2);
-					const newCAEPart3Tests = await getTestsById(folderContent, CAEPart3);
 
+					// Fetch all test types concurrently
+					const [
+						newFCEPart2Tests,
+						newFCEPart3Tests,
+						newFCEPart4Tests,
+						newCAEPart2Tests,
+						newCAEPart3Tests,
+						newCAEPart4Tests,
+					] = await Promise.all([
+						getTestsById(folderContent, FCEPart2),
+						getTestsById(folderContent, FCEPart3),
+						getTestsById(folderContent, FCEPart4),
+						getTestsById(folderContent, CAEPart2),
+						getTestsById(folderContent, CAEPart3),
+						getTestsById(folderContent, CAEPart4),
+					]);
+
+					// Set all states after all fetches are done
 					setFCEPart2Tests(newFCEPart2Tests);
 					setFCEPart3Tests(newFCEPart3Tests);
 					setFCEPart4Tests(newFCEPart4Tests);
 					setCAEPart2Tests(newCAEPart2Tests);
 					setCAEPart3Tests(newCAEPart3Tests);
+					setCAEPart4Tests(newCAEPart4Tests);
+
 					setFetching(false);
 					setTestContainerExpanded((prevState) => !prevState);
 				};
+
 				fetchTests();
 				setFetched(true);
 			} else {
@@ -149,7 +165,7 @@ const VerticallyExpandingFolder = ({ folder }) => {
 										<TestPreview
 											key={test.id}
 											testId={test.id}
-											testType={"FCEPart4"}
+											testType={FCEPart4}
 											testTags={test.tags}
 										>
 											<Part4TestPreviewContent test={test} />
@@ -183,6 +199,22 @@ const VerticallyExpandingFolder = ({ folder }) => {
 											<Part3TestPreviewContent
 												test={test}
 												bottomLabel={"CAE Part 3"}
+											/>
+										</TestPreview>
+									);
+								})}
+							{CAEPart4Tests &&
+								CAEPart4Tests.map((test) => {
+									return (
+										<TestPreview
+											key={test.id}
+											testId={test.id}
+											testType={CAEPart4}
+											testTags={test.tags}
+										>
+											<Part4TestPreviewContent
+												test={test}
+												bottomLabel={"CAE Part 4"}
 											/>
 										</TestPreview>
 									);
