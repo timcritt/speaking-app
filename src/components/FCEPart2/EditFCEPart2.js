@@ -49,10 +49,6 @@ const EditFCEPart2 = ({
 	if (context.hasFetched || context.docRef == "new") {
 		return (
 			<Fragment>
-				<Prompt
-					when={context.unsavedChanges}
-					message="You have unsaved changes. Are you sure you want to leave? All changes will be lost. "
-				/>
 				<EditTestContainer>
 					<EditTestFormHeading
 						docRef={context.docRef}
@@ -95,7 +91,12 @@ const EditFCEPart2 = ({
 								)}
 							</ExamPicture>
 						</div>
-						<div className={`${styles.image_container}`}>
+						<div
+							className={`${styles.image_container} ${
+								inputStatus.imageTwoFailedValidation &&
+								styles.required_input_incomplete
+							}`}
+						>
 							<ExamPicture
 								image={context.imageTwoUrl}
 								setImage={context.updateImageTwoUrl}
@@ -111,12 +112,7 @@ const EditFCEPart2 = ({
 										setImageUrl={context.updateImageTwoUrl}
 										modalButton={
 											<button
-												className={`${styles.clickable_image_overlay} ${
-													styles.image_container
-												} ${
-													inputStatus.imageTwoFailedValidation &&
-													styles.required_input_incomplete
-												} `}
+												className={styles.clickable_image_overlay}
 											></button>
 										}
 									/>
@@ -179,7 +175,6 @@ const EditFCEPart2 = ({
 						creatorId={context.creatorId}
 						docRef={context.docRef}
 						clearState={context.resetState}
-						setInputStatus={setInputStatus}
 						handleClickViewButton={() => setEditMode(false)}
 						testType={FCEPart2}
 						closeModal={() => handleShowModal(false)}

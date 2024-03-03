@@ -49,59 +49,37 @@ const FCEPart2PublishModalWithButton = ({ setInputStatus }) => {
 	});
 
 	const validateInputs = () => {
-		if (!context.questionOne) {
-			setInputStatus((prevState) => {
-				return {
-					...prevState,
-					questionOneFailedValidation: true,
-				};
-			});
-		}
-		if (!context.shortTurnQuestion) {
-			setInputStatus((prevState) => {
-				return {
-					...prevState,
-					shortTurnQuestionFailedValidation: true,
-				};
-			});
-		}
-		if (!context.imageOneUrl) {
-			setInputStatus((prevState) => {
-				return {
-					...prevState,
-					imageOneFailedValidation: true,
-				};
-			});
-		}
-		if (!context.imageTwoUrl) {
-			setInputStatus((prevState) => {
-				return {
-					...prevState,
-					imageTwoFailedValidation: true,
-				};
-			});
-		}
-		if (!context.testTags.length > 0) {
-			setInputStatus((prevState) => {
-				return {
-					...prevState,
-					topicTagsFailedValidation: true,
-				};
-			});
-		}
+		const {
+			questionOne,
+			shortTurnQuestion,
+			imageOneUrl,
+			imageTwoUrl,
+			testTags,
+		} = context;
 
-		if (
-			context.testTags.length > 0 &&
-			context.imageOneUrl &&
-			context.imageTwoUrl &&
-			context.questionOne
-		) {
-			setAllInputsCompleted(true);
-			return true;
-		} else {
-			setAllInputsCompleted(false);
-			return false;
-		}
+		const newInputStatus = {
+			questionOneFailedValidation: !questionOne,
+			shortTurnQuestionFailedValidation: !shortTurnQuestion,
+			imageOneFailedValidation: !imageOneUrl,
+			imageTwoFailedValidation: !imageTwoUrl,
+			topicTagsFailedValidation: !(testTags.length > 0),
+		};
+
+		setInputStatus((prevState) => ({
+			...prevState,
+			...newInputStatus,
+		}));
+
+		const allInputsCompleted =
+			questionOne &&
+			shortTurnQuestion &&
+			imageOneUrl &&
+			imageTwoUrl &&
+			testTags.length > 0;
+
+		setAllInputsCompleted(allInputsCompleted);
+
+		return allInputsCompleted;
 	};
 
 	const handleOpen = (e) => {

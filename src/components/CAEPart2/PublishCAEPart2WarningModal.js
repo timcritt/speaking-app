@@ -52,75 +52,43 @@ export default function PublishWarningModal({ setInputStatus }) {
 	});
 
 	const validateInputs = () => {
-		if (!context.questionOne) {
-			setInputStatus((prevState) => {
-				return {
-					...prevState,
-					questionOneFailedValidation: true,
-				};
-			});
-		}
-		if (!context.questionTwo) {
-			setInputStatus((prevState) => {
-				return {
-					...prevState,
-					questionTwoFailedValidation: true,
-				};
-			});
-		}
-		if (!context.shortTurnQuestion) {
-			setInputStatus((prevState) => {
-				return {
-					...prevState,
-					shortTurnQuestionFailedValidation: true,
-				};
-			});
-		}
-		if (!context.imageOneUrl) {
-			setInputStatus((prevState) => {
-				return {
-					...prevState,
-					imageOneFailedValidation: true,
-				};
-			});
-		}
-		if (!context.imageTwoUrl) {
-			setInputStatus((prevState) => {
-				return {
-					...prevState,
-					imageTwoFailedValidation: true,
-				};
-			});
-		}
-		if (!context.imageThreeUrl) {
-			setInputStatus((prevState) => {
-				return {
-					...prevState,
-					imageThreeFailedValidation: true,
-				};
-			});
-		}
-		if (!context.testTags.length > 0) {
-			setInputStatus((prevState) => {
-				return {
-					...prevState,
-					topicTagsFailedValidation: true,
-				};
-			});
-		}
+		const {
+			questionOne,
+			questionTwo,
+			shortTurnQuestion,
+			imageOneUrl,
+			imageTwoUrl,
+			imageThreeUrl,
+			testTags,
+		} = context;
 
-		if (
-			context.testTags.length > 0 &&
-			context.imageOneUrl &&
-			context.imageTwoUrl &&
-			context.questionOne
-		) {
-			setAllInputsCompleted(true);
-			return true;
-		} else {
-			setAllInputsCompleted(false);
-			return false;
-		}
+		const newInputStatus = {
+			questionOneFailedValidation: !questionOne,
+			questionTwoFailedValidation: !questionTwo,
+			shortTurnQuestionFailedValidation: !shortTurnQuestion,
+			imageOneFailedValidation: !imageOneUrl,
+			imageTwoFailedValidation: !imageTwoUrl,
+			imageThreeFailedValidation: !imageThreeUrl,
+			topicTagsFailedValidation: !(testTags.length > 0),
+		};
+
+		setInputStatus((prevState) => ({
+			...prevState,
+			...newInputStatus,
+		}));
+
+		const allInputsCompleted =
+			questionOne &&
+			questionTwo &&
+			shortTurnQuestion &&
+			imageOneUrl &&
+			imageTwoUrl &&
+			imageThreeUrl &&
+			testTags.length > 0;
+
+		setAllInputsCompleted(allInputsCompleted);
+
+		return allInputsCompleted;
 	};
 
 	const handleOpen = (e) => {
@@ -237,12 +205,12 @@ export default function PublishWarningModal({ setInputStatus }) {
 				)}
 			</div>
 			<ul>
-				{(!context.imageOneUrl || !context.imageTwoUrl) && (
-					<li>select two images</li>
-				)}
-				{!context.questionOne && !context.questionTwo && (
-					<li>enter a question</li>
-				)}
+				{(!context.imageOneUrl ||
+					!context.imageTwoUrl ||
+					!context.imageThreeUrl) && <li>select three images</li>}
+				{(!context.questionOne ||
+					!context.questionTwo ||
+					!context.questionThree) && <li>enter three questions</li>}
 				{context.testTags.length === 0 && <li>select at least one tag</li>}
 			</ul>
 			<div className="center">
