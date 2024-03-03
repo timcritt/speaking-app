@@ -48,6 +48,15 @@ const Part3ViewOverlay = ({
 
 	const [time, setTime] = useState(longTime);
 
+	useLoadTestIntoComponent(
+		testType,
+		docToFetchRef,
+		context.resetState,
+		context.updateTest,
+		context.updateHasFetched,
+		context.docRef
+	);
+
 	const hideLines = () => {
 		setLineClass("line-hidden");
 	};
@@ -113,15 +122,6 @@ const Part3ViewOverlay = ({
 			window.removeEventListener("fullscreenchange", handleResize);
 		};
 	}, [handleResize]);
-
-	useLoadTestIntoComponent(
-		testType,
-		docToFetchRef,
-		context.resetState,
-		context.updateTest,
-		context.updateHasFetched,
-		context.docRef
-	);
 
 	return (
 		<Fragment>

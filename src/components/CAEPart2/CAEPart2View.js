@@ -20,9 +20,6 @@ import styles from "./CAEPart2View.module.css";
 //constants
 import { CAEPart2 } from "APIHandlers/firebaseConsts";
 
-//API Handlers
-import getTest from "APIHandlers/getTest";
-
 const CAEPart2View = ({ docToFetchRef, setEditMode }) => {
 	//max time for short and long terms. Passed down to question row so that flipping it results in time change
 	const shortTime = "2000";
@@ -34,32 +31,14 @@ const CAEPart2View = ({ docToFetchRef, setEditMode }) => {
 
 	const context = useContext(CAEPart2Context);
 
-	useEffect(() => {
-		//clear state before attempting to fetch a new test to prevent previous test being displayed while new one is loading (for slower connections)
-
-		const asyncWrapper = async () => {
-			context.updateHasFetched(false);
-			const test = await getTest(CAEPart2, docToFetchRef);
-			console.log(test);
-			//change object shape to match state shape before dispatching
-			test.docRef = test.id;
-			delete test.id;
-			test.testTags = test.tags;
-			delete test.tags;
-			context.updateTest(test);
-			context.updateHasFetched(true);
-			console.log(test);
-		};
-
-		if (docToFetchRef !== "new") {
-			if (docToFetchRef !== context.docRef) {
-				context.resetState();
-				asyncWrapper();
-			}
-
-			context.updateHasFetched(true);
-		}
-	}, [docToFetchRef]);
+	useLoadTestIntoComponent(
+		CAEPart2,
+		docToFetchRef,
+		context.resetState,
+		context.updateTest,
+		context.updateHasFetched,
+		context.docRef
+	);
 
 	if (context.hasFetched) {
 		return (

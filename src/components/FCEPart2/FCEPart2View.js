@@ -15,11 +15,11 @@ import Timer from "components/common/Timer";
 import GrabSlider from "components/common/GrabSlider/GrabSlider";
 import ImageWithPlaceHolder from "components/TestCommon/ImageWithPlaceHolder";
 
+//Custom Hooks
+import useLoadTestIntoComponent from "hooks/useLoadTestIntoComponent";
+
 //constants
 import { FCEPart2 } from "APIHandlers/firebaseConsts";
-
-//API Handlers
-import getTest from "APIHandlers/getTest";
 
 //CSS Modules
 import styles from "./FCEPart2View.module.css";
@@ -33,32 +33,14 @@ const FCEPart2View = ({ context, docToFetchRef, setEditMode }) => {
 	const handleFullScreen = useFullScreenHandle();
 	const [time, setTime] = useState(6000);
 
-	useEffect(() => {
-		//clear state before attempting to fetch a new test to prevent previous test being displayed while new one is loading (for slower connections)
-
-		const asyncWrapper = async () => {
-			context.updateHasFetched(false);
-			const test = await getTest(FCEPart2, docToFetchRef);
-			console.log(test);
-			//change object shape to match state shape before dispatching
-			test.docRef = test.id;
-			delete test.id;
-			test.testTags = test.tags;
-			delete test.tags;
-			context.updateTest(test);
-			context.updateHasFetched(true);
-			console.log(test);
-		};
-
-		if (docToFetchRef !== "new") {
-			if (docToFetchRef !== context.docRef) {
-				context.resetState();
-				asyncWrapper();
-			}
-
-			context.updateHasFetched(true);
-		}
-	}, [docToFetchRef]);
+	useLoadTestIntoComponent(
+		FCEPart2,
+		docToFetchRef,
+		context.resetState,
+		context.updateTest,
+		context.updateHasFetched,
+		context.docRef
+	);
 
 	if (context.hasFetched) {
 		return (
