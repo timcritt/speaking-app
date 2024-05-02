@@ -95,7 +95,12 @@ const EditFCEPart2 = ({
 								)}
 							</ExamPicture>
 						</div>
-						<div className={`${styles.image_container}`}>
+						<div
+							className={`${styles.image_container} ${
+								inputStatus.imageTwoFailedValidation &&
+								styles.required_input_incomplete
+							}`}
+						>
 							<ExamPicture
 								image={context.imageTwoUrl}
 								setImage={context.updateImageTwoUrl}
@@ -111,12 +116,7 @@ const EditFCEPart2 = ({
 										setImageUrl={context.updateImageTwoUrl}
 										modalButton={
 											<button
-												className={`${styles.clickable_image_overlay} ${
-													styles.image_container
-												} ${
-													inputStatus.imageTwoFailedValidation &&
-													styles.required_input_incomplete
-												} `}
+												className={styles.clickable_image_overlay}
 											></button>
 										}
 									/>

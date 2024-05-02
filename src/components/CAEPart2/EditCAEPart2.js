@@ -100,7 +100,12 @@ const EditCAEPart2 = ({ docToFetchRef, setEditMode, handleShowModal }) => {
 								)}
 							</ExamPicture>
 						</div>
-						<div className={`${styles.image_container}`}>
+						<div
+							className={`${styles.image_container} ${
+								inputStatus.imageTwoFailedValidation &&
+								styles.required_input_incomplete
+							}`}
+						>
 							<ExamPicture
 								image={context.imageTwoUrl}
 								setImage={context.updateImageTwoUrl}
@@ -116,12 +121,7 @@ const EditCAEPart2 = ({ docToFetchRef, setEditMode, handleShowModal }) => {
 										setImageUrl={context.updateImageTwoUrl}
 										modalButton={
 											<button
-												className={`${styles.clickable_image_overlay} ${
-													styles.image_container
-												} ${
-													inputStatus.imageTwoFailedValidation &&
-													styles.required_input_incomplete
-												} `}
+												className={styles.clickable_image_overlay}
 											></button>
 										}
 									/>
@@ -129,7 +129,12 @@ const EditCAEPart2 = ({ docToFetchRef, setEditMode, handleShowModal }) => {
 							</ExamPicture>
 						</div>
 
-						<div className={`${styles.image_container}`}>
+						<div
+							className={`${styles.image_container} ${
+								inputStatus.imageThreeFailedValidation &&
+								styles.required_input_incomplete
+							}`}
+						>
 							<ExamPicture
 								image={context.imageThreeUrl}
 								setImage={context.updateImageThreeUrl}
@@ -145,12 +150,7 @@ const EditCAEPart2 = ({ docToFetchRef, setEditMode, handleShowModal }) => {
 										setImageUrl={context.updateImageThreeUrl}
 										modalButton={
 											<button
-												className={`${styles.clickable_image_overlay} ${
-													styles.image_container
-												} ${
-													inputStatus.imageThreeFailedValidation &&
-													styles.required_input_incomplete
-												} `}
+												className={styles.clickable_image_overlay}
 											></button>
 										}
 									/>
