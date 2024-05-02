@@ -55,7 +55,7 @@ const EditFCEPart2 = ({
 				/>
 				<EditTestContainer>
 					<EditTestFormHeading
-						docRef={context.docRef}
+						docRef={docToFetchRef}
 						testTypeLabel={"FCE Part 2"}
 					/>
 					<fieldset className={styles.image_row}>

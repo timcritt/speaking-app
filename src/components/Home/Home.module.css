@@ -8,7 +8,7 @@
 }
 
 .slogan_container {
-	font-size: max(15vh, 10vw);
+	font-size: max(13vh, 10vw);
 	z-index: 2;
 }
 .slogan {

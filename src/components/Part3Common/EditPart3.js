@@ -75,7 +75,7 @@ const EditPart3 = ({
 			<Fragment>
 				<EditTestContainer>
 					<EditTestFormHeading
-						docRef={docRef}
+						docRef={docToFetchRef}
 						testTypeLabel={
 							testType === FCEPart3
 								? "FCE Part 3"
