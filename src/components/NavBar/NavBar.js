@@ -111,12 +111,7 @@ export const NavBar = () => {
 							</Link>
 						</Fragment>
 					)}
-					<Link className="nav-link navItem" to="/about">
-						About
-					</Link>
-					<Link className="nav-link navItem" to="/about">
-						Help
-					</Link>
+
 					<Link className="nav-link navItem" to="/exploreContent/tests">
 						Explore content
 					</Link>

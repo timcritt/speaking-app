@@ -1,0 +1,22 @@
+.container {
+	display: flex;
+	justify-content: start;
+	border: rgb(189, 189, 189) 1px solid;
+	cursor: pointer;
+	background-color: white;
+	border-radius: 5px;
+}
+
+.container :hover {
+	background-color: rgb(234, 234, 234);
+}
+
+.content_container {
+	display: flex;
+	align-items: center;
+	width: 100%;
+}
+
+.createdBy_text_container {
+	padding: 5px 10px;
+}
