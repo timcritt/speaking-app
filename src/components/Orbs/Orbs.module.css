@@ -1,146 +1,182 @@
 .orbs_container {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  overflow: hidden;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	overflow: hidden;
 }
 
 .orb {
-  position: absolute;
+	position: absolute;
+	filter: opacity(0.6);
 }
 
 .orb_inner {
-  transform-origin: center;
-  animation: horizontal infinite 8s;
-  border-radius: 100%;
-  height: 100%;
-  width: 100%;
+	transform-origin: center;
+	animation: horizontal infinite 8s;
+	border-radius: 100%;
+	height: 100%;
+	width: 100%;
 }
 
 .gradient_1 {
-  background: linear-gradient(266deg, rgba(73, 182, 175, 0.9) 10%, #44a2b3 50%, #4375b9 100%);
+	background: linear-gradient(
+		266deg,
+		rgba(73, 182, 175, 0.9) 10%,
+		#44a2b3 50%,
+		#4375b9 100%
+	);
 }
 
 .gradient_2 {
-  background: linear-gradient(142deg, rgba(73, 182, 175, 0.9) 10%, #44a2b3 50%, #4375b9 100%);
+	background: linear-gradient(
+		142deg,
+		rgba(73, 182, 175, 0.9) 10%,
+		#44a2b3 50%,
+		#4375b9 100%
+	);
 }
 
 .gradient_3 {
-  background: linear-gradient(237deg, rgba(73, 182, 175, 0.9) 10%, #44a2b3 50%, #4375b9 100%);
+	background: linear-gradient(
+		237deg,
+		rgba(73, 182, 175, 0.9) 10%,
+		#44a2b3 50%,
+		#4375b9 100%
+	);
 }
 
 .gradient_4 {
-  background: linear-gradient(303deg, rgba(73, 182, 175, 0.75) 10%, #4499b3 18%, #4375b9 100%);
+	background: linear-gradient(
+		303deg,
+		rgba(73, 182, 175, 0.75) 10%,
+		#4499b3 18%,
+		#4375b9 100%
+	);
 }
 
 .gradient_5 {
-  background: linear-gradient(94deg, rgb(73 182 175) 10%, #44a2b3 50%, #4375b9 100%);
+	background: linear-gradient(
+		94deg,
+		rgb(73 182 175) 10%,
+		#44a2b3 50%,
+		#4375b9 100%
+	);
 }
 
 .gradient_6 {
-  background: linear-gradient(12deg, rgb(73 182 175) 10%, #44a2b3de 50%, #4375b9f0 100%);
+	background: linear-gradient(
+		12deg,
+		rgb(73 182 175) 10%,
+		#44a2b3de 50%,
+		#4375b9f0 100%
+	);
 }
 
 .gradient_7 {
-  background: linear-gradient(71deg, rgb(71 170 178) 10%, #437bb8 50%, #4375b9 100%);
+	background: linear-gradient(
+		71deg,
+		rgb(71 170 178) 10%,
+		#437bb8 50%,
+		#4375b9 100%
+	);
 }
 
 .gradient_8 {
-  background: red;
+	background: red;
 }
 
 .orbs_container :nth-child(1) {
-  top: -100px;
-  width: 500px;
-  height: 500px;
-  transform: translate3d(-50%, 0, 0);
-  left: 50%;
-  z-index: 2;
+	top: -100px;
+	width: 500px;
+	height: 500px;
+	transform: translate3d(-50%, 0, 0);
+	left: 50%;
+	z-index: 2;
 }
 
 /* translation calcualted from centre to preserve relative position between orbs when screen resizes or zoom */
 .orbs_container :nth-child(2) {
-  transform: translate3d(-50%, 0, 0);
-  left: calc(50% - 380px);
-  top: -251px;
-  z-index: 2;
+	transform: translate3d(-50%, 0, 0);
+	left: calc(50% - 380px);
+	top: -251px;
+	z-index: 2;
 }
 
 .orbs_container :nth-child(3) {
-  transform: translate3d(-50%, 0, 0);
-  left: calc(50% - 700px);
-  top: -221px;
+	transform: translate3d(-50%, 0, 0);
+	left: calc(50% - 700px);
+	top: -221px;
 }
 
 .orbs_container :nth-child(4) {
-  transform: translate3d(-50%, 0, 0);
-  left: calc(50% - 230px);
-  top: -102px;
+	transform: translate3d(-50%, 0, 0);
+	left: calc(50% - 230px);
+	top: -102px;
 }
 
 .orbs_container :nth-child(5) {
-  transform: translate3d(50%, 0, 0);
-  right: calc(50% - 380px);
-  top: -251px;
-  z-index: 2;
+	transform: translate3d(50%, 0, 0);
+	right: calc(50% - 380px);
+	top: -251px;
+	z-index: 2;
 }
 
 .orbs_container :nth-child(6) {
-  transform: translate3d(50%, 0, 0);
-  right: calc(50% - 230px);
-  top: -102px;
-  z-index: 2;
+	transform: translate3d(50%, 0, 0);
+	right: calc(50% - 230px);
+	top: -102px;
+	z-index: 2;
 }
 .orbs_container :nth-child(7) {
-  transform: translate3d(50%, 0, 0);
-  right: calc(50% - 641px);
-  top: -222px;
+	transform: translate3d(50%, 0, 0);
+	right: calc(50% - 641px);
+	top: -222px;
 }
 
 .orbs_container :nth-child(8) {
-  z-index: 5;
+	z-index: 5;
 }
 
 .orb .small {
-  width: 50px;
-  height: 50px;
+	width: 50px;
+	height: 50px;
 }
 
 .orb .medium {
-  width: 400px;
-  height: 400px;
+	width: 400px;
+	height: 400px;
 }
 
 .bob_vertically {
-  animation: horizontal infinite 8s;
+	animation: horizontal infinite 8s;
 }
 
 .sway_horizontally {
-  animation: vertical infinite 6s;
+	animation: vertical infinite 6s;
 }
 
 @keyframes vertical {
-  0% {
-    transform: translateY(0) scale(1);
-  }
-  50% {
-    transform: translateY(20px) scale(0.98);
-  }
-  100% {
-    transform: translateY(0) scale(1);
-  }
+	0% {
+		transform: translateY(0) scale(1);
+	}
+	50% {
+		transform: translateY(20px) scale(0.98);
+	}
+	100% {
+		transform: translateY(0) scale(1);
+	}
 }
 
 @keyframes horizontal {
-  0% {
-    transform: translateX(0) scale(1);
-  }
-  50% {
-    transform: translateX(20px) scale(0.98);
-  }
-  100% {
-    transform: translateX(0) scale(1);
-  }
+	0% {
+		transform: translateX(0) scale(1);
+	}
+	50% {
+		transform: translateX(20px) scale(0.98);
+	}
+	100% {
+		transform: translateX(0) scale(1);
+	}
 }
