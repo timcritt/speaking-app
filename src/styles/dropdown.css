@@ -37,11 +37,12 @@
 	border: 1px solid white;
 	box-sizing: border-box;
 	transition: background-color 0.25s, color 0.25s;
+	cursor: pointer;
 }
 
 .nav-dropdown-link:hover {
 	background-color: #fafafa;
-	cursor: default;
+
 	color: darkgoldenrod;
 	border: 1px solid #dbdbdb;
 	box-sizing: inherit;

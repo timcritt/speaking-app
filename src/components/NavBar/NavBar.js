@@ -68,24 +68,42 @@ export const NavBar = () => {
 							<div className="dropdown-m">
 								<span className={"dropdown nav-link navItem"}>Create</span>
 								<div className={"dropdown-content"}>
-									<li onClick={() => handleCreateTestClick(FCEPart2)}>
+									<p
+										className="nav-dropdown-link"
+										onClick={() => handleCreateTestClick(FCEPart2)}
+									>
 										FCE Part 2
-									</li>
-									<li onClick={() => handleCreateTestClick(FCEPart3)}>
+									</p>
+									<p
+										className="nav-dropdown-link"
+										onClick={() => handleCreateTestClick(FCEPart3)}
+									>
 										FCE Part 3
-									</li>
-									<li onClick={() => handleCreateTestClick(FCEPart4)}>
+									</p>
+									<p
+										className="nav-dropdown-link"
+										onClick={() => handleCreateTestClick(FCEPart4)}
+									>
 										FCE Part 4
-									</li>
-									<li onClick={() => handleCreateTestClick(CAEPart2)}>
+									</p>
+									<p
+										className="nav-dropdown-link"
+										onClick={() => handleCreateTestClick(CAEPart2)}
+									>
 										CAE Part 2
-									</li>
-									<li onClick={() => handleCreateTestClick(CAEPart3)}>
+									</p>
+									<p
+										className="nav-dropdown-link"
+										onClick={() => handleCreateTestClick(CAEPart3)}
+									>
 										CAE Part 3
-									</li>
-									<li onClick={() => handleCreateTestClick(CAEPart4)}>
+									</p>
+									<p
+										className="nav-dropdown-link"
+										onClick={() => handleCreateTestClick(CAEPart4)}
+									>
 										CAE Part 4
-									</li>
+									</p>
 								</div>
 							</div>
 							<Link className="nav-link" to={`/userContent/${userId}/tests`}>
