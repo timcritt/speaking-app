@@ -4,8 +4,10 @@ import React from "react";
 import {
 	FCEPart2,
 	FCEPart3,
+	FCEPart4,
 	CAEPart2,
 	CAEPart3,
+	CAEPart4,
 } from "APIHandlers/firebaseConsts";
 
 //custom components
@@ -72,7 +74,18 @@ const Tests = React.memo(({ results = [], testType }) => {
 										</TestPreview>
 									);
 								}
-								case "FCEPart4":
+								case FCEPart4:
+									return (
+										<TestPreview
+											testId={doc.id}
+											key={doc.id}
+											testType={testType}
+											testTags={doc.tags}
+										>
+											<Part4TestPreviewContent test={doc} />
+										</TestPreview>
+									);
+								case CAEPart4:
 									return (
 										<TestPreview
 											testId={doc.id}
