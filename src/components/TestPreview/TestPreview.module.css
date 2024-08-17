@@ -1,70 +1,88 @@
 .outer_container {
-  overflow: hidden;
-  margin-right: 5px;
-  position: relative;
+	overflow: hidden;
+	margin-right: 5px;
+	position: relative;
+	border: solid 1px #e0e0e0;
+	border-radius: 4px;
 }
 
 .inner_container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	position: relative;
 }
 
 .question_container {
-  color: black;
-  font-size: small;
-  align-items: center;
-  box-sizing: border-box;
+	color: black;
+	font-size: small;
+	align-items: center;
+	box-sizing: border-box;
+	margin: 10px 10px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .question_text {
-  font-size: 1rem;
+	font-size: 0.9rem;
 }
 
 .img_wrap {
-  display: inline-block;
-  justify-content: center;
-  filter: grayscale(0.5);
+	display: inline-block;
+	justify-content: center;
+	filter: grayscale(0.5);
 }
 
 .grow_hover_container {
-  overflow: hidden;
-  position: relative;
-  border-radius: 0.25em;
+	overflow: hidden;
+	position: relative;
 }
 
 .grow_hover_container:hover .grow_on_hover {
-  transform: scale(1.05);
+	transform: scale(1.05);
 }
 
 .grow_on_hover {
-  transition: all 0.3s ease-in-out;
-  overflow: hidden;
-  display: flex;
+	transition: all 0.3s ease-in-out;
+	overflow: hidden;
+	display: flex;
 }
 
 .label_container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 5px 0 0 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 5px 0 0 0;
 }
 
 @media (hover: hover) {
-  /*applies styles to the overlay (separate child component)*/
-  .grow_hover_container:hover > div {
-    opacity: 1;
-    color: white;
-    background: linear-gradient(311deg, rgb(73 182 175 / 72%) 10%, #44a2b3d9 50%, #4375b9c7 100%);
-  }
-  /*buttons on overlay are disabled by default to prevent accidental clicks when overlay is hidden. This activates them for devices with mouse*/
-  .test-preview-overlay:hover .overlay-bottom-right {
-    pointer-events: unset;
-  }
+	/*applies styles to the overlay (separate child component)*/
+	.grow_hover_container:hover > div {
+		opacity: 1;
+		color: white;
+		background: linear-gradient(
+			311deg,
+			rgb(73 182 175 / 72%) 10%,
+			#44a2b3d9 50%,
+			#4375b9c7 100%
+		);
+	}
+	/*buttons on overlay are disabled by default to prevent accidental clicks when overlay is hidden. This activates them for devices with mouse*/
+	.test-preview-overlay:hover .overlay-bottom-right {
+		pointer-events: unset;
+	}
 }
 .tags_container {
-  color: #a1a1a1;
-  margin-top: 10px;
-  text-align: center;
+	color: #a1a1a1;
+	text-align: center;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.info_container {
+	display: flex;
+
+	margin: 10px 25px 15px 25px;
 }

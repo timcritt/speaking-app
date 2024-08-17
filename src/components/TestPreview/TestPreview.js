@@ -17,6 +17,11 @@ const TestPreview = ({
 	return (
 		<div className={styles.outer_container} key={testId}>
 			<div className={`${styles.inner_container} fade-in`}>
+				<div className={`${styles.question_container} `}>
+					{testType !== "FCEPart4" && (
+						<span className={styles.question_text}>{questionOne}</span>
+					)}
+				</div>
 				<div
 					className={styles.grow_hover_container}
 					onClick={(e) => e.stopPropagation()}
@@ -33,15 +38,12 @@ const TestPreview = ({
 				</div>
 			</div>
 			<div className={styles.label_container}>{testLabel}</div>
-			<div className={`${styles.question_container} dont-break-out`}>
-				{testType !== "FCEPart4" && (
-					<span className={styles.question_text}>{questionOne}</span>
-				)}
-			</div>
-			<div className={styles.tags_container}>
-				{testTags.map((tag) => {
-					return <span key={uuidv4()}>{`#${tag} `}</span>;
-				})}
+			<div className={styles.info_container}>
+				<div className={styles.tags_container}>
+					{testTags.map((tag) => {
+						return <span key={uuidv4()}>{`#${tag} `}</span>;
+					})}
+				</div>
 			</div>
 		</div>
 	);
